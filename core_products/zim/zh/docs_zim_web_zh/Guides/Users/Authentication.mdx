@@ -1,128 +1,115 @@
 ---
-articleID: 13942
+articleID: 14607
 ---
-
-export const getPlatformData = (props, data)=>{
-    const platform = props.platform ?? "Android";
-    return platform in data ? data[platform] : data["Android"]
-}
-
-
-# Authentication
+# 使用 Token 鉴权
 
 - - -
 
-## Overview
+## 1 功能简介
 
-To avoid unauthorized service access or operations, ZEGOCLOUD uses digital Tokens to control and validate users' login privileges.
-
-
-
-## The validation process
+使用 Token 鉴权，指用户进行登录时，ZIM 的业务服务端会根据用户登录时携带的 Token 参数，判断用户是否有权限进行登录，避免因权限控制缺失或操作不当引发的风险问题。
 
 
-Before you log in to a room, your app clients request Tokens from your app server and provide the Token for privilege validation when logging in to a room.
+## 2 实现原理
 
-The following diagram shows the process of room login privilege validation:
+用户登录 ZIM 的服务端之前，开发者服务端应先生成 Token，ZIM 服务端会对带着 Token 的用户进行校验，根据 Token 参数判断用户是否为合法登录的用户。
 
-![/Pics/ZIMChatRoom/en/tokenvalidation_EN.png](http://doc.oa.zego.im/Pics/ZIMChatRoom/en/tokenvalidation_EN.png)
+登录时 Token 校验的流程如下图：
+
+![/Pics/ZIM/Authenticate_users_with_tokens.png](http://doc.oa.zego.im/Pics/ZIM/Authenticate_users_with_tokens.png)
+
+1. 客户端发起申请 Token 的请求。
+2. 在开发者的服务端上生成 Token，并返回给客户端。
+3. 客户端携带申请到的 Token 和 userID 信息，登录 ZIM SDK。
+4. ZIM SDK 会自动将 Token 发送到 ZIM 服务端进行校验。
+5. ZIM 服务端会将校验的结果返回给 ZIM SDK。
+6. ZIM SDK 再将校验的结果直接返回给客户端，没有权限客户端登录将失败。
 
 
 
-## Generate a Token
+## 3 使用步骤
+
+以下将介绍开发者的服务端如何生成 Token、如何使用 SDK 设置 Token、以及 Token 过期时的处理方式。
+
+### 3.1 生成 Token
 
 <Warning title="Warning">
 
-For business security, you must generate Tokens on your app server.
+Token 有效时长不能超过 24 天，为保证安全性，ZEGO 强烈建议开发者在自己的服务端生成 Token。 
 </Warning>
 
+#### 1. 获取 AppID 和 ServerSecret。
 
-1. Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com), and do the following:
-    - Create a project, get the AppID and AppSign.
-    - Subscribe to the In-app Chat service.
+前往 [ZEGO 控制台](https://console.zego.im) 创建项目，获取接入 ZIM SDK 服务所需的 AppID 和 ServerSecret。ZIM 服务权限不是默认开启的，使用前，请先在 [ZEGO 控制台](https://console.zego.im) 自助开通 ZIM 服务（详情请参考 [项目管理 - 即时通讯](#14994)），若无法开通 ZIM 服务，请联系 ZEGO 技术支持开通。
 
-2. Use the `token generator` plug-in provided by ZEGOCLOUD to generate Tokens on your app server.
 
+#### 2. 开发者服务端生成 Token。
+
+<Note title="Note">
+
+客户端向开发者服务端发送请求申请 Token，由开发者服务端计算 Token 并返回给对应客户端。
+</Note>
+
+为方便开发者使用，ZEGO 在 GitHub/Gitee 提供了一个开源的 zego_server_assistant 插件，支持使用 Go、C++、Java、Python、PHP、.NET、Node.js 等语言，在开发者的服务端部署生成 Token。
 
 <table>
-
-  <tbody><tr>
-    <th rowspan="2">Language</th>
-    <th rowspan="2">Supported version</th>
-    <th rowspan="2">Core function</th>
-    <th rowspan="2">Code base</th>
-    <th colspan="2">Sample code</th>
-  </tr>
-  <tr>
-    <th>User identity Token</th>
-    <th>User privilege Token</th>
-  </tr>
-  <tr>
-    <td>Go</td>
-    <td>Go 1.14.15 or later</td>
-    <td>GenerateToken04</td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/go/src/token04">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/go/sample/sample.go">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/go/sample/sample-for-rtcroom.go">GitHub</a></li></ul></td>
-  </tr>
-  <tr>
-    <td>C++</td>
-    <td>C++ 11&nbsp; or later</td>
-    <td>GenerateToken04</td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/c%2B%2B">GitHub</a></li></ul></td>
-    <td colspan="2"><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/c%2B%2B/sample/demo/main.cc">GitHub</a></li></ul></td>
-  </tr>
-  <tr>
-    <td>Java</td>
-    <td>Java 1.8&nbsp; or later</td>
-    <td>generateToken04</td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/java/token04">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/java/token04/src/im/zego/serverassistant/sample/Token04SampleBase.java">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/java/token04/src/im/zego/serverassistant/sample/Token04SampleForRtcRoom.java">GitHub</a></li></ul></td>
-  </tr>
-  <tr>
-    <td>Python</td>
-    <td>Python 3.6.8&nbsp; or later</td>
-    <td>generate_token04</td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/python/token04">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/python/token04/test/base_sample.py">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/python/token04/test/rtcroom_sample.py">GitHub</a></li></ul></td>
-  </tr>
-  <tr>
-    <td>PHP</td>
-    <td>PHP 7.0&nbsp; or later</td>
-    <td>generateToken04</td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/php/token04">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/php/token04/test/test.php">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/php/token04/test/testForRtcRoom.php">GitHub</a></li></ul></td>
-  </tr>
-  <tr>
-    <td>.NET</td>
-    <td>.NET Framework 3.5&nbsp; or later</td>
-    <td>GenerateToken04</td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/.net">GitHub</a></li></ul></td>
-    <td colspan="2"><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/.net/demo/WindowsFormsApp1/Form1.cs">GitHub</a></li></ul></td>
-  </tr>
-  <tr>
-    <td>Node.js</td>
-    <td>Node.js 8&nbsp; or later</td>
-    <td>generateToken04</td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/nodejs">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/nodejs/sample/sample-base.js">GitHub</a></li></ul></td>
-    <td><ul><li><a target="_blank" href="https://github.com/ZEGOCLOUD/zego_server_assistant/blob/master/token/nodejs/sample/sample-rtc-room.js">GitHub</a></li></ul></td>
-  </tr>
+<tbody><tr>
+<th>语言</th>
+<th>支持版本</th>
+<th>关键函数</th>
+<th>具体地址</th>
+</tr>
+<tr>
+<td>Go</td>
+<td>Go 1.14.15 或以上版本</td>
+<td>GenerateToken04</td>
+<td><ul><li><a target="_blank" href="https://github.com/zegoim/zego_server_assistant/blob/release/github/token/go/src/token04">GitHub</a></li><li><a target="_blank" href="https://gitee.com/zegodev_admin/zego_server_assistant/blob/release/github/token/go/src/token04">Gitee</a></li></ul></td>
+</tr>
+<tr>
+<td>C++</td>
+<td>C++ 11 或以上版本</td>
+<td>GenerateToken04</td>
+<td><ul><li><a target="_blank" href="https://github.com/zegoim/zego_server_assistant/blob/release/github/token/c%2B%2B/token04">GitHub</a></li><li><a target="_blank" href="https://gitee.com/zegodev_admin/zego_server_assistant/tree/release/github/token/c++/token04">Gitee</a></li></ul></td>
+</tr>
+<tr>
+<td>Java</td>
+<td>Java 1.8 或以上版本</td>
+<td>generateToken04</td>
+<td><ul><li><a target="_blank" href="https://github.com/zegoim/zego_server_assistant/tree/release/github/token/java/token04">GitHub</a></li><li><a target="_blank" href="https://gitee.com/zegodev_admin/zego_server_assistant/tree/release/github/token/java/token04">Gitee</a></li></ul></td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Python 3.6.8 或以上版本</td>
+<td>generate_token04</td>
+<td><ul><li><a target="_blank" href="https://github.com/zegoim/zego_server_assistant/tree/release/github/token/python/token04">GitHub</a></li><li><a target="_blank" href="https://gitee.com/zegodev_admin/zego_server_assistant/tree/release/github/token/python/token04">Gitee</a></li></ul></td>
+</tr>
+<tr>
+<td>PHP</td>
+<td>PHP 7.0 或以上版本</td>
+<td>generateToken04</td>
+<td><ul><li><a target="_blank" href="https://github.com/zegoim/zego_server_assistant/tree/release/github/token/php/token04">GitHub</a></li><li><a target="_blank" href="https://gitee.com/zegodev_admin/zego_server_assistant/tree/release/github/token/php/token04">Gitee</a></li></ul></td>
+</tr>
+<tr>
+<td>.NET</td>
+<td>.NET Framework 3.5 或以上版本</td>
+<td>GenerateToken04</td>
+<td><ul><li><a target="_blank" href="https://github.com/zegoim/zego_server_assistant/tree/release/github/token/.net/token04">GitHub</a></li><li><a target="_blank" href="https://gitee.com/zegodev_admin/zego_server_assistant/tree/release/github/token/.net/token04">Gitee</a></li></ul></td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>Node.js 8 或以上版本</td>
+<td>generateToken04</td>
+<td><ul><li><a target="_blank" href="https://github.com/zegoim/zego_server_assistant/tree/release/github/token/nodejs/token04">GitHub</a></li><li><a target="_blank" href="https://gitee.com/zegodev_admin/zego_server_assistant/tree/release/github/token/nodejs/token04">Gitee</a></li></ul></td>
+</tr>
 </tbody></table>
 
 
+以 Go 语言为例，开发者可参考以下步骤使用 zego_server_assistant 生成 Token：
 
-Take Go language as an example, you can do the following steps to generate a Token：
 
-1. go get github.com/ZEGOCLOUD/zego_server_assistant
-2. import "github.com/ZEGOCLOUD/zego_server_assistant/token/go/src/token04"
-3. Call the `GenerateToken04` method to generate a Token.
-
-The following code shows how to generate a user identity Token:
-
+1. 首先将 “go/zegoserverassistant” 目录，拷贝到开发者的服务端项目中。
+2. 使用命令 `import zsa "your-project-go-mod-path/zegoserverassistant"` 引入插件，需要将 “your-project-go-mod-path” 替换为开发者自己的项目名称。
+3. 调用插件提供的 `GenerateToken04` 方法生成 Token。
 
 ```go
 var appId uint32 = <Your AppId>   // type: uint32
@@ -138,45 +125,44 @@ if err != nil {
 fmt.Println(token)
 ```
 
-
-#### Generating Token on the Developer's Browser
+#### 3. 开发者浏览器端生成 Token。
 
 <Warning title="Warning">
 
-The following example code is for reference only. The token validity period cannot exceed 24 days. To ensure security, ZEGOCLOUD strongly recommends that you generate tokens on your own server.
+以下示例代码仅供参考。Token 有效时长不能超过 24 天，为保证安全性，ZEGO 强烈建议开发者在自己的服务端生成 Token。
 </Warning>
 
-Please refer to the following code example for generating tokens on the browser:
+浏览器端生成 Token 的代码示例请参考如下：
 
 ```javascript
 import CryptoJS from 'crypto-js';
 
 const appConfig = {
-    appID: 0, // Fill in the AppID you applied for
-    serverSecret: '', // Fill in the ServerSecret you applied for
+    appID: 0, // 填写申请的 AppID
+    serverSecret: '', // 填写申请的 ServerSecret
 };
 
 /**
- * Generate token
+ * 生成 token
  *
- * Token = "04" + Base64.encode(expire_time + IV.length + IV + binary_ciphertext.length + binary_ciphertext)
- * Algorithm: AES<ServerSecret, IV>(token_json_str), using mode: CBC/PKCS5Padding
+ * Token = “04” + Base64.encode(expire_time + IV.length + IV + 二进制密文.length + 二进制密文)
+ * 算法：AES<ServerSecret, IV>(token_json_str)，使用模式: CBC/PKCS5Padding
  *
- * This code example only provides a client-side token generation example. Please make sure to generate tokens on your own server to avoid leaking your ServerSecret.
+ * 这里仅提供生成 token 的客户端示例代码。请务必在您的业务后台生成 token，避免泄漏您的 ServerSecret
  */
 export function generateToken(userID, seconds) {
   if (!userID) return '';
 
-  // Construct encrypted data
+  // 构造 加密数据
   const time = (Date.now() / 1000) | 0;
   const body = {
     app_id: appConfig.appID,
     user_id: userID,
     nonce: (Math.random() * 2147483647) | 0,
     ctime: time,
-    expire: time + (seconds || 7200),  // The validity period should not exceed 24 days
+    expire: time + (seconds || 7200),  // 有效时长不能超过 24 天
   };
-  // Encrypt the body
+  // 加密 body
   const key = CryptoJS.enc.Utf8.parse(appConfig.serverSecret);
   let iv = Math.random().toString().substring(2, 18);
   if (iv.length < 16) iv += iv.substring(0, 16 - iv.length);
@@ -185,7 +171,7 @@ export function generateToken(userID, seconds) {
   const ciphert = new Uint8Array(Array.from(atob(ciphertext)).map((val) => val.charCodeAt(0)));
   const len_ciphert = ciphert.length;
 
-  // Assemble token data
+  // 组装 token 数据
   const uint8 = new Uint8Array(8 + 2 + 16 + 2 + len_ciphert);
   // expire: 8
   uint8.set([0, 0, 0, 0]);
@@ -195,10 +181,10 @@ export function generateToken(userID, seconds) {
   uint8[9] = iv.length - (uint8[8] << 8);
   // iv: 16
   uint8.set(new Uint8Array(Array.from(iv).map((val) => val.charCodeAt(0))), 10);
-  // ciphertext length: 2
+  // 密文 length: 2
   uint8[26] = len_ciphert >> 8;
   uint8[27] = len_ciphert - (uint8[26] << 8);
-  // ciphertext
+  // 密文
   uint8.set(ciphert, 28);
 
   const token = `04${btoa(String.fromCharCode(...Array.from(uint8)))}`;
@@ -209,61 +195,61 @@ export function generateToken(userID, seconds) {
 ```
 
 
-### Setting Token 
+### 3.2 设置 Token 
 
 <Warning title="Warning">
 
-The token validity period cannot exceed 24 days. To ensure security, ZEGOCLOUD strongly recommends that you generate tokens on your own server.
+Token 有效时长不能超过 24 天，为保证安全性，ZEGO 强烈建议开发者在自己的服务端生成 Token。
 </Warning>
 
-When a user logs in, they should pass the corresponding token for authentication.
+用户在登录时传入权限相关的 Token，并设置对应的权限。
 
-<CodeGroup>
 ```javascript
 var useID = 'xxxx';
 var config = {
     userName: 'xxxx',
-    token: '',// The validity period should not exceed 24 days. Request from the developer's server to obtain the token
+    token: '',// 有效时长不能超过 24 天，请求开发者服务端获取
 }
 
 zim.login(useID, config)
     .then(function() {
-        // Login successful
+        // 登录成功
     })
     .catch(function(err) {
-        // Login failed
+        // 登录失败
     });
 ```
-</CodeGroup>
 
 
-### Handling Token Expiration
+### 3.3 Token 过期时的处理方式
 
-30 seconds before the token expires, the SDK will send a notification through the [tokenWillExpire](@tokenWillExpire) callback. If the token expires within 30 seconds after a successful login, the callback will be triggered immediately.
+在 Token 过期前 30 秒，SDK 会通过 [tokenWillExpire](@tokenWillExpire) 回调发出通知。若登录成功后 Token 有效期不足 30 秒，则会立即回调。
 
-Upon receiving this callback, developers need to obtain a new valid token from their own server and use the [renewToken](@renewToken) interface provided by the SDK to update the token.
+收到该回调后，开发者需要从自己的服务端获取新的有效 Token，并调用 SDK 提供的 [renewToken](@renewToken) 接口更新 Token。
 
+<Note title="Note">
 
-<CodeGroup>
+当 Token 过期且未得到更新时，用户会掉线，收到 [connectionStateChanged](@connectionStateChanged) 回调，其中 `event` 为 `TokenExpired`，`state` 为 `Disconnected`。
+</Note>
+
 ```javascript
-// Register the callback for "Token Will Expire"
+// 注册监听“令牌即将过期”的回调
 zim.on('tokenWillExpire', function(zim, second) {
-    var token = ''; // The validity period should not exceed 24 days. Request a new token from the developer's server
+    var token = ''; // 有效时长不能超过 24 天，重新请求开发者服务端获取 Token
     zim.renewToken(token)    
         .then(function({ token }) {
-            // Token updated successfully
+            // 更新成功
         })
         .catch(function(err) {
-            // Token update failed
+            // 更新失败
         });
 })
 ```
-</CodeGroup>
 
-## API Reference
+## 4 API 参考
 
-| Method | Description |
+| 方法 | 描述 |
 |-------|--------|
-| [login](@login__2) | Log in to the ZIM service.  |
-| [renewToken](@renewToken) | Update the authentication token. |
-| [tokenWillExpire](@tokenWillExpire) | Token expiration callback. |
+| [login](@login__2) | 登录 ZIM 服务。  |
+| [renewToken](@renewToken) | 更新鉴权 Token。 |
+| [tokenWillExpire](@tokenWillExpire) | Token 过期回调。 |
