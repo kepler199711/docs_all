@@ -2,11 +2,7 @@
 articleID: 14733
 ---
 
-{/* 区分不同平台返回对应的链接 */}
-export const getPlatformData = (props, data) => {
-  const platform = props.platform ?? "Android";
-  return platform in data ? data[platform] : data["Android"]
-}
+import { getPlatformData } from "/snippets/utils-content-parser.js"
 
 export const onTokenWillExpireMap = {
   'Android': <a href="@onTokenWillExpire" target="_blank">onTokenWillExpire</a>,
@@ -186,7 +182,7 @@ When logging in to a room, you need to pass the Token for validation. Otherwise,
 :::if{props.platform=undefined}
 
 <CodeGroup>
-```java
+```java 
 ZIMUserInfo userInfo = new ZIMUserInfo();
 userInfo.userID = "YOUR_USER_ID";
 userInfo.userName = "YOUR_USER_NAME";
@@ -207,7 +203,7 @@ zim.login(userInfo, token, new ZIMLoggedInCallback() {
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart
+```dart 
 try{
     ZIMLoginConfig loginConfig = ZIMLoginConfig();
     // The user's nickname, leave it blank if you don't want to modify the nickname
@@ -231,7 +227,7 @@ try{
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc
+```objc 
 ZIMUserInfo *userInfo = [[ZIMUserInfo alloc] init];
 userInfo.userID = @"YOUR_USER_ID";
 userInfo.userName = @"YOUR_USER_NAME";
@@ -247,7 +243,7 @@ NSString *token = @"xxxxxxxx"; // Obtain the token from the server.
 
 :::if{props.platform="MacOS"}
 <CodeGroup>
-```objc
+```objc 
 ZIMUserInfo *userInfo = [[ZIMUserInfo alloc] init];
 userInfo.userID = @"YOUR_USER_ID";
 userInfo.userName = @"YOUR_USER_NAME";
@@ -264,7 +260,7 @@ NSString *token = @"xxxxxxxx"; // Obtain the token from the server.
 :::if{props.platform="U3D"}
 
 <CodeGroup>
-```c#
+```c# 
 ZIMUserInfo userInfo = new ZIMUserInfo();
 userInfo.userID = "userID";
 userInfo.userName = "userName";
@@ -287,7 +283,7 @@ zim.Login(userInfo, token, (ZIMError errorInfo) =>
 
 :::if{props.platform="windows"}
 <CodeGroup>
-```cpp
+```cpp 
 ZIMUserInfo userInfo;
 userInfo.userID = 'YOUR_USER_ID';
 userInfo.userName = 'YOUR_USER_NAME';
@@ -316,7 +312,7 @@ When the token expires and is not updated, the user will be disconnected and rec
 :::if{props.platform=undefined}
 
 <CodeGroup>
-```java
+```java 
 @Override
 public void onTokenWillExpire(int second){
     String token = getToken(); // Request a new Token from app server.
@@ -334,7 +330,7 @@ public void onTokenWillExpire(int second){
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart
+```dart 
 ZIMEventHandler.onTokenWillExpire = (zim, second) {
     ZIM.getInstance().renewToken('new token');
 };
@@ -344,7 +340,7 @@ ZIMEventHandler.onTokenWillExpire = (zim, second) {
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc
+```objc 
 - (void)zim:(ZIM *)zim tokenWillExpire:(unsigned int)second {
     NSString *token = [MyToken getToken]; // Obtain a new token from the server.
     [self.zim renewToken:token callback:^(ZIMError * _Nonnull errorInfo) {
@@ -358,7 +354,7 @@ ZIMEventHandler.onTokenWillExpire = (zim, second) {
 
 :::if{props.platform="MacOS"}
 <CodeGroup>
-```objc
+```objc 
 - (void)zim:(ZIM *)zim tokenWillExpire:(unsigned int)second {
     NSString *token = [MyToken getToken]; // Obtain a new token from the server.
     [self.zim renewToken:token callback:^(ZIMError * _Nonnull errorInfo) {
@@ -372,7 +368,7 @@ ZIMEventHandler.onTokenWillExpire = (zim, second) {
 
 :::if{props.platform="U3D"}
 <CodeGroup>
-```c#
+```c# 
 // zim is the instance you created.
 zim.onTokenWillExpire = (ZIM zim, uint second) =>
 {
@@ -387,7 +383,7 @@ zim.onTokenWillExpire = (ZIM zim, uint second) =>
 
 :::if{props.platform="windows"}
 <CodeGroup>
-```cpp
+```cpp 
 void onTokenWillExpire(ZIM * zim, unsigned int second) override {
     std::string token = getToken(); // Request a new Token from app server.
     zim->renewToken(token, [=](const std::string &token, zim::ZIMError errorInfo) {
