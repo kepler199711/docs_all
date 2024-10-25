@@ -1,117 +1,85 @@
-export const getPlatformData = (props, data)=>{
-    const platform = props.platform ?? "Android";
-    return platform in data ? data[platform] : data["Android"]
-}
-export const typeVoiceCallDoc={
-    "Android": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=android&language=java" target="_blank">Voice Call</a>,
-    "iOS": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=ios&language=objective-c" target="_blank">Voice Call</a>,
-    "rn": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=react-native&language=javascript" target="_blank">Voice Call</a>,
-    "macOS": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=macos&language=objective-c" target="_blank">Voice Call</a>,
-    "Flutter": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=flutter&language=dart" target="_blank">Voice Call</a>,
-    "Web": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=web&language=javascript" target="_blank">Voice Call</a>,
-    "Windows": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=windows&language=cpp" target="_blank">Voice Call</a>,
-    "u3d": <a href="https://www.zegocloud.com/docs/voice-call/overview?platform=unity3d&language=cs" target="_blank">Voice Call</a>,
-}
+# 概述
 
-export const typeVideoCallDoc={
-    "Android": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=android&language=java" target="_blank">Video Call</a>,
-    "iOS": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=ios&language=objective-c" target="_blank">Video Call</a>,
-    "rn": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=react-native&language=javascript" target="_blank">Video Call</a>,
-    "macOS": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=macos&language=objective-c" target="_blank">Video Call</a>,
-    "Flutter": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=flutter&language=dart" target="_blank">Video Call</a>,
-    "Web": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=web&language=javascript" target="_blank">Video Call</a>,
-    "Windows": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=windows&language=cpp" target="_blank">Video Call</a>,
-    "u3d": <a href="https://www.zegocloud.com/docs/video-call/overview?platform=unity3d&language=cs" target="_blank">Video Call</a>,
-}
-export const typeLiveStreamingDoc={
-    "Android": <a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=android&language=java" target="_blank">Live Streaming</a>,
-    "iOS": <a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=ios&language=objective-c" target="_blank">Live Streaming</a>,
-    "rn": <a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=react-native&language=javascript" target="_blank">Live Streaming</a>,
-    "macOS":<a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=macos&language=objective-c" target="_blank">Live Streaming</a>,
-    "Flutter": <a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=flutter&language=dart" target="_blank">Live Streaming</a>,
-    "Web": <a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=web&language=javascript" target="_blank">Live Streaming</a>,
-    "Windows": <a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=windows&language=cpp" target="_blank">Live Streaming</a>,
-    "u3d": <a href="https://www.zegocloud.com/docs/live-streaming/overview?platform=unity3d&language=cs" target="_blank">Live Streaming</a>,
-}
+---
 
-# Overview
+## 产品简介
 
-ZEGOCLOUD In-app Chat provides an interactive messaging service with high reliability, high concurrency, and ultra-low latency. You can simply and quickly implement real-time messaging scenarios, such as large-scale live streaming, live audio room, online customer service system, and more.
+ZEGO 即时通讯（ZEGO Instant Messaging，ZIM）是一款实时的通信互动产品，为开发者提供全平台互动、海量并发、超低延时、消息必达的通信服务，助力打造大型直播、语聊房、客服系统等场景。
 
-And In-app Chat's great compatibility also provides a full-package solution that is compatible with ZEGOCLOUD's {getPlatformData(props, typeVoiceCallDoc)}, {getPlatformData(props, typeVideoCallDoc)}, and {getPlatformData(props, typeLiveStreamingDoc)}, which helps you to build exactly what you want fast.
+ZEGO 提供 ZIM + RTC 服务联动的场景解决方案，公开 [语聊房](https://doc-zh.zego.im/article/15942)、[秀场直播](https://doc-zh.zego.im/article/15942) 等业务场景搭建的示例源码，帮助开发者能在极短的时间内搭建完美的业务场景。
 
 
+## 产品优势
+
+### 全球通信
+使用优秀的全球网络调度策略，满足 200 多个国家和地区的超低延迟通信需求。
+
+### 海量并发
+在线人数无上限，支持亿量级消息并发，满足任何消息通信需求。
+
+### 超低延时
+服务器分布式部署，实现延时在 200 ms 以内的消息传输。
+
+### 消息必达
+设立消息的优先级，保证重要消息最优先推送，保证所有消息必达。
+
+### 弱网高可用
+建立久经用户考验的网络策略，在 90% 丢包率情况下仍可做到登录、消息通信等功能。
 
 
-## Why ZEGOCLOUD's In-app Chat
+## 功能简介
 
-### Global reach with ultra-low latency
-ZEGOCLOUD's real-time communications network covers 200+ countries and regions. With an excellent global network scheduling strategy, it delivers real-time messages to users with an ultra-low latency as lower as 200 ms.
-
-### Massive concurrency
-
-Supports handling hundreds of millions of concurrent messages easily, meeting the needs of large-scale live communication events.
-
-
-### Message deliverability
-
-With ZEGOCLOUD's in-app chat, the priority of messages can be set to make sure all messages with higher priorities are transmitted. 
-
-### Optimized performance under weak networks
-
-With ZEGOCLOUD's sophisticated QoS strategies, messages are delivered reliably even when under the 90% of packet loss rate of network conditions, so you can provide users with a smooth communication experience at all times.
-
-
-## Features
-
-| Module/Feature| Description |
+| 主要功能 | 功能描述 |
 |-----|-----|
-| Monitor the login status | Supports the periodic heartbeat mechanism to monitor online status and update the login status in real time. |
-| Conversation module  | Supports obtaining the conversation list, and sending messages to the specified user, group, and chatroom.|
-| [Room\|_blank](./Basic%20concepts.mdx#room) module | Create a chatroom, destroy a chatroom, and obtain the chatroom list, which can be applied to the temporary chat events, such as live streaming and live audio room.  |
-| [Group\|_blank](./Basic%20concepts.mdx#group-chat) module | Create a group, ungroup, and save the relation chain of the group members.  |
-| Message module | Send text, image, file, audio, and other messages to users and to chatrooms.  |
-| Message priority | Message priorities can be set to ensure that messages with higher priorities are transmitted. |
-| Store message history| Supports storing historical messages. |
-| Push system notifications | Supports push system notifications with the server. |
-| Call invitation | Supports implementing the basic control logic of the call invitation: sending, canceling, accepting, and refusing the call invitation. |
-| Offline messages | Support for saving messages while offline and receiving complete offline messages after logging in. <Note title="Note"><p>Users can send messages to offline users through the following platforms: **iOS, Android, macOS, Windows, Linux, Web**.</p></Note> |
-| Offline notifications|  Support for sending message notifications to users when the app is not open, displayed in the notification bar. <Note title="Note"><p>Supports offline users on: **iOS, Android, Web**.</p></Note> |
+| 登录状态监控 | 支持在登录状态下，定时心跳机制监控在线情况，并实时更新登录状态。 |
+| 会话模块 | 支持获取会话列表，向指定用户 ID、房间 ID 、群组 ID 发送消息。 |
+| [房间](!Introduction/Basic_concepts#2)模块 | 支持创建房间、销毁房间，适用于直播、语聊房等临时性活动。 |
+| [群组](!Introduction/Basic_concepts#1)模块 | 支持创建群组、解散群组，持久化存储群组关系链。 |
+| 消息模块 | 支持向用户和房间发送文本等类型的消息。 |
+| 消息优先级 | 支持设置消息优先级，优先保证高优先级消息传输。 |
+| 历史消息存储 | 支持存储历史消息内容。 |
+| 系统消息推送 | 支持通过服务端下发系统消息。 |
+| 呼叫邀请 | 支持主叫向被叫发送呼叫邀请，被叫接受或拒绝邀请。 |
 
-## Use cases
 
-| Scenario | Description |
+## 适用场景
+
+| 行业 | 适用场景 |
 |-----|-----|
-| Online shopping | Build real-time purchasing-related communications with text, images, order information, and more. |
-| Social interactions | Offer one-on-one chatting or room chatting capabilities, also provide signaling for real-time audio or video call invitations, which is the best addition to any app. |
-| Interactive live streaming | Support sending bullet messages, sending virtual gifts, commenting live to, and managing room seats enhance the live streaming with interactivity. |
-| Online education | Use internal signaling to build interactive features that help students learn, such as text, images, media files, and more. |
-| Online consulting | With one-to-one chat or group chat capabilities, text message history, voice and video call recordings can be retrieved anytime for online consulting scenarios. |
-| Work collaborations | Build more efficient office collaborations with the inclusion of files, images, call invitations, or other rich media in messages.  |
-| Online games | Provide various chatting modes, such as everyone, team-only to enhance the game experience with real-time communication, and support interactive gaming operations with customizable messages. |
-| IoT devices| Monitor and message control between apps and devices like smartwatches, home security cameras, and other IoT devices. |
+| 电商购物 | 买家和卖家、客服之间需要通信，发送文本、图片、订单等消息。 |
+| 娱乐社交 | 用户之间消息通信，通过呼叫邀请建立音视频连接。 |
+| 互动直播 | 直播内的弹幕消息、礼物消息，语聊房内的麦位控制。 |
+| 在线教育 | 老师和学生在课堂上、课后有文本、图片等内容沟通。 |
+| 在线咨询 | 用户之间进行 1v1 沟通，发送文本、图片、语音、呼叫邀请等消息。 |
+| 办公工具 | 用户之间的文本、语音、视频、文件沟通。 |
+| 在线游戏 | 游戏内多人语音、文字沟通。 |
+| 智能硬件 | 实现对智能家居、智能手表等硬件远程控制。 |
 
 
-## Compatibility
+## 平台兼容
 
-| Platform | Version compatibility|
+| 平台 | 支持版本 |
 |-----|-----|
-| Android | Android 4.1 or later, supports JDK 1.6 or later.  |
-| iOS | iOS 11.0  or later. |
-| Windows | Windows 7  or later (32/64 bit). |
-| macOS | macOS 10.13  or later. x64 and ARM64 Framework. |
-| Web | <ul><li>Chrome 58 or later</li><li>Firefox 56 or later</li><li>Safari 11 or later</li><li>Opera 45 or later</li></ul>  |
-| Flutter | <ul><li>Any version of Flutter</li><li>The Dart version is [2.12.0, 3.0.0).</li><li>iOS 11.0 or later</li><li>Android 4.1 or later, supports JDK 1.6 or later.</li><li>Web:<ul><li>Chrome 58 or later</li><li>Firefox 56 or later</li><li>Safari 11 or later</li><li>Opera 45 or later</li></ul> </li></ul> |
-| React Native| <ul><li>React Native 0.60.0 or later</li><li>iOS 11.0 or later</li><li>Android 4.0.3 or later</li></ul> |
-| Unity | <ul><li>Unity version 2021.3.18f1c1 or above LTS stable version (it is recommended to download the latest LTS version through [Unity Hub\|_blank](https://unity.cn/releases/lts/2021)).</li><li>iOS 11.0 or above.</li><li>Android 4.1 or above, with support for JDK 1.6 or above.</li><li>Supports macOS 10.13 or above, with support for x64 and ARM64 architectures.</li><li>Supports Windows 7 or above, with support for both 32-bit and 64-bit. Also, install Visual Studio 2015 or above.</li></ul>|
+| Android | 支持 Android 4.1 或以上版本，支持 JDK 1.6 或以上版本。 |
+| iOS | 支持 iOS 11.0 或以上版本。 |
+| Windows | 支持 Windows 7 或以上版本，支持 32 位与 64 位。 |
+| macOS | 支持 macOS 10.13 或以上版本，支持 x64 和 ARM64 的架构。 |
+| Web | <ul><li>Chrome 58 或以上版本。</li><li>Firefox 56 或以上版本。</li><li>Safari 11 或以上版本。</li><li>Opera 45 或以上版本。</li><li>QQ 浏览器 Windows 10.1 或以上版本、macOS 4.4 或以上版本。</li><li>360 安全浏览器极速模式。</li></ul>  |
+| 小程序 | <p>微信：<ul><li>小程序基础库：2.1.0 或以上版本。</li><li>iOS 微信：6.7.0  或以上版本。</li><li>Android 微信：6.7.2 或以上版本。</li></ul></p><p>字节跳动：<ul><li>小程序基础库：2.60.0 或以上版本。</li></ul></p><p>百度：<ul><li>智能小程序基础库：3.310.11 或以上版本。</li></ul></p><p>支付宝：<ul><li>小程序基础库：1.24.9 或以上版本。</li></ul></p> |
+| Flutter | <ul><li>Flutter 任意版本。</li><li>Dart 版本为 [2.12.0, 3.0.0)。</li><li>iOS 11.0 或以上版本。</li><li>Android 4.1 或以上版本，支持 JDK 1.6 或以上版本。</li><li>Web：<ul><li>Chrome 58 或以上版本。</li><li>Firefox 56 或以上版本。</li><li>Safari 11 或以上版本。</li><li>Opera 45 或以上版本。</li><li>QQ 浏览器 Windows 10.1 或以上版本、macOS 4.4 或以上版本。</li><li>360 安全浏览器极速模式。</li></ul></li></ul>  |
+| uni-app | <ul><li>HBuilderX 3.0.0 或以上版本。</li><li>iOS 11.0 或以上版本。</li><li>Android 4.4 或以上版本。</li></ul>  |
+| React Native | <ul><li>React Native 0.60.0 或以上版本。</li><li>iOS 11.0 或以上版本。</li><li>Android 4.0.3 或以上版本。</li></ul>  |
+| Unity | <ul><li>2021.3.18f1c1 或以上 LTS 稳定版本（建议通过 [Unity Hub](https://unity.cn/releases/lts/2021) 下载最新的 LTS 版本）。</li><li>iOS 11.0 或以上版本。</li><li>Android 4.1 或以上版本，支持 JDK 1.6 或以上版本。</li><li>支持 macOS 10.13 或以上版本，支持 x64 和 ARM64 的架构。</li><li>支持 Windows 7 或以上版本，支持 32 位与 64 位。并安装 Visual Studio 2015 或以上版本。</li></ul>  |
 
-## Increment size
+## 6 增量大小
 
-After integrating the ZIM SDK into the App, the incremental sizes of the App are as follows:
+ZIM SDK 集成到 App 后，App 的增量大小如下：
 
-| Platform | Incremental Size |
+| 平台 | 增量 |
 | -- | -- |
-| Android | <ul><li>arm: 4.22 MB</li><li>arm64: 4.71 MB</li><li>x64: 5.32 MB</li><li>x86: 5.24 MB</li></ul> |
-| iOS | <ul><li>arm64: 4.22 MB</li><li>arm64-catalyst: 4.3 MB</li><li>arm64-simulator: 4.3 MB</li><li>x64-catalyst: 4.55 MB</li><li>x64-simulator: 4.73 MB</li></ul> |
-| macOS | <ul><li>arm64: 5.24 MB</li><li>x64: 5.82 MB</li></ul> |
-| Windows | <ul><li>x64: 5.91 MB</li><li>x86: 4.88 MB</li></ul> |
+| Android | <ul><li>arm：4.37 MB</li><li>arm64：4.89 MB</li><li>x64：5.35 MB</li><li>x86：5.45 MB</li></ul> |
+| iOS | <ul><li>arm64：4.42 MB</li><li>arm64-catalyst：4.51 MB</li><li>arm64-simulator：4.5 MB</li><li>x64-catalyst: 4.77 MB</li><li>x64-simulator: 4.95 MB</li></ul> |
+| macOS | <ul><li>arm64：5.47 MB</li><li>x64：6.07 MB</li></ul> |
+| Windows | <ul><li>x64：6.1 MB</li><li>x86：5.05 MB</li></ul> |
+
+如需了解更多，请参考 [什么是 SDK 的安装包大小增量？](https://doc-zh.zego.im/faq/common_faq_sdk_package_size?product=ZegoAvatar&platform=flutter)
