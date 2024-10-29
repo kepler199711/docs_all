@@ -1,100 +1,40 @@
 ---
-articleID: 17601
+articleID: 18978
 ---
 
-# Offline login
+# 离线登录
 
-- - -
+## 功能简介
 
-
-## Function introduction
-
-Offline login is typically used when the application is cleared from memory, and the user relaunches the application by clicking on the application icon. In this scenario, the user can directly access the local SDK data without network connectivity or a successful login.
+离线登录，是指应用被清理后，用户再次点击应用图标启动应用时，在无网络、未登录成功的状态下直接访问用户本地 SDK 数据，常用于自动登录 App。
 
 <Note title="Note">
 
-Users can only perform an offline login using the UserID from their previous successful login; otherwise, the login will not succeed.
+用户只能使用上一次成功登录的 UserID 进行离线登录；否则，登录不会成功。
 </Note>
 
-## Technical principle
+## 技术原理
 
-When the offline login interface is called, the ZIM SDK performs verification (UserID verification; if token-based login is used, it also verifies the token's validity period). After successful verification, the SDK returns a login success callback, allowing users to query local data, while the SDK internally attempts to establish a connection with the backend service automatically.
+当调用接口离线登录时，ZIM SDK 会进行校验（UseID 校验；如果使用 token 方式登录，还会校验 token 有效期）。校验成功后，SDK 会先行返回登陆成功的回调，允许用户查询本地数据，而 SDK 内部会自动尝试连接后台服务。
 
 
-## Implementation Steps
+## 实现流程
 
-### 1. Offline Login
+### 1 离线登录
 
-In the case of no network and the app being cleared, you can call the [login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html) interface with the [isOfflineLogin](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig/isOfflineLogin.html) parameter set to `true` in [ZIMLoginConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig-class.html) to achieve offline login using the user information from the last login. After successful login, you can access the local SDK data.
+在无网络且应用已被清理的情况下，可以调用 [login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html) 接口时，[ZIMLoginConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig-class.html) 中的 [isOfflineLogin](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig/isOfflineLogin.html) 传入 `true`，实现使用上一次的用户信息离线登录 App。登录成功后，即可访问本地 SDK 数据。 
 
 <Note title="Note">
 
-We recommend caching the user information used for each login. When the app is opened, read the cache and implement the following logic:
-- If it is determined that the user did not use the UserID from the last online login, the [isOfflineLogin](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig/isOfflineLogin.html) should be `false`. In this case, offline login will fail and the user will not be allowed to access the local SDK data for that UserID.
-- If the user uses the UserID from the last online login, in order to achieve automatic login, speed up entering the app's main page, and pre-render the UI, the [isOfflineLogin](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig/isOfflineLogin.html) should be `true` to achieve offline login.
+建议您缓存每次登录使用的用户信息。当 App 打开时，读取缓存，实现以下逻辑：
+- 如果判断用户不是使用上一次在线登录的 UserID ，此时 [isOfflineLogin](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig/isOfflineLogin.html) 应为 `false`，此时离线登录会失败，不允许用户访问该 UserID 的本地 SDK 数据。
+- 如果用户使用上一次在线登录的 UserID，为了实现自动登录、加速进入 App 主页以及提前渲染 UI，[isOfflineLogin](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig/isOfflineLogin.html) 应为 `true`，实现离线登录。
 </Note>
 
-#### Definition of the Login Interface
+#### Login 接口定义
 
-```dart
-// This Login interface is the new login interface. The original login interface has been deprecated since version 2.13.0 and is no longer maintained.
-  Future<void> login(String userID,ZIMLoginConfig config);
-```
-
-
-<table>
-<tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>userID</td>
-<td>String</td>
-<td>Yes</td>
-<td>The user ID for the previous online login. It can contain up to 32 bytes in length, including digits, letters, and the following characters: &apos;!&apos;, &apos;#&apos;, &apos;$&apos;, &apos;%&apos;, &apos;&amp;&apos;, &apos;(&apos;, &apos;)&apos;, &apos;+&apos;, &apos;-&apos;, &apos;:&apos;, &apos;;&apos;, &apos;< &apos;, &apos;= &apos;, &apos;. &apos;, &apos;> &apos;, &apos;?&apos;, &apos;@&apos;, &apos;[&apos;, &apos;]&apos;, &apos;^&apos;, &apos;_&apos;, { "'{'" },{"'}'"} &apos;|&apos;, &apos;~&apos;.</td>
-</tr>
-<tr>
-<td>config</td>
-<td>[ZIMLoginConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig-class.html)</td>
-<td>Yes</td>
-<td>Login configuration.</td>
-</tr>
-</tbody></table>
-
-The parameter `config` needs to be configured using the following parameters of the [ZIMLoginConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig-class.html) class:
-
-<table>
-<tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>userName</td>
-<td>String</td>
-<td>No</td>
-<td>User name. A string with a maximum of 256 bytes. If empty, it will be the UserName set during the last login.</td>
-</tr>
-<tr>
-<td>token</td>
-<td>String</td>
-<td>No</td>
-<td>Token.<ul><li>When using Token authentication, this parameter is required.</li><li>When using AppSign authentication, this parameter is not required.</li></ul></td>
-</tr>
-<tr>
-<td>isOfflineLogin</td>
-<td>bool</td>
-<td>No</td>
-<td>Whether this login is an offline login. If empty, it will be an online login.</td>
-</tr>
-</tbody></table>
-
-#### Example
-
-```dart
+<CodeGroup>
+```dart title="示例代码"
 ZIMLoginConfig loginConfig = ZIMLoginConfig();
 loginConfig.userName = 'username';
 // This parameter is not required when using AppSign authentication
@@ -109,22 +49,23 @@ try {
     // Login failed
 }
 ```
+</CodeGroup>
 
-### 2 Accessing Local SDK Data
+### 2 访问本地 SDK 数据
 
-After a successful offline login, users can perform the following operations when offline (as of version 2.12):
+在成功的离线登录后，用户可以在离线状态下执行以下操作（截至版本2.12）：
 
 <table>
 <tbody><tr>
-<th>Category</th>
-<th>Interface</th>
+<th>分类</th>
+<th>接口</th>
 </tr>
 <tr>
-<td>User-related</td>
+<td>用户相关</td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryUsersInfo.html" target="_blank" referer="noopener">queryUsersInfo</a></td>
 </tr>
 <tr>
-<td>Group-related</td>
+<td>群组相关</td>
 <td><ul>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryGroupList.html" target="_blank" referer="noopener">queryGroupList</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/searchLocalGroups.html" target="_blank" referer="noopener">searchLocalGroups</a></li>
@@ -140,25 +81,25 @@ After a successful offline login, users can perform the following operations whe
 </ul></td>
 </tr>
 <tr>
-<td>Message-related</td>
+<td>消息相关</td>
 <td><ul>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryHistoryMessage.html" target="_blank" referer="noopener">queryHistoryMessage</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateMessageLocalExtendedData.html" target="_blank" referer="noopener">updateMessageLocalExtendedData</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/searchLocalMessages.html" target="_blank" referer="noopener">searchLocalMessages</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/searchGlobalLocalMessages.html" target="_blank" referer="noopener">searchGlobalLocalMessages</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/insertMessageToLocalDB.html" target="_blank" referer="noopener">insertMessageToLocalDB</a></li>
-<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteAllMessage.html" target="_blank" referer="noopener">deleteAllMessage</a>: Only supports deleting messages in the local database.</li>
-<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteMessages.html" target="_blank" referer="noopener">deleteMessages</a>: Only supports deleting messages in the local database.</li>
+<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteAllMessage.html" target="_blank" referer="noopener">deleteAllMessage</a>：仅支持删除本地数据库中消息。</li>
+<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteMessages.html" target="_blank" referer="noopener">deleteMessages</a>：仅支持删除本地数据库中消息。</li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessageReceiptsInfo.html" target="_blank" referer="noopener">queryMessageReceiptsInfo</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessageReactionUserList.html" target="_blank" referer="noopener">queryMessageReactionUserList</a></li>
 </ul></td>
 </tr>
 <tr>
-<td>Call Invitation-related</td>
+<td>呼叫邀请相关</td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryCallInvitationList.html" target="_blank" referer="noopener">queryCallInvitationList</a></td>
 </tr>
 <tr>
-<td>Conversation-related</td>
+<td>会话相关</td>
 <td><ul>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryConversation.html" target="_blank" referer="noopener">queryConversation</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryConversationList.html" target="_blank" referer="noopener">queryConversationList</a></li>
@@ -166,16 +107,16 @@ After a successful offline login, users can perform the following operations whe
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/searchLocalConversations.html" target="_blank" referer="noopener">searchLocalConversations</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/clearConversationUnreadMessageCount.html" target="_blank" referer="noopener">clearConversationUnreadMessageCount</a></li>
 <li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/clearConversationTotalUnreadMessageCount.html" target="_blank" referer="noopener">clearConversationTotalUnreadMessageCount</a></li>
-<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteConversation.html" target="_blank" referer="noopener">deleteConversation</a>: Only supports deleting conversations in the local database.</li>
-<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteAllConversations.html" target="_blank" referer="noopener">deleteAllConversations</a>: Only supports deleting conversations in the local database.</li>
+<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteConversation.html" target="_blank" referer="noopener">deleteConversation</a>：仅支持删除本地数据库中会话。</li>
+<li><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteAllConversations.html" target="_blank" referer="noopener">deleteAllConversations</a>：仅支持删除本地数据库中会话。</li>
 </ul></td>
 </tr>
 </tbody></table>
 
-### 3 Event Listening
+### 3 监听事件
 
-Users can listen to the [onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html) event notification to get the connection status between the SDK and the ZIM backend service.
+用户可以监听 [onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html) 事件通知获取 SDK 与 ZIM 后台服务的连接情况。
 
-When offline login is successful, [onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html) returns [ZIMConnectionState](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConnectionState.html) as Connecting (enum value 1).
+当离线登录成功时，[onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html) 返回 [ZIMConnectionState](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConnectionState.html) 为 Connecting（枚举值为 1）。
 
-When the user's network is restored and the ZIM SDK successfully connects to the ZIM backend service, [onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html) returns [ZIMConnectionState](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConnectionState.html) as Connected (enum value 2). Only then does the ZIM SDK allow calling interfaces that depend on a stable network connection and synchronizing backend data.
+当用户网络恢复连接，ZIM SDK 内部自动连接 ZIM 后台服务成功后，[onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html) 返回 [ZIMConnectionState](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConnectionState.html) 为 Connected（枚举值为 2）时，ZIM SDK 才允许调用强依赖网络的接口，并同步后台数据。

@@ -1,205 +1,141 @@
 ---
-articleID: 17405
+articleID: 18905
 ---
 
-# Offline login
+# 离线登录
 
-- - -
+## 功能简介
 
-## Function introduction
-
-Offline login is typically used when the application is cleared from memory, and the user relaunches the application by clicking on the application icon. In this scenario, the user can directly access the local SDK data without network connectivity or a successful login.
+离线登录，是指应用被清理后，用户再次点击应用图标启动应用时，在无网络、未登录成功的状态下直接访问用户本地 SDK 数据，常用于自动登录 App。
 
 <Note title="Note">
 
-Users can only perform an offline login using the UserID from their previous successful login; otherwise, the login will not succeed.
+用户只能使用上一次成功登录的 UserID 进行离线登录；否则，登录不会成功。
 </Note>
 
-## Technical principle
+## 技术原理
 
-When the offline login interface is called, the ZIM SDK performs verification (UserID verification; if token-based login is used, it also verifies the token's validity period). After successful verification, the SDK returns a login success callback, allowing users to query local data, while the SDK internally attempts to establish a connection with the backend service automatically.
-
-
-## Procedure
-
-### 1\. Log in to the app in offline status
+当调用接口离线登录时，ZIM SDK 会进行校验（UseID 校验；如果使用 token 方式登录，还会校验 token 有效期）。校验成功后，SDK 会先行返回登陆成功的回调，允许用户查询本地数据，而 SDK 内部会自动尝试连接后台服务。
 
 
-In scenarios where there is no network connectivity and the application has been cleared from memory, you can make use of  [login](@login__2) interface. Set the [isOfflineLogin](@isOfflineLogin) in [ZIMLoginConfig](@-ZIMLoginConfig) to `true`to achieve offline login using the user information from the previous session. Once the login is confirmed as successful through the [ZIMLoggedInCallback](@ZIMLoggedInCallback) , you can then access the local SDK data.
+## 实现流程
+
+### 1 离线登录
+
+在无网络且应用已被清理的情况下，可以调用 [login](@login__2) 接口时，[ZIMLoginConfig](@-ZIMLoginConfig) 中的 [isOfflineLogin](@isOfflineLogin) 传入 `true`，实现使用上一次的用户信息离线登录 App。当通过 [ZIMLoggedInCallback](@ZIMLoggedInCallback) 回调确定登录成功后，即可访问本地 SDK 数据。 
 
 <Note title="Note">
-We recommend that you cache user information for each login. If the app is opened, the following logic is implemented when reading the cache:
 
-- If the user does not log in with the `UserID` for the previous online login, [isOfflineLogin](@isOfflineLogin) should be `false`. In this case, offline login is not supported, and local data of the SDK is inaccessible.
-- If the user logs in with the `UserID` for the previous online login, [isOfflineLogin](@isOfflineLogin) should be `true ` to implement automatic login, accelerated access to the app homepage, and UI rendering in advance. In this case, offline login is supported.
-
+建议您缓存每次登录使用的用户信息。当 App 打开时，读取缓存，实现以下逻辑：
+- 如果判断用户不是使用上一次在线登录的 UserID ，此时 `isOfflineLogin` 应为 `false`，此时离线登录会失败，不允许用户访问该 UserID 的本地 SDK 数据。
+- 如果用户使用上一次在线登录的 UserID，为了实现自动登录、加速进入 App 主页以及提前渲染 UI，`isOfflineLogin` 应为 `true`，实现离线登录。
 </Note>
 
-#### Login method definition
+#### Login 接口定义
 
-```cpp
-// This login method is new, and the original method is no longer maintained since ZIM SDK 2.13.0.
-virtual void login(const std::string &userID, const ZIMLoginConfig &config,
-                    ZIMLoggedInCallback callback) = 0;
-```
 
-<table>
-<tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>userID</td>
-<td>const std::string &</td>
-<td>Yes</td>
-<td>The user ID for the previous online login. It can contain up to 32 bytes in length, including digits, letters, and the following characters: &apos;!&apos;, &apos;#&apos;, &apos;$&apos;, &apos;%&apos;, &apos;&amp;&apos;, &apos;(&apos;, &apos;)&apos;, &apos;+&apos;, &apos;-&apos;, &apos;:&apos;, &apos;;&apos;, &apos;< &apos;, &apos;= &apos;, &apos;. &apos;, &apos;> &apos;, &apos;?&apos;, &apos;@&apos;, &apos;[&apos;, &apos;]&apos;, &apos;^&apos;, &apos;_&apos;, { "'{'" },{"'}'"} &apos;|&apos;, &apos;~&apos;.</td>
-</tr>
-<tr>
-<td>config</td>
-<td>const [ZIMLoginConfig](@-ZIMLoginConfig) &amp;</td>
-<td>Yes</td>
-<td>Login configuration.</td>
-</tr>
-<tr>
-<td>callback</td>
-<td>[ZIMLoggedInCallback](@ZIMLoggedInCallback)</td>
-<td>Yes</td>
-<td>The login operation callback.</td>
-</tr>
-</tbody></table>
-
-The following table describes the parameters in the `ZIMLoginConfig` class that are used to configure the `config` parameter.
-
-<table>
-<tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>userName</td>
-<td>std::string</td>
-<td>No</td>
-<td>The username, which can contain up to 256 bytes in length. If the value is empty, the `UserName` for the previous login is used.</td>
-</tr>
-<tr>
-<td>token</td>
-<td>std::string</td>
-<td>No</td>
-<td>The token.<ul><li>This parameter is required for token-based authentication.</li><li>Do not specify it for AppSign-based authentication.</li></ul></td>
-</tr>
-<tr>
-<td>isOfflineLogin</td>
-<td>bool</td>
-<td>No</td>
-<td>Specifies whether this login is offline login. If the value is empty, the login is online login.</td>
-</tr>
-</tbody></table>
-
-#### Sample call
-
-```cpp
+<CodeGroup>
+```cpp title="示例代码"
 zim::ZIMLoginConfig config;
 config.userName = user_name;
-// Do not specify this parameter for AppSign-based authentication.
+// 使用 AppSign 鉴权时，此参数不填
 config.token = token;
 config.isOfflineLogin = true;
 
 zim_sdk->login("user_id", config, [=](const zim::ZIMError &errorInfo) {
     if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
-        // Offline login is successful, and local data of the SDK can be queried.
+        // 离线登录成功，可以查询 SDK 本地数据
     }
-}];
+    });
 ```
+</CodeGroup>
+### 2 访问本地 SDK 数据
 
-### 2\. Access local data of the SDK
+离线登录成功后，用户可以在断网时实现以下操作（截至 2.15.0 版本）：
 
-After successful offline login, the following methods of the ZIM SDK 2.15.0 or earlier can be called when the network is disconnected.
 
 <table>
 <tbody><tr>
-<th>Category</th>
-<th>Method</th>
+<th>分类</th>
+<th>接口</th>
 </tr>
 <tr>
-<td>User</td>
+<td>用户相关</td>
 <td><ul>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-users-info" target="_blank" referer="noopener">queryUsersInfo</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-self-user-info" target="_blank" referer="noopener">querySelfUserInfo</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-application-list" target="_blank" referer="noopener">queryGroupApplicationList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-blacklist" target="_blank" referer="noopener">queryBlacklist</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#check-user-is-in-blacklist" target="_blank" referer="noopener">checkUserIsInBlackList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-friends" target="_blank" referer="noopener">searchLocalFriends</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-friends-info" target="_blank" referer="noopener">queryFriendsInfo</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-friend-list" target="_blank" referer="noopener">queryFriendList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-friend-application-list" target="_blank" referer="noopener">queryFriendApplicationList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-users-info" target="_blank" referer="noopener">queryUsersInfo</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-self-user-info" target="_blank" referer="noopener">querySelfUserInfo</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-application-list" target="_blank" referer="noopener">queryGroupApplicationList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-blacklist" target="_blank" referer="noopener">queryBlacklist</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#check-user-is-in-blacklist" target="_blank" referer="noopener">checkUserIsInBlackList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-friends" target="_blank" referer="noopener">searchLocalFriends</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-friends-info" target="_blank" referer="noopener">queryFriendsInfo</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-friend-list" target="_blank" referer="noopener">queryFriendList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-friend-application-list" target="_blank" referer="noopener">queryFriendApplicationList</a></li>
 </ul></td>
 </tr>
 <tr>
-<td> Group</td>
+<td>群组相关</td>
 <td><ul>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-list" target="_blank" referer="noopener">queryGroupList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-groups" target="_blank" referer="noopener">searchLocalGroups</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-info" target="_blank" referer="noopener">queryGroupInfo</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-attributes" target="_blank" referer="noopener">queryGroupAttributes</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-all-attributes" target="_blank" referer="noopener">queryGroupAllAttributes</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-list" target="_blank" referer="noopener">queryGroupMemberList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-group-members" target="_blank" referer="noopener">searchLocalGroupMembers</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-info" target="_blank" referer="noopener">queryGroupMemberInfo</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-count" target="_blank" referer="noopener">queryGroupMemberCount</a></li><li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-muted-list" target="_blank" referer="noopener">queryGroupMemberMutedList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-list" target="_blank" referer="noopener">queryGroupList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-groups" target="_blank" referer="noopener">searchLocalGroups</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-info" target="_blank" referer="noopener">queryGroupInfo</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-attributes" target="_blank" referer="noopener">queryGroupAttributes</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-all-attributes" target="_blank" referer="noopener">queryGroupAllAttributes</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-list" target="_blank" referer="noopener">queryGroupMemberList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-group-members" target="_blank" referer="noopener">searchLocalGroupMembers</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-info" target="_blank" referer="noopener">queryGroupMemberInfo</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-count" target="_blank" referer="noopener">queryGroupMemberCount</a></li><li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-member-muted-list" target="_blank" referer="noopener">queryGroupMemberMutedList</a></li>
 </ul></td>
 </tr>
 <tr>
-<td>Message</td>
+<td>消息相关</td>
 <td><ul>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-history-message" target="_blank" referer="noopener">queryHistoryMessage</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#update-message-local-extended-data" target="_blank" referer="noopener">updateMessageLocalExtendedData</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-messages" target="_blank" referer="noopener">searchLocalMessages</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-global-local-messages" target="_blank" referer="noopener">searchGlobalLocalMessages</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#insert-message-to-local-db" target="_blank" referer="noopener">insertMessageToLocalDB</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-all-message" target="_blank" referer="noopener">deleteAllMessage</a>：Only messages in the local database can be deleted.</li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-messages" target="_blank" referer="noopener">deleteMessages</a>：Only messages in the local database can be deleted.</li><li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-all-conversation-messages" target="_blank" referer="noopener">deleteAllConversationMessages</a>：Only messages in the local database can be deleted.</li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-message-receipts-info" target="_blank" referer="noopener">queryMessageReceiptsInfo</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-message-reaction-user-list" target="_blank" referer="noopener">queryMessageReactionUserList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-message-receipt-read-member-list" target="_blank" referer="noopener">queryGroupMessageReceiptReadMemberList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-message-receipt-unread-member-list" target="_blank" referer="noopener">queryGroupMessageReceiptUnreadMemberList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#import-local-messages" target="_blank" referer="noopener">importLocalMessages</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#export-local-messages" target="_blank" referer="noopener">exportLocalMessages</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-history-message" target="_blank" referer="noopener">queryHistoryMessage</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#update-message-local-extended-data" target="_blank" referer="noopener">updateMessageLocalExtendedData</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-messages" target="_blank" referer="noopener">searchLocalMessages</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-global-local-messages" target="_blank" referer="noopener">searchGlobalLocalMessages</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#insert-message-to-local-db" target="_blank" referer="noopener">insertMessageToLocalDB</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-all-message" target="_blank" referer="noopener">deleteAllMessage</a>：仅支持删除本地数据库中消息。</li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-messages" target="_blank" referer="noopener">deleteMessages</a>：仅支持删除本地数据库中消息。</li><li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-all-conversation-messages" target="_blank" referer="noopener">deleteAllConversationMessages</a>：仅支持删除本地数据库中消息。</li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-message-receipts-info" target="_blank" referer="noopener">queryMessageReceiptsInfo</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-message-reaction-user-list" target="_blank" referer="noopener">queryMessageReactionUserList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-message-receipt-read-member-list" target="_blank" referer="noopener">queryGroupMessageReceiptReadMemberList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-group-message-receipt-unread-member-list" target="_blank" referer="noopener">queryGroupMessageReceiptUnreadMemberList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#import-local-messages" target="_blank" referer="noopener">importLocalMessages</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#export-local-messages" target="_blank" referer="noopener">exportLocalMessages</a></li>
 </ul></td>
 </tr>
 <tr>
-<td>Call invitation</td>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-call-invitation-list" target="_blank" referer="noopener">queryCallInvitationList</a></td>
+<td>呼叫邀请相关</td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-call-invitation-list" target="_blank" referer="noopener">queryCallInvitationList</a></td>
 </tr>
 <tr>
-<td>Conversation</td>
+<td>会话相关</td>
 <td><ul>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-conversation" target="_blank" referer="noopener">queryConversation</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-conversation-list" target="_blank" referer="noopener">queryConversationList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-conversation-pinned-list" target="_blank" referer="noopener">queryConversationPinnedList</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-conversations" target="_blank" referer="noopener">searchLocalConversations</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#clear-conversation-unread-message-count" target="_blank" referer="noopener">clearConversationUnreadMessageCount</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#clear-conversation-total-unread-message-count" target="_blank" referer="noopener">clearConversationTotalUnreadMessageCount</a></li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-conversation" target="_blank" referer="noopener">deleteConversation</a>：Only conversations in the local database can be deleted.</li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-all-conversations" target="_blank" referer="noopener">deleteAllConversations</a>：Only conversations in the local database can be deleted.</li>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#set-conversation-draft" target="_blank" referer="noopener">setConversationDraft</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-conversation" target="_blank" referer="noopener">queryConversation</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-conversation-list" target="_blank" referer="noopener">queryConversationList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-conversation-pinned-list" target="_blank" referer="noopener">queryConversationPinnedList</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#search-local-conversations" target="_blank" referer="noopener">searchLocalConversations</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#clear-conversation-unread-message-count" target="_blank" referer="noopener">clearConversationUnreadMessageCount</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#clear-conversation-total-unread-message-count" target="_blank" referer="noopener">clearConversationTotalUnreadMessageCount</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-conversation" target="_blank" referer="noopener">deleteConversation</a>：仅支持删除本地数据库中会话。</li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#delete-all-conversations" target="_blank" referer="noopener">deleteAllConversations</a>：仅支持删除本地数据库中会话。</li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#set-conversation-draft" target="_blank" referer="noopener">setConversationDraft</a></li>
 </ul></td>
 </tr>
 <tr>
-<td>Cache management</td>
+<td>缓存管理</td>
 <td><ul>
-<li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#clear-local-file-cache" target="_blank" referer="noopener">clearLocalFileCache</a></li><li><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-local-file-cache" target="_blank" referer="noopener">queryLocalFileCache</a></li>
+<li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#clear-local-file-cache" target="_blank" referer="noopener">clearLocalFileCache</a></li><li><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIM#query-local-file-cache" target="_blank" referer="noopener">queryLocalFileCache</a></li>
 </ul></td>
 </tr>
 </tbody></table>
 
-### 3\. Listen for the login event
 
-Listen for the [onConnectionStateChanged](@onConnectionStateChanged) event to obtain the status of connection between the ZIM SDK and the ZIM backend.
+### 3 监听事件
 
-After a successful offline login, the value of [ZIMConnectionState](@-ZIMConnectionState) in [onConnectionStateChanged](@onConnectionStateChanged) is `Connecting` (enumeration value: `1`).
+用户可以监听 [onConnectionStateChanged](@onConnectionStateChanged) 事件通知获取 SDK 与 ZIM 后台服务的连接情况。
 
-You can call network methods to synchronize backend data only when the ZIM SDK automatically connects to the ZIM backend upon network reconnection and the value of [ZIMConnectionState](@-ZIMConnectionState) in [onConnectionStateChanged](@onConnectionStateChanged) is `Connected` (enumeration value: `2`).
+当离线登录成功时，[onConnectionStateChanged](@onConnectionStateChanged) 返回 [ZIMConnectionState](@-ZIMConnectionState) 为 Connecting（枚举值为 1）。
+
+当用户网络恢复连接，ZIM SDK 内部自动连接 ZIM 后台服务成功后，[onConnectionStateChanged](@onConnectionStateChanged) 返回 [ZIMConnectionState](@-ZIMConnectionState) 为 Connected（枚举值为 2）时，ZIM SDK 才允许调用强依赖网络的接口，并同步后台数据。
