@@ -1,11 +1,8 @@
 ---
-articleID: 17254
+articleID: 19231
 ---
 
-export const getPlatformData = (props, data) => {
-  const platform = props.platform ?? "Android";
-  return platform in data ? data[platform] : data["Android"]
-}
+import {getPlatformData} from "/snippets/utils-content-parser.js"
 
 export const setEventHandlerMap = {
   'Android': <a href='@setEventHandler' target='_blank'>setEventHandler</a>,
@@ -207,147 +204,141 @@ export const ZIMFriendApplicationSentCallbackMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMFriendApplicationSentResult-class.html' target='_blank'>ZIMFriendApplicationSentResult</a>,
 }
 
-# Friend management
+
+# 好友管理
 
 - - -
 
-## Overview
+## 功能简介
 
-ZIM SDK supports friend management, allowing users to directly add and delete friends, view their friends list, send friend requests to other users, accept or reject friend requests, view friend request lists, check their friend relationship with other users, and query or modify friend information.
+ZIM SDK 支持好友管理，用户可以直接添加和删除好友、查看看好友列表、向用户发起好友申请、同意或拒绝好友申请、查看好友申请列表、检查其他用户与自己的好友关系、查询或修改好友信息。
 
-Each user can have a maximum of 3000 friends.
+每名用户最多可以拥有 3000 名好友。
 
+## 基础功能
 
-## Basic functions
+### 监听好友相关回调
 
-### Listen for friend-related callbacks
-
-
-By calling the {getPlatformData(props,setEventHandlerMap)} API, you can register callbacks to listen for friend-related events, including: {getPlatformData(props,onFriendListChangedMap)}, {getPlatformData(props,onFriendApplicationListChangedMap)}, {getPlatformData(props,onFriendApplicationUpdatedMap)} and {getPlatformData(props,onFriendInfoUpdatedMap)}.
+通过调用 {getPlatformData(props,setEventHandlerMap)} 接口，注册监听好友相关回调，包括 {getPlatformData(props,onFriendListChangedMap)} 、{getPlatformData(props,onFriendApplicationListChangedMap)}  、 {getPlatformData(props,onFriendApplicationUpdatedMap)} 和 {getPlatformData(props,onFriendInfoUpdatedMap)} 。
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Friend list change callback
+// 好友列表变更回调
 public void onFriendListChanged(ZIM zim, ArrayList<ZIMFriendInfo> friendInfoList,
                                     ZIMFriendListChangeAction action) {}
 
-// Friend information change callback
+// 好友信息变更回调
 public void onFriendInfoUpdated(ZIM zim, ArrayList<ZIMFriendInfo> friendInfoList) {}
 
-// Friend application list change callback
+// 好友申请列表变更回调
 public void
     onFriendApplicationListChanged(ZIM zim,
                                    ArrayList<ZIMFriendApplicationInfo> friendApplicationInfoList,
                                    ZIMFriendApplicationListChangeAction action) {}
 
-// Friend application information change callback
+// 好友申请信息变更回调
 public void
     onFriendApplicationUpdated(ZIM zim,
                                ArrayList<ZIMFriendApplicationInfo> friendApplicationInfoList) {}
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Callback for friend list changes
+// 好友列表变更回调
 static void Function(ZIM zim, List<ZIMFriendInfo> friendInfoList ,ZIMFriendListChangeAction action)? onFriendListChanged;
 
-// Callback for friend info updates
+// 好友信息变更回调
 static void Function(ZIM zim, List<ZIMFriendInfo> friendInfoList)? onFriendInfoUpdated;
 
-// Callback for friend application list changes
+// 好友申请列表变更回调
 static void Function(ZIM zim,List<ZIMFriendApplicationInfo> friendApplicationInfoList ,ZIMFriendApplicationListChangeAction action)? onFriendApplicationListChanged;
 
-// Callback for friend application updates
+// 好友申请信息变更回调
 static void Function(ZIM zim,List<ZIMFriendApplicationInfo> friendApplicationInfoList)? onFriendApplicationUpdated;
 ```
-</CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
-// Callback for friend list changes
+// 好友列表变化的回调函数
 - (void)zim:(ZIM *)zim
-    friendListChanged:(NSArray<ZIMFriendInfo *> *)friendInfoList
+    friendListChanged:(NSArray<ZIMFriendInfo * > *)friendInfoList
                action:(ZIMFriendListChangeAction)action{
-    // todo
+    // 待办事项
 }
 
-// Callback for friend info updates
-- (void)zim:(ZIM *)zim friendInfoUpdated:(NSArray<ZIMFriendInfo *> *)friendInfoList{
-    // todo
+// 好友信息更新的回调函数
+- (void)zim:(ZIM *)zim friendInfoUpdated:(NSArray<ZIMFriendInfo * > *)friendInfoList{
+    // 待办事项
 }
 
-// Callback for friend application list changes
+// 好友申请列表变化的回调函数
 - (void)zim:(ZIM *)zim
-    friendApplicationListChanged:(NSArray<ZIMFriendApplicationInfo *> *)friendApplicationInfoList
+    friendApplicationListChanged:(NSArray<ZIMFriendApplicationInfo * > *)friendApplicationInfoList
                           action:(ZIMFriendApplicationListChangeAction)action{
-    // todo
+    // 待办事项
 }
 
-// Callback for friend application info updates
+// 好友申请信息更新的回调函数
 - (void)zim:(ZIM *)zim
-    friendApplicationUpdated:(NSArray<ZIMFriendApplicationInfo *> *)friendApplicationInfoList{
-    // todo
+    friendApplicationUpdated:(NSArray<ZIMFriendApplicationInfo * > *)friendApplicationInfoList{
+    // 待办事项
 }
 ```
-</CodeGroup>
 :::
 :::if{props.platform="mac"}
-<CodeGroup>
+
 ```objc
-// Callback for friend list changes
+// 好友列表变化的回调函数
 - (void)zim:(ZIM *)zim
-    friendListChanged:(NSArray<ZIMFriendInfo *> *)friendInfoList
+    friendListChanged:(NSArray<ZIMFriendInfo * > *)friendInfoList
                action:(ZIMFriendListChangeAction)action{
-    // todo
+    // 待办事项
 }
 
-// Callback for friend info updates
-- (void)zim:(ZIM *)zim friendInfoUpdated:(NSArray<ZIMFriendInfo *> *)friendInfoList{
-    // todo
+// 好友信息更新的回调函数
+- (void)zim:(ZIM *)zim friendInfoUpdated:(NSArray<ZIMFriendInfo * > *)friendInfoList{
+    // 待办事项
 }
 
-// Callback for friend application list changes
+// 好友申请列表变化的回调函数
 - (void)zim:(ZIM *)zim
-    friendApplicationListChanged:(NSArray<ZIMFriendApplicationInfo *> *)friendApplicationInfoList
+    friendApplicationListChanged:(NSArray<ZIMFriendApplicationInfo * > *)friendApplicationInfoList
                           action:(ZIMFriendApplicationListChangeAction)action{
-    // todo
+    // 待办事项
 }
 
-// Callback for friend application info updates
+// 好友申请信息更新的回调函数
 - (void)zim:(ZIM *)zim
-    friendApplicationUpdated:(NSArray<ZIMFriendApplicationInfo *> *)friendApplicationInfoList{
-    // todo
+    friendApplicationUpdated:(NSArray<ZIMFriendApplicationInfo * > *)friendApplicationInfoList{
+    // 待办事项
 }
 ```
-</CodeGroup>
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Friend list changed callback
+// 好友列表变更回调
 zim.on('friendListChanged', (zim, data) => {
-    // todo
+    // 待办事项
 });
 
-// Friend info updated callback
+// 好友信息更新回调
 zim.on('friendInfoUpdated', (zim, data) => {
-    // todo
+    // 待办事项
 });
 
-// Friend application list changed callback
+// 好友申请列表变更回调
 zim.on('friendApplicationListChanged', (zim, data) => {
-    // todo
+    // 待办事项
 });
 
-// Friend application updated callback
+// 好友申请更新回调
 zim.on('friendApplicationUpdated', (zim, data) => {
-    // todo
+    // 待办事项
 });
 ```
 :::
@@ -385,26 +376,24 @@ void onFriendApplicationUpdated(
 }
 ```
 :::
+### 直接添加好友
 
-### Add friends directly
-
-After logging in to the ZIM SDK, users can use the {getPlatformData(props,addFriendMap)} API to directly add other users as friends without requiring their consent. This allows users to set friend remarks and attributes for the added user.
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,addFriendMap)} 接口对其他用户设置好友备注和属性，直接添加为好友，无需对方同意。
 
 <Note title="Note">
 
-You can set up to 5 friend attributes, and the corresponding `key` values must be k0, k1, k2, k3, and k4. It is recommended that you agree in advance on the actual meanings of each attribute and maintain consistency.
+最多可以设置 5 个好友属性，且对应的 `key` 取值必须为 k0、k1、k2、k3、k4。建议您提前约定各属性的实际含义并保持统一。
 </Note>
 
-The result of adding a friend is returned through the {getPlatformData(props,ZIMFriendAddedCallbackMap)} .
+添加好友结果通过 {getPlatformData(props,ZIMFriendAddedCallbackMap)} 返回。
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Add friends directly
+// 直接添加好友
 ZIMFriendAddConfig config = new ZIMFriendAddConfig();
 config.friendAlias = "zego"
 config.friendAttributes.put("k0", "v0");
-config.wording = "How are you";
+config.wording = "老同学好久不见";
 
 ZIM.getInstance().addFriend("zego", config, new ZIMFriendAddedCallback() {
     @Override
@@ -412,64 +401,60 @@ ZIM.getInstance().addFriend("zego", config, new ZIMFriendAddedCallback() {
     }
 );
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Add friend directly
+// 直接添加好友
 try{
     ZIMFriendAddConfig config = ZIMFriendAddConfig();
     config.friendAlias = 'zego';
     config.friendAttributes['k0'] = 'v0';
-    config.wording = 'Long time no see, old classmate';
+    config.wording = '老同学好久不见';
     ZIMFriendAddedResult result = await ZIM.getInstance()!.addFriend("zego", config);
-    // Handle success logic
+    //处理成功逻辑
 } on PlatformException catch (onError){
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    //处理失败逻辑 
+    onError.code; //根据官网错误码表处理
+    onError.message; //错误信息
 }
 ```
-
-</CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
-// Add friend directly
+// 直接添加好友
 ZIMFriendAddConfig *addConfig = [[ZIMFriendAddConfig alloc] init];
-addConfig.wording = @"hello";
-addConfig.friendAlias = @"Mark";
+addConfig.wording = @"你好";
+addConfig.friendAlias = @"马克";
 addConfig.friendAttributes = @{@"k0":@"SZ"};
 [[ZIM getInstance] addFriendByUserID:@"userID" config:addConfig callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 :::if{props.platform="mac"}
-<CodeGroup>
+
 ```objc
-// Add friend directly
+// 直接添加好友
 ZIMFriendAddConfig *addConfig = [[ZIMFriendAddConfig alloc] init];
-addConfig.wording = @"hello";
-addConfig.friendAlias = @"Mark";
+addConfig.wording = @"你好";
+addConfig.friendAlias = @"马克";
 addConfig.friendAttributes = @{@"k0":@"SZ"};
 [[ZIM getInstance] addFriendByUserID:@"userID" config:addConfig callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Add friends directly
-zim.addFriend('userID', { wording: 'Hello!', friendAlias: 'Mark', friendAttributes: { k0: 'SZ' } }).then(res => {
+// 直接添加好友
+zim.addFriend('userID', { wording: '你好！', friendAlias: '马克', friendAttributes: { k0: 'SZ' } }).then(res => {
     const friendInfo = res.friendInfo;
 });
 ```
@@ -491,24 +476,24 @@ zim::ZIM::getInstance()->addFriend("userID", config, (const zim::ZIMFriendInfo &
 ```
 :::
 
-After successfully adding a friend, the related users will receive the callback {getPlatformData(props,onFriendListChangedMap)} to notify them that the user has become a friend.
+添加好友成功后，相关用户会收到回调 {getPlatformData(props,onFriendListChangedMap)} 得知该用户已成为好友。
 
-### Batch deleting friends
+### 批量删除好友
 
-After logging in to the ZIM SDK, users can use the {getPlatformData(props,deleteFriendsMap)} API to batch delete up to 20 friends in a one-way or two-way deletion manner.
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,deleteFriendsMap)} 接口批量单向或双向删除至多 20 名好友。
 
-In this example, one-way deletion and two-way deletion are explained.
-- One-way deletion: If user A deletes user B in a one-way manner, user B is no longer a friend of user A, but not vice versa.
-- Two-way deletion: If user A deletes user B in a two-way manner, they are no longer friends with each other.
+以用户 A、B 举例说明单向删除和双向删除：
+- 单向删除：当用户 A 单向删除了用户 B，用户 B 不再是用户 A 的好友、用户 A 仍为用户 B 的好友。
+- 双向删除：当用户 A 双向删除了用户 B，彼此都不再是对方的好友。
 
-The result of deleting friends is returned through {getPlatformData(props,ZIMFriendsDeletedCallbackMap)}.
+删除好友结果通过 {getPlatformData(props,ZIMFriendsDeletedCallbackMap)} 返回。
+
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Batch deleting friends
-// When the type is set to BOTH: Perform a two-way deletion
-// When the type is set to SINGLE: Perform a one-way deletion
+// 批量删除好友
+// type 为 BOTH：双向删除 
+// type 为 SINGLE：单向删除
 ZIMFriendDeleteConfig zimFriendDeleteConfig = new ZIMFriendDeleteConfig();
 zimFriendDeleteConfig.type = ZIMFriendDeleteType.BOTH;    
 ArrayList<String> arrayList = new ArrayList<>();
@@ -516,70 +501,65 @@ arrayList.add("zego");
 ZIM.getInstance().deleteFriends(arrayList, zimFriendDeleteConfig, new ZIMFriendsDeletedCallback() {
        @Override
        public void onFriendsDeletedCallback(ArrayList<ZIMErrorUserInfo> errorUserList, ZIMError zimError) {
-             // Delete result callback.
+             // 删除结果回调。
        }
 });
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Batch delete friends
-// type is both: bilateral deletion
-// type is single: unilateral deletion
+// 批量删除好友
+// type 为 both：双向删除 
+// type 为 single：单向删除
 try{
     ZIMFriendDeleteConfig friendDeleteConfig = ZIMFriendDeleteConfig();
     friendDeleteConfig.type = ZIMFriendDeleteType.single;
     List<String> list = [];
     list.add('zego');
     ZIMFriendsDeletedResult result = await ZIM.getInstance()!.deleteFriends(list, friendDeleteConfig);
-    // Handle success logic
+    //处理成功逻辑
 } on PlatformException catch (onError){
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    //处理失败逻辑
+    onError.code; //根据官网错误码表处理
+    onError.message; //错误信息
 }
 ```
-</CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
-// Batch delete friends
-// type is ZIMFriendDeleteTypeBoth: bilateral deletion
-// type is ZIMFriendDeleteTypeSingle: unilateral deletion
+// 批量删除好友
+// type为ZIMFriendDeleteTypeBoth：双向删除
+// type为ZIMFriendDeleteTypeSingle：单向删除
 ZIMFriendDeleteConfig *friendDeleteConfig = [[ZIMFriendDeleteConfig alloc] init];
 friendDeleteConfig.type = ZIMFriendDeleteTypeBoth;
-[[ZIM getInstance] deleteFriendsByUserIDs:@[@"userID1",@"userID2"] config:friendDeleteConfig callback:^(NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] deleteFriendsByUserIDs:@[@"userID1",@"userID2"] config:friendDeleteConfig callback:^(NSArray<ZIMErrorUserInfo * > * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
 :::
 :::if{props.platform="mac"}
-<CodeGroup>
 ```objc
-// Batch delete friends
-// type is ZIMFriendDeleteTypeBoth: bilateral deletion
-// type is ZIMFriendDeleteTypeSingle: unilateral deletion
+// 批量删除好友
+// type为ZIMFriendDeleteTypeBoth：双向删除
+// type为ZIMFriendDeleteTypeSingle：单向删除
 ZIMFriendDeleteConfig *friendDeleteConfig = [[ZIMFriendDeleteConfig alloc] init];
 friendDeleteConfig.type = ZIMFriendDeleteTypeBoth;
-[[ZIM getInstance] deleteFriendsByUserIDs:@[@"userID1",@"userID2"] config:friendDeleteConfig callback:^(NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] deleteFriendsByUserIDs:@[@"userID1",@"userID2"] config:friendDeleteConfig callback:^(NSArray<ZIMErrorUserInfo * > * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Batch delete friends
-// type 0: bilateral deletion
-// type 1: unilateral deletion
+// 批量删除好友
+// 类型 0: 双向删除
+// 类型 1: 单向删除
 zim.deleteFriends(['userID1', 'userID2'], { type: 0 }).then(res => {
     const errorUserList = res.errorUserList;
 })
@@ -605,90 +585,73 @@ zim::ZIM::getInstance()->deleteFriends(userIDs, config, [=](
 ```
 :::
 
-After successfully deleting a friend, depending on the deletion type, the related users will receive the callback {getPlatformData(props,onFriendListChangedMap)} to notify them that the user is no longer a friend.
+删除好友成功后，根据删除类型，相关用户会收到回调 {getPlatformData(props,onFriendListChangedMap)} 得知该用户不再是好友。
 
-### Send friend requests
+### 发送好友申请
 
-After logging in to the ZIM SDK, users can use the  {getPlatformData(props,sendFriendApplicationMap)} API to send friend requests to other users and set friend remarks and attributes.
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,sendFriendApplicationMap)} 接口向其他用户发送好友申请、设置好友备注和好友属性。
 
 <Note title="Note">
 
-You can set up to 5 friend attributes, and the corresponding `key` values must be k0, k1, k2, k3, and k4. It is recommended that you agree in advance on the actual meanings of each attribute and maintain consistency.
+最多可以设置 5 个好友属性，且对应的 `key` 取值必须为 k0、k1、k2、k3、k4。建议您提前约定各属性的实际含义并保持统一。
 </Note>
 
-The result of sending a friend request is returned through {getPlatformData(props,ZIMFriendApplicationSentCallbackMap)}.
+发送好友申请结果通过 {getPlatformData(props,ZIMFriendApplicationSentCallbackMap)} 返回。
+
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Send friend requests
+// 发送好友申请
 ZIMFriendApplicationSendConfig config = new ZIMFriendApplicationSendConfig();
 config.friendAlias = "zego"
-config.wording = "How are you";
+config.wording = "老同学你好";
 ZIM.getInstance().sendFriendApplication("zego", config, new ZIMFriendApplicationSentCallback() {
     @Override
     public void onFriendApplicationSentCallback( ZIMFriendApplicationInfo applicationInfoList, ZIMError errorInfo) {
-           // Handling friend request results
+           // 处理好友申请结果    
     }
 });
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Send friend application
+// 发送好友申请
 try{
-    ZIMFriendApplicationSendConfig config = ZIMFriendApplicationSendConfig();
-    config.friendAlias = 'zego';
-    config.wording = 'Hello old friend';
-    ZIMFriendApplicationSentResult result = await ZIM.getInstance()!.sendFriendApplication('zego', config);
-    // Handle success logic
-} on PlatformException catch (onError){
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
-}
+      ZIMFriendApplicationSendConfig config = ZIMFriendApplicationSendConfig();
+      config.friendAlias = 'zego';
+      config.wording = '老同学你好';
+      ZIMFriendApplicationSentResult result = await ZIM.getInstance()!.sendFriendApplication('zego', config);
+      //处理成功逻辑
+    } on PlatformException catch (onError){
+      //处理失败逻辑
+      onError.code; //根据官网错误码表处理
+      onError.message; //错误信息
+    }
 ```
-</CodeGroup>
 :::
 
-:::if{props.platform="iOS"}
-<CodeGroup>
+:::if{props.platform="iOS|mac"}
+
 ```objc
-// Send friend application
+// 发送好友申请
 ZIMFriendApplicationSendConfig *sendConfig = [[ZIMFriendApplicationSendConfig alloc] init];
-sendConfig.wording = @"Hello!";
-sendConfig.friendAlias = @"Mark";
+sendConfig.wording = @"你好！";
+sendConfig.friendAlias = @"马克";
 sendConfig.friendAttributes = @{@"k0":@"SZ"};
 [[ZIM getInstance] sendFriendApplicationToUserID:@"userID" config:sendConfig callback:^(ZIMFriendApplicationInfo * _Nonnull applicationInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
-:::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc
-// Send friend application
-ZIMFriendApplicationSendConfig *sendConfig = [[ZIMFriendApplicationSendConfig alloc] init];
-sendConfig.wording = @"Hello!";
-sendConfig.friendAlias = @"Mark";
-sendConfig.friendAttributes = @{@"k0":@"SZ"};
-[[ZIM getInstance] sendFriendApplicationToUserID:@"userID" config:sendConfig callback:^(ZIMFriendApplicationInfo * _Nonnull applicationInfo, ZIMError * _Nonnull errorInfo) {
-    
-}];
-```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Receive friend application list callback
+// 收到好友申请列表变更的回调
 zim.on('friendApplicationListChanged', (zim, data) => {
-    // action is 0: new
+    // action为0表示新的申请
     const { action, applicationList } = data;
 });
 ```
@@ -710,35 +673,36 @@ zim::ZIM::getInstance()->sendFriendApplication("userID", config, [=](const zim::
 ```
 :::
 
-The target user will receive the {getPlatformData(props,onFriendApplicationListChangedMap)} callback, indicating that a user has requested to become friends. The user can choose to <a href="#send-friend-requests"> accept </a> or <a href="#reject-friend-requests"> reject </a> the request within 7 days.
+目标用户会收到 {getPlatformData(props,onFriendApplicationListChangedMap)} 回调，得知有用户申请加为好友。该用户可以选择在 7 日内 <a href="#同意好友申请">同意</a> 或 <a href="#拒绝好友申请">拒绝</a> 申请。
 
 <Note title="Note">
-If you need to adjust the friend application validity period, please contact the ZEGOCLOUD technical support team.
+
+如需调整好友申请有效期，请联系 ZEGO 技术支持。
 </Note>
 
+
 :::if{props.platform=undefined}
-<CodeGroup>
+
 ```java
-// Received friend request list callback
+// 收到好友申请列表回调
 public void onFriendApplicationListChanged(ZIM zim,
                                    ArrayList<ZIMFriendApplicationInfo> friendApplicationInfoList, ZIMFriendApplicationListChangeAction action) {
 
 }
 ```
-</CodeGroup>
+
 
 :::
 
-### Accept friend requests
+### 同意好友申请
 
-After logging in to ZIM SDK, users can call the {getPlatformData(props,acceptFriendApplicationMap)} API, passing the ID of the user who initiated the request, to accept a friend request.
+登录 ZIM SDK 后，用户可以调用 {getPlatformData(props,acceptFriendApplicationMap)} 接口，传入申请发起用户 ID，同意好友申请。
 
-The result of accepting a friend request is returned through {getPlatformData(props,ZIMFriendApplicationAcceptedCallbackMap)}.
+同意好友申请结果通过 {getPlatformData(props,ZIMFriendApplicationAcceptedCallbackMap)} 返回。
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Accept friend requests
+// 同意好友申请
 ZIMFriendApplicationAcceptConfig config = new ZIMFriendApplicationAcceptConfig();
 config.friendAlias = "zego";
 config.friendAttributes = new 
@@ -749,59 +713,44 @@ ZIM.getInstance().acceptFriendApplication("zego", config, new ZIMFriendApplicati
    }
 });
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Accept friend application
+// 同意好友申请
 try{
     ZIMFriendApplicationAcceptConfig acceptConfig = ZIMFriendApplicationAcceptConfig();
     acceptConfig.friendAlias = 'Mark';
     acceptConfig.friendAttributes = {'k0':'SZ'};    
     ZIMFriendApplicationAcceptedResult result = await ZIM.getInstance()!.acceptFriendApplication('zego', config);
-    // Handle success logic
+    //处理成功逻辑
 } on PlatformException catch (onError){
-    // Handle failure logic
-    onError.code; // Handle according to the official error code document
-    onError.message; // Error message
+    //处理失败逻辑
+    onError.code; //根据官网错误码文档处理
+    onError.message; //错误信息
 }
 ```
-</CodeGroup>
 :::
 
-:::if{props.platform="iOS"}
-<CodeGroup>
+:::if{props.platform="iOS|mac"}
+
 ```objc
-// Accept friend application
-ZIMFriendApplicationAcceptConfig *acceptConfig = [[ ZIMFriendApplicationAcceptConfig alloc] init];
+// 接受好友申请
+ZIMFriendApplicationAcceptConfig *acceptConfig = [[ZIMFriendApplicationAcceptConfig alloc] init];
 acceptConfig.friendAlias = @"Mark";
 acceptConfig.friendAttributes = @{@"k0":@"SZ"};
 [[ZIM getInstance] acceptFriendApplicationFromUserID:@"userID" config:acceptConfig callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc
-// Accept friend application
-ZIMFriendApplicationAcceptConfig *acceptConfig = [[ ZIMFriendApplicationAcceptConfig alloc] init];
-acceptConfig.friendAlias = @"Mark";
-acceptConfig.friendAttributes = @{@"k0":@"SZ"};
-[[ZIM getInstance] acceptFriendApplicationFromUserID:@"userID" config:acceptConfig callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
-    
-}];
-```
-</CodeGroup>
-:::
+
 
 :::if{props.platform="Web"}
 ```javascript
-// Accept friend application
+// 接受好友申请
 zim.acceptFriendApplication('userID', { friendAlias: 'Mark', friendAttributes: { k0: 'SZ' } }).then(res => {
     const friendInfo = res.friendInfo;
 })
@@ -823,77 +772,62 @@ zim::ZIM::getInstance()->acceptFriendApplication("userID", config, [=](const zim
 ```
 :::
 
-Both the requesting user and the requested user will not only receive the {getPlatformData(props,onFriendApplicationUpdatedMap)} to know that the other user has become their friend.
+
+与申请相关的双方用户不仅会收到 {getPlatformData(props,onFriendApplicationUpdatedMap)} 回调，得知申请通过，还会收到 {getPlatformData(props,onFriendListChangedMap)}  得知对方已成为自己的好友。
 
 
+### 拒绝好友申请
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,rejectFriendApplicationMap)} 拒绝好友申请。
 
-### Reject friend requests
+拒绝好友申请结果通过 {getPlatformData(props,ZIMFriendApplicationRejectedCallbackMap)} 返回。
 
-After logging in to ZIM SDK, users can reject friend requests by using the {getPlatformData(props,rejectFriendApplicationMap)} API.
-
-The result of rejecting a friend request is returned through {getPlatformData(props,ZIMFriendApplicationRejectedCallbackMap)}.
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Reject friend requests
+// 拒绝好友申请
 ZIMFriendApplicationRejectConfig config = new ZIMFriendApplicationRejectConfig();
 ZIM.getInstance().rejectFriendApplication("zego", config, new ZIMFriendApplicationRejectedCallback() {
     @Override
     public void onFriendApplicationRejected(ZIMUserInfo zimUserInfo, ZIMError zimError) {
-          // Rejecting friend request result                  
+          // 拒绝好友申请结果                     
     }
 });
 ```
-</CodeGroup>
+
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Reject friend application
+// 拒绝好友申请
 try{
     ZIMFriendApplicationRejectConfig config = ZIMFriendApplicationRejectConfig();
     ZIMFriendApplicationRejectedResult result = await ZIM.getInstance()!.rejectFriendApplication('zego', config);
-    // Handle success logic
+    //处理成功逻辑
 } on PlatformException catch (onError){
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    //处理失败逻辑
+    onError.code; //根据官网错误码表处理
+    onError.message; //错误信息
 }
 ```
-
-</CodeGroup>
 :::
 
-:::if{props.platform="iOS"}
-<CodeGroup>
+:::if{props.platform="iOS|mac"}
 ```objc
-// Reject friend application
+// 拒绝好友申请
 ZIMFriendApplicationRejectConfig *rejectConfig = [[ZIMFriendApplicationRejectConfig alloc] init];
 [[ZIM getInstance] rejectFriendApplicationFromUserID:@"userID" config:rejectConfig callback:^(ZIMUserInfo * _Nonnull userInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc
-// Reject friend application
-ZIMFriendApplicationRejectConfig *rejectConfig = [[ZIMFriendApplicationRejectConfig alloc] init];
-[[ZIM getInstance] rejectFriendApplicationFromUserID:@"userID" config:rejectConfig callback:^(ZIMUserInfo * _Nonnull userInfo, ZIMError * _Nonnull errorInfo) {
-    
-}];
-```
-</CodeGroup>
-:::
+
 
 :::if{props.platform="Web"}
 ```javascript
-// Reject friend application
-zim.rejectFriendApplication('userID', {} }).then(res => {
+// 拒绝好友申请
+zim.rejectFriendApplication('userID', {}).then(res => {
     const userInfo = res.userInfo;
 })
 ```
@@ -912,17 +846,18 @@ zim::ZIM::getInstance()->rejectFriendApplication("userID", config, [=](const zim
 ```
 :::
 
-Both the requesting user and the requested user will receive the {getPlatformData(props,onFriendApplicationUpdatedMap)} callback to know that the application has been rejected.
+与申请相关的双方用户会收到 {getPlatformData(props,onFriendApplicationUpdatedMap)} 回调，得知申请遭到拒绝。
 
-### Query friend list
-After logging in to the ZIM SDK, users can use the {getPlatformData(props,queryFriendListMap)} API to retrieve the paginated complete friends list.
+### 查询好友列表
 
-The query results are returned through {getPlatformData(props,ZIMFriendListQueriedCallbackMap)}, and the returned friends list is sorted in descending order based on the time of friend relationship creation.
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,queryFriendListMap)} 拉取分页全量好友列表。
+
+查询结果通过 {getPlatformData(props,ZIMFriendListQueriedCallbackMap)} 返回，返回的好友列表以好友关系创建时间倒序排列。
+
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Query Friends List
+// 查询好友信息列表
 ZIMFriendListQueryConfig config = new ZIMFriendListQueryConfig();
 config.count = 3000;
 config.nextFlag = 0;
@@ -933,59 +868,58 @@ ZIM.getInstance().queryFriendList(config, new ZIMFriendListQueriedCallback() {
 }
 });
 ```
-</CodeGroup>
+
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
+
 ```dart
-// Query friend information list
+// 查询好友信息列表
 try{
     ZIMFriendListQueryConfig config = ZIMFriendListQueryConfig();
     config.count = 3000;
     config.nextFlag = 0;
     ZIMFriendListQueriedResult result = await ZIM.getInstance()!.queryFriendList(config);
-    // Handle success logic
+    //处理成功逻辑
 } on PlatformException catch (onError){
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    //处理失败逻辑
+    onError.code; //根据官网错误码表处理
+    onError.message; //错误信息
 }
 ```
-</CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
-// Query the list of friend information
-ZIMFriendListQueryConfig *queryConfig = [[ ZIMFriendListQueryConfig alloc] init];
+// 查询好友信息列表
+ZIMFriendListQueryConfig *queryConfig = [[ZIMFriendListQueryConfig alloc] init];
 queryConfig.count = 100;
 queryConfig.nextFlag = 0;
-[[ZIM getInstance] queryFriendListWithConfig:queryConfig callback:^(NSArray<ZIMFriendInfo *> * _Nonnull friendList, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] queryFriendListWithConfig:queryConfig callback:^(NSArray<ZIMFriendInfo * > * _Nonnull friendList, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
 :::
+
 :::if{props.platform="mac"}
-<CodeGroup>
+
 ```objc
-// Query the list of friend information
-ZIMFriendListQueryConfig *queryConfig = [[ ZIMFriendListQueryConfig alloc] init];
+// 查询好友信息列表
+ZIMFriendListQueryConfig *queryConfig = [[ZIMFriendListQueryConfig alloc] init];
 queryConfig.count = 100;
 queryConfig.nextFlag = 0;
-[[ZIM getInstance] queryFriendListWithConfig:queryConfig callback:^(NSArray<ZIMFriendInfo *> * _Nonnull friendList, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] queryFriendListWithConfig:queryConfig callback:^(NSArray<ZIMFriendInfo * > * _Nonnull friendList, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Query friend information list
+// 查询好友信息列表
 zim.queryFriendList({ count: 100, nextFlag: 0 }).then(res => {
     const { friendList, nextFlag } = res;
 });
@@ -1008,15 +942,16 @@ zim::ZIM::getInstance()->queryFriendList(config, [=](const std::vector<zim::ZIMF
 ```
 :::
 
-### Query friend request list
+### 查询好友申请列表
 
-After logging in to the ZIM SDK, users can use the {getPlatformData(props,queryFriendApplicationListMap)} API to retrieve the friend request list and understand the status of each request. The friend request list includes both the requests initiated by the user to other users and the requests initiated by other users to the user.
-The query results are returned through {getPlatformData(props,ZIMFriendApplicationListQueriedCallbackMap)}.
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,queryFriendApplicationListMap)} 获取好友申请列表，了解各申请的状态。好友申请列表中会包含本用户向其他用户发起的申请，也会包含其他用户向本用户发起的申请。
+
+查询结果通过 {getPlatformData(props,ZIMFriendApplicationListQueriedCallbackMap)} 返回。
+
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Query friend application information list
+// 查询好友申请信息列表
 ZIMFriendApplicationListQueryConfig config = new ZIMFriendApplicationListQueryConfig();
 config.count = 3000;
 config.nextFlag = 0;
@@ -1026,59 +961,42 @@ ZIM.getInstance().queryFriendApplicationList(config, new ZIMFriendApplicationLis
     }                                                
 });
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Query friend application information list
-try {
+// 查询好友申请信息列表
+try{
     ZIMFriendApplicationListQueryConfig config = ZIMFriendApplicationListQueryConfig();
     config.count = 3000;
     config.nextFlag = 0;
     ZIMFriendApplicationListQueriedResult result = await ZIM.getInstance()!.queryFriendApplicationList(config);
-    // Handle success logic
-} on PlatformException catch (onError) {
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    //处理成功逻辑
+} on PlatformException catch (onError){
+    //处理失败逻辑
+    onError.code; //根据官网错误码表处理
+    onError.message; //错误信息
 }
 ```
-</CodeGroup>
 :::
 
-:::if{props.platform="iOS"}
-<CodeGroup>
+:::if{props.platform="iOS|mac"}
 ```objc
-// Query friend application information list
+// 查询好友申请信息列表
 ZIMFriendApplicationListQueryConfig *queryConfig = [[ZIMFriendApplicationListQueryConfig alloc] init];
 queryConfig.count = 100;
 queryConfig.nextFlag = 0;
-[[ZIM getInstance] queryFriendApplicationListWithConfig:queryConfig callback:^(NSArray<ZIMFriendApplicationInfo *> * _Nonnull applicationList, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] queryFriendApplicationListWithConfig:queryConfig callback:^(NSArray<ZIMFriendApplicationInfo * > * _Nonnull applicationList, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
 :::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc
-// Query friend application information list
-ZIMFriendApplicationListQueryConfig *queryConfig = [[ZIMFriendApplicationListQueryConfig alloc] init];
-queryConfig.count = 100;
-queryConfig.nextFlag = 0;
-[[ZIM getInstance] queryFriendApplicationListWithConfig:queryConfig callback:^(NSArray<ZIMFriendApplicationInfo *> * _Nonnull applicationList, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
-    
-}];
-```
-</CodeGroup>
-:::
+
 
 :::if{props.platform="Web"}
 ```javascript
-// Query friend application information list
+// 查询好友申请信息列表
 zim.queryFriendApplicationList({ count: 100, nextFlag: 0 }).then(res => {
     const { applicationList, nextFlag } = res;
 });
@@ -1101,59 +1019,54 @@ zim::ZIM::getInstance()->queryFriendApplicationList(config, [=](const std::vecto
 ```
 :::
 
-## More functions
+## 更多功能
 
-### Update friend alias
+### 更新好友备注
 
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,updateFriendAliasMap)} 更新自己对好友的备注。
 
-After logging in to the ZIM SDK, users can update the alias they have for a friend using the {getPlatformData(props,updateFriendAliasMap)} API.
+更新结果通过 {getPlatformData(props,ZIMFriendAliasUpdatedCallbackMap)} 返回。
 
-The result of the update is returned through {getPlatformData(props,ZIMFriendAliasUpdatedCallbackMap)}.
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Update friend alias
-ZIM.getInstance().updateFriendAlias("Classmate A", "zego", new ZIMFriendAliasUpdatedCallback() {
+// 更新好友备注
+ZIM.getInstance().updateFriendAlias("A同学", "zego", new ZIMFriendAliasUpdatedCallback() {
     @Override
     public void onFriendAliasUpdated(ZIMFriendInfo friendInfo, ZIMError zimError) {
 
     }
 });
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Update friend alias
-try {
+// 更新好友备注
+try{
     ZIMFriendAliasUpdatedResult result = await ZIM.getInstance()!.updateFriendAlias('A同学', 'zego');
-    // Handle success logic
-} on PlatformException catch (onError) {
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    //处理成功逻辑
+} on PlatformException catch (onError){
+    //处理失败逻辑
+    onError.code; //根据官网错误码表处理
+    onError.message; //错误信息
 }
 ```
-
-</CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
 ```objc
-// Update friend alias
-[[ZIM getInstance] updateFriendAlias:@"New Alias" userID:@"userID" callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
+// 更新好友别名
+[[ZIM getInstance] updateFriendAlias:@"新别名" userID:@"userID" callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
 :::
 :::if{props.platform="mac"}
 ```objc
-// Update friend alias
-[[ZIM getInstance] updateFriendAlias:@"New Alias" userID:@"userID" callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
+// 更新好友别名
+[[ZIM getInstance] updateFriendAlias:@"新别名" userID:@"userID" callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
@@ -1161,8 +1074,8 @@ try {
 
 :::if{props.platform="Web"}
 ```javascript
-// Update friend remark
-zim.updateFriendAlias('New remark', 'userID' }).then(res => {
+// 更新好友备注
+zim.updateFriendAlias('新备注', 'userID' }).then(res => {
     const friendInfo = res.friendInfo;
 });
 ```
@@ -1180,25 +1093,26 @@ zim::ZIM::getInstance()->updateFriendAlias("新备注", "userID", [=](const zim:
 ```
 :::
 
-After a successful update, the user can receive the {getPlatformData(props,onFriendInfoUpdatedMap)} callback to know that the friend's information has been updated.
+更新成功后，该用户可以收到 {getPlatformData(props,onFriendInfoUpdatedMap)} 接口，得知好友信息已更新。
 
-### Update friend attributes
+### 更新好友属性
 
-After logging in to the ZIM SDK, users can update friend attributes using the {getPlatformData(props,updateFriendAttributesMap)} API.
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,updateFriendAttributesMap)} 更新好友属性。
 
 <Note title="Note">
 
-You can set up to 5 friend attributes, and the corresponding `key` values must be k0, k1, k2, k3, and k4. It is recommended that you agree in advance on the actual meanings of each attribute and maintain consistency.
+最多可以设置 5 个好友属性，且对应的 `key` 取值必须为 k0、k1、k2、k3、k4。建议您提前约定各属性的实际含义并保持统一。
 </Note>
 
-The result of updating friend attributes is returned through {getPlatformData(props,ZIMFriendAttributesUpdatedCallbackMap)}.
+更新好友属性结果通过 {getPlatformData(props,ZIMFriendAttributesUpdatedCallbackMap)} 返回。
+
+
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
 HashMap<String, String> friendAttributes = new HashMap<String, String>();
 friendAttributes.put("k0","v0");
-// Update friend attributes
+// 更新好友属性
 zim.updateFriendAttributes(friendAttributes, "zego", new ZIMFriendAttributesUpdatedCallback(){
     
      public void onFriendAttributesUpdated(ZIMFriendInfo friendInfo, ZIMError errorInfo)   {
@@ -1207,46 +1121,45 @@ zim.updateFriendAttributes(friendAttributes, "zego", new ZIMFriendAttributesUpda
 });
 
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
+
 ```dart
-// Update friend attributes
+// 更新好友属性
 zim.updateFriendAttributes({ k1: 'v1', k2: 'v2' } , 'userID' }).then(res => {
     const friendInfo = res.friendInfo;
 });
 ```
 
-</CodeGroup>
+
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
-// Update friend attributes
+// 更新好友属性
 [[ZIM getInstance] updateFriendAttributes:@{@"k1":@"v1",@"k2":@"v2"} userID:@"userID" callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 :::if{props.platform="mac"}
-<CodeGroup>
+
 ```objc
-// Update friend attributes
+// 更新好友属性
 [[ZIM getInstance] updateFriendAttributes:@{@"k1":@"v1",@"k2":@"v2"} userID:@"userID" callback:^(ZIMFriendInfo * _Nonnull friendInfo, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Update friend attributes
+// 更新好友属性
 zim.updateFriendAttributes({ k1: 'v1', k2: 'v2' } , 'userID' }).then(res => {
     const friendInfo = res.friendInfo;
 });
@@ -1268,26 +1181,24 @@ zim::ZIM::getInstance()->updateFriendAttributes(friendAttributes, "userID", [=](
 ```
 :::
 
-After logging in to the ZIM SDK, users can update friend attributes using the {getPlatformData(props,onFriendInfoUpdatedMap)} API.
+更新成功后，该用户可以收到 {getPlatformData(props,onFriendInfoUpdatedMap)} 接口，得知好友信息已更新。
 
-### Check friend relationships
+### 检查好友关系
 
-After logging in to the ZIM SDK, users can use the {getPlatformData(props,checkFriendsRelationMap)} API to batch check their friend relationships with up to 20 other users.
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,checkFriendsRelationMap)} 批量检查自己与至多 20 名其他用户的好友关系。
 
-ZEGOCLOUD allows one-way or two-way check of friendships. In this example, the friendship between users A and B is checked.
+ZEGO 支持单边或双边检查好友关系，以检查用户 A 与目标用户 B 的好友关系为例：
+- 单边检查：仅检查用户 A 的好友列表是否有用户 B。
+- 双边检查：同时检查用户 A 和用户 B 的好友列表是否有对方。
 
-- One-way check: Only checks whether user B is in the friend list of user A.
-- Two-way check: Checks whether users A and B are in the friend list of the other.
+检查好友关系结果通过 {getPlatformData(props,ZIMFriendsRelationCheckedCallbackMap)} 返回。
 
-
-The result of checking friend relationships is returned through {getPlatformData(props,ZIMFriendsRelationCheckedCallbackMap)}.
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Check friend relationships with other users
-// When the type is set to BOTH: Perform a two-way check
-// When the type is set to SINGLE: Perform a one-way check
+// 检查与其他用户的好友关系
+// type 为 BOTH：双向 
+// type 为 SINGLE：单向
 ArrayList<String> userIDs = new ArrayList<>();
 userIDs.add("zego");
 ZIMFriendRelationCheckConfig config = new ZIMFriendRelationCheckConfig();
@@ -1299,64 +1210,60 @@ ZIM.getInstance().checkFriendsRelation(userIDs, config, new ZIMFriendsRelationCh
    }
 });
 ```
-</CodeGroup>
-
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Check friend relationship with other users
-// type is both: bidirectional
-// type is single: unidirectional
-try {
-    ZIMFriendAttributesUpdatedResult result = await ZIM.getInstance()!.updateFriendAttributes(
-        {'k1':'v1','k2':'v2'}, 'zego');
-    // Handle success logic
-} on PlatformException catch (onError) {
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
-}
+// 检查与其他用户的好友关系
+// type 为 both：双向 
+// type 为 single：单向
+    try {
+      ZIMFriendAttributesUpdatedResult result = await ZIM.getInstance()!.updateFriendAttributes(
+          {'k1':'v1','k2':'v2'}, 'zego');
+      // 处理成功逻辑
+    } on PlatformException catch(onError){
+      //处理失败逻辑
+      onError.code; //根据官网错误码表处理
+      onError.message; //错误信息
+    }
 ```
-</CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
-// Check friend relationship with other users
-// type is ZIMFriendRelationCheckTypeBoth: bidirectional
-// type is ZIMFriendRelationCheckTypeSingle: unidirectional
+// 检查与其他用户的好友关系
+// type为ZIMFriendRelationCheckTypeBoth：双向关系
+// type为ZIMFriendRelationCheckTypeSingle：单向关系
 ZIMFriendRelationCheckConfig *checkConfig = [[ZIMFriendRelationCheckConfig alloc] init];
 checkConfig.type = ZIMFriendRelationCheckTypeSingle;
-[[ZIM getInstance] checkFriendsRelationByUserIDs:@[@"userID1",@"userID2"] config:checkConfig callback:^(NSArray<ZIMFriendRelationInfo *> * _Nonnull relationInfos, NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] checkFriendsRelationByUserIDs:@[@"userID1",@"userID2"] config:checkConfig callback:^(NSArray<ZIMFriendRelationInfo * > * _Nonnull relationInfos, NSArray<ZIMErrorUserInfo * > * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 :::if{props.platform="mac"}
-<CodeGroup>
+
 ```objc
-// Check friend relationship with other users
-// type is ZIMFriendRelationCheckTypeBoth: bidirectional
-// type is ZIMFriendRelationCheckTypeSingle: unidirectional
+// 检查与其他用户的好友关系
+// type为ZIMFriendRelationCheckTypeBoth：双向
+// type为ZIMFriendRelationCheckTypeSingle：单向
 ZIMFriendRelationCheckConfig *checkConfig = [[ZIMFriendRelationCheckConfig alloc] init];
 checkConfig.type = ZIMFriendRelationCheckTypeSingle;
-[[ZIM getInstance] checkFriendsRelationByUserIDs:@[@"userID1",@"userID2"] config:checkConfig callback:^(NSArray<ZIMFriendRelationInfo *> * _Nonnull relationInfos, NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] checkFriendsRelationByUserIDs:@[@"userID1",@"userID2"] config:checkConfig callback:^(NSArray<ZIMFriendRelationInfo * > * _Nonnull relationInfos, NSArray<ZIMErrorUserInfo * > * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Check friend relationship with other users
-// type is 0: bidirectional
-// type is 1: unidirectional
-zim.checkFriendsRelation(['userID1', 'userID2'], { type: 0 } }).then(res => {
+// 检查与其他用户的好友关系
+// 类型为0：双向关系
+// 类型为1：单向关系
+zim.checkFriendsRelation(['userID1', 'userID2'], { type: 0 }).then(res => {
     const { relationInfos, errorUserList } = res;
 })
 ```
@@ -1382,18 +1289,15 @@ zim::ZIM::getInstance()->checkFriendsRelation(userIDs, config, [=](
 ```
 :::
 
-### Batch query friend information
+### 批量查询好友信息
 
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,queryFriendsInfoMap)} 批量查询 20 名好友信息。
 
-After logging in to the ZIM SDK, users can use the {getPlatformData(props,queryFriendsInfoMap)} API to batch query information for up to 20 friends.
-
-
-The result of batch querying friend information is returned through {getPlatformData(props,ZIMFriendsInfoQueriedCallbackMap)}.
+批量查询好友信息结果通过 {getPlatformData(props,ZIMFriendsInfoQueriedCallbackMap)} 返回。
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
-// Batch query friend information
+// 批量查询好友信息
 ArrayList<String> userIDs = new ArrayList<>();
 userIDs.add("zego");
 ZIM.getInstance().queryFriendsInfo(userIDs, new ZIMFriendsInfoQueriedCallback() {
@@ -1403,51 +1307,46 @@ ZIM.getInstance().queryFriendsInfo(userIDs, new ZIMFriendsInfoQueriedCallback() 
     }
 });
 ```
-</CodeGroup>
 
 :::
 :::if{props.platform="Flutter"}
-<CodeGroup>
 ```dart
-// Batch query friends info
-try {
+// 批量查询好友信息
+try{
     List<String> userIDs = ['zego'];
     userIDs.add('zego');
     ZIMFriendsInfoQueriedResult result = await ZIM.getInstance()!.queryFriendsInfo(userIDs);
-    // Handle success logic
-} on PlatformException catch (onError) {
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    //处理成功逻辑
+} on PlatformException catch (onError){
+    //处理失败逻辑
+    onError.code; //根据官网错误码表处理
+    onError.message; //错误信息
 }
 ```
-</CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
-// Query friend information in batch
-[[ZIM getInstance] queryFriendsInfoByUserIDs:@[@"userID1",@"userID2"] callback:^(NSArray<ZIMFriendInfo *> * _Nonnull friendInfos, NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
+// 批量查询好友信息
+[[ZIM getInstance] queryFriendsInfoByUserIDs:@[@"userID1",@"userID2"] callback:^(NSArray<ZIMFriendInfo * > * _Nonnull friendInfos, NSArray<ZIMErrorUserInfo * > * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
     
 }];
-```
-</CodeGroup>
+
 :::
 :::if{props.platform="mac"}
-<CodeGroup>
+
 ```objc
-// Query friend information in batch
-[[ZIM getInstance] queryFriendsInfoByUserIDs:@[@"userID1",@"userID2"] callback:^(NSArray<ZIMFriendInfo *> * _Nonnull friendInfos, NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
+// 批量查询好友信息
+[[ZIM getInstance] queryFriendsInfoByUserIDs:@[@"userID1",@"userID2"] callback:^(NSArray<ZIMFriendInfo * > * _Nonnull friendInfos, NSArray<ZIMErrorUserInfo * > * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
     
 }];
-```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
-// Batch query friend information
+// 批量查询好友信息
 zim.queryFriendsInfo(['userID1', 'userID2']).then(res => {
     const { friendInfos, errorUserList } = res;
 });
@@ -1469,15 +1368,14 @@ zim::ZIM::getInstance()->queryFriendsInfo(userIDs, [=](
     });
 ```
 :::
+### 搜索好友
 
-### Search for friends
+登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,searchLocalFriendsMap)} 接口，传入至多 5 个关键词，即可对好友的用户名及备注进行搜索，获取同时命中所有关键词的好友。
 
-After logging in to the ZIM SDK, users can use the {getPlatformData(props,searchLocalFriendsMap)} API to search for friends based on their usernames and aliases. Users can provide up to 5 keywords to search for friends who match all the provided keywords.
+搜索结果通过 {getPlatformData(props,ZIMFriendsSearchedCallbackMap)} 返回。
 
-The search results are returned through {getPlatformData(props,ZIMFriendsSearchedCallbackMap)}.
 
 :::if{props.platform=undefined}
-<CodeGroup>
 ```java
 ZIMFriendSearchConfig config = new ZIMFriendSearchConfig();
 config.count = 100;
@@ -1491,12 +1389,11 @@ ZIM.getInstance().searchLocalFriends(config, new ZIMFriendsSearchedCallback() {
     }
 });
 ```
-</CodeGroup>
 
 :::
 
 :::if{props.platform="Flutter"}
-<CodeGroup>
+
 ```dart
 try {
     ZIMFriendSearchConfig config = ZIMFriendSearchConfig();
@@ -1505,49 +1402,49 @@ try {
     config.isAlsoMatchFriendAlias = true;
     config.keywords.add('zego');
     ZIMFriendsSearchedResult result = await ZIM.getInstance()!.searchLocalFriends(config);
-    // Handle success logic
+    // 处理成功逻辑
 } on PlatformException catch (onError) {
-    // Handle failure logic
-    onError.code; // Handle according to the official error code table
-    onError.message; // Error message
+    // 处理失败逻辑
+    onError.code; // 根据官方错误代码表进行处理
+    onError.message; // 错误消息
 }
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="iOS"}
-<CodeGroup>
+
 ```objc
 ZIMFriendSearchConfig *searchConfig = [[ZIMFriendSearchConfig alloc] init];
 searchConfig.count = 100;
 searchConfig.keywords = @[@"a",@"b"];
 searchConfig.isAlsoMatchFriendAlias = YES;
 searchConfig.nextFlag = 0;
-[[ZIM getInstance] searchLocalFriendsWithConfig:searchConfig callback:^(NSArray<ZIMFriendInfo *> * _Nonnull friendInfos, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] searchLocalFriendsWithConfig:searchConfig callback:^(NSArray<ZIMFriendInfo * > * _Nonnull friendInfos, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 :::if{props.platform="mac"}
-<CodeGroup>
+
 ```objc
 ZIMFriendSearchConfig *searchConfig = [[ZIMFriendSearchConfig alloc] init];
 searchConfig.count = 100;
 searchConfig.keywords = @[@"a",@"b"];
 searchConfig.isAlsoMatchFriendAlias = YES;
 searchConfig.nextFlag = 0;
-[[ZIM getInstance] searchLocalFriendsWithConfig:searchConfig callback:^(NSArray<ZIMFriendInfo *> * _Nonnull friendInfos, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] searchLocalFriendsWithConfig:searchConfig callback:^(NSArray<ZIMFriendInfo * > * _Nonnull friendInfos, unsigned int nextFlag, ZIMError * _Nonnull errorInfo) {
     
 }];
 ```
-</CodeGroup>
+
 :::
 
 :::if{props.platform="Web"}
 ```javascript
 zim.searchLocalFriends({ keywords: ['a', 'b'], isAlsoMatchFriendAlias: true, count: 100, nextFlag: 0 }).then(res => {
-    // todo
+    // 待办事项
 });
 ```
 :::
