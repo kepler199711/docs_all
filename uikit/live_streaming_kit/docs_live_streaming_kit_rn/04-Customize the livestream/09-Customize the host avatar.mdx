@@ -9,11 +9,11 @@ This doc describes how to customize the host's avatar.
 
 To custom host's avatar, do the following:
 
-1. When the host initiates `ZegoUIKitPrebuiltLiveStreaming`, pass the host's avatar url address as a parameter.
+1. Implement a function to retrieve the user's avatar URL using the userID.
 
 <Warning title="Warning">
 
-Please note that here you need to set different avatars url for different users in the avatar parameters. If you hardcode a URL, then everyone's avatar will be the one you hardcoded.
+Please note that here you need to set different avatars url for different users in the `getUserAvatar` function. If you hardcode a URL, then everyone's avatar will be the one you hardcoded.
 
 </Warning>
 
@@ -21,7 +21,7 @@ Please note that here you need to set different avatars url for different users 
 
 Here is the reference code:
 
-```typescript {8-9,18,25-35}
+```typescript {8-11,26-37}
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import ZegoUIKitPrebuiltLiveStreaming, { HOST_DEFAULT_CONFIG } from '@zegocloud/zego-uikit-prebuilt-live-streaming-rn';
@@ -29,8 +29,10 @@ import * as ZIM from 'zego-zim-react-native';
 
 export default function HostPage(props) {
 
-    // This is just an example; please replace it with the storage address for user avatars in your app.
-    let userAvatar = `https://robohash.org/${userID}.png`
+    const getUserAvatar = (userID: string) => {
+        // This is just an example; please replace it with the storage address for user avatars in your app.
+        return `https://robohash.org/${userID}.png`
+    }
 
     return (
         <View style={styles.container}>
@@ -39,7 +41,6 @@ export default function HostPage(props) {
                 appSign={yourAppSign}
                 userID={userID}
                 userName={userName}
-                userAvatar={userAvatar}
                 liveID={liveID}
 
                 config={{
@@ -51,7 +52,8 @@ export default function HostPage(props) {
                                     <View style={[styles.hostInfo]}>
                                         <Image
                                             style={styles.memberAvatar}
-                                            source={hostInfo.avatar ? { uri: hostInfo.avatar } : require('./resources/avatar_def.png')}
+                                            defaultSource={require('./resources/avatar_def.png')}
+                                            source={{uri: getUserAvatar(hostInfo.userID)}}
                                         />
                                         <Text style={styles.hostName}>{hostInfo.userName}</Text>
                                     </View>
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
     memberAvatar: {
         width: 36,
         height: 36,
-        backgroundColor: '#DBDDE3',
+        backgroundColor: '#5c5c5c',
         borderRadius: 1000,
         marginRight: 12,
         flexDirection: 'row',
