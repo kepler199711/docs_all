@@ -353,31 +353,31 @@ zim.on('friendApplicationUpdated', (zim, data) => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 注册 SDK 事件通知回调
+// Register SDK event notification callback
 zim->setEventHandler(shared_from_this());
 
 ...
-// 好友列表变更回调
+// Callback for friend list changes
 void onFriendListChanged(ZIM * /*zim*/,
-                                     const std::vector<ZIMFriendInfo> & /*friendInfoList*/,
-                                     ZIMFriendListChangeAction & /*action*/) {
+                         const std::vector<ZIMFriendInfo> & /*friendInfoList*/,
+                         ZIMFriendListChangeAction & /*action*/) {
     //todo
 }
 
-// 好友信息变更回调
+// Callback for friend information updates
 void onFriendInfoUpdated(ZIM * /*zim*/,
-                                     const std::vector<ZIMFriendInfo> & /*friendInfoList*/) {
+                         const std::vector<ZIMFriendInfo> & /*friendInfoList*/) {
     //todo
 }
 
-// 好友申请列表变更回调
+// Callback for friend application list changes
 void onFriendApplicationListChanged(
         ZIM * /*zim*/, const std::vector<ZIMFriendApplicationInfo> & /*friendApplicationInfoList*/,
         ZIMFriendApplicationListChangeAction & /*action*/) {
     //todo
 }
 
-// 好友申请信息变更回调
+// Callback for friend application information updates
 void onFriendApplicationUpdated(
         ZIM * /*zim*/,
         const std::vector<ZIMFriendApplicationInfo> & /*friendApplicationInfoList*/) {
@@ -476,7 +476,7 @@ zim.addFriend('userID', { wording: 'Hello!', friendAlias: 'Mark', friendAttribut
 :::
 :::if{props.platform="window"}
 ```cpp
-// 直接添加好友
+// Add friend directly
 ZIMFriendAddConfig config;
 config.wording = "Hello!";
 config.friendAlias = "Mark";
@@ -587,9 +587,9 @@ zim.deleteFriends(['userID1', 'userID2'], { type: 0 }).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 批量删除好友
-// type 为 ZIM_FRIEND_DELETE_TYPE_BOTH：双向删除 
-// type 为 ZIM_FRIEND_DELETE_TYPE_SINGLE：单向删除
+// Batch delete friends
+// type is ZIM_FRIEND_DELETE_TYPE_BOTH: delete in both directions
+// type is ZIM_FRIEND_DELETE_TYPE_SINGLE: delete in one direction
 zim::ZIMFriendDeleteConfig config;
 config.type = ZIM_FRIEND_DELETE_TYPE_BOTH;
 std::vector<std::string> userIDs;
@@ -696,7 +696,7 @@ zim.on('friendApplicationListChanged', (zim, data) => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 发送好友申请
+// Send friend application
 zim::ZIMFriendApplicationSendConfig config;
 config.friendAlias = "Mark";
 config.friendAttributes["k0"] = "SZ";
@@ -810,7 +810,7 @@ zim.acceptFriendApplication('userID', { friendAlias: 'Mark', friendAttributes: {
 :::if{props.platform="window"}
 
 ```cpp
-// 同意好友申请
+// Accept friend request
 zim::ZIMFriendApplicationAcceptConfig config;
 config.friendAlias = "Mark";
 config.friendAttributes["k0"] = "SZ";
@@ -900,7 +900,7 @@ zim.rejectFriendApplication('userID', {} }).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 拒绝好友申请
+// Reject friend request
 zim::ZIMFriendApplicationRejectConfig config;
 zim::ZIM::getInstance()->rejectFriendApplication("userID", config, [=](const zim::ZIMUserInfo& userInfo, const zim::ZIMError& errorInfo) {
     if(errorInfo.code == ZIMErrorCodeSuccess) {
@@ -908,7 +908,7 @@ zim::ZIM::getInstance()->rejectFriendApplication("userID", config, [=](const zim
     } else {
         // ......
     }  
-    });
+});
 ```
 :::
 
@@ -993,7 +993,7 @@ zim.queryFriendList({ count: 100, nextFlag: 0 }).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 查询好友信息列表
+// Query friend information list
 zim::ZIMFriendListQueryConfig config;
 config.count = 100;
 config.nextFlag = 0;
@@ -1086,7 +1086,7 @@ zim.queryFriendApplicationList({ count: 100, nextFlag: 0 }).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 查询好友申请信息列表
+// Query friend application information list
 zim::ZIMFriendApplicationListQueryConfig config;
 config.count = 100;
 config.nextFlag = 0;
@@ -1169,8 +1169,8 @@ zim.updateFriendAlias('New remark', 'userID' }).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 更新好友备注
-zim::ZIM::getInstance()->updateFriendAlias("新备注", "userID", [=](const zim::ZIMFriendInfo& friendInfo, const zim::ZIMError& errorInfo) {
+// Update friend alias
+zim::ZIM::getInstance()->updateFriendAlias("New Alias", "userID", [=](const zim::ZIMFriendInfo& friendInfo, const zim::ZIMError& errorInfo) {
     if(errorInfo.code == ZIMErrorCodeSuccess) {
         // ......
     } else {
@@ -1254,7 +1254,7 @@ zim.updateFriendAttributes({ k1: 'v1', k2: 'v2' } , 'userID' }).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 更新好友属性
+// Update friend attributes
 std::unordered_map<std::string, std::string> friendAttributes;
 friendAttributes["k1"] = "v1";
 friendAttributes["k2"] = "v2";
@@ -1363,9 +1363,9 @@ zim.checkFriendsRelation(['userID1', 'userID2'], { type: 0 } }).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 检查与其他用户的好友关系
-// type 为 ZIM_FRIEND_RELATION_CHECK_TYPE_BOTH：双向 
-// type 为 ZIM_FRIEND_RELATION_CHECK_TYPE_SINGLE：单向
+// Check the friend relationship with other users
+// type is ZIM_FRIEND_RELATION_CHECK_TYPE_BOTH: bidirectional
+// type is ZIM_FRIEND_RELATION_CHECK_TYPE_SINGLE: unidirectional
 std::vector<std::string> userIDs;
 userIDs.emplace_back("userID1");
 zim::ZIMFriendRelationCheckConfig config;
@@ -1455,7 +1455,7 @@ zim.queryFriendsInfo(['userID1', 'userID2']).then(res => {
 :::
 :::if{props.platform="window"}
 ```cpp
-// 批量查询好友信息
+// Batch query friend information
 std::vector<std::string> userIDs;
 userIDs.emplace_back("userID1");
 zim::ZIM::getInstance()->queryFriendsInfo(userIDs, [=](
