@@ -1,568 +1,648 @@
 ---
-articleID: 14168
+articleID: 11628
 ---
 
-# ZIM release notes
+# ZIM 发布日志
 
 - - -
 
-## Version 2.18.0 
+## 2.18.0 版本
 
-**Release date: 2024-10-15**
+**发布日期：2024-10-15**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature | Description | Method |
-| ----- | ---- | ----- |
-| Group alias | Users can set group aliases that are only visible to themselves for a specific group. For more details, please refer to [Manage group info - Modify the group alias](./../Guides/Group/Group%20info.mdx#modify-the-group-alias).| <ul><li>[updateGroupAlias](@updateGroupAlias)</li><li>[groupAliasUpdated](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-alias-updated-operated-user-id-group-id)</li></ul> |
-| User online status | Users can continuously monitor the online status changes of other users by subscription, query the current online statuses of other users, and also query their own subscription list. In addition, in the scenario of multi-device login, users can listen for changes in their online platforms. For more details, please refer to [Online Status Subscription](./../Guides/Users/Online%20Status%20Subscription.mdx).| <ul><li>[subscribeUsersStatus](@subscribeUsersStatus)</li><li>[userStatusUpdated](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-user-status-updated)</li><li>[unsubscribeUsersStatus](@unsubscribeUsersStatus)</li><li>[queryUsersStatusByUserIDs](@queryUsersStatusByUserIDs)</li><li>[querySubscribedUserStatusListWithConfig](@querySubscribedUserStatusListWithConfig)</li></ul> |
-| Get room user avatars | Users can query the avatar information of other users in a room using the `userAvatarUrl` property of the `ZIMRoomMemberInfo` class.| [ZIMRoomMemberInfo > userAvatarUrl](@userAvatarUrl-ZIMRoomMemberInfo) |
-| Switch rooms | ZIM supports using the `switchRoomFromRoomID` method to switch rooms, suitable for smooth room switching scenarios such as instant joining a room. For more details, please refer to [Manage rooms - Switch Rooms](./../Guides/Room/Manage%20rooms.mdx#switch-rooms) | [switchRoomFromRoomID](@switchRoomFromRoomID) |
-| Query user information on the server | ZIM supports querying user information on the server by user ID. The user information include user name, user avatar, and extended fields. | [Query user information](/zim-server/user/query-user-information) |
-| Recall a room message on the server | ZIM supports recalling room messages on the server. | [Recall a room message](/zim-server/user/recall-a-room-message) |
-
-<h4>Enhancement</h4>
-
-| Item  | Description | Method |
+| <div style={{width:"130px"}}><div style={{width:"130px"}}>功能项</div></div>  | 功能描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Optimization of the initial conversation list retrieval time | We have enhanced the efficiency of fetching the initial conversation list upon user login, resulting in a significantly reduced wait time and an improved overall user experience. | [queryConversationListWithConfig](@queryConversationListWithConfig) |
-| Enhancement of the server API response parameter for sending group messages | We have added a new response parameter `MsgId` for the server API `SendGroupMessage`, which can be used to locate messages. | [Send Group Messages](/zim-server/messaging/send-group-messages) |
-| Improvement of parameters of callback on message sent | When a message fails to send, the `msg_id` parameter in the callback on message sent will no longer be empty. | [Callback on message sent](/zim-server/callbacks/message-sent) |
-| Retrieving the message extension field from the server | Through the `payload` parameter in the server callback on not sent yet, ZIM supports retrieving the extension field passed by users when sending messages. | [Callback on not sent yet](/zim-server/callbacks/message-not-sent-yet) |
-| Increased length limit for `ExtendedData` in `MessageBody` | The default maximum length of `ExtendedData` in the `MessageBody` structure is 1 KB. If you need to increase it, please contact ZEGOCLOUD technical support. | [MessageBody Introduction](/zim-server/messagebody-introduction) |
+| 群备注  | 支持用户对某个群组设置仅自己可见的群备注。详情请参考 [群资料管理 - 修改群备注](./../Guides/Group/Group%20info.mdx)。| <ul><li>[updateGroupAlias](@updateGroupAlias)</li><li>[groupAliasUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-alias-updated-operated-user-id-group-id)</li></ul> |
+| 用户在线状态 | 不仅支持用户通过订阅以持续关注其他用户的在线状态变化，还支持一次性查询其他用户的当下的在线状态，也支持用户查询自己的订阅列表。此外，在多端登录场景下，用户可以监听自己的在线平台变化。详情请参考 [在线状态订阅](./../Guides/Users/Online%20Status%20Subscription.mdx)。| <ul><li>[subscribeUsersStatus](@subscribeUsersStatus)</li><li>[userStatusUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-user-status-updated)</li><li>[unsubscribeUsersStatus](@unsubscribeUsersStatus)</li><li>[queryUsersStatusByUserIDs](@queryUsersStatusByUserIDs)</li><li>[querySubscribedUserStatusListWithConfig](@querySubscribedUserStatusListWithConfig)</li></ul> |
+| 获取房间用户头像 | 用户现在可以通过 `ZIMRoomMemberInfo` 类的 `userAvatarUrl` 属性，查询房间内其他用户的头像信息。| [ZIMRoomMemberInfo > userAvatarUrl](@userAvatarUrl-ZIMRoomMemberInfo) |
+| 切换房间  | 新增 `switchRoomFromRoomID ` 接口以切换房间，适用于秒开等需要平滑切换房间的业务场景。详情请参考 [房间管理 - 切换房间](./../Guides/Room/Manage%20rooms.mdx) | [switchRoomFromRoomID](@switchRoomFromRoomID) |
+| 服务端查询用户信息 | 支持在服务端通过用户 ID 查询用户的信息，包含用户名称、用户头像和扩展字段。| [查询用户信息](/zh/zim-server/user/query-user-information) |
+| 服务端撤回房间消息 | 支持从服务端调用接口撤回房间消息。| [撤回房间消息](/zh/zim-server/messaging/recall-a-room-message)。 |
 
----
-## Version 2.17.1 
+<h5>改进优化</h5>
 
-**Release date: 2024-08-15**
-
-<h4>Enhancement</h4>
-
-Known issues fixed.
-
----
-
-## Version 2.17.0
-
-**Release date: 2024-08-02**
-
-<h4>New features</h4>
-
-| Feature | Description | Method |
-| ----- | ---- | ----- |
-| Conversation Marking | Supports users to mark conversations, suitable for scenarios where users need to pay attention to certain conversations or cannot handle certain conversations. This feature can be used to group conversations by setting the same mark for multiple conversations. For client implementation, please refer to [Mark Conversations](./../Guides/Conversation/Mark%20conversations.mdx). For server implementation, please refer to [Set Conversation Marks](/zim-server/conversation/set-conversation-marks). | <ul><li>[setConversationMark](@setConversationMark)</li><li>[Set Conversation Marks](/zim-server/conversation/set-conversation-marks)</li></ul> |
-| Query Conversation List | Supports filtering conversation list by mark, conversation type, and whether it contains unread messages. For more details, please refer to [Mark Conversations](./../Guides/Conversation/Mark%20conversations.mdx). | [queryConversationListWithConfig](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#query-conversation-list-with-config-callback-1) |
-| Query Total Unread Message Count By Marks | Supports filtering unread message count by mark. For more details, please refer to [Mark Conversations](./../Guides/Conversation/Mark%20conversations.mdx). | [queryConversationTotalUnreadMessageCountWithConfig](@queryConversationTotalUnreadMessageCountWithConfig) |
-| Reply to Message | Supports users to reply to a specific message within a conversation. Currently supports replying with text, image, file, audio, video, merged, and custom messages. In addition, users can also query the reply tree to get the complete list of replied messages. For more details, please refer to [Reply to a message](./../Guides/Messaging/Reply%20to%20a%20message.md). | <ul><li>[replyMessage](@replyMessage)</li><li>[queryMessageRepliedListByMessage](@queryMessageRepliedListByMessage)</li></ul> |
-| Get Specific Message List | Supports querying a specific list of historical messages, suitable for scenarios where users need to understand the context of a certain message. For more details, please refer to [Get message history](./../Guides/Messaging/Get%20message%20history.md) | [queryMessagesByMessageSeqs](@queryMessagesByMessageSeqs) |
-| Sender Unaware When Sending Messages by Server APIs | Newly adds `SenderUnaware` field, allowing the client corresponding to the `FromUserId` (sender's user ID) in the request parameters to be unaware of the sending of the peer-to-peer message sent by the server. | [Send a one-to-one message](/zim-server/messaging/send-a-one-to-one-message) |
-
-
----
-
-
-## Version 2.16.0 
-
-**Release date: 2024-05-31**
-
-<h4>New features</h4>
-
-| Feature  | Description | Method|
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Server-side management of call invitations | Supports initiating, accepting and rejecting call invitations on the server side.| <ul><li>[Send a call invitation](/zim-server/call-invitation/send-a-call-invitation)</li><li>[Accept a call invitation](/zim-server/call-invitation/accept-a-call-invitation)</li><li>[Reject a call invitation](/zim-server/call-invitation/reject-a-call-invitation)</li></ul> |
-| Server-side management muting | Supports muting groups and specific group members on the server. | <ul><li> [Mute a group](/zim-server/group/mute-a-group)</li><li>[Mute group members](/zim-server/group/mute-group-members)</li></ul> |
-| Server-side setting group member roles| Supports modifying group member roles on the server. | [Set group member roles](/zim-server/group/set-group-member-roles) |
-
-<h4>Enhancement</h4>
-
-| Item  | Description | Method |
-| -----  | ---- | ----- |
-| Optimize receipts| Includes real-time perception of receipt expiration status, supports offline query of receipt details, and supports query of group receipt details for groups with more than 100 members;| <ul><li>[queryGroupMessageReceiptReadMemberListByMessage](@queryGroupMessageReceiptReadMemberListByMessage)</li><li>[queryGroupMessageReceiptUnreadMemberListByMessage](@queryGroupMessageReceiptUnreadMemberListByMessage)</li></ul> |
-| Call invitation | Supports users to pass in a specified userID through the [callCancelWithInvitees](@callCancelWithInvitees) interface when making advanced call invitations, and only cancel the call for this user without affecting the global call status. |   [callCancelWithInvitees](@callCancelWithInvitees)|
+| 首次拉取会话列表耗时优化 | 优化用户登录后首次拉取会话列表的时效，提升用户体验。 | [queryConversationListWithConfig](@queryConversationListWithConfig) |
+| 服务端发送群聊消息响应参数优化 | 服务端 API `SendGroupMessage` 的响应参数新增 `MsgId`，可用于定位消息。 | [发送群组消息](/zh/zim-server/messaging/send-group-messages) |
+| 消息发送后回调参数优化 | 当消息发送失败，消息发送后回调中的 `msg_id` 参数将不再为空。 | [消息发送后回调](/zh/zim-server/callbacks/message-sent) |
+| 从服务端获取消息拓展字段 | 支持通过消息发送前回调中的 `payload` 参数获取用户发送消息时传入的拓展字段。 | [消息发送前回调](/zh/zim-server/callbacks/message-not-sent-yet) |
+| `MessageBody` 扩展字段长度可上调 | `MessageBody` 结构中的 `ExtendedData` 长度上限默认为 1 KB。如需上调，请联系 ZEGO 技术支持。| [MessageBody 说明](/zh/zim-server/messaging/messagebody-introduction) |
 
 ---
 
-## Version 2.15.0 
+## 2.17.1 版本
 
-**Release date: 2024-03-29**
+**发布日期：2024-08-15**
 
-<h4>New features</h4>
+<h5>问题修复</h5>
 
-| Item  | Description | Method |
+修复已知问题。
+
+---
+
+## 2.17.0 版本
+
+**发布日期：2024-08-02**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
+| -----  | ---- | ----- |
+| 内容审核 | 无需额外开发，即可实现对消息的安全审核。<ul><li>支持消息类型多样，涵盖文本消息、图片消息、语音消息和视频消息。</li><li>支持先审后发和先发后审两种审核方式。</li><li>支持根据不同会话类型的消息定制审核标签和尺度</li><li>支持针对审核结果配置不同的审核强度。</li><li>除了默认的敏感词汇外，您可以自行定义需要处理的词汇。</li></ul>详情请参考 [内容审核 - 能力概述](./../Guides/Content%20Moderation/Overview.mdx)。 | - |
+| 会话标记 | 支持用户对会话设置标记，适用于需要关注某会话或无法处理某条会话的场景。可使用本功能实现会话分组，即对多个会话设置相同的标记。客户端实现流程请参考 [标记会话](./../Guides/Conversation/Mark%20conversations.mdx)，服务端实现流程请参考 [设置会话标记](/zh/zim-server/conversation/set-conversation-marks)。  | <ul><li>[setConversationMark](@setConversationMark)</li><li>[设置会话标记](/zh/zim-server/conversation/set-conversation-marks)</li></ul> |
+| 会话列表查询 | 支持将标记、会话类型和是否包含未读消息作为过滤项获取会话列表。详情请参考 [标记会话](./../Guides/Conversation/Mark%20conversations.mdx)。 | [queryConversationListWithConfig](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#query-conversation-list-with-config-callback-1) |
+| 特定会话未读消息总数查询 | 支持按标记作为过滤项获取未读消息总数。详情请参考 [标记会话](./../Guides/Conversation/Mark%20conversations.mdx)。 | [queryConversationTotalUnreadMessageCount](@queryConversationTotalUnreadMessageCountWithConfig) |
+| 回复消息 | 支持用户在会话内针对某条消息进行回复，当前支持回复文本、图片、文件、音频、视频、合并和自定义消息。此外，还支持用户查询回复树，获取回复的完整消息列表。详情请参考 [回复消息](./../Guides/Messaging/Reply%20to%20a%20message.mdx)。 | <ul><li>[replyMessage](@replyMessage)</li><li>[queryMessageRepliedListByMessage](queryMessageRepliedListByMessage)</li></ul> |
+| 获取特定历史消息列表 | 支持查询指定的历史消息列表，适用于需要了解某条消息的上下文的场景。详情请参考 [获取历史消息](./../Guides/Messaging/Get%20message%20history.mdx)。 | [queryMessagesByMessageSeqs](@queryMessagesByMessageSeqs) |
+| 服务端离线消息推送无限频 | 支持开发者在调用服务端接口 [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) 和 [发送群组消息](/zh/zim-server/messaging/send-group-messages) 向国内 Android 厂商进行无限频离线推送。 | [MessageBody 说明 - OfflinePush - PushStrategyId](/zh/zim-server/messaging/messagebody-introduction#offlinepush-说明房间消息不支持此字段) |
+| 服务端发送房间消息接口支持发送者有感知 | 新增 `SenderUnaware` 字段，允许通过服务端发送房间消息后，请求参数中的 `FromUserId`（发送方用户 ID）所对应的客户端对此次发送有感知。 | [发送房间消息](/zh/zim-server/messaging/send-room-messages) |
+
+
+<h5>改进优化</h5>
+
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
+| -----  | ---- | ----- |
+| 计费优化 | 优化 ZIM 各个版本间的计费梯度和规格，新增内容审核的费用说明，详情请参考 [计费说明](./../Introduction/Billing%20instructions.mdx)。 | - |
+
+---
+
+## 2.16.0 版本
+
+**发布日期：2024-05-31**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
+| -----  | ---- | ----- |
+| 服务端管理呼叫邀请 | 支持在服务端发起、接受和拒绝呼叫邀请。 | <ul><li>[发起呼叫邀请](/zh/zim-server/call-invitation/send-a-call-invitation)</li><li>[接受呼叫邀请](/zh/zim-server/call-invitation/accept-a-call-invitation)</li><li>[拒绝呼叫邀请](/zh/zim-server/call-invitation/reject-a-call-invitation)</li></ul> |
+| 服务端管理禁言 | 支持在服务端禁言群组和特定群成员。 | <ul><li>[设置群禁言](/zh/zim-server/group/mute-a-group)</li><li>[设置群成员禁言](/zh/zim-server/group/mute-group-members)</li></ul> |
+| 服务端设置群成员角色 | 支持在服务端修改群成员的角色。 | [设置群成员角色](/zh/zim-server/group/set-group-member-roles) |
+
+<h5>改进优化</h5>
+
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
+| -----  | ---- | ----- |
+| 优化回执 | 包含回执过期状态实时感知，支持离线查询回执详情，支持查询群人数超过 100 人的群回执详情； | <ul><li>[queryGroupMessageReceiptReadMemberListByMessage](@queryGroupMessageReceiptReadMemberListByMessage)</li><li>[queryGroupMessageReceiptUnreadMemberListByMessage](@queryGroupMessageReceiptUnreadMemberListByMessage)</li></ul> |
+| 呼叫邀请 | 支持用户进行进阶模式呼叫邀请时，通过 [callCancelWithInvitees](@callCancelWithInvitees) 接口单独传入某个指定的 userID，仅对该用户取消呼叫，不影响全局呼叫状态。 |   [callCancelWithInvitees](@callCancelWithInvitees)|
+
+---
+
+## 2.15.0 版本
+
+**发布日期：2024-03-29**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Group role | New group role "Administrator" has the upper limit of most group leaders. It can modify the nicknames of ordinary group members, withdraw messages from ordinary group members, kick people, and ban individual group members and specific group roles. <br/>To learn about group roles and corresponding permissions, please refer to [Manage group members- Set Group Member Roles](./../Guides/Group/Group%20members.mdx#set-a-role-for-a-group-member)  | [setGroupMemberRole](@setGroupMemberRole) |
-| Group verification | <ul><li>[ZIMGroupAdvancedConfig](@-ZIMGroupAdvancedConfig) New attributes [joinMode](@joinMode-ZIMGroupAdvancedConfig), [inviteMode](@inviteMode-ZIMGroupAdvancedConfig) and [beInviteMode](@beInviteMode-ZIMGroupAdvancedConfig) supports setting the group verification mode, invitation mode, and invitation target user verification mode when creating a group, making it easier for group owners and administrators to restrict external users from joining the group. </li><li>When the group's group membership verification mode is modified to require the target user's approval, users in the group need to initiate a group invitation application to external users and wait for the target user's approval. </li><li>When the group's invitation target user verification mode is modified to require approval by the group owner and administrator, external users initiate a group application, which must be approved by the group owner or administrator. </li><li>Support users to query lists related to group membership applications. </li><li>Supports calling client API and server API to update the above mode after the group is created. </li></ul>For details on interface calling, please refer to [Manage groups](./../Guides/Group/Manage%20groups.mdx). | <ul><li>[createGroup](@createGroup__1)</li><li>[ZIMGroupAdvancedConfig > joinMode](@joinMode-ZIMGroupAdvancedConfig)</li><li>[ZIMGroupAdvancedConfig > inviteMode](@inviteMode-ZIMGroupAdvancedConfig)</li><li>[ZIMGroupAdvancedConfig > beInviteMode](@beInviteMode-ZIMGroupAdvancedConfig)</li><li>[sendGroupJoinApplicationToGroupID](@sendGroupJoinApplicationToGroupID)</li><li>[acceptGroupJoinApplicationFromUserID](@acceptGroupJoinApplicationFromUserID)</li><li>[rejectGroupJoinApplicationFromUserID](@rejectGroupJoinApplicationFromUserID)</li><li>[sendGroupInviteApplicationsToUserIDs](@sendGroupInviteApplicationsToUserIDs)</li><li>[acceptGroupInviteApplicationFromInviterUserID](@acceptGroupInviteApplicationFromInviterUserID)</li><li>[rejectGroupInviteApplicationFromInviterUserID](@rejectGroupInviteApplicationFromInviterUserID)</li><li>[queryGroupApplicationListWithConfig](@queryGroupApplicationListWithConfig)</li><li>[updateGroupJoinMode](@updateGroupJoinMode)</li><li>[updateGroupInviteMode](@updateGroupInviteMode)</li><li>[updateGroupBeInviteMode](@updateGroupBeInviteMode)</li><li>[Modify group specification limits](/zim-server/group/modify-group-specification-limits)</li></ul>|
-| Tips Message | Supports converting certain group operations of users in the group (such as creating groups, disbanding groups, etc.) into special types of messages (Tips). After obtaining the operation information through the group message callback, developers can construct and display the description text of the related events on the UI. <br/>For information on Tips message types and extended information, as well as post-reception processing operations, please refer to [Receive tip messages](./../Guides/Messaging/Receive%20tip%20messages.mdx). | <ul><li>[ZIMMessageType > ZIMMessageTypeTips\| _blank](@ZIMMessageTypeTips-ZIMMessageType)</li><li>[receiveGroupMessage](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-group-message-from-group-id)</li></ul> |
-| Custom push rules | Support users to decide the platforms that need to receive offline push in multi-terminal login scenarios, and query the current offline push rules. <br />For details on interface calling, please refer to [Set custom push rules](./../Offline%20push%20notifications/Set%20custom%20push%20rules.mdx).| <ul><li>[updateUserOfflinePushRule](@updateUserOfflinePushRule)</li><li >[querySelfUserInfo](@querySelfUserInfo)</li></ul> |
-| Message export and import | Supports exporting historical messages from the user's local terminal as a backup, which can be used to migrate chat records when changing devices, or restore deleted messages. <br />For details on interface calling, please refer to [Export and import messages](./../Guides/Messaging/Export%20and%20import%20messages.mdx) | <ul><li>[exportLocalMessagesToFolderPath](@exportLocalMessagesToFolderPath)</li><li> [importLocalMessagesToFolderPath](@importLocalMessagesToFolderPath)</li></ul> |
-| Cache Management | Supports querying the local cache file size of the currently logged in user and clearing the local cache. <br />For details on interface calling, please refer to [Cache management](./../Guides/Cache%20management.mdx). | <ul><li>[queryLocalFileCacheWithConfig](@queryLocalFileCacheWithConfig)</li><li>[ clearLocalFileCacheWithConfig](@clearLocalFileCacheWithConfig)</li></ul> |
-| Exit all rooms | Supports users to exit all rooms at once in multi-room scenarios; it can also be used in scenarios where developers exit a single room without passing in the roomID in advance. | [leaveAllRoom](@leaveAllRoom) |
-| Data migration | Supports users to migrate user data to ZIM service through the ZIM server interface. For the implementation plan, please refer to [Migration solution](./../Migration%20solution.mdx). | - |
-| Server-side query session list | Supports paging query of the user's latest 1000 conversations (one-to-one chats and group chats) on the server side. | [Query Conversation List](/zim-server/conversation/query-conversation-list) |
-| Query historical messages on the server | Support paging query of the historical message list of the user-specified single chat or group chat session on the server. | <ul><li>[Query the message list of one-on-one chats](/zim-server/conversation/query-the-message-list-of-one-on-one-chats)</li><li>[Query the message list of group chats](/zim-server/conversation/query-the-message-list-of-group-chats)</li></ul> |
-| Modify group specifications on the server side | Support modifying the group's entry verification mode, invitation mode, invitation target verification mode and upper limit of group members on the server side. | [Modify group specification limit](/zim-server/group/modify-group-specification-limits) |
+| 群组角色 | 新增群组角色 “管理员”，拥有大部分群主上限，可以对修改普通群成员昵称、撤回普通群成员消息、踢人、禁言单独群成员和特定群角色。<br/>如需了解群组角色与对应权限，请参考 [群成员管理 - 设置群成员角色](./../Guides/Group/Group%20members.mdx)。 | [setGroupMemberRole](@setGroupMemberRole) |
+| 入群验证 | <ul><li>[ZIMGroupAdvancedConfig](@-ZIMGroupAdvancedConfig) 新增属性 [joinMode](@joinMode-ZIMGroupAdvancedConfig)、[inviteMode](@inviteMode-ZIMGroupAdvancedConfig) 和 [beInviteMode](@beInviteMode-ZIMGroupAdvancedConfig)，支持在创建群组时设置入群验证模式、邀请模式、和邀请目标用户验证模式，从而方便群主和管理员限制外部用户入群。</li><li>当群组的入群验证模式修改为需要目标用户审批后，群内用户需要向外部用户发起入群邀请申请，等待目标用户审批。</li><li>当群组的邀请目标用户验证模式修改为需要群主和管理员审批后，外部用户发起入群申请，经由群主或管理员审批。</li><li>支持用户查询入群申请相关的列表。</li><li>支持在群组创建后调用客户端 API 和服务端 API 更新上述模式。</li></ul>如需了解接口调用细节，请参考 [群组管理](./../Guides/Group/Manage%20groups.mdx)。 | <ul><li>[createGroup](@createGroup__1)</li><li>[ZIMGroupAdvancedConfig > joinMode](@joinMode-ZIMGroupAdvancedConfig)</li><li>[ZIMGroupAdvancedConfig > inviteMode](@inviteMode-ZIMGroupAdvancedConfig)</li><li>[ZIMGroupAdvancedConfig > beInviteMode](@beInviteMode-ZIMGroupAdvancedConfig)</li><li>[sendGroupJoinApplicationToGroupID](@sendGroupJoinApplicationToGroupID)</li><li>[acceptGroupJoinApplicationFromUserID](@acceptGroupJoinApplicationFromUserID)</li><li>[rejectGroupJoinApplicationFromUserID](@rejectGroupJoinApplicationFromUserID)</li><li>[sendGroupInviteApplicationsToUserIDs](@sendGroupInviteApplicationsToUserIDs)</li><li>[acceptGroupInviteApplicationFromInviterUserID](@acceptGroupInviteApplicationFromInviterUserID)</li><li>[rejectGroupInviteApplicationFromInviterUserID](@rejectGroupInviteApplicationFromInviterUserID)</li><li>[queryGroupApplicationListWithConfig](@queryGroupApplicationListWithConfig)</li><li>[updateGroupJoinMode](@updateGroupJoinMode)</li><li>[updateGroupInviteMode](@updateGroupInviteMode)</li><li>[updateGroupBeInviteMode](@updateGroupBeInviteMode)</li><li>[修改群规格限制](/zh/zim-server/group/modify-group-specification-limits)</li></ul>|
+| Tips 消息 | 支持将群内用户的某些群组操作（如创建群组、解散群组等） 转换为特殊类型消息（Tips）。凭借群组消息回调获得操作信息后，开发者可以自行构造并在 UI 上展示相关事件的描述文本。<br />如需了解 Tips 消息种类和扩展信息，以及调接收后的处理操作，请参考 [接收 Tips 消息](./../Guides/Messaging/Receive%20tip%20messages.mdx)。 | <ul><li>[ZIMMessageType > ZIMMessageTypeTips](@ZIMMessageTypeTips-ZIMMessageType)</li><li>[receiveGroupMessage](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-group-message-from-group-id)</li></ul> |
+| 自定义推送规则 | 支持用户在多端登录场景下，自行决定需要接收离线推送的平台，以及查询当前的离线推送规则。<br />如需了解接口调用细节，请参考 [自定义推送规则](./../Offline%20push%20notifications/Set%20custom%20push%20rules.mdx)。 | <ul><li>[updateUserOfflinePushRule](@updateUserOfflinePushRule)</li><li>[querySelfUserInfo](@querySelfUserInfo)</li></ul> |
+| 消息导出导入 | 支持将用户本地终端的历史消息导出作为备份，可用于更换设备时迁移聊天记录，或恢复被删除的消息。<br />如需了解接口调用细节，请参考 [导出导入消息](./../Guides/Messaging/Export%20and%20import%20messages.mdx)。 | <ul><li>[exportLocalMessagesToFolderPath](@exportLocalMessagesToFolderPath)</li><li>[importLocalMessagesToFolderPath](@importLocalMessagesToFolderPath)</li></ul> |
+| 缓存管理 | 支持查询当前登录用户的本地缓存文件大小，并清理本地缓存。<br />如需了解接口调用细节，请参考 [缓存管理](./../Guides/Cache%20management.mdx)。 | <ul><li>[queryLocalFileCacheWithConfig](@queryLocalFileCacheWithConfig)</li><li>[clearLocalFileCacheWithConfig](@clearLocalFileCacheWithConfig)</li></ul> |
+| 退出所有房间 | 支持用户在多房间场景下一次性退出所有房间；也可用于开发者退出单一房间而不提前传入 roomID 的场景。| [leaveAllRoom](@leaveAllRoom) |
+| 数据迁移 | 支持用户通过 ZIM 服务端接口将用户数据迁移至 ZIM 服务。实现方案请参考 [迁移方案](./../Migration%20solution.mdx)。| - |
+| 服务端查询会话列表 | 支持在服务端分页查询用户最新的 1000 个会话（单聊与群聊）。| [查询会话列表](/zh/zim-server/conversation/query-conversation-list) |
+| 服务端查询历史消息 | 支持在服务端分页查询用户指定单聊或群聊会话的历史消息列表。| <ul><li>[查询单聊会话消息列表](/zh/zim-server/conversation/query-the-message-list-of-one-on-one-chats)</li><li>[查询群聊会话消息列表](/zh/zim-server/conversation/query-the-message-list-of-group-chats)</li></ul> |
+| 服务端修改群组规格 | 支持在服务端修改群组的入群验证模式、邀请模式、邀请目标验证模式和群成员人数上限。| [修改群组规格限制](/zh/zim-server/group/modify-group-specification-limits) |
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Item  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Detect whether the invitation has been delivered | Support configuring the parameter [enableNotReceivedCheck](@enableNotReceivedCheck-ZIMCallInviteConfig) when initiating a call invitation to detect whether the call reaches the called party, so that the caller can quickly perceive the called network status and implement prompts. | [ZIMCallInviteConfig > enableNotReceivedCheck](@enableNotReceivedCheck-ZIMCallInviteConfig) |
-| New parameters for server-side create group interface | Added `CreateGroupTime` parameter to support setting events for group creation. | [Create a group](/zim-server/group/create-a-group) |
-| Added new parameters to the server-side interface for adding group members | Added the `GroupMemberInfos` parameter to support defining the group joining time and group joining mode of users who join the group. | [Add group members](/zim-server/group/add-group-members) |
-
+| 检测邀请是否送达 | 支持在发起呼叫邀请时配置参数 [enableNotReceivedCheck](@enableNotReceivedCheck-ZIMCallInviteConfig)，检测呼叫是否触达被叫，以便主叫更快感知被叫网络状态并实现提示。 | [ZIMCallInviteConfig > enableNotReceivedCheck](@enableNotReceivedCheck-ZIMCallInviteConfig) |
+| 服务端创建群组接口新增参数 | 新增 `CreateGroupTime` 参数，支持设置创建群组的事件。 | [创建群组](/zh/zim-server/group/create-a-group) |
+| 服务端添加群成员接口新增参数 | 新增 `GroupMemberInfos` 参数，支持定义入群用户的入群时间和入群模式。 | [添加群成员](/zh/zim-server/group/add-group-members) |
 
 
 ---
 
-## Version 2.14.1
+## 2.14.1 版本
 
-**Release date: 2024-03-05**
+**发布日期：2024-03-05**
 
-<h4>Enhancement</h4>
+<h5>问题修复</h5>
 
-Known issues fixed.
+修复已知问题。
 
 ---
 
 
-## Version 2.14.0 
+## 2.14.0 版本
 
-**Release date: 2024-02-02**
+**发布日期：2024-02-02**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Item  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Forwarding messages | <ul><li>Users can construct a merged message body and pass it to the send message API to forward merged messages.<p>Note: If you want to forward messages one by one, you can simply pass the existing message as a parameter to the send message API.</p></li><li>Supports querying the specific content of sub-messages included in a merged message.</li></ul> | <ul><li>[ZIMCombineMessage](@-ZIMCombineMessage)</li><li>[sendMessage](@sendMessage)</li><li>[queryCombineMessageDetailByMessage](@queryCombineMessageDetailByMessage)</li></ul> |
-| Send and receive @ messages| Users can mention specific users (who may not be in the current conversation) or mention all members in a conversation when sending a message. | <ul><li>[ZIMMessage > mentionedUserIDs](@mentionedUserIDs-ZIMMessage)</li><li>[ZIMMessage > isMentionAll](@isMentionAll-ZIMMessage)</li></ul> |
-| Deleting messages | Users can delete all messages in a conversation at once.| [deleteAllConversationMessagesWithConfig](@deleteAllConversationMessagesWithConfig) |
-| Saving conversation drafts |  ZIM allows users to save conversation drafts locally even after exiting one-on-one or group chat conversations for future editing.  | [setConversationDraft](@setConversationDraft) |
-| Do not disturb for one-on-one conversations  | In addition to "Do Not Disturb" for group conversations, ZIM now supports setting "Do Not Disturb" for one-on-one conversations. Users will not receive notifications for new messages in one-on-one conversations.  | [setConversationNotificationStatus](@setConversationNotificationStatus) |
-| Muting | Supports group owners to mute groups and mute specific group members. Muting groups can be applied to all members, ordinary members, or members with specific roles.  | <ul><li>[muteGroup](@muteGroup)</li><li>[muteGroupMembers](@muteGroupMembers)</li></ul> |
-| Friend management | Users can directly add and delete friends, view friend lists, send friend requests to users, accept or reject friend requests, view friend request lists, check the friend relationship between other users and themselves, query or modify friend information, and search for friends. | <ul><li>[addFriendByUserID](@addFriendByUserID)</li><li>[deleteFriendsByUserIDs](@deleteFriendsByUserIDs)</li><li>[sendFriendApplicationToUserID](@sendFriendApplicationToUserID)</li><li>[acceptFriendApplicationFromUserID](@acceptFriendApplicationFromUserID)</li><li>[rejectFriendApplicationFromUserID](@rejectFriendApplicationFromUserID)</li><li>[checkFriendsRelationByUserIDs](@checkFriendsRelationByUserIDs)</li><li>[queryFriendListWithConfig](@queryFriendListWithConfig)</li><li>[queryFriendApplicationListWithConfig](@queryFriendApplicationListWithConfig)</li><li>[updateFriendAlias](@updateFriendAlias)</li><li>[updateFriendAttributes](@updateFriendAttributes)</li><li>[queryFriendsInfoByUserIDs](@queryFriendsInfoByUserIDs)</li><li>[searchLocalFriendsWithConfig](@searchLocalFriendsWithConfig)</li></ul> |
-| Set sensitive word filtering | After enabling the security audit, developers can add additional sensitive words. When a user sends a message containing sensitive words, the message will be audited, and the content may be replaced or intercepted. <p>Note: To use this feature, please contact the ZEGOCLOUD technical support team.</p> | - |
-| Server-side Conversation Muting | Supports setting the mute notification status for group chat and one-on-one conversations on the server-side.| [Mute notifications for conversations](/zim-server/conversation/mute-notifications-for-conversations) |
-| Pin conversations on the server side | Supports setting the pinned status for user conversations on the server side.  | [Pin conversations to the top](/zim-server/conversation/pin-conversations-to-the-top) |
-| Modify group information on the server side | Supports modifying the avatar, name, and announcement of a pinned group on the server side. <p>Note: To use this feature, please contact the ZEGOCLOUD technical support team.</p> | - |
-| Manage friends on the server side| Supports adding and deleting friends for users, querying the friend list, checking friend relationships, and updating friend aliases and attributes.  | <ul><li>[Batch add friends](/zim-server/user/batch-add-friends)</li><li>[Batch send friend requests](/zim-server/user/batch-send-friend-requests)</li><li>[Batch delete friends](/zim-server/user/batch-delete-friends)</li><li>[Query the friend list](/zim-server/user/query-the-friend-list)</li><li>[Check friendships](/zim-server/user/check-friendships)</li><li>[Change the alias of a friend](/zim-server/user/change-the-alias-of-a-friend)</li><li>[Modify the attributes of a friend](/zim-server/user/modify-the-attributes-of-a-friend)</li></ul> |
-| Manage blacklist on the server side  | Supports batch blocking and unblocking users, querying the blacklist, and checking blacklist relationships for users. | <ul><li>[Batch block users](/zim-server/user/batch-block-users)</li><li>[Batch unblock users](/zim-server/user/batch-unblock-users)</li><li>[Query the blocklist](/zim-server/user/query-the-blocklist)</li><li>[Check blockships](/zim-server/user/check-blockships)</li></ul> |
-
+| 合并转发 | <ul><li>支持用户在收发消息后，通过构造合并消息体，传入发送消息接口即可实现转发合并消息；<br />说明：如需实现逐条转发，只需将已有消息作为参数传入发送消息接口即可。</li><li>支持查询合并消息包含的子消息具体内容。</li></ul> | <ul><li>[ZIMCombineMessage](@-ZIMCombineMessage)</li><li>[sendMessage](@sendMessage)</li><li>[queryCombineMessageDetailByMessage](@queryCombineMessageDetailByMessage)</li></ul> |
+| 收发 @ 消息 | 支持用户在某个会话发送消息时，为消息设置提及指定用户（可以不在当前会话）或提及全部会话内成员。 | <ul><li>[ZIMMessage > mentionedUserIDs](@mentionedUserIDs-ZIMMessage)</li><li>[ZIMMessage > isMentionAll](@isMentionAll-ZIMMessage)</li></ul> |
+| 删除消息 | 支持用户一次性删除全部会话的所有消息。 | [deleteAllConversationMessagesWithConfig](@deleteAllConversationMessagesWithConfig) |
+| 保存会话草稿 | ZIM 支持用户退出单聊和群聊会话后仍在本地保存会话草稿，以便后续编辑。 | [setConversationDraft](@setConversationDraft) |
+| 单聊会话免打扰 | 在原有“群聊会话免打扰”的基础上，新增支持对单聊会话设置免打扰。单聊会话接收新消息后，不推送通知。 | [setConversationNotificationStatus](@setConversationNotificationStatus) |
+| 禁止发言 | 支持群主对群组实现群组禁言和指定群成员禁言。群组禁言支持全体禁言、普通成员禁言、指定角色成员禁言。 | <ul><li>[muteGroup](@muteGroup)</li><li>[muteGroupMembers](@muteGroupMembers)</li></ul> |
+| 好友管理 | 用户可以直接添加和删除好友、查看看好友列表、向用户发起好友申请、同意或拒绝好友申请、查看好友申请列表、检查其他用户与自己的好友关系、查询或修改好友信息，以及搜索好友。 | <ul><li>[addFriendByUserID](@addFriendByUserID)</li><li>[deleteFriendsByUserIDs](@deleteFriendsByUserIDs)</li><li>[sendFriendApplicationToUserID](@sendFriendApplicationToUserID)</li><li>[acceptFriendApplicationFromUserID](@acceptFriendApplicationFromUserID)</li><li>[rejectFriendApplicationFromUserID](@rejectFriendApplicationFromUserID)</li><li>[checkFriendsRelationByUserIDs](@checkFriendsRelationByUserIDs)</li><li>[queryFriendListWithConfig](@queryFriendListWithConfig)</li><li>[queryFriendApplicationListWithConfig](@queryFriendApplicationListWithConfig)</li><li>[updateFriendAlias](@updateFriendAlias)</li><li>[updateFriendAttributes](@updateFriendAttributes)</li><li>[queryFriendsInfoByUserIDs](@queryFriendsInfoByUserIDs)</li><li>[searchLocalFriendsWithConfig](@searchLocalFriendsWithConfig)</li></ul> |
+| 设置安全审核敏感词 | 开通安全审核后，支持开发者添加额外敏感词。当用户发送消息包含敏感词时，对该消息进行审核、替换内容或拦截。<br />说明：如需使用此功能，请联系 ZEGO 技术支持。 | - |
+| 服务端设置会话免打扰 | 支持在服务端对群聊会话和单聊会话设置免打扰状态。 | [设置会话消息免打扰](/zh/zim-server/conversation/mute-notifications-for-conversations) |
+| 服务端置顶会话 | 支持在服务端为用户设置会话的置顶状态。 | [置顶会话](/zh/zim-server/conversation/pin-conversations-to-the-top) |
+| 服务端修改群资料 | 支持在服务端修改置顶群组的头像、名称和公告。**说明**：如需使用此功能，请联系 ZEGO 技术支持了解详情。 | - |
+| 服务端管理好友 | 支持在服务端为用户添加和删除好友，查询好友列表，检查好友关系，更新好友备注和属性。 | <ul><li>[批量添加好友](/zh/zim-server/user/batch-add-friends)</li><li>[批量发送好友申请](/zh/zim-server/user/batch-send-friend-requests)</li><li>[批量删除好友](/zh/zim-server/user/batch-delete-friends)</li><li>[查询好友列表](/zh/zim-server/user/query-the-friend-list)</li><li>[检查好友关系](/zh/zim-server/user/check-friendships)</li><li>[更新好友备注](/zh/zim-server/user/change-the-alias-of-a-friend)</li><li>[更新好友属性](/zh/zim-server/user/modify-the-attributes-of-a-friend)</li></ul> |
+| 服务端管理黑名单 | 支持在服务端为用户批量拉黑、解除黑名单、查询黑名单、检查黑名单关系。 | <ul><li>[批量拉黑用户](/zh/zim-server/user/batch-block-users)</li><li>[批量移除黑名单](/zh/zim-server/user/batch-unblock-users)</li><li>[查询黑名单](/zh/zim-server/user/query-the-blocklist)</li><li>[检查黑名单关系](/zh/zim-server/user/check-blockships)</li></ul> |
 
 
 ---
 
-## Version 2.13.1 
 
-**Release date: 2024-01-12**
+## 2.13.1 版本
 
-<h4>Enhancement</h4>
+**发布日期：2024-01-12**
 
-Known issues fixed.
+<h5>问题修复</h5>
+
+修复已知问题。
 
 ---
 
-## Version 2.13.0 
+## 2.13.0 版本
 
-**Release date: 2024-01-05**
+**发布日期：2024-01-05**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Multi-device login | The "multi-device login" strategy supports configuring the logic for kicking each other out. Currently, it only supports kicking out between Android and iOS devices, as well as between Windows and Mac devices. | [loginWithUserID](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2) |
-| Offline login | Supports users to login to the IM service and access local SDK data while being offline. | [loginWithUserID](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2) |
-| Blacklist management | You can query your own blacklist, block specific users (no longer receive messages from them), remove users from the blacklist, and check if a specific user is in the blacklist. | <ul><li>[queryBlacklistWithConfig](@queryBlacklistWithConfig)</li><li>[addUsersToBlacklistWithUserIDs](@addUsersToBlacklistWithUserIDs)</li><li>[removeUsersFromBlacklistWithUserIDs](@removeUsersFromBlacklistWithUserIDs)</li><li>[checkUserIsInBlackListByUserID](@checkUserIsInBlackListByUserID)</li></ul> |
-| Insert local message | Support inserting local messages into room conversations. | [insertMessageToLocalDB](@insertMessageToLocalDB) |
-| Call Invitation | Add callback [callInvitationCreated](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-created-call-id). The initiator of the call invitation can know that the call invitation has been created by listening to this callback. | [callInvitationCreated](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-created-call-id) |
-| Server-side message retraction |Supports calling the interface from the server to retract one-on-one messages and group chat messages. | <ul><li>[Recall a one-to-one message](/zim-server/messaging/recall-a-one-to-one-message)</li><li>[Recall a group message](/zim-server/messaging/recall-a-group-message)</li></ul> |
-| Server-side user profile modification | Supports calling the interface from the server to modify user profile information, including user nickname, avatar, etc. | [Modify user information](/zim-server/user/modify-user-information) |
+| 多端登录 | “多平台登录”策略支持配置互踢逻辑，当前仅支持 android、iOS 设备互踢，Windows、Mac 设备互踢。 | [loginWithUserID](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2) |
+| 离线登录 | 支持用户在离线状态登录 IM 服务，访问本地 SDK 数据。 | [loginWithUserID](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2) |
+| 黑名单管理 | 用户可以查询自己的黑名单、将指定用户拉黑（不再接收该用户消息）、移出黑名单、以及检查指定用户是否在黑名单内。 | <ul><li>[queryBlacklistWithConfig](@queryBlacklistWithConfig)</li><li>[addUsersToBlacklistWithUserIDs](@addUsersToBlacklistWithUserIDs)</li><li>[removeUsersFromBlacklistWithUserIDs](@removeUsersFromBlacklistWithUserIDs)</li><li>[checkUserIsInBlackListByUserID](@checkUserIsInBlackListByUserID)</li></ul> |
+| 插入本地消息 | 支持向房间会话插入本地消息。 | [insertMessageToLocalDB](@insertMessageToLocalDB) |
+| 呼叫邀请 | 新增回调 [callInvitationCreated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-created-call-id)，呼叫邀请发起者可通过监听此回调，得知呼叫邀请已创建。 | [callInvitationCreated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-created-call-id) |
+| 服务端撤回消息 | 支持从服务端调用接口撤回单聊消息和群聊消息。 | <ul><li>[撤回单聊消息](/zh/zim-server/messaging/recall-a-one-to-one-message)</li><li>[撤回群聊消息](/zh/zim-server/messaging/recall-a-group-message)</li></ul> |
+| 服务端修改用户资料 | 支持从服务端调用接口修改用户资料信息，包括用户昵称、头像等。 | [修改用户资料](/zh/zim-server/user/modify-user-information) |
 
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Item  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Optimize roomID length limitation | Supports a maximum length of 128 bytes for [roomID](@roomID-ZIMRoomInfo).| [ZIMRoomInfo > roomID](@roomID-ZIMRoomInfo) |
-| Added user avatar field to user information related classes | [ZIMUserInfo](@-ZIMUserInfo) and [ZIMGroupMemberInfo](@-ZIMGroupMemberInfo) added `userAvatarUrl` field, which is used to set or describe the user avatar address.<p>Warning: The user avatar field for room members is currently not supported. This means that the `userAvatarUrl` in the `ZIMUserInfo` obtained through [queryRoomMemberListByRoomID](@queryRoomMemberListByRoomID) and [queryRoomMembersByUserIDs](@queryRoomMembersByUserIDs) will be empty.</p> | <ul><li>[ZIMUserInfo](@-ZIMUserInfo)</li><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo)</li></ul> |
-| Added new response parameters to the server interface for sending one-to-one chat messages  | Added the  `SuccessList` parameter, with member parameters including `UserId`、`MsgId` and `MsgSeq`, to provide information about users who have successfully received the message. `MsgSeq` can be used for [Recall a one-to-one message](/zim-server/messaging/recall-a-one-to-one-message).| [Send a one-to-one messages](/zim-server/messaging/send-a-one-to-one-message) |
-| Added new response parameters to the server interface for sending group chat messages | Added `MsgSeq`, which can be used to [Recall a group message](/zim-server/messaging/recall-a-group-message). | [Send group messages](/zim-server/messaging/send-group-messages) |
-| New field for server callback after the message is sent | Added `user_list` field, used to return messages in batches to receive user information. <p>Warning: Only when developers call the server interface [Send a one-to-one message](/zim-server/messaging/send-a-one-to-one-message), this field will have a value.</p> | [Callback on message sent](/zim-server/callbacks/message-sent) |
-| Optimize the call back logic of [roomStateChanged](https://doc-en.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data)| When developers call the ZIM server API to destroy a room in the backend, the callback [roomStateChanged](https://doc-en.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) that describes the room state change reason is modified to`ZIMRoomEventRoomNotExist`. | [roomStateChanged](https://doc-en.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) |
+| 优化 roomID 长度限制 | 支持最长 128 字节的 [roomID](@roomID-ZIMRoomInfo)。| [ZIMRoomInfo > roomID](@roomID-ZIMRoomInfo) |
+| 用户信息相关类新增用户头像字段 | [ZIMUserInfo](@-ZIMUserInfo) 和 [ZIMGroupMemberInfo](@-ZIMGroupMemberInfo) 新增 `userAvatarUrl` 字段，用于设置或说明用户头像地址。<br />注意：暂不支持获取房间成员的用户头像字段，即通过 [queryRoomMemberListByRoomID](@queryRoomMemberListByRoomID) 和 [queryRoomMembersByUserIDs](@queryRoomMembersByUserIDs) 拿到的 `ZIMUserInfo` 的 `userAvatarUrl` 为空。 | <ul><li>[ZIMUserInfo](@-ZIMUserInfo)</li><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo)</li></ul> |
+| 发送单聊消息服务端接口新增响应参数 | 新增 `SuccessList` 参数，成员参数包含 `UserId`、`MsgId` 和 `MsgSeq`，说明消息接受成功用户的相关信息。`MsgSeq` 可用于 [撤回单聊消息](/zh/zim-server/messaging/recall-a-one-to-one-message)。 | [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) |
+| 发送群聊消息服务端接口新增响应参数 | 新增 `MsgSeq`，可用于 [撤回群聊消息](/zh/zim-server/messaging/send-a-one-to-one-message)。 | [发送群聊消息](/zh/zim-server/messaging/send-group-messages) |
+| 消息发送后服务端回调新增字段 | 新增 `user_list` 字段，用于批量返回消息接收用户信息。**说明**：仅当开发者调用服务端接口 [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) 时，此字段有值。| [消息发送后回调](/zh/zim-server/callbacks/message-sent) |
+| 优化 [roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 回调逻辑  | 当开发者调用 ZIM 服务端接口在后台销毁房间后，[roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 回调描述房间状态变化的原因修改为 `ZIMRoomEventRoomNotExist`。 | [roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) |
 
-<h4>Deprecation</h4>
+<h5>废弃删除</h5>
 
-| Item | Description | Method |
+| <div style={{width:"130px"}}>废弃项</div>  | 废弃描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Abandon the `loginWithUserInfo` interface | Abandon the old login interface and add a new login interface[loginWithUserID](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2). The new version of the login interface supports more configurations through [ZIMLoginConfig](@-ZIMLoginConfig), such as whether to use Token authentication and whether to log in offline.| [loginWithUserID](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2) |
-| Part of the user information-related classes have deprecated the old avatar field. | <ul><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo) deprecated `memberAvatarUrl`. Please use the new field `userAvatarUrl`.</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo) The `userAvatarUrl`，is deprecated. Please retrieve `userAvatarUrl` from `baseInfo`. </li></ul> | <ul><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo)</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo)</li></ul> |
+| 废弃 `loginWithUserInfo` 接口 | 废弃旧版登录接口，新增新版登录接口 [loginWithUserID](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2)。新版登录接口支持通过 [ZIMLoginConfig](@-ZIMLoginConfig) 进行更多配置，如是否使用 Token 鉴权、是否离线登录。 | [loginWithUserID](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2) |
+| 部分用户信息相关类废弃旧版头像字段  | <ul><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo) 废弃 `memberAvatarUrl`，请使用新字段 `userAvatarUrl`。</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo) 废弃 `userAvatarUrl`，请从 `baseInfo` 获取 `userAvatarUrl`。</li></ul> | <ul><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo)</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo)</li></ul> |
 
 ---
 
 
-## Version 2.12.1
+## 2.12.1 版本
 
-**Release date: 2023-11-29**
+**发布日期：2023-11-29**
 
-<h4>Enhancement</h4>
+<h5>问题修复</h5>
 
-Known issues fixed.
+修复已知问题。
 
 ---
 
-## Version 2.12.0 
+## 2.12.0 版本
 
-**Release date: 2023-11-20**
+**发布日期：2023-11-20**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Geofencing |  Provides geofencing services, ensuring that IM data is stored locally and suitable for high-security overseas scenarios. | [setGeofencingConfig](@setGeofencingConfig) |
-| Group message management | Supports automatic retrieval of group history messages for new members joining the group. <p>Note: If you need to use this feature, please contact the ZEGOCLOUD technical support team for configuration.</p> | <ul><li>[joinGroup](@joinGroup)</li><li>[inviteUsersIntoGroup](@inviteUsersIntoGroup)</li></ul> |
-| Read all with one click | Supports clearing the unread message count and total unread message count for all conversations. | [clearConversationTotalUnreadMessageCount](@clearConversationTotalUnreadMessageCount) |
-| Call invitation| Supports calling external users to join advanced mode calls or calling internal users to switch devices. | [callJoin](@callJoin) |
-| Delete all conversation lists | Supports clearing the current conversation list. | [deleteAllConversationsWithConfig](@deleteAllConversationsWithConfig) |
-| Server-Side API for adding group members | Supports adding specified users to a group.  | [Add group members](/zim-server/group/add-group-members) |
-| Server-side API for dismissing a group | Supports dismissing a specified group.  | [Disband a group chat](/zim-server/group/disband-a-group-chat) |
-| Server-side API for transferring group ownership | Supports transferring group ownership to a specified group member. | [Transfer the group ownership](/zim-server/group/transfer-the-group-ownership) |
-| Server-side API for setting group member nickname | Supports setting the nickname for a specified group member. | [Set nicknames of group members](/zim-server/group/set-nicknames-of-group-members) |
-| Server-side message with receipt | When sending one-to-one messages or group messages through the server, you can attach a receipt to know if the message has been read. Supported message types include text, image, file, audio, video, and custom messages. For more details, please refer to [MessageBody introduction](/zim-server/messagebody-introduction). | <ul><li>[Send a one-to-one message](/zim-server/messaging/send-a-one-to-one-message)</li><li>[Send group messages](/zim-server/messaging/send-group-messages)</li></ul> |
-| Server-Side login and logout callback |When a user logs in or logs out, the ZIM server will actively notify the developer's server through callbacks.  | [ Login and logout callback ](/zim-server/callbacks/login-and-logout) |
-| Offline push to all users  | When using the server-side API for pushing messages to all users, you can choose the push type to achieve offline push. | [Push message to all users](/zim-server/messaging/push-message-to-all-users) |
+| 地理围栏 | 提供地理围栏服务，保证 IM 数据存储在运营本地，适用于海外高安全场景。 | [setGeofencingConfig](@setGeofencingConfig) |
+| 群消息管理 | 支持新进入群组成员自动获取群历史消息。<br />说明：如需使用此功能，请联系 ZEGO 技术支持配置。 | <ul><li>[joinGroup](@joinGroup)</li><li>[inviteUsersIntoGroup](@inviteUsersIntoGroup)</li></ul> |
+| 一键已读 | 支持清除所有会话的消息未读数和总消息未读数。 | [clearConversationTotalUnreadMessageCount](@clearConversationTotalUnreadMessageCount) |
+| 呼叫邀请 | 支持呼叫外用户主动加入进阶模式呼叫，或呼叫内用户切换设备。 | [callJoin](@callJoin) |
+| 删除所有会话列表 | 支持清空当前会话列表 | [deleteAllConversationsWithConfig](@deleteAllConversationsWithConfig) |
+| 服务端新增添加群成员接口 | 支持将指定用户拉进至群组中。 | [添加群成员](/zh/zim-server/group/disband-a-group-chat) |
+| 服务端新增解散群组接口 | 支持解散指定群组。 | [解散群组](/zh/zim-server/group/disband-a-group-chat) |
+| 服务端新增转让群主接口 | 支持将群主转让给指定的群成员。 | [转让群主](/zh/zim-server/group/set-nicknames-of-group-members) |
+| 服务端新增设置群成员昵称接口 | 支持为指定群成员设置其群昵称。 | [设置群成员昵称](/zh/zim-server/group/set-nicknames-of-group-members) |
+| 服务端消息支持附带回执 | 通过服务端发送单聊消息、群聊消息时，可以附带回执功能，以便得知消息是否已读。支持的消息类型包含文本、图片、文件、音频、视频、自定义消息，详情请参考 [MessageBody 说明](/zh/zim-server/messaging/messagebody-introduction)。 | <ul><li>[发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message)</li><li>[发送群组消息](/zh/zim-server/messaging/send-group-messages)</li></ul> |
+| 服务端新增登录登出回调 | 在用户登录、退出时，ZIM 服务端会主动回调通知给开发者服务端。 | [登录登出回调](/zh/zim-server/callbacks/login-and-logout) |
+| 全员离线推送 | 在调用服务端接口进行全员推送时，支持选择推送类型，实现离线推送。 | [全员推送](/zh/zim-server/messaging/push-message-to-all-users) |
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Item  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-|  Login logic optimization| Optimized the login logic to avoid multiple devices kicking each other out in weak network environments. | - |
-| Server callback for call creation | The server callback for call creation now includes the `caller` field, which indicates the user who initiated the call. For more details, please refer to [Callback on call invitation sent](/zim-server/callbacks/call-invitation-sent). | - |
+| 登录逻辑优化 | 优化登录逻辑，避免了弱网环境下多设备异常互踢的情况。 | - |
+| 呼叫创建服务端回调 | 呼叫创建服务端回调新增 `caller` 字段说明发起呼叫的用户，详情请参考 [呼叫创建回调]()。 | - |
 
 
 ---
 
-## Version 2.11.0 
+## 2.11.0 版本
 
-**Release date: 2023-10-26**
+**发布日期：2023-10-26**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Multi-device login| Support for configuring dual-platform or multi-platform login strategies allows users to log in to the same account on multiple platforms or devices simultaneously, enabling data synchronization for sessions, messages, groups, and other features across multiple devices. For more information on the impact of multi-platform login on other functions, please refer to [Multi-device login](./../Guides/Users/Multi-device%20login.mdx).<p>Note: This feature is only supported for users of the Professional or Ultimate packages and they must contact the ZEGOCLOUD technical support team to configure the login policy.</p> | [loginWithUserInfo](@loginWithUserInfo) |
+| 多端登录 | 支持配置双平台或多平台登录策略，用户可在多平台、多设备上同时登录同一账户，实现会话、消息、群组等数据多端互通。如需了解多端登录对其他功能的影响，请参考 [多端登录](./../Guides/Users/Multi-device%20login.mdx)。<br />**注意**：仅支持专业版或旗舰版套餐用户使用此功能，且需联系 ZEGO 技术支持进行配置登录策略。 | [loginWithUserInfo](@loginWithUserInfo) |
 
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Item  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Added support for server-Side signaling message types | Supports sending binary signaling messages encoded in base64 through the server. For more details, please refer to [MessageBody introduction](/zim-server/messagebody-introduction). | - |
-| Optimized logic for unpinning conversations| After deleting a pinned conversation, the pinned status of the conversation([ZIMConversation > isPinned](@isPinned-ZIMConversation))will not be automatically changed to `No`. When there are new messages in this conversation and it appears in the conversation list again, it will still be a pinned conversation. | - |
+| 新增服务端信令消息支持类型 | 支持通过服务端发送经 base64 编码后的二进制信令消息，详情请参考 [MessageBody 说明](/zh/zim-server/messaging/messagebody-introduction)。 | - |
+| 优化删除会话后的置顶逻辑 | 删除某置顶会话后，不会自动更改该会话的置顶状态（[ZIMConversation > isPinned](@isPinned-ZIMConversation)）为 `No`。当该会话有新消息，再次出现在会话列表时，仍为置顶会话。 | - |
 
 ---
 
 
-## Version 2.10.0
+## 2.10.0 版本
 
-**Release date: 2023-08-31**
+**发布日期：2023-08-31**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-|  Respond to messages with emoticons | Supports responding to messages with emoticons in one-on-one chats and group chats. It can be used for scenarios such as replying with emojis and initiating group polls or confirming group results. Additionally, it supports deleting one's own reactions and querying user information related to a specific reaction.  | <ul><li>[addMessageReaction](@addMessageReaction)</li><li>[deleteMessageReaction](@deleteMessageReaction)</li><li>[queryMessageReactionUserListByMessage](@queryMessageReactionUserListByMessage)</li></ul> |
-| Sender unaware for server-side peer messaging  | Added the `SenderUnaware`  field, which allows the client associated with the `FromUserId`(sender's user ID) to be unaware of the server-side peer message being sent.  | [Send one-to-one messages](/zim-server/messaging/send-a-one-to-one-message) |
-| Server-side broadcast messaging | Supports sending messages with specific content, such as text and images, to all online users, including the message sender. This feature is suitable for scenarios like broadcasting announcements or displaying cross-room gift animations.  | <ul><li>[Push message to all users](/zim-server/messaging/push-message-to-all-users)</li><li>[broadcastMessageReceived](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-broadcast-message-received)</li></ul> |
-| The server has added a new interface to query whether the user is in the room | This interface supports querying whether a specified user is present in the target room. | [Query whether a user is in a room](/zim-server/room/query-whether-a-user-is-in-a-room) |
+|  消息表态 | 支持对单聊和群聊消息做出反应（即表态），一般可用于表情回复消息等场景，也可用于发起群组投票、确认群组结果等操作。此外，还支持删除自己做出的表态，以及查询某个表态相关的用户信息。 | <ul><li>[addMessageReaction](@addMessageReaction)</li><li>[deleteMessageReaction](@deleteMessageReaction)</li><li>[queryMessageReactionUserListByMessage](@queryMessageReactionUserListByMessage)</li></ul> |
+| 服务端发送单聊消息接口支持发送者无感知 | 新增 `SenderUnaware` 字段，允许通过服务端发送单聊消息后，请求参数中的 `FromUserId`（发送方用户 ID）所对应的客户端对此次发送无感知。 | [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) |
+| 服务端发送房间消息接口支持发送者有感知 | 新增 `SenderUnaware` 字段，允许通过服务端发送房间消息后，请求参数中的 `FromUserId`（发送方用户 ID）所对应的客户端对此次发送有感知。 | [发送房间消息](/zh/zim-server/messaging/send-room-messages) |
+| 服务端新增全员推送接口 | 支持向所有在线用户（包括消息发送用户自己）发送特定内容的消息，如文本、图片等。本功能适用于全员活动公告、送礼跨房间飘屏等场景。 | <ul><li>[全员推送](/zh/zim-server/messaging/push-message-to-all-users)</li><li>[broadcastMessageReceived](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-broadcast-message-received)</li></ul> |
+| 服务端新增查询用户是否在房间内接口 | 支持通过此接口，查询指定用户是否在目标房间内。 | [查询用户是否在房间内](/zh/zim-server/room/query-whether-a-user-is-in-a-room) |
 
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Item  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Adjusting the maximum length of user nickname, UserName | Extended from 64 bytes to 256 bytes, supports longer nicknames, applicable to ZIM SDK version 2.0.0 and later. | [ZIMUserInfo > userName](@userName) |
+| 用户昵称 UserName 长度上限调整 | 从 64 字节扩展至 256 字节，支持更长昵称，适用于 2.0.0 及以后版本的 ZIM SDK。 | [ZIMUserInfo > userName](@userName) |
 
 ---
 
-## Version 2.9.0 
+## 2.9.0 版本
 
-**Release date: 2023-07-18**
+**发布日期：2023-07-18**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Call invitation new mode | Added advanced mode, supports inviting, exiting, and ending calls during a call. | <ul><li>[callingInviteWithInvitees](@callingInviteWithInvitees)</li><li>[callQuit](@callQuit)</li><li>[callEnd](@callEnd)</li></ul> |
-| Revoke other's message | In group conversations, the group owner can revoke messages sent by others. | [revokeMessage](@revokeMessage) |
-| Get room member information | Supports calling server-side API to get information about room members based on room ID, including the number of users in the room, user IDs, and names.| [Obtain information about users in a room](/zim-server/room/obtain-information-about-users-in-a-room) |
-| Server-side message sending API now supports more message types |  Supports sending image, file, audio, video, custom, and barrage message types through the server-side API. For details, please refer to [MessageBody introduction](/zim-server/messagebody-introduction). | <ul><li>[Send a one-to-one message](/zim-server/messaging/send-a-one-to-one-message)</li><li>[Send group messages](/zim-server/messaging/send-group-messages)</li><li>[Send room messages](/zim-server/messaging/send-room-messages)</li></ul> |
-|  Download external rich media messages | Supports calling the [downloadMediaFileWithMessage](@downloadMediaFileWithMessage) API to download rich media messages through external URLs.  | [downloadMediaFileWithMessage](@downloadMediaFileWithMessage) |
-| Set message extension fields | Added message extension fields that are only visible on the local end, supports updating this field, can be used to display message translation status or other content. | <ul><li>[localExtendedData](@localExtendedData-ZIMMessage)</li><li>[updateMessageLocalExtendedData](@updateMessageLocalExtendedData)</li></ul> | 
-| Search local messages | Search local messages in individual or all 'one-to-one' and 'group' conversations based on keywords, user IDs, and other conditions, and retrieve a list of messages that meet the criteria; can also search conversations based on local messages. | <ul><li>[searchLocalMessagesByConversationID](@searchLocalMessagesByConversationID)</li><li>[searchGlobalLocalMessagesWithConfig](@searchGlobalLocalMessagesWithConfig)</li><li>[searchLocalConversationsWithConfig](@searchLocalConversationsWithConfig)</li></ul> |
-| Search groups |  Supports searching for group names based on keywords, and also supports including group member names and nicknames in the search scope.  | [searchLocalGroupsWithConfig](@searchLocalGroupsWithConfig) |
-| Search group members |  Supports searching for group members' names in a specific group based on keywords, and also supports including group members' nicknames in the search scope.  | [searchLocalGroupMembersByGroupID](@searchLocalGroupMembersByGroupID) |
+|  呼叫邀请新增模式 | 新增进阶模式，支持用户在呼叫中邀请、退出呼叫和结束呼叫。 | <ul><li>[callingInviteWithInvitees](@callingInviteWithInvitees)</li><li>[callQuit](@callQuit)</li><li>[callEnd](@callEnd)</li></ul> |
+| 撤回他人消息 | 群组会话中，群主可以撤回他人发送的消息。 | [revokeMessage](@revokeMessage) |
+| 获取房间成员信息 | 支持调用服务端接口，根据房间 ID 获取房间成员的信息，包括房间用户数量、用户 ID 及名称。| [获取房间成员信息](/zh/zim-server/room/obtain-information-about-users-in-a-room) |
+| 服务端消息发送接口新增支持更多消息类型 | 支持通过服务端接口发送图片、文件、音频、视频、自定义和弹幕类型消息，详情请参考 [MessageBody 说明](/zh/zim-server/messaging/messagebody-introduction)。 | <ul><li>[发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message)</li><li>[发送群组消息](/zh/zim-server/messaging/send-group-messages)</li><li>[发送房间消息](/zh/zim-server/messaging/send-room-messages)</li></ul> |
+| 下载外部富媒体消息 | 支持调用 [downloadMediaFileWithMessage](@downloadMediaFileWithMessage) 接口，通过外部 URL 下载富媒体消息。 | [downloadMediaFileWithMessage](@downloadMediaFileWithMessage) |
+| 设置消息拓展字段 | 新增仅本端可见的消息拓展字段，支持更新该字段，可用于展示消息翻译状态或其他内容。 | <ul><li>[localExtendedData](@localExtendedData-ZIMMessage)</li><li>[updateMessageLocalExtendedData](@updateMessageLocalExtendedData)</li></ul> | 
+| 搜索本地消息 | 通过关键字、用户 ID 等条件对单个或所有 `单聊` 和 `群聊` 会话的本地消息进行搜索，获取符合条件的消息列表；也可以基于本地消息搜索会话。| <ul><li>[searchLocalMessagesByConversationID](@searchLocalMessagesByConversationID)</li><li>[searchGlobalLocalMessagesWithConfig](@searchGlobalLocalMessagesWithConfig)</li><li>[searchLocalConversationsWithConfig](@searchLocalConversationsWithConfig)</li></ul> |
+| 搜索群组 | 支持基于关键字对群组名称进行搜索，同时支持将群成员名称和群成员昵称纳入搜索范围。 | [searchLocalGroupsWithConfig](@searchLocalGroupsWithConfig) |
+| 搜索群成员 | 支持基于关键字对指定群内的群成员名称进行搜索，同时支持将群成员昵称纳入搜索范围。 | [searchLocalGroupMembersByGroupID](@searchLocalGroupMembersByGroupID) |
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Item  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Call invitation reception callback |  Optimize the regular mode of call invitation, support offline users to receive call invitations and be immediately notified upon going online within the timeout period of the call invitation.| [callUserStateChanged](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id) |
+| 呼叫邀请接收回调 | 优化呼叫邀请普通模式，支持在呼叫邀请的超时时间内，离线用户收到呼叫邀请在上线后能够立即被通知。| [callUserStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id) |
 
-<h4>Deprecation</h4>
+<h5>废弃删除</h5>
 
-| Method | Description | Change version |
+| <div style={{width:"130px"}}>废弃接口</div> | 废弃说明 | 废弃版本 |
 | -----  | ---- | ----- |
-| <ul><li>[callInvitationAccepted](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-accepted-info-call-id)</li><li>[callInvitationRejected](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-rejected-call-id)</li><li>[callInviteesAnsweredTimeout](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitees-answered-timeout-call-id)</li></ul> | To facilitate developers to monitor the call status changes of users in call invitations, [callUserStateChanged](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id) is added to replace the original call invitation callbacks `callInvitationAccepted`、`callInvitationRejected` and `callInviteesAnsweredTimeout`. | 2.9.0 |
+| <ul><li>[callInvitationAccepted](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-accepted-info-call-id)</li><li>[callInvitationRejected](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitation-rejected-call-id)</li><li>[callInviteesAnsweredTimeout](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-invitees-answered-timeout-call-id)</li></ul> | 为便利开发者监听呼叫邀请中用户的呼叫状态变化，新增 [callUserStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id)，替代原呼叫邀请回调 `callInvitationAccepted`、`callInvitationRejected` 和 `callInviteesAnsweredTimeout`。 | 2.9.0 |
 
 ---
 
-## Version 2.8.0
+## 2.8.0 版本
 
-**Release date: 2023-05-23**
+**发布日期：2023-05-23**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-|  Pin conversation | Users can choose conversations they want to prioritize and pin them at the top of the conversation list.  | <ul><li>[updateConversationPinnedState](@updateConversationPinnedState)</li><li>[queryConversationPinnedListWithConfig](@queryConversationPinnedListWithConfig)</li></ul> |
-| Custom message types | Added custom message types, developers can define their own message types, such as voting, chain reaction, video card, etc., and handle message parsing themselves. ZIM SDK does not define or parse the specific content of custom messages. | [ZIMCustomMessage](@-ZIMCustomMessage) |
-| Query conversation information | Query detailed information of a conversation by specifying the conversation ID. | [queryConversation](@queryConversation) |
-| Query user status in a room | By specifying multiple user IDs and the room ID, query whether the target users are in the specified room, in order to design business logic such as inviting for co-live streaming.<p>Note: Supports querying information of up to 10 users at a time.</p> | [queryRoomMembersByUserIDs](@queryRoomMembersByUserIDs) |
-| Pre-send message callback | By setting server-side callbacks, when users send one-on-one, group, or room chat messages, ZIM sends requests to the developer's server. Developers can implement:<ul><li>Intercepting inappropriate messages.</li><li>Establishing user blacklists and whitelists.</li></ul>  | [Callback on message not sent yet](/zim-server/callbacks/message-not-sent-yet) |
-| Post-send message callback| By setting server-side callbacks, after users successfully or unsuccessfully send one-on-one, group, or room chat messages, ZIM sends requests to the developer's server. Developers can implement:<ul><li>Real-time recording of messages sent by users.</li><li>Statistics of messages sent by users.</li><li>In live streaming and screen recording scenarios, embedding chat records into recorded videos using timestamps.</li></ul>  | [Callback on message sent](/zim-server/callbacks/message-sent) |
-| Batch user registration | Supports calling server-side APIs to specify user information (user ID, etc.), allowing developers to register multiple users with a single request.<p>Note: Supports registering up to 100 users at a time.</p> | [Batch register users](/zim-server/user/batch-register-users) |
-| Query group list under an app | Supports calling server-side APIs to retrieve the IDs of all groups in the app.  | [Query group list in the app](/zim-server/group/query-group-list-in-the-app) |
-| Query group member list | Supports calling server-side APIs to specify the group ID and retrieve the member list of the corresponding group.  | [Query group member list](/zim-server/group/query-group-member-list) |
-| Remove group members | Supports calling server-side APIs to specify the group ID and user ID, and remove group members in batch. <p>Note: Supports removing up to 50 group members at a time.</p> | [Remove group member](/zim-server/group/remove-group-member) |
+| 置顶会话 | 用户可以选择想要优先查看的会话，将其固定在会话列表顶部。 | <ul><li>[updateConversationPinnedState](@updateConversationPinnedState)</li><li>[queryConversationPinnedListWithConfig](@queryConversationPinnedListWithConfig)</li></ul> |
+| 自定义消息类型 | 新增自定义类型消息，开发者可自定义消息的类型，如投票类型、接龙类型、视频卡片类型等，并自行完成消息的解析。ZIM SDK 不负责定义和解析自定义消息的具体内容。 | [ZIMCustomMessage](@-ZIMCustomMessage) |
+| 查询会话信息 | 通过指定会话 ID 查询会话的详细信息。 | [queryConversation](@queryConversation) |
+| 查询房间内用户状态 | 通过指定若干 userID 和 roomID，查询目标用户是否在指定房间内，从而进行业务逻辑设计，如邀请连麦。说明：最多支持一次性查询 10 名用户的信息。 | [queryRoomMembersByUserIDs](@queryRoomMembersByUserIDs) |
+| 消息发送前回调 | 通过设置服务端回调，在用户发送单聊、群聊或房间聊天消息时，ZIM 向开发者服务端发送请求，开发者可实现：<ul><li>拦截违规消息。</li><li>建立用户黑白名单。</li></ul>  | [消息发送前回调](/zh/zim-server/callbacks/message-not-sent-yet) |
+| 消息发送后回调 | 通过设置服务端回调，在用户发送单聊、群聊、房间消息成功或失败后，ZIM 向开发者服务端发送请求，开发者可实现：<ul><li>实时记录用户发送的消息。</li><li>统计用户发送的消息。</li><li>直播录屏场景中，通过录制视频的时间戳，将聊天记录嵌入到录播视频中。</li></ul>  | [消息发送后回调](/zh/zim-server/callbacks/message-sent) |
+| 批量注册用户 | 支持调用服务端接口，指定用户信息（用户 ID 等），开发者可实现发起一次请求，注册多名用户。**说明**：最多支持一次性注册 100 名用户。 | [批量注册用户](/zh/zim-server/user/batch-register-users) |
+| 查询 App 下的群列表 | 支持调用服务端接口获取 App 中所有群组的 ID。 | [查询 App 下的群列表](/zh/zim-server/group/query-group-list-in-the-app) |
+| 查询群成员列表 | 支持调用服务端接口，指定群组 ID，获取对应群组的成员列表。 | [查询群成员列表](/zh/zim-server/group/query-group-member-list) |
+| 移除群成员 | 支持调用服务端接口，指定群组 ID 和用户 ID，批量群成员。<br />**注意：**最多支持一次性移除 50 名群成员。 | [移除群成员](/zh/zim-server/group/remove-group-member) |
 
-<h4>Deprecation</h4>
 
-| Item | Description | Method |
+<h5>废弃删除</h5>
+
+| <div style={{width:"130px"}}>废弃项</div>  | 废弃描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Deprecated system message types | [ZIMMessageType](@-ZIMMessageType) (value 30) have been deprecated. Developers are advised to use more versatile custom messages (value 200) instead. | [ZIMMessageTypeCustom](@ZIMMessageTypeCustom) |
+| 废弃系统消息类型 | [ZIMMessageType](@-ZIMMessageType) 废弃了系统消息（值为 30），开发者请使用功能更完善的自定义消息（值为 200）替代。 | [ZIMMessageTypeCustom](@ZIMMessageTypeCustom) |
 
 
-<h4>Other Matters</h4>
+<h5>其他事项</h5>
 
-<h5>1. Starting from version 2.8.0, ZIM no longer supports macOS versions below 11.0. Developers should set their macOS Deployment Target (minimum supported version) to macOS 10.13.</h5>
+<h6>1. 从 2.8.0 版本开始，ZIM 不再支持 macOS 10.13 以下版本，开发者的 macOS Deployment Target（最低支持版本）提升到 macOS 10。13</h6>
 
-For more details, please refer to [App Store submission requirement starts April 25](https://developer.apple.com/news/?id=jd9wcyov) and [Xcode 14 Release Notes](https://developer.apple.com/documentation/xcode-release-notes/xcode-14-release-notes#Build-System).
-
----
-
-## Version 2.7.1  
-
-**Release date: 2023-03-15**
-
-<h4>Enhancement</h4>
-
-Known issues fixed.
+具体说明，请参考 [App Store submission requirement starts April 25](https://developer.apple.com/news/?id=jd9wcyov) 及 [Xcode 14 Release Notes](https://developer.apple.com/documentation/xcode-release-notes/xcode-14-release-notes#Build-System)。
 
 ---
 
-## Version 2.7.0
+## 2.7.1 版本
 
-**Release date: 2023-03-07**
+**发布日期：2023-03-15**
 
-<h4>Enhancement</h4>
+<h5>问题修复</h5>
 
-| Item  | Description | Method |
+修复已知问题。
+
+---
+
+## 2.7.0 版本
+
+**发布日期：2023-03-07**
+
+<h5>改进优化</h5>
+
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Optimization of clearing userName during user login | Distinguish between the interface for modifying the username and the interface for logging in. When a user logs in and clears the userName, the userName will no longer be modified, optimizing the user login experience. | [userName](@userName-ZIMUserInfo) |
-| Optimization of session message fetching timing | The SDK intelligently detects the user's session activity to optimize the timing of data synchronization, improving user query speed and experience. | - |
-| Optimization of network reconnection timing | After the APP loses network connection, the SDK will continuously detect changes in network status and the foreground/background status of the APP, speeding up the user's reconnection process. | - |
+| 优化用户登录时 userName 置空逻辑 | 区分了用户名修改接口和登录接口。用户登录时，若将 userName 置空，不再会因此修改 userName，优化用户登录体验。 | [userName](@userName-ZIMUserInfo) |
+| 优化会话消息拉取时机 | SDK 会智能检测当前用户的会话活跃情况，优化数据同步的时机，提升用户查询速度与体验。 | - |
+| 优化断网重连时机 | 当 APP 断网后，SDK 会实时检测网络状态变化以及 APP 前后台变化，加快用户重连速度。 | - |
 
 ---
 
+## 2.6.0 版本
 
-## Version 2.6.0 
+**发布日期：2023-01-11**
 
+<h5>新增功能</h5>
 
-**Release date: 2023-01-17**
-
-<h4>New features</h4>
-
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Added server callbacks related to call invitation| You can confirm the results of the call invitation via the server callbacks provided by In-app Chat, which suits the call invitations made in a weak network condition (results returned by the SDK can be volatile).   | <ul><li>[Callback on call invitation sent](/zim-server/callbacks/call-invitation-sent)</li><li>[Callback on call invitation canceled](/zim-server/callbacks/call-invitation-canceled)</li><li>[Callback on call invitation accepted](/zim-server/callbacks/call-invitation-accepted)</li><li>[Callback on call invitation rejected](/zim-server/callbacks/call-invitation-rejected)</li><li>[Callback on call invitation timed out](/zim-server/callbacks/call-invitation-timed-out)</li></ul>  |
-| Extended fields are added to the message body | The [extendedData](@extendedData-ZIMMessage) field is added to the [ZIMMessage](@-ZIMMessage), which enables the user avatars and nicknames to be passed in this field, and those can be displayed in real time when sending messages. 	| [extendedData](@extendedData-ZIMMessage) |
-| Added the callback for the message sending status | You can refine the logic of message sending status by listening for this callback. You can design UI logic to notify users when the message status changes. | [messageSentStatusChanged](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-message-sent-status-changed) |
+| 服务端新增呼叫邀请相关回调 | 用户可以通过 ZIM 服务端的回调，明确呼叫邀请的结果，适用于网络环境不好时，SDK 反馈的结果不稳定。 | <ul><li>[呼叫创建回调](/zh/zim-server/callbacks/call-invitation-sent)</li><li>[呼叫取消回调](/zh/zim-server/callbacks/call-invitation-canceled)</li><li>[呼叫接受回调](/zh/zim-server/callbacks/call-invitation-accepted)</li><li>[呼叫拒绝回调](/zh/zim-server/callbacks/call-invitation-rejected)</li><li>[呼叫超时回调](/zh/zim-server/callbacks/call-invitation-timed-out)</li></ul> |
+| 消息体增加扩展字段 | [ZIMMessage](@-ZIMMessage) 增加 [extendedData](@extendedData-ZIMMessage) 字段，用户可以将用户头像和昵称等信息传入该字段，在聊天对话发送消息时实时展示。	| [extendedData](@extendedData-ZIMMessage) |
+| 新增发送消息状态回调 | 开发者可以通过监听此回调来完善消息发送状态的逻辑。根据消息状态的变更，开发者可以在 UI 上做相应提醒等。 | [messageSentStatusChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-message-sent-status-changed) |
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Item | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Optimized the logic of message sending under weak network conditions| When a message is sent on a weak network condition, the SDK uses policy logic to ensure the message sending status as much as possible. | - |
+| 优化弱网情况下消息发送的逻辑 | 用户在弱网环境下发送消息时，SDK 会通过策略逻辑尽可能保证消息发送状态的正确性。 | - |
 
 ---
 
 
+## 2.5.0 版本
 
-## Version 2.5.0 
+**发布日期：2022-11-30**
 
-**Release date: 2022-11-30**
+<h5>新增功能</h5>
 
-<h4>New features</h4>
-
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-|Message recall|  Sent messages can be recalled within 2 minutes by default. This is only supported in one-on-one chats and group chats. <p>Note: To customize the recall time, please contact ZEGOCLOUD technical support.</p>| <ul><li>[revokeMessage](@revokeMessage)</li><li>[messageRevokeReceived](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-conversation-total-unread-message-count-updated)</li></ul>|
-|Read receipts| [ZIMMessageSendConfig](@-ZIMMessageSendConfig) Added the hasReceipt parameter to allow sending messages with receipts in one-on-one and group chats. <br/>In-app Chat SDK supports checking whether a user has read locally sent messages In a one-on-one chat and a group chat, as well as the number of read and unread messages in a group chat and the corresponding user information. **Receipts for signaling messages, barrage messages, and in-room messages are not supported.**| <ul><li>[ZIMMessageSendConfig](@-ZIMMessageSendConfig)</li><li>[sendMessageReceiptsRead](@sendMessageReceiptsRead)</li><li>[sendConversationMessageReceiptRead](@sendConversationMessageReceiptRead)</li><li>[queryGroupMessageReceiptReadMemberListByMessage](@queryGroupMessageReceiptReadMemberListByMessage)</li><li>[queryGroupMessageReceiptUnreadMemberListByMessage](@queryGroupMessageReceiptUnreadMemberListByMessage)</li><li>[queryMessageReceiptsInfoByMessageList](@queryMessageReceiptsInfoByMessageList)</li></ul> |
-| Receives push notifications for all offline call invitations | Add the pushConfig parameter to support push call invitations to offline users. Offline users need to use the ZPNs SDK together to accept call invitations. | [ZIMCallInviteConfig](@-ZIMCallInviteConfig) |
+|消息撤回|  撤回发送成功的消息，默认撤回 2 分钟内的消息。撤回操作仅支持撤回单聊和群聊的消息，不支持撤回房间内消息。说明：如需配置撤回时间，请联系 ZEGO 技术支持。| <ul><li>[revokeMessage](@revokeMessage)</li><li>[ZIMMessageRevokedCallback](@ZIMMessageRevokedCallback)</li></ul>|
+|消息回执| [ZIMMessageSendConfig](@-ZIMMessageSendConfig) 新增 hasReceipt 参数，支持在单聊和群聊会话中发送附带回执的消息。<br />ZIM SDK 支持在单聊和群聊会话查看其他用户是否阅读本端发送的信息，以及支持查看群聊中已读消息和未读消息的数量，以及对应的用户信息，**但是不支持信令消息、弹幕消息、以及房间内消息使用回执。**| <ul><li>[ZIMMessageSendConfig](@-ZIMMessageSendConfig)</li><li>[sendMessageReceiptsRead](@sendMessageReceiptsRead)</li><li>[sendConversationMessageReceiptRead](@sendConversationMessageReceiptRead)</li><li>[queryGroupMessageReceiptReadMemberListByMessage](@queryGroupMessageReceiptReadMemberListByMessage)</li><li>[queryGroupMessageReceiptUnreadMemberListByMessage](@queryGroupMessageReceiptUnreadMemberListByMessage)</li><li>[queryMessageReceiptsInfoByMessageList](@queryMessageReceiptsInfoByMessageList)</li></ul> |
+| 呼叫邀请支持离线推送 | [ZIMCallInviteConfig](@-ZIMCallInviteConfig) 新增 pushConfig 参数，支持向离线用户推送呼叫邀请。离线用户接受呼叫邀请需要搭配 ZPNs SDK 一起使用。 | [ZIMCallInviteConfig](@-ZIMCallInviteConfig) |
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Improved Swift API naming | For Swift, In-app Chat SDK manually corrects the existing Swift APIs automatically generated by the Objective-C interface to avoid API ambiguity caused by the interface automatically generated by XCode.<p>Note: If you are using Swift to integrate In-app Chat SDK 2.5.0 and the interface fails to compile, just follow the instructions of your IDE.</p> | -|
-| Changed the name of the extra field of  [ZIMPushConfig](@-ZIMPushConfig) | To avoid confusion, the extendedData parameter of [ZIMPushConfig](@-ZIMPushConfig) is changed to payload, and the functionality remains the same. When you use the ZPNs SDK, you can retrieve additional fields passed in by the sender via the payload field in extras on the vendor channel. <p>Note: After integrating In-app Chat SDK 2.5.0, if you use the offline push function and the interface fails to compile, please change the extendedData to payload. </p> | - |
-| Optimized the rich media message transfer protocol| The protocol packet size during network transmission is reduced. | -|
-| Optimized the API thread safety | - | -|
+| 优化 Swift 语言 API 命名 | 针对 Swift，ZIM 对现有的 Objective-C 接口自动生成的 Swift API 做了手动校正，避免因 XCode 自动生成接口导致 API 歧义等问题。<br />说明：若开发者使用 Swift 集成 ZIM SDK 2.5.0 版本后，出现了接口编译失败问题，只需按照 IDE 指示更改即可。接口变更详情请参考 [升级指南 - ZIM](client-sdks/zim-upgrade-guide)。 | -|
+| [ZIMPushConfig](@-ZIMPushConfig) 的额外字段命名变更| 为避免开发者接入概念混淆，[ZIMPushConfig](@-ZIMPushConfig) 的 extendedData 参数修改为 payload 参数，功能不变。<p>说明：若集成 ZIM SDK 2.5.0 版本后，开发者使用了离线推送功能后出现了接口编译失败的问题，请将 extendedData 改为 payload。</p> | - |
+| 优化富媒体消息传输协议 | 减少网络传输过程中的协议包大小。 | -|
+| 优化 API 调用的线程安全 | - | -|
 
 ---
 
-## Version 2.4.0 
+## 2.4.2 版本
 
-**Release date: 2022-10-10**
+**发布日期：2022-11-01**
 
-<h4>New features</h4>
+<h5>问题修复</h5>
 
-| Feature  | Description | Method |
+修复已知问题。
+
+---
+
+## 2.4.0 版本
+
+**发布日期：2022-10-10**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-|Manage in-room user properties| Support room users to customize user properties. For example, user level, badge, status, etc.| <ul><li>[setRoomMembersAttributes](@setRoomMembersAttributes)</li><li>[queryRoomMembersAttributesByUserIDs](@queryRoomMembersAttributesByUserIDs)</li><li>[queryRoomMemberAttributesListByRoomID](@queryRoomMemberAttributesListByRoomID)</li></ul>|
-| System message added| The message type of the system message was added, and the SDK was supported to trigger the notification of entering the group, the change of the group owner, and other system messages.|- |
-| Inserting local messages| Support for inserting a message of any message type directly into the local. You can convert callback notifications (e.g., invite someone to a group, remove someone from a group, etc.) into system messages on the client side and insert them into the local database to achieve the effect of system prompts.| [insertMessageToLocalDB](@insertMessageToLocalDB)|
+|管理房间用户属性| 支持房间内的用户自定义用户属性。例如：用户等级、勋章、状态等信息。| <ul><li>[setRoomMembersAttributes](@setRoomMembersAttributes)</li><li>[queryRoomMembersAttributesByUserIDs](@queryRoomMembersAttributesByUserIDs)</li><li>[queryRoomMemberAttributesListByRoomID](@queryRoomMemberAttributesListByRoomID)</li></ul>|
+|新增系统消息| 新增系统消息类型，支持 SDK 触发进群通知、群主替换等系统性消息。可以通过 [插入本地消息](./../Guides/Messaging/Insert%20local%20messages.mdx) 功能实现。|- |
+|插入本地消息| 支持直接向本地插入一条任意消息类型的消息。开发者可结合系统消息类型，在客户端将回调通知（例如：邀请某人进群、把某人移出群等），转为系统消息类型，插入本地 DB，以达到系统提示的效果。| [insertMessageToLocalDB](@insertMessageToLocalDB)|
 
-<h4>Enhancement</h4>
+<h5>改进优化</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Method for sending message is optimized| Optimized message object to be the same object before and after sending. When you are sending a large message such as a video, you can cache the message object before the message is uploaded. When you receive the SDK notification of successful delivery, you can achieve the effect of Loading before sending by comparing the objects to be the same.|  [sendMessage](@sendMessage) |
-| Logic of reconnection after disconnection is optimized | The logic for no-network status and reconnection after disconnection is optimized. | -|
-| Performance optimized | Optimized database performance. | -|
+| 优化消息发送接口 | 优化消息对象，在发送前和发送后是同一个对象。开发者在发送“视频”等内容较大的消息时，可以在消息上传完成前，缓存该消息对象，直到收到 SDK 发送成功通知时，通过比较对象相同来实现发送前 Loading 的效果。 |  [sendMessage](@sendMessage) |
+| 优化断网重连逻辑 | 优化在无网状态下、以及断网重连后的逻辑。 | -|
+| 优化性能 | 优化数据库性能。 | -|
 
 
-<h4>API method changes</h4>
+<h5>接口变更</h5>
 
-- **New methods**
+- **<div style={{width:"130px"}}>新增接口</div>**
 
-| Method | Description | Change version |
+| <div style={{width:"130px"}}>新增接口</div> | 接口描述 | 上线版本 |
 | :-------- | :------- | :----- |
-| [loginWithUserInfo](@loginWithUserInfo) |  A new [loginWithUserInfo](@loginWithUserInfo) method without a Token parameter is added. When you use the "AppSign" authentication mode, you can directly use this method to log in to In-App Chat.  | 2.4.0 |
-| [sendMessage](@sendMessage) |  New method to send messages, support one-to-one, in-room, and group messages. | 2.4.0 |
-| [sendMediaMessage](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-notification-callback) |  A new rich media message sending interface [sendMediaMessage](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-notification-callback) (overloaded with the same name) was added, which supports getting the information before media uploading and can send rich media information such as files, pictures, audio, and video.  | 2.4.0 |
+| [loginWithUserInfo](@loginWithUserInfo) | 新增不带 Token 参数的 [loginWithUserInfo](@loginWithUserInfo) 接口。开发者使用 “AppSign 鉴权” 时，可直接使用该接口登录 ZIM，接入更加便捷。   | 2.4.0 |
+| [sendMessage](@sendMessage) |  新增发送消息接口，支持发送单聊、房间、群组消息。  | 2.4.0 |
+| [sendMediaMessage](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-notification-callback) | 新增富媒体消息发送接口 [sendMediaMessage](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-notification-callback)（同名重载），支持获取媒体上传前的信息，可发送文件、图片、音频、视频等富媒体信息。   | 2.4.0 |
 
+- **<div style={{width:"130px"}}>废弃接口</div>**
 
-- **Deprecation**
-
-| Method | Description | Change version |
+| <div style={{width:"130px"}}>废弃接口</div> | 变更说明 | 废弃版本 |
 | :-------- | :------- | :----- |
-| <ul><li>[sendPeerMessage](@sendPeerMessage)</li><li>[sendRoomMessage](@sendRoomMessage)</li><li>[sendGroupMessage](@sendGroupMessage)</li></ul> | The method for sending one-to-one, in-room, and group messages ([sendPeerMessage](@sendPeerMessage), [sendRoomMessage](@sendRoomMessage), [sendGroupMessage](@sendGroupMessage)) are abandoned. We will be unified using the [sendMessage](@sendMessage) interface, making a more standard way of sending a message.   | 2.4.0 |
-| [sendMediaMessage](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-progress-callback) | The original [sendMediaMessage](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-progress-callback) method for sending rich media messages is deprecated and replaced by the [sendMediaMessage](/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-notification-callback) method with the same name. The parameters are different, please pay attention to the change.   | 2.4.0 |
+| <ul><li>[sendPeerMessage](@sendPeerMessage)</li><li>[sendRoomMessage](@sendRoomMessage)</li><li>[sendGroupMessage](@sendGroupMessage)</li></ul> | 废弃单聊消息 [sendPeerMessage](@sendPeerMessage)、房间消息 [sendRoomMessage](@sendRoomMessage)、群组消息 [sendGroupMessage](@sendGroupMessage) 3 个消息发送接口，统一使用 [sendMessage](@sendMessage) 接口替代，发送消息方式更加规范。    | 2.4.0 |
+| [sendMediaMessage](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-progress-callback) | 原有的发送富媒体消息 [sendMediaMessage](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-progress-callback) 接口废弃，替换为同名的 [sendMediaMessage](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-media-message-message-to-conversation-id-conversation-type-config-notification-callback) 接口，接口参数不同，请注意切换使用。    | 2.4.0 |
 
 ---
 
-## Version 2.3.0 
+## 2.3.3 版本
 
-**Release date: 2022-08-12**
+**发布日期：2022-09-09**
 
-<h4>New features</h4>
+<h5>改进优化</h5>
 
-| Feature  | Description | Method |
-|-------|-------|-------|
-| Added extension fields | Support users to set their own personal information through the extension field, such as user profile picture, personality signature, gender, and other personal information. | [updateUserExtendedData](@updateUserExtendedData)|
-| Added avatar field| In the user information and group related methods, the avatar field has been added, users can upload their own avatar, or custom group avatar.| <ul><li>[updateUserAvatarUrl](@updateUserAvatarUrl)</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo)</li><li>[updateGroupAvatarUrl](@updateGroupAvatarUrl)</li><li>[ZIMGroupInfo](@-ZIMGroupInfo)</li><li>[ZIMConversation](@-ZIMConversation)</li></ul>|
-| Supports AppSign authentication mode | <p> The AppSign authentication mode is supported on iOS, Android, macOS, and Windows, which facilitates the integration process. </p><p>When authentication, you only need to call the [createWithAppConfig](@createWithAppConfig) method and fill in the AppSign you get, and you can use the In-app Chat service when authentication is passed.  [createWithAppConfig](@createWithAppConfig)</p>|
-|Support to set the width and height of image/video messages | <p>Make it more convenient to design the display effect of the picture:</p><ul><li>Image message: support to set the width and height of the "original image", the width and height of the "detail image", and the width and height of the "thumbnail".</li><li>Video message: support to set the width and height of the "first frame".</li></ul> | <ul><li>[ZIMImageMessage](@-ZIMImageMessage)</li><li>[ZIMVideoMessage](@-ZIMVideoMessage)</li></ul>|
-| Added a method for singleton instance object | This allows you to get the In-app Chat instance object easier.| [getInstance](@getInstance)|
-
-
-
-<h4>Enhancement</h4>
-
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Logic optimized  | <ul><li>Improved API logic when the network is disconnected.</li><li>Optimizes the logic for getting a list of room members.</li></ul> | - |
-| Performance optimized | Thread switching performance is optimized | - |
+| 鉴权方式优化 | 从当前版本开始，开发者可以自主进行 “AppSign 鉴权” 和 “Token 鉴权” 的切换。| <ul><li>[createWithAppConfig](@createWithAppConfig)</li><li>[loginWithUserInfo](@loginWithUserInfo)</li></ul> |
 
-<h4>API method changes</h4>
+<h5>问题修复</h5>
 
-- **Deprecation**
+修复已知问题。
 
-| Method | Description | Change version |
+---
+
+## 2.3.1 版本
+
+**发布日期：2022-08-22**
+
+<h5>问题修复</h5>
+
+修复已知问题。
+
+---
+
+## 2.3.0 版本
+
+**发布日期：2022-08-12**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
+|-------|-------|-------|
+| 新增扩展字段 | 支持用户通过扩展字段，设置自己的个人信息，例如用户头像、个性签名、性别等个人信息。| [updateUserExtendedData](@updateUserExtendedData)|
+| 新增头像字段 | 用户信息及群组新增头像字段，用户可以上传自己的头像、或自定义群组头像。| <ul><li>[updateUserAvatarUrl](@updateUserAvatarUrl)</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo)</li><li>[updateGroupAvatarUrl](@updateGroupAvatarUrl)</li><li>[ZIMGroupInfo](@-ZIMGroupInfo)</li><li>[ZIMConversation](@-ZIMConversation)</li></ul>|
+| 支持 AppSign 鉴权 | <p>iOS、Android、macOS、Windows 平台支持 AppSign 鉴权，降低开发者接入门槛。</p><p>开发者在调用 [createWithAppConfig](@createWithAppConfig) 接口，传入 AppSign，进行鉴权，鉴权通过即可使用 ZIM 相关功能。</p>| [createWithAppConfig](@createWithAppConfig)|
+| 图片/视频消息支持宽、高设置 | <p>方便开发者设计图片展示效果：</p><ul><li>图片消息支持设置“原图”宽、高，“大图”宽、高，“缩略图”宽、高。</li><li>视频消息支持设置“首帧图“宽、高。</li></ul> | <ul><li>[ZIMImageMessage](@-ZIMImageMessage)</li><li>[ZIMVideoMessage](@-ZIMVideoMessage)</li></ul>|
+| 增加单例对象接口 | 便于开发者获取 ZIM 单例对象。 | [getInstance](@getInstance)|
+
+
+<h5>改进优化</h5>
+
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
+| -----  | ---- | ----- |
+| 逻辑优化 | <ul><li>优化网络断开时、API 的逻辑表现。</li><li>优化获取房间成员列表的逻辑。</li></ul> | - |
+| 性能优化 | 优化线程切换性能。 | - |
+
+
+<h5>接口变更</h5>
+
+- **<div style={{width:"130px"}}>废弃接口</div>**
+
+| <div style={{width:"130px"}}>废弃接口</div> | 变更说明 | 废弃版本 |
 | :-------- | :------- | :----- |
-| [createWithAppID](@createWithAppID) |The original [createWithAppID](@createWithAppID) method has been deprecated and replaced with [createWithAppConfig](@createWithAppConfig), which allows you to pass in AppSign for authentication and make the integration easier. | 2.3.0 |
+| [createWithAppID](@createWithAppID) | 原有的 [createWithAppID](@createWithAppID) 接口废弃，变更为 [createWithAppConfig](@createWithAppConfig)，开发者可以通过传入 AppSign 进行鉴权，接入更加便捷。   | 2.3.0 |
 
 ---
 
-## Version 2.2.0 
+## 2.2.3 版本
 
-**Release date: 2022-07-29**
+**发布日期：2022-07-22**
 
-<h4>New features</h4>
+<h5>问题修复</h5>
 
-| Feature  | Description | Method |
-|-------|-------|-------|
-| Change username | Supports changing usernames. | <ul><li>[updateUserName](@updateUserName)</li><li>[ZIMUserInfo](@-ZIMUserInfo)</li></ul>|
-| Query user profile  | Supports users to query profiles, such as username, and status updates.| <ul><li>[queryUsersInfo](@queryUsersInfo)</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo)</li></ul>|
-| Query the number of group members | Supports querying the number of group members. | [queryGroupMemberCountByGroupID](@queryGroupMemberCountByGroupID)|
+修复已知问题。
 
 ---
 
-## Version 2.1.5
 
-**Release date: 2022-06-15**
+## 2.2.1 版本
 
-<h4>New features</h4>
+**发布日期：2022-07-18**
 
+<h5>问题修复</h5>
 
-| Feature  | Description | Method |
-|-------|-------|-------|
-| Content moderation  | Supports moderating the text messages, and images in one-on-one, group, and room chat. The mechanism can help moderate the following inappropriate content: Sex solicitation, terrorism, violence, advertisements, and more.| <ul><li>[sendPeerMessage](@sendPeerMessage)</li><li>[sendGroupMessage](@sendGroupMessage)</li><li>[sendRoomMessage](@sendRoomMessage)</li><li>[sendMediaMessage](@sendMediaMessage)</li></ul> |
-
-<h4>Enhancement</h4>
-
-Known issues fixed.
+修复已知问题。
 
 ---
 
-## Version 2.1.0 
+## 2.2.0 版本
 
-**Release date: 2022-05-13**
+**发布日期：2022-06-30**
 
-<h4>New features</h4>
+<h5>新增功能</h5>
 
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Send & Receive rich media content| Supports sending and receiving messages of different rich media types, such as images, audio, video, and files. | <ul><li>[`sendMediaMessage`](@sendMediaMessage)</li><li>[`downloadMediaFileWithMessage`](@downloadMediaFileWithMessage)</li></ul>|
-| Automatic room creation | When entering a room, supports automatic room creation when the room does not exist.| [`enterRoom`](@enterRoom)|
+| 更新用户名称 | 支持用户更新自己的名称 userName。| <ul><li>[updateUserName](@updateUserName)</li><li>[ZIMUserInfo](@-ZIMUserInfo)</li></ul>|
+| 查询用户个人信息 | 支持用户查询个人信息，例如用户名称、签名等信息。| <ul><li>[queryUsersInfo](@queryUsersInfo)</li><li>[ZIMUserFullInfo](@-ZIMUserFullInfo)</li></ul>|
+| 获取群组人数 | 支持获取群组里的成员人数。| [queryGroupMemberCountByGroupID](@queryGroupMemberCountByGroupID)|
 
-<h4>Enhancement</h4>
+---
 
-| Item  | Description | Method |
+## 2.1.6 版本
+
+**发布日期：2022-06-17**
+
+<h5>问题修复</h5>
+
+修复已知问题。
+
+---
+
+## 2.1.5 版本
+
+**发布日期：2022-06-06**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
+|-------|-------|-------|
+| 安全审核 | 支持对单聊、群聊和房间内的通讯消息（文本消息、图片消息）进行安全审核，审核范围包含：鉴黄、暴恐、违禁、涉政、广告等。| <ul><li>[sendPeerMessage](@sendPeerMessage)</li><li>[sendGroupMessage](@sendGroupMessage)</li><li>[sendRoomMessage](@sendRoomMessage)</li><li>[sendMediaMessage](@sendMediaMessage)</li></ul> |
+
+<h5>问题修复</h5>
+
+修复已知问题。
+
+---
+
+## 2.1.1 版本
+
+**发布日期：2022-05-09**
+
+<h5>问题修复</h5>
+
+修复已知问题。
+
+---
+
+## 2.1.0 版本
+
+**发布日期：2022-04-29**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
+|-------|-------|-------|
+| 收发富媒体消息 | 支持用户发送和接收图片、语音、视频和文件等类型的富媒体消息。| <ul><li>[sendMediaMessage](@sendMediaMessage)</li><li>[downloadMediaFileWithMessage](@downloadMediaFileWithMessage)</li></ul>|
+| 自动创建房间 | 进入房间时，如果房间不存在，支持自动创建房间。| [enterRoom](@enterRoom)|
+
+<h5>改进优化</h5>
+
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| Member property of [`ZIMMessage`](@-ZIMMessage) enhanced |  The member property of the ZIMMessage object is changed to read-only. This property doesn't need to be concerned or modified when sending messages.| [`ZIMMessage`](@-ZIMMessage) |
+| [ZIMMessage](@-ZIMMessage) 成员属性优化 | ZIMMessage 对象的成员属性改为“只读”属性，开发者发送消息时无需关注和修改其属性。 | [ZIMMessage](@-ZIMMessage) |
 
 ---
 
-## Version 2.0.0 
+## 2.0.0 版本
 
-**Release date: 2022-03-25**
+**发布日期：2022-03-21**
 
+<h5>新增功能</h5>
 
-<h4>New features</h4>
-
-| Feature  | Description | Method |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Session management  | <ul><li>Supports updating, searching, and deleting the session list. </li><li>Supports obtaining the session list to display all sessions and implementing a real-time message list.</li></ul>| <ul><li>[`queryConversationListWithConfig`](@queryConversationListWithConfig)</li><li>[`deleteConversation`](@deleteConversation)</li></ul>|
-| Group chat | <ul><li>Supports creating a group chat, ungroup, joining, and leaving a group chat. </li><li> Supports transferring the group ownership, setting group notice, and more.</li></ul> | <ul><li>[`createGroup`](@createGroup)</li><li>[`joinGroup`](@joinGroup)</li><li>[`leaveGroup`](@leaveGroup)</li><li>[`dismissGroup`](@dismissGroup)</li><li>[`transferGroupOwnerToUserID`](@transferGroupOwnerToUserID)</li></ul>|
-| Message management | <ul><li>Supports saving the one-to-one, group, in-room messages on the local database for retrieval after changing your devices or getting back from offline status. </li><li>Supports deleting specified or all one-to-one or group messages.</li></ul>| <ul><li>[`queryHistoryMessageByConversationID`](@queryHistoryMessageByConversationID)</li><li>[`deleteMessages`](@deleteMessages)</li><li>[`deleteMessages`](@deleteMessages)</li></ul>|
-| Call invitation| <ul><li>Supports sending and responding to call invitations.</li><li>Suitbale for multiple scenarios, such as, video calls, send seat-taking invitation in live audio room, and more.</li></ul>| <ul><li>[`callInviteWithInvitees`](@callInviteWithInvitees)</li><li>[`callCancelWithInvitees`](@callCancelWithInvitees)</li><li>[`callAcceptWithCallID`](@callAcceptWithCallID)</li><li>[`callRejectWithCallID`](@callRejectWithCallID)</li></ul> |
+| 会话管理 | <ul><li>支持用户更新、查询、删除会话列表。</li><li>支持拉取会话列表，承载所有会话，实现消息列表。</li></ul>| <ul><li>[queryConversationListWithConfig](@queryConversationListWithConfig)</li><li>[deleteConversation](@deleteConversation)</li></ul>|
+| 群组系统 | 支持用户登录后，创建、加入、退出、解散群聊；同时配备转让群主、设置群公告等常用功能。| <ul><li>[createGroup](@createGroup)</li><li>[joinGroup](@joinGroup)</li><li>[leaveGroup](@leaveGroup)</li><li>[dismissGroup](@dismissGroup)</li><li>[transferGroupOwnerToUserID](@transferGroupOwnerToUserID)</li></ul>|
+| 消息管理 | <ul><li>支持“单聊/群组/房间”的所有消息存储在本地数据库中，用户更换设备也可拉取到历史信息。</li><li>支持删除“单聊/群组”会话的指定消息或全部消息。</li></ul>| <ul><li>[queryHistoryMessageByConversationID](@queryHistoryMessageByConversationID)</li><li>[deleteMessages](@deleteMessages)</li><li>[deleteAllMessageByConversationID](@deleteAllMessageByConversationID)</li></ul>|
+| 呼叫邀请 | <ul><li>支持用户登录后，向指定“用户/群组/房间”发起呼叫邀请、取消邀请；支持其他用户同意邀请、拒绝邀请。</li><li>可应用于视频通话、抱麦申请等场景。</li></ul>| <ul><li>[callInviteWithInvitees](@callInviteWithInvitees)</li><li>[callCancelWithInvitees](@callCancelWithInvitees)</li><li>[callAcceptWithCallID](@callAcceptWithCallID)</li><li>[callRejectWithCallID](@callRejectWithCallID)</li></ul> |
 
-<h4>Enhancement</h4>
 
-<Warning title="Warning">
+<h5>改进优化</h5>
 
-In this iteration, we unified and optimized all existing and new methods of In-App Chat In terms of style. When you upgrade the API methods from V 1.x.x to V 2.0.0, you will need to adjust the code accordingly by referring to the table below.
+<Warning title="警告">
+本次迭代，我们对产品的所有已有接口和新增接口，做了统一的风格优化，开发者从 `1.x.x` 升级至 `2.0.0` API 时，需要在代码里做以下适配。
 </Warning>
 
 <table>
@@ -572,44 +652,144 @@ In this iteration, we unified and optimized all existing and new methods of In-A
     <col width="40%" />
   </colgroup>
   <tbody><tr>
-    <th>Item</th>
-    <th>Description</th>
-    <th>Method</th>
+    <th>优化项</th>
+    <th>优化描述</th>
+    <th>相关接口</th>
   </tr>
   <tr>
-    <td rowspan="4">Enhanced API method name</td>
-    <td><b>The method used to create the ZIM SDK instance: </b> Changed to <b>createWithAppID</b> from <b>create</b>.</td>
-    <td><a target="_blank" href="/article/api?doc=zim_API~objectivec_macos~protocol~ZIM#create-with-app-id">createWithAppID</a></td>
+    <td rowspan="4">API 接口命名优化</td>
+    <td><b>创建 ZIM 实例</b> 接口命名优化：create 重命名为 <a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#create-with-app-id">createWithAppID</a>。</td>
+    <td><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#create-with-app-id">createWithAppID</a></td>
   </tr>
   <tr>
-    <td><b>The method used to log in: </b> Changed to <b>loginWithUserInfo</b> from <b>login</b>.</td>
-    <td><a target="_blank" href="/article/api?doc=zim_API~objectivec_macos~protocol~ZIM#login-with-user-info-token-callback">loginWithUserInfo</a></td>
+    <td><b>登录</b> 接口命名优化：login 重命名为 <a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#login-with-user-info-token-callback">loginWithUserInfo</a>。</td>
+    <td><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#login-with-user-info-token-callback">loginWithUserInfo</a></td>
   </tr>
   <tr>
-    <td><b>The method used to query room members: </b> Changed to <b>queryRoomMemberListByRoomID</b> from <b>queryRoomMember</b>.</td>
-    <td><a target="_blank" href="/article/api?doc=zim_API~objectivec_macos~protocol~ZIM#query-room-member-list-by-room-id-room-id-config-callback">queryRoomMemberListByRoomID</a></td>
+    <td><b>查询房间成员</b> 接口命名优化：queryRoomMember 重命名为 <a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#query-room-member-list-by-room-id-room-id-config-callback">queryRoomMemberListByRoomID</a>。</td>
+    <td><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#query-room-member-list-by-room-id-room-id-config-callback">queryRoomMemberListByRoomID</a></td>
   </tr>
   <tr>
-    <td><b>The method used to query online room members:</b> Changed to <b>queryRoomOnlineMemberCountByRoomID</b> from <b>queryRoomOnlineCount</b>.</td>
-    <td><a target="_blank" href="/article/api?doc=zim_API~objectivec_macos~protocol~ZIM#query-room-online-member-count-by-room-id-callback">queryRoomOnlineMemberCountByRoomID</a></td>
+    <td><b>查询房间在线成员人数</b> 接口命名优化：queryRoomOnlineCount 重命名为 <a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#query-room-online-member-count-by-room-id-callback">queryRoomOnlineMemberCountByRoomID</a>。</td>
+    <td><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIM#query-room-online-member-count-by-room-id-callback">queryRoomOnlineMemberCountByRoomID</a></td>
   </tr>
   <tr>
-    <td rowspan="3">New parameter added for API method or callback</td>
-    <td><b>The method used to send one-to-one/group messages</b>: a <b>config</b> parameter is added, used to set offline notifications, message priority, and more.</td>
-    <td><ul><li><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-peer-message-message-to-user-id-config-callback">sendPeerMessage</a></li><li><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-room-message-message-to-room-id-config-callback">sendRoomMessage</a></li></ul></td>
+    <td rowspan="3">API 或回调接口新增参数</td>
+    <td>发送单聊/房间消息接口，增加 config 参数，用于设置是否配置离线推送、以及消息优先级等。</td>
+    <td><ul><li><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-peer-message-message-to-user-id-config-callback">sendPeerMessage</a></li><li><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#send-room-message-message-to-room-id-config-callback">sendRoomMessage</a></li></ul></td>
   </tr>
   <tr>
-    <td>A <b>roomID</b> parameter is added for some method callbacks. It is convenient for you to get the roomID from which the result of the current operation comes when calling relevant methods.</td>
+    <td>部分回调接口，增加 roomID 参数，便于开发者在调用相关接口时，获取当前操作结果来源的房间 roomID。</td>
     <td><ul>
-<li><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-left-callback">ZIMRoomLeftCallback</a></li>
-<li><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-member-queried-callback">ZIMRoomMemberQueriedCallback</a></li>
-<li><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-online-member-count-queried-callback">ZIMRoomOnlineMemberCountQueriedCallback</a></li>
-<li><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-attributes-batch-operated-callback">ZIMRoomAttributesBatchOperatedCallback</a></li>
-<li><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-attributes-queried-callback">ZIMRoomAttributesQueriedCallback</a></li>
+<li><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-left-callback">ZIMRoomLeftCallback</a></li>
+<li><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-member-queried-callback">ZIMRoomMemberQueriedCallback</a></li>
+<li><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-online-member-count-queried-callback">ZIMRoomOnlineMemberCountQueriedCallback</a></li>
+<li><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-attributes-batch-operated-callback">ZIMRoomAttributesBatchOperatedCallback</a></li>
+<li><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-attributes-queried-callback">ZIMRoomAttributesQueriedCallback</a></li>
 </ul></td>
   </tr>
   <tr>
-    <td>The <b>roomID</b> and <b>errorKeys</b> parameters are added. It is convenient for you to get the roomID from the current operation result when they get the room property, and the key will be returned to you when the operation fails.</td>
-    <td><a target="_blank" href="/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-attributes-operated-callback">ZIMRoomAttributesOperatedCallback</a></td>
+    <td><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-attributes-operated-callback">ZIMRoomAttributesOperatedCallback</a> 增加了 roomID 和 errorKeys 参数，便于开发者获取房间属性时，获取当前操作结果来源的房间 roomID，同时操作失败的 key 会返回给开发者。</td>
+    <td><a target="_blank" href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~class~ZIMDefines#zim-room-attributes-operated-callback">ZIMRoomAttributesOperatedCallback</a></td>
   </tr>
 </tbody></table>
+
+---
+
+## 1.3.7 版本
+
+**发布日期：2022-02-18**
+
+<h5>问题修复</h5>
+
+修复已知问题。
+
+---
+
+## 1.3.1 版本
+
+**发布日期：2021-12-27**
+
+此版本新增了后台服务端 API 接口，提升后台的消息发送能力。适用的场景更广泛，开发者可应用于在线剧本杀、在线直播、语聊房等场景中，下发场景所需音乐链接、图片链接、大批量文字等信息将更加便捷。
+
+<h5>接口变更</h5>
+
+- **新增接口**
+
+| 新增服务端 API 接口 | 接口描述 | 
+|---------|---------|
+| [发送单聊消息（POST 方式）](/zh/zim-server/messaging/send-a-one-to-one-message) | 采用 POST 方式，向指定用户发送消息，消息大小限制为 32 KB。 |
+| [发送房间消息（POST 方式）](/zh/zim-server/messaging/send-room-messages) | 采用 POST 方式，向房间内发送消息，并推送给房间内所有在线用户，消息大小限制为 32 KB。 |
+
+- **废弃接口**
+
+| <div style={{width:"130px"}}>废弃接口</div> | 变更说明 | 废弃版本 |
+| :-------- | :------- | :----- |
+| 发送单聊消息（GET 方式）| 原有的 GET 请求方法（消息大小限制为 2 KB）废弃，变更为 [发送单聊消息（POST 方式）](/zh/zim-server/messaging/send-a-one-to-one-message)，消息大小限制扩大为 32 KB，适用场景更广泛。   | 1.3.1 |
+| 发送房间消息（GET 方式） | 原有的 GET 请求方法（消息大小限制为 2 KB）废弃，变更为 [发送房间消息（POST 方式）](/zh/zim-server/messaging/send-room-messages)，消息大小限制扩大为 32 KB，适用场景更广泛。 | 1.3.1 |
+
+
+<h5>改进优化</h5>
+
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
+| -----  | ---- | ----- |
+| 优化断网重连逻辑 | 优化断网重连逻辑。 | - |
+
+<h5>问题修复</h5>
+
+修复了请求超时逻辑在特殊场景下的异常问题。
+
+---
+
+## 1.3.0 版本
+**发布日期：2021-11-09**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
+|-------|-------|-------|
+| 新增“房间属性”功能 | <p>房间属性指房间内保存的 `Key-Value` 属性对，开发者可以使用此功能为房间设置自定义信息。</p><p>此功能可用于语聊房、直播等场景，用来记录房间背景图地址、各用户的角色身份、设备状态等自定义信息。</p> | <ul><li>[createRoom](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~class~ZIM#create-room-room-info-config-callback)</li><li>[setRoomAttributes](@setRoomAttributes)</li><li>[deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys)</li><li>[queryRoomAllAttributesByRoomID](@queryRoomAllAttributesByRoomID)</li><li>[beginRoomAttributesBatchOperationWithRoomID](@beginRoomAttributesBatchOperationWithRoomID)</li><li>[endRoomAttributesBatchOperationWithRoomID](@endRoomAttributesBatchOperationWithRoomID)</li><li>[roomAttributesUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id)</li><li>[roomAttributesBatchUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-attributes-batch-updated-room-id-update-info)</li></ul> |
+
+<h5>接口变更</h5>
+
+- **新增接口**
+
+| <div style={{width:"130px"}}>新增接口</div> | 接口描述 | 
+|---------|---------|
+| [createRoom](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~class~ZIM#create-room-room-info-config-callback) | 创建带高级设置的房间。 |
+| [setRoomAttributes](@setRoomAttributes) | <p>设置房间属性。</p><ul><li>当 Key 不存在时，调用此接口，将自动添加此 Key-Value 属性对。</li><li>当 Key 存在时，调用此接口，将更新 Value 值。</li></ul><p>此接口支持同时设置多个 Key-Value，后台默认最多可设置 10 个 Key-Value 属性对。</p>|
+| [deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys) | 删除房间属性。调用此接口，传入 Key 即可删除，支持同时删除多个 Key-Value 属性对。 |
+| [queryRoomAllAttributesByRoomID](@queryRoomAllAttributesByRoomID) | 查询房间内设置的属性信息。 |
+| [beginRoomAttributesBatchOperationWithRoomID](@beginRoomAttributesBatchOperationWithRoomID) | <p>开始进行房间属性的组合式操作，支持组合调用设置和删除房间属性。组合操作可将同一房间中，多个不同操作合并为一个原子操作进行执行，通常用于连续操作时不想被其他用户操作插入执行的场景中。</p><p>在此接口之后调用的 [setRoomAttributes\|_](@setRoomAttributes) 和 [deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys) 将会被同时发送到后台执行。</p> |
+| [endRoomAttributesBatchOperationWithRoomID](@endRoomAttributesBatchOperationWithRoomID) | <p>结束进行房间属性的组合式操作。</p><p>调用此接口之后将请求后台执行组合式操作。</p> |
+| [roomAttributesUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id) | 房间内有属性对更新时，相关信息的回调。 |
+|[roomAttributesBatchUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-attributes-batch-updated-room-id-update-info) | 房间内有使用组合式操作来更新房间属性时，相关信息的回调。|
+
+<h5>问题修复</h5>
+
+1. 修复部分房间生命周期问题。
+2. 修复其他已知问题。
+
+---
+
+## 1.2.1 版本
+**发布日期：2021-10-13**
+
+
+<h5>改进优化</h5>
+
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
+| -----  | ---- | ----- |
+| SDK 接口优化 | [roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 回调新增 roomID 参数。 | [roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) |
+
+<h5>问题修复</h5>
+
+修复 [roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 接口某些场景不回调的问题。
+
+---
+
+## 1.2.0 版本
+
+**发布日期：2021-09-07**
+
+首次发布，支持 1v1 通信、多人房间聊天等功能。

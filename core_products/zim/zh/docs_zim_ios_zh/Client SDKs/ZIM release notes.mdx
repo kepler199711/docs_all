@@ -196,7 +196,7 @@ articleID: 11593
 | 发送单聊消息服务端接口新增响应参数 | 新增 `SuccessList` 参数，成员参数包含 `UserId`、`MsgId` 和 `MsgSeq`，说明消息接受成功用户的相关信息。`MsgSeq` 可用于 [撤回单聊消息](/zh/zim-server/messaging/recall-a-one-to-one-message)。 | [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) |
 | 发送群聊消息服务端接口新增响应参数 | 新增 `MsgSeq`，可用于 [撤回群聊消息](/zh/zim-server/messaging/send-a-one-to-one-message)。 | [发送群聊消息](/zh/zim-server/messaging/send-group-messages) |
 | 消息发送后服务端回调新增字段 | 新增 `user_list` 字段，用于批量返回消息接收用户信息。**说明**：仅当开发者调用服务端接口 [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) 时，此字段有值。| [消息发送后回调](/zh/zim-server/callbacks/message-sent) |
-| 优化 [roomStateChanged](https://doc-zh.zego.imhttps://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 回调逻辑  | 当开发者调用 ZIM 服务端接口在后台销毁房间后，[roomStateChanged](https://doc-zh.zego.imhttps://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 回调描述房间状态变化的原因修改为 `ZIMRoomEventRoomNotExist`。 | [roomStateChanged](https://doc-zh.zego.imhttps://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) |
+| 优化 [roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 回调逻辑  | 当开发者调用 ZIM 服务端接口在后台销毁房间后，[roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) 回调描述房间状态变化的原因修改为 `ZIMRoomEventRoomNotExist`。 | [roomStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data) |
 
 <h5>废弃删除</h5>
 
@@ -767,7 +767,7 @@ articleID: 11593
 
 | <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| 新增“房间属性”功能 | <p>房间属性指房间内保存的 `Key-Value` 属性对，开发者可以使用此功能为房间设置自定义信息。</p><p>此功能可用于语聊房、直播等场景，用来记录房间背景图地址、各用户的角色身份、设备状态等自定义信息。</p> | <ul><li>[createRoom](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~class~ZIM#create-room-room-info-config-callback)</li><li>[setRoomAttributes](@setRoomAttributes)</li><li>[deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys)</li><li>[queryRoomAllAttributes](@queryRoomAllAttributes)</li><li>[beginRoomAttributesBatchOperationWithRoomID](@beginRoomAttributesBatchOperationWithRoomID)</li><li>[endRoomAttributesBatchOperationWithRoomID](@endRoomAttributesBatchOperationWithRoomID)</li><li>[onRoomAttributesUpdated](@onRoomAttributesUpdated)</li><li>[onRoomAttributesBatchUpdated](@onRoomAttributesBatchUpdated)</li></ul> |
+| 新增“房间属性”功能 | <p>房间属性指房间内保存的 `Key-Value` 属性对，开发者可以使用此功能为房间设置自定义信息。</p><p>此功能可用于语聊房、直播等场景，用来记录房间背景图地址、各用户的角色身份、设备状态等自定义信息。</p> | <ul><li>[createRoom](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~class~ZIM#create-room-room-info-config-callback)</li><li>[setRoomAttributes](@setRoomAttributes)</li><li>[deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys)</li><li>[queryRoomAllAttributesByRoomID](@queryRoomAllAttributesByRoomID)</li><li>[beginRoomAttributesBatchOperationWithRoomID](@beginRoomAttributesBatchOperationWithRoomID)</li><li>[endRoomAttributesBatchOperationWithRoomID](@endRoomAttributesBatchOperationWithRoomID)</li><li>[roomAttributesUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id)</li><li>[roomAttributesBatchUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-attributes-batch-updated-room-id-update-info )</li></ul> |
 
 <h5>接口变更</h5>
 
@@ -778,11 +778,11 @@ articleID: 11593
 | [createRoom](https://doc-zh.zego.im/article/api?doc=zim_API~objectivec_ios~class~ZIM#create-room-room-info-config-callback) | 创建带高级设置的房间。 |
 | [setRoomAttributes](@setRoomAttributes) | <p>设置房间属性。</p><ul><li>当 Key 不存在时，调用此接口，将自动添加此 Key-Value 属性对。</li><li>当 Key 存在时，调用此接口，将更新 Value 值。</li></ul><p>此接口支持同时设置多个 Key-Value，后台默认最多可设置 10 个 Key-Value 属性对。</p>|
 | [deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys) | 删除房间属性。调用此接口，传入 Key 即可删除，支持同时删除多个 Key-Value 属性对。 |
-| [queryRoomAllAttributes](@queryRoomAllAttributes) | 查询房间内设置的属性信息。 |
-| [beginRoomAttributesBatchOperationWithRoomID](@beginRoomAttributesBatchOperationWithRoomID) | <p>开始进行房间属性的组合式操作，支持组合调用设置和删除房间属性。组合操作可将同一房间中，多个不同操作合并为一个原子操作进行执行，通常用于连续操作时不想被其他用户操作插入执行的场景中。</p><p>在此接口之后调用的 [setRoomAttributes\|_](@setRoomAttributes) 和 [deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys) 将会被同时发送到后台执行。</p> |
+| [queryRoomAllAttributesByRoomID](@queryRoomAllAttributesByRoomID) | 查询房间内设置的属性信息。 |
+| [beginRoomAttributesBatchOperationWithRoomID](@beginRoomAttributesBatchOperationWithRoomID) | <p>开始进行房间属性的组合式操作，支持组合调用设置和删除房间属性。组合操作可将同一房间中，多个不同操作合并为一个原子操作进行执行，通常用于连续操作时不想被其他用户操作插入执行的场景中。</p><p>在此接口之后调用的 [setRoomAttributes](@setRoomAttributes) 和 [deleteRoomAttributesByKeys](@deleteRoomAttributesByKeys) 将会被同时发送到后台执行。</p> |
 | [endRoomAttributesBatchOperationWithRoomID](@endRoomAttributesBatchOperationWithRoomID) | <p>结束进行房间属性的组合式操作。</p><p>调用此接口之后将请求后台执行组合式操作。</p> |
-| [onRoomAttributesUpdated](@onRoomAttributesUpdated) | 房间内有属性对更新时，相关信息的回调。 |
-|[onRoomAttributesBatchUpdated](@onRoomAttributesBatchUpdated) | 房间内有使用组合式操作来更新房间属性时，相关信息的回调。|
+| [roomAttributesUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id) | 房间内有属性对更新时，相关信息的回调。 |
+| [roomAttributesBatchUpdated](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-attributes-batch-updated-room-id-update-info) | 房间内有使用组合式操作来更新房间属性时，相关信息的回调。|
 
 <h5>问题修复</h5>
 
