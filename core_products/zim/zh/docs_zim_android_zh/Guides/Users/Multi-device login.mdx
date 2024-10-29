@@ -1,15 +1,8 @@
 ---
-articleID: 17433
+articleID: 18383
 ---
 
-export const getPlatformData = (props, data) => {
-  let platform = props.platform ?? "Android";
-  if(props.special){// 有特殊值先使用特殊值,在使用platform
-    platform = props.special
-    if(data[props.platform]) return platform in data ? data[platform] : data[props.platform]
-  }
-  return platform in data ? data[platform] : data["Android"]
-}
+import {getPlatformData} from "/snippets/utils-content-parser.js"
 
 export const loginMap = {
   'Android': <a href='@login__2' target='_blank'>login</a>,
@@ -173,59 +166,61 @@ export const onCallUserStateChangedMap = {
   'FLutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onCallUserStateChanged.html' target='_blank'>onCallUserStateChanged</a>,
 }
 export const deleteAllConversationMessagesMap = {// Flutter特有的api
-  'Android': <a href='' target='_blank'></a>,
+  'Android': "",
   "Flutter": <a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteAllConversationMessages.html" target="_blank">deleteAllConversationMessages</a>
 }
 
-# Multi-device login
+
+# 多端登录
 
 - - -
 
-## Function introduction
+## 功能简介
 
-ZIM SDK supports the configuration of custom multi-device logins, which means that users can log in to multiple devices simultaneously with the same account, ensuring that the user's sessions, messages, groups and other data communicate with each other.
+ZIM SDK 支持配置自定义多端登录，即用户同一个账号可在多个平台上同时登录，满足用户的会话、消息、群组等数据互通。
+
 <Note title="Note">
 
-- To use this feature, please subscribe to the Professional or Ultimate package, and contact the technical support team to activate the service and configure the login policy.
-- This feature only supports SDK version 2.11.0 and above.
+- 如需使用此功能，请开通专业版或旗舰版套餐，并联系技术支持开通服务并配置登录策略。
+- 本功能仅支持 2.11.0 及以上版本的 SDK 使用。
 </Note>
 
-## Common login policies
+## 常见的登录策略
 
-Multi-device login supports configuration on eight devices including Windows, Mac, Linux, Android, iOS, iPad, Web, and Mini Program. Among them, multi-device login is supported on Windows, Mac, Linux, Android, iOS, and iPad devices, with a maximum of 2 devices. Multi-instance login is supported on the Web device, with a maximum of 5 login instances.
+多端登录可支持在 Windows、Mac、Linux、Android、iOS、iPad、Web、小程序等八个平台上配置，其中支持在 Windows、Mac、Linux、Android、iOS、iPad 平台配置多设备登录，对于上述任一平台而言，一个账号在同一时间只能在最多两台设备上进行登录。在 Web 平台配置多实例登录，最多不超过 5 个登录实例。
 
-The following are the three login policies supported by the ZIM SDK: single-device login, dual-device login, and multi-device login.
+以下为 ZIM SDK 支持的三种登录策略，即单平台登录、双平台登录以及多平台登录：
 
-| Single device login (by default) | Only supports users logging into the account on one device at a time. If the account is logged into another device, the account on the original device will be logged out. |
+| 单平台登录（默认） | 仅支持用户同时在 1 个平台上登录帐号。如果在其他平台上登录帐号，原平台上的账号会被退出。 |
 | :-- | :-- | 
-| Dual-device login | Allows users to log in to their accounts on any of the Windows, Mac, Linux, Android, iOS, and iPad devices while keeping their accounts online on the web device. |
-| Multi-device login | Allows users to simultaneously log in to their accounts on multiple devices, including Windows, Mac, Linux, Android, iOS, iPad, Web, and Mini program. The following configurations are supported:<br/><ul><li>Multiple device and instance login on the same device at the same time.</li><li>Configure the logic for kicking each other offline; currently only supports offline kicking between Android and iOS devices, and offline kicking between Windows and Mac devices.</li></ul> |
+| 双平台登录 | 支持用户在 Windows、Mac、Linux、Android、iOS 和 iPad 的其中 1 个平台上登录帐号，并同时保持帐号在 Web 平台在线。 |
+| 多平台登录 | 是指支持用户同时在 Windows、Mac、Linux、Android、iOS、iPad、Web、小程序多平台登录帐号，支持以下配置：<br/><ul><li>同一平台同时多设备、实例登录。</li><li>配置互踢逻辑，当前仅支持 android、iOS 设备互踢，Windows、Mac 设备互踢。</li></ul> |
 
 
+## 实现流程
 
-## Implementation process
+联系 ZEGO 技术支持，开通多端登录服务，配置多端登录之后，即可在多端调用 [login\|_blank](@login__2) 登录 ZIM SDK，实现流程与单端登录无异。如何登录，详情请参考 [实现基本消息收发\|_blank](!IM-Quick_Starts/Implementation_of_sending_and_receiving#login) 的“登录 ZIM“。 
 
-Contact ZEGOCLOUD technical support team to activate the multi-terminal login service. After configuring the multi-device login, you can call {getPlatformData(props,loginMap)} on multiple devices to log in to the ZIM SDK. The implementation process is the same as a single-terminal login. For details on how to log in, please refer to the "Logging in ZIM" section in [Send and receive messages](../../Send%20and%20receive%20messages.mdx).
+当登录设备已达到策略规定的上限时，如果在新设备登录帐号，原设备中最早登录的帐号会被踢下线，并通过 [onConnectionStateChanged\|_blank](@onConnectionStateChanged) 回调得知 event 为 `KickedOut` 。例如：登录策略规定最多只能在 3 台设备上登录，已在设备 A、B、C（按登录时间排序）登录，如果在设备 D 上登录帐号，则设备 A 上的帐号会被踢下线。
 
-When the number of login devices reaches the limit set by the policy, if you log in to the account on a new device, the account that was logged in the earliest on the original device will be kicked offline. You will be notified of this through the {getPlatformData(props,onConnectionStateChangedMap)} callback with the event set to `KickedOut`. For example, if the login specifies a maximum of 3 devices to be logged in, and the account has already been logged in on devices A, B, and C (in chronological order), logging in to the account on device D will kick the account on device A offline.
+当帐号被踢下线后，建议调用 [logout\|_blank](@logout) 接口登出 ZIM 服务，用户界面切换为登录界面。
 
-When the account is kicked offline, it is recommended to call the {getPlatformData(props,logoutMap)} interface to log out of the ZIM service and switch the user interface to the login interface.
+## 多端登录对其他功能的影响
 
-## The impact of multi-device login on other functions
+配置多端登录后，以下功能的代码也需要做相应调整。
 
-The codes for the following functions must also be changed after configuring multi-device login.
+### 用户信息管理
 
-### User information management
+ZIM SDK 为多端登录用户提供了用户信息同步的功能。当用户在一端通过 [updateUserName\|_blank](@updateUserName)、[updateUserAvatarUrl\|_blank](@updateUserAvatarUrl)、[updateUserExtendedData\|_blank](@updateUserExtendedData) 接口更新了自己的信息后，其他在线客户端可通过注册 [onUserInfoUpdated\|_blank](@onUserInfoUpdated) 事件监听用户信息被修改。
 
-ZIM SDK provides user information synchronization function for multi-device login users.After a user updates his or her information through {getPlatformData(props,updateUserNameMap)}, {getPlatformData(props,updateUserAvatarUrlMap)}, {getPlatformData(props,updateUserExtendedDataMap)} interfaces on one device, other online clients can register the {getPlatformData(props,onUserInfoUpdatedMap)}  event to listen for user information being modified.
+#### onUserInfoUpdated 示例
 
-#### onUserInfoUpdated processing example
 
 :::if{props.platform=undefined}
 ```java
 public class ZIMEventHandler {
     public void onUserInfoUpdated(ZIM zim, ZIMUserFullInfo info) {
-        // Can be obtained in info: user ID, user name, user avatar, user additional fields
+        // 可以在 info 中获取：用户 ID，用户名，用户头像，用户额外字段
         String userID = info.baseInfo.userID;
         String userName = info.baseInfo.userName;
         String userAvatarUrl = info.userAvatarUrl;
@@ -239,7 +234,7 @@ public class ZIMEventHandler {
 :::if{props.platform="Flutter"}
 ```dart
 ZIMEventHandler.onUserInfoUpdated = (ZIM zim, ZIMUserFullInfo info){
-    // You can obtain the following information from info: user ID, username, user avatar, user additional fields
+    // 您可以从info中获取以下信息：用户ID、用户名、用户头像、用户附加字段
     String userID = info.baseInfo.userID;
     String userName = info.baseInfo.userName;
     String userAvatarUrl = info.userAvatarUrl;
@@ -248,10 +243,10 @@ ZIMEventHandler.onUserInfoUpdated = (ZIM zim, ZIMUserFullInfo info){
 ```
 :::
 
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 - (void)zim:(ZIM *)zim userInfoUpdated:(ZIMUserFullInfo *)info{
-         // Can be obtained in info: user ID, user name, user avatar, user additional fields
+         // 可以从info中获取到用户ID、用户名、用户头像、用户附加字段
          NSString *userID = info.baseInfo.userID;
          NSString *userName = info.baseInfo.userName;
          NSString *userAvatarUrl = info.userAvatarUrl;
@@ -265,14 +260,13 @@ ZIMEventHandler.onUserInfoUpdated = (ZIM zim, ZIMUserFullInfo info){
 ```Cpp
 class zim_event_handler : public zim::ZIMEventHandler {
 ...
-
-    virtual void onUserInfoUpdated(zim::ZIM * zim, const zim::ZIMUserFullInfo & info) override {
-        // Can be obtained in info: user ID, user name, user avatar, user additional fields
-        auto user_id = info.baseInfo.userID;
-        auto user_name = info.baseInfo.userName;
-        auto user_avatar_url = info.userAvatarUrl;
-        auto user_extended_data = info.extendedData;
-    }
+virtual void onUserInfoUpdated(zim::ZIM * zim, const zim::ZIMUserFullInfo & info) override {
+    // 可以在info中获取：用户ID、用户名、用户头像、用户附加字段
+    auto user_id = info.baseInfo.userID;
+    auto user_name = info.baseInfo.userName;
+    auto user_avatar_url = info.userAvatarUrl;
+    auto user_extended_data = info.extendedData;
+}
 
 ...
 }
@@ -286,13 +280,13 @@ zim.on('userInfoUpdated', (zim, { info }) => {
 ```
 :::
 
-### Conversation management
+### 会话管理
 
-#### Delete a single server conversation
+#### 删除单个服务端会话
 
-When the user deletes the server conversation on one device through the {getPlatformData(props,deleteConversationMap)} interface（that is, {getPlatformData(props,isAlsoDeleteServerConversationMap)} set to true）, other online clients can register {getPlatformData(props,onConversationChangedMap)} event to listen for the deletion of the conversation.
+当用户在一端通过 [deleteConversation\|_blank](@deleteConversation) 接口删除服务端会话后（即 [isAlsoDeleteServerConversation\|_blank](@isAlsoDeleteServerConversation) 为 true），其他在线客户端可通过注册 [onConversationChanged\|_blank](@onConversationChanged) 事件监听会话被删除。
 
-#### onConversationChanged example
+#### onConversationChanged 示例
 
 
 :::if{props.platform=undefined}
@@ -302,7 +296,7 @@ public class ZIMEventHandler{
     public void onConversationChanged(ZIM zim, ArrayList<ZIMConversationChangeInfo> conversationChangeInfoList){
         for (ZIMConversationChangeInfo convInfo : conversationChangeInfoList) {
             if (convInfo.event == ZIMConversationEvent.DELETED) {
-                // The conversation is deleted
+                // 会话被删除
             }
         }
     }
@@ -317,19 +311,19 @@ public class ZIMEventHandler{
 ZIMEventHandler.onConversationChanged = (ZIM zim, List<ZIMConversationChangeInfo> conversationChangeInfoList){
     for (ZIMConversationChangeInfo convInfo : conversationChangeInfoList) {
         if (convInfo.event == ZIMConversationEvent.delete) {
-        // The conversation has been deleted
+       // 该对话已被删除
         }
     }
 };
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 - (void)zim:(ZIM *)zim
     conversationChanged:(NSArray<ZIMConversationChangeInfo * > *)conversationChangeInfoList{
         for(ZIMConversationChangeInfo *convInfo in conversationChangeInfoList){
             if(convInfo.event == ZIMConversationEventDeleted){
-                // The conversation is deleted
+                // 该对话已被删除
             }
         }
 }
@@ -344,7 +338,7 @@ class zim_event_handler : public zim::ZIMEventHandler {
                                        const std::vector<zim::ZIMConversationChangeInfo> &conversationChangeInfoList) override {
         for (const auto &conv_info : conversationChangeInfoList) {
             if (conv_info.event == zim::ZIMConversationEvent::ZIM_CONVERSATION_EVENT_DELETED) {
-                // The conversation is deleted
+                // 该对话已被删除
             }
         }
     }
@@ -358,24 +352,26 @@ class zim_event_handler : public zim::ZIMEventHandler {
 zim.on('conversationChanged', (zim, { infoList }) => {
     infoList.forEach((info) => {
         if (info.event == 3) {
-            //The conversation is deleted
+            //对话已被删除
         }
     });
 });
 ```
 :::
 
-#### Delete all server conversations
 
-When the user deletes all server conversations on one device through the {getPlatformData(props,deleteAllConversationsMap)} interface（that is, {getPlatformData(props,isAlsoDeleteServerConversationMap)} set to true）, other clients can use {getPlatformData(props,onConversationsAllDeletedMap)} event to listen for the deletion of the.
+#### 删除全部服务端会话
 
-#### onConversationsAllDeleted processing example
+当用户在一端通过 [deleteAllConversations\|_blank](@deleteAllConversations) 接口删除全部服务端会话后（即 [isAlsoDeleteServerConversation\|_blank](@isAlsoDeleteServerConversation) 为 true），其他客户端可通过 [onConversationsAllDeleted\|_blank](@onConversationsAllDeleted) 事件监听全部会话被删除。
+
+#### onConversationsAllDeleted 处理示例
+
 
 :::if{props.platform=undefined}
 ```java
 @Override
 public void onConversationsAllDeleted(ZIM zim, ZIMConversationsAllDeletedInfo info) {
-        // The other end deleted all sessions
+        // 其他端删除了全部会话
 }
 ```
 
@@ -385,17 +381,17 @@ public void onConversationsAllDeleted(ZIM zim, ZIMConversationsAllDeletedInfo in
 ZIMEventHandler.onConversationChanged = (ZIM zim, List<ZIMConversationChangeInfo> conversationChangeInfoList){
     for (ZIMConversationChangeInfo convInfo : conversationChangeInfoList) {
         if (convInfo.event == ZIMConversationEvent.delete) {
-        // The conversation has been deleted
+        // 该对话已被删除
         }
     }
 };
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 - (void)zim:(ZIM *)zim
     conversationsAllDeleted:(ZIMConversationsAllDeletedInfo *)info{
-        // The other end deleted all sessions
+        //另一方删除了所有会话。
 }
 ```
 :::
@@ -406,7 +402,7 @@ class zim_event_handler : public zim::ZIMEventHandler {
 
     virtual void onConversationsAllDeleted(zim::ZIM *zim, 
                                        const ZIMConversationsAllDeletedInfo &info) override {
-        // The other end deleted all sessions
+        另一方删除了所有会话。
    }
 ...
 }
@@ -415,22 +411,23 @@ class zim_event_handler : public zim::ZIMEventHandler {
 :::if{props.platform="Web"}
 ```javascript
 zim.on('conversationsAllDeleted', (zim, { count }) => {
-    console.log('Number of deleted conversations', count);
+    console.log('已删除的对话数量', count);
 });
 ```
 :::
 
-#### Clear all unread conversations
+#### 清楚全部会话未读
 
-When the user clears all unread conversations on one device through {getPlatformData(props,clearConversationTotalUnreadMessageCountMap)}. Other clients can listen for the notification of all conversations having their unread message count cleared through the {getPlatformData(props,onConversationTotalUnreadMessageCountUpdatedMap)} event.
+当用户在一端通过 [clearConversationTotalUnreadMessageCount\|_blank](@clearConversationTotalUnreadMessageCount) 清除全部会话未读时，其他客户端可通过 [onConversationTotalUnreadMessageCountUpdated\|_blank](@onConversationTotalUnreadMessageCountUpdated) 事件监听所有会话的未读都被清零的通知。
 
-#### onConversationTotalUnreadMessageCountUpdated processing example
+#### onConversationTotalUnreadMessageCountUpdated 处理示例
+
 
 :::if{props.platform=undefined}
 ```java
 @Override
 public void onConversationTotalUnreadMessageCountUpdated(ZIM zim, int totalUnreadMessageCount) {
-        //After clearing all unread messages in all conversations on other devices, the value of totalUnreadMessageCount in the current device will be 0
+        // 其他端清除全部会话未读后，本端该通知 totalUnreadMessageCount 的值将为 0
 }
 ```
 
@@ -439,15 +436,15 @@ public void onConversationTotalUnreadMessageCountUpdated(ZIM zim, int totalUnrea
 ```dart
 ZIMEventHandler.onConversationsAllDeleted = (
       ZIM zim, ZIMConversationsAllDeletedInfo info){
-        // All conversations have been deleted by another client
+        // 所有对话已被另一个客户删除
 }
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 - (void)zim:(ZIM *)zim
 conversationTotalUnreadMessageCountUpdated:(unsigned int)totalUnreadMessageCount{
-    //After clearing all unread messages in all conversations on other devices, the value of totalUnreadMessageCount in the current device will be 0
+    //在其他设备上清除所有对话中的未读消息后，当前设备上的totalUnreadMessageCount值将为0。
 }
 ```
 :::
@@ -458,7 +455,7 @@ class zim_event_handler : public zim::ZIMEventHandler {
 
     virtual void onConversationTotalUnreadMessageCountUpdated(zim::ZIM *zim, 
                                        unsigned int totalUnreadMessageCount) override {
-        //After clearing all unread messages in all conversations on other devices, the value of totalUnreadMessageCount in the current device will be 0
+        //在其他设备上清除所有对话中的未读消息后，当前设备上的totalUnreadMessageCount值将为0。
    }
 ...
 }
@@ -467,22 +464,23 @@ class zim_event_handler : public zim::ZIMEventHandler {
 :::if{props.platform="Web"}
 ```javascript
 zim.on('conversationTotalUnreadMessageCountUpdated', (zim, { totalUnreadMessageCount }) => {
-    //After clearing all unread messages in all conversations on other devices, the value of `totalUnreadMessageCount` in the current device will be 0
+    //在其他设备上清除所有对话中的未读消息后，当前设备上的`totalUnreadMessageCount`值将为0。
 });
 ```
 :::
 
-### Message management
+### 消息管理
 
-#### Message Synchronization
+#### 消息同步
 
-When a user logs in to a new device, the SDK does not automatically synchronize the existing messages from the old device to the new device. Users need to actively call the  {getPlatformData(props,queryHistoryMessageMap)} interface to retrieve the messages stored on the ZIM server. For more details, please refer to {<a href="!zim-query_Message_Records" target="_blank">Get message history</a>} . As for the local messages stored on the old device, they cannot be retrieved.
+当用户登录新设备后，SDK 不会自动将旧设备中的已有消息同步到新设备上，用户需要主动调用 [queryHistoryMessage\|_blank](@queryHistoryMessage) 接口，才能获取存储于 ZIM 服务端的消息，详情请参考 [获取历史消息\|_blank](!IM-query_Message_Records)。对于存储于旧设备的本地消息，则无法获取。
 
-####  Deleting server message
+#### 删除服务端消息
 
-When a user deletes server messages in a conversation through the {getPlatformData(props,deleteMessagesMap)}, {getPlatformData(props,deleteAllMessageMap)} ,{getPlatformData(props,deleteAllConversationMessagesMap)} with （that is {getPlatformData(props,isAlsoDeleteServerMessageMap)} set to true）, other online clients can listen for the {getPlatformData(props,onMessageDeletedMap)} to be notified of the deleted messages.
+当用户在一端通过 [deleteMessages\|_blank](@deleteMessages)、[deleteAllMessage\|_blank](@deleteAllMessage)、[deleteAllConversationMessages\|_blank](@deleteAllConversationMessages) 接口删除会话的服务端消息后（即 [isAlsoDeleteServerMessage\|_blank](@isAlsoDeleteServerMessage) 为 true），其他在线客户端可通过注册 [onMessageDeleted\|_blank](@onMessageDeleted) 事件监听消息被删除。
 
-#### Example of calling the interface
+#### 调用接口示例
+
 
 :::if{props.platform=undefined}
 ```java
@@ -490,21 +488,23 @@ public class ZIMEventHandler{
 ...
     public void onMessageDeleted(ZIM zim, ZIMMessageDeletedInfo deletedInfo){
 
-if (deletedInfo.messageDeleteType == ZIMMessageDeleteType.MESSAGE_LIST_DELETED)
-        {
-            // Multiple messages in a session are deleted
-            for (ZIMMessage message : messageList) {
-             // Iterate through each deleted message
-            }
-        } else if (deletedInfo.messageDeleteType ==
-                   ZIMMessageDeleteType.CONVERSATION_ALL_MESSAGES_DELETED)
-        {
-            // all current messages for a session are deleted
-        } else if (deletedInfo.messageDeleteType ==
-                   ZIMMessageDeleteType.ALL_CONVERSATION_MESSAGES_DELETED)
-        {
-            // all messages for all sessions are deleted
-        }
+      if (deletedInfo.messageDeleteType == ZIMMessageDeleteType.MESSAGE_LIST_DELETED)
+          {
+              // 某个会话中的多条消息被删除
+              for (ZIMMessage message : messageList) {
+                  // 遍历每一条被删除的消息
+              }
+          } else if (deletedInfo.messageDeleteType ==
+                    ZIMMessageDeleteType.CONVERSATION_ALL_MESSAGES_DELETED)
+          {
+              // 某个会话当前所有消息被删除
+          } else if (deletedInfo.messageDeleteType ==
+                    ZIMMessageDeleteType.ALL_CONVERSATION_MESSAGES_DELETED)
+          {
+              // 所有会话的所有消息被删除
+          }
+      }
+...
 }
 ```
 
@@ -514,41 +514,41 @@ if (deletedInfo.messageDeleteType == ZIMMessageDeleteType.MESSAGE_LIST_DELETED)
 ZIMEventHandler.onMessageDeleted = (ZIM zim, ZIMMessageDeletedInfo deletedInfo){
     if (deletedInfo.messageDeleteType == ZIMMessageDeleteType.messageListDeleted)
         {
-            // Multiple messages in a conversation have been deleted
+            // 会话中的多条消息已被删除
             for (var message in messageList) {
-                // Iterate through each deleted message
+                // 遍历每条已删除的消息
             }
         } else if (deletedInfo.messageDeleteType ==
                    ZIMMessageDeleteType.conversationAllMessagesDeleted)
         {
-            // All messages in a conversation have been deleted
+            // 会话中的所有消息已被删除
         } else if (deletedInfo.messageDeleteType ==
                    ZIMMessageDeleteType.allConversationMessagesDeleted)
         {
-            // All messages in all conversations have been deleted
+            // 所有会话中的消息都已被删除
         }
 }
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 
 ```objc
 - (void)zim:(ZIM *)zim messageDeleted:(ZIMMessageDeletedInfo *)deletedInfo{
         if (deletedInfo.messageDeleteType == ZIMMessageDeleteTypeMessageListDeleted)
         {
-            // Multiple messages in a session are deleted
+            // 会话中删除了多条消息
             for (ZIMMessage *message in messageList) {
-             // Iterate through each deleted message
+             // 遍历每条被删除的消息
             }
 
         } else if (deletedInfo.messageDeleteType ==
                    ZIMMessageDeleteTypeConversationAllMessagesDeleted)
         {
-            // all current messages for a session are deleted
+            // 删除了会话中的所有当前消息
         } else if (deletedInfo.messageDeleteType ==
                    ZIMMessageDeleteTypeAllConversationMessagesDeleted)
         {
-            // all messages for all sessions are deleted
+            // 删除了所有会话的所有消息
         }
 }
 ```
@@ -557,24 +557,23 @@ ZIMEventHandler.onMessageDeleted = (ZIM zim, ZIMMessageDeletedInfo deletedInfo){
 ```Cpp
 class zim_event_handler : public zim::ZIMEventHandler {
 ...
-
-    virtual void onMessageDeleted(zim::ZIM * /*zim*/, const zim::ZIMMessageDeletedInfo &deletedInfo) override {
-        if (deletedInfo.messageDeleteType == zim::ZIM_MESSAGE_DELETE_TYPE_MESSAGE_LIST_DELETED)
+virtual void onMessageDeleted(zim::ZIM * /*zim*/, const zim::ZIMMessageDeletedInfo &deletedInfo) override {
+    if (deletedInfo.messageDeleteType == zim::ZIM_MESSAGE_DELETE_TYPE_MESSAGE_LIST_DELETED)
+    {
+        // 多条消息被删除
+        for (const auto& message : deletedInfo.messageList)
         {
-            // Multiple messages in a session are deleted
-            for (const auto& message : deletedInfo.messageList)
-            {
-             // Iterate through each deleted message
-            }
-        } else if (deletedInfo.messageDeleteType ==
-                   zim::ZIM_MESSAGE_DELETE_TYPE_CONVERSATION_ALL_MESSAGES_DELETED)
-        {
-            // All current messages for a session are deleted
-        } else if (deletedInfo.messageDeleteType ==
-                   zim::ZIM_MESSAGE_DELETE_TYPE_ALL_CONVERSATION_MESSAGES_DELETED)
-        {
-            // all messages for all sessions are deleted
+            // 遍历每条被删除的消息
         }
+    } else if (deletedInfo.messageDeleteType ==
+               zim::ZIM_MESSAGE_DELETE_TYPE_CONVERSATION_ALL_MESSAGES_DELETED)
+    {
+        // 会话中的所有当前消息被删除
+    } else if (deletedInfo.messageDeleteType ==
+               zim::ZIM_MESSAGE_DELETE_TYPE_ALL_CONVERSATION_MESSAGES_DELETED)
+    {
+        // 所有会话的所有消息被删除
+    }
 ...
 }
 ```
@@ -583,21 +582,22 @@ class zim_event_handler : public zim::ZIMEventHandler {
 ```javascript
 zim.on('messageDeleted', (zim, { conversationID, conversationType, isDeleteConversationAllMessage, messageList }) => {
     if (messageDeleteType == 2 ) {
-        // All messages in the conversation are deleted
+        // 会话中的所有消息都被删除
      } else if (messageDeleteType == 1 ) {
-        // All current messages in the conversation are deleted
+        // 会话中的所有当前消息都被删除
     } else if (messageDeleteType == 0) {
-        // The specified message in the conversation is deleted
+        // 会话中指定的消息被删除
     }
 });
 ```
 :::
 
-#### Set message receipt as read
+#### 设置消息回执已读
 
-When a user sets a message receipt as read through the {getPlatformData(props,sendMessageReceiptsReadMap)}, {getPlatformData(props,sendConversationMessageReceiptReadMap)} interface on one device, other online clients can listen for the {getPlatformData(props,onMessageReceiptChangedMap)} and {getPlatformData(props,onConversationMessageReceiptChangedMap)} event to be notified that the account has set the message receipt as read.
+当用户在一端通过 [sendMessageReceiptsRead\|_blank](@sendMessageReceiptsRead)、[sendConversationMessageReceiptRead\|_blank](@sendConversationMessageReceiptRead) 接口设置消息回执已读后，其他在线客户端可通过注册 [onMessageReceiptChanged\|_blank](@onMessageReceiptChanged)、[onConversationMessageReceiptChanged\|_blank](@onConversationMessageReceiptChanged) 事件监听本帐号已设置消息回执为已读。
 
-#### Example of calling the interface
+#### 调用接口示例
+
 
 :::if{props.platform=undefined}
 ```java
@@ -607,7 +607,7 @@ public class ZIMEventHandler {
     public void onMessageReceiptChanged(ZIM zim, ArrayList<ZIMMessageReceiptInfo> infos) {
         for (ZIMMessageReceiptInfo info : infos) {
             if (info.isSelfOperated) {
-                // Message receipt set as read by the user
+                // 用户自己设置的消息回执已读
             }
         }
     }
@@ -615,7 +615,7 @@ public class ZIMEventHandler {
     public void onConversationMessageReceiptChanged(ZIM zim, ArrayList<ZIMMessageReceiptInfo> infos) {
         for (ZIMMessageReceiptInfo info : infos) {
             if (info.isSelfOperated) {
-                // Conversation receipt set as read by the user
+                // 用户自己设置的消息回执已读
             }
         }
     }
@@ -630,7 +630,7 @@ public class ZIMEventHandler {
 ZIMEventHandler.onMessageReceiptChanged = (ZIM zim, List<ZIMMessageReceiptInfo> infos){
     for (ZIMMessageReceiptInfo info : infos) {
         if (info.isSelfOperated) {
-            // The user has set the message receipt as read
+            // 用户已将消息回执设置为已读
         }
     }
 };
@@ -638,18 +638,18 @@ ZIMEventHandler.onMessageReceiptChanged = (ZIM zim, List<ZIMMessageReceiptInfo> 
 ZIMEventHandler.onConversationMessageReceiptChanged = (ZIM zim, List<ZIMMessageReceiptInfo> infos){
     for (ZIMMessageReceiptInfo info : infos) {
         if (info.isSelfOperated) {
-            // The user has set the message receipt as read
+            // 用户已将消息回执设置为已读
         }
     }
 };
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 - (void)zim:(ZIM *)zim messageReceiptChanged:(NSArray<ZIMMessageReceiptInfo *> *)infos{
         for(ZIMMessageReceiptInfo *info in infos){
             if (info.isSelfOperated) {
-                // Message receipt set as read by the user
+                // 用户将消息回执设置为已读
             }
         }
 
@@ -658,7 +658,7 @@ ZIMEventHandler.onConversationMessageReceiptChanged = (ZIM zim, List<ZIMMessageR
 - (void)zim:(ZIM *)zim conversationMessageReceiptChanged:(NSArray<ZIMMessageReceiptInfo *> *)infos{
         for (ZIMMessageReceiptInfo *info in infos) {
             if (info.isSelfOperated) {
-                // Conversation receipt set as read by the user
+                // 用户将会话回执设置为已读
             }
         }
 }
@@ -669,11 +669,11 @@ ZIMEventHandler.onConversationMessageReceiptChanged = (ZIM zim, List<ZIMMessageR
 class zim_event_handler : public zim::ZIMEventHandler {
 ...
 
-    virtual void onMessageReceiptChanged(zim::ZIM * /*zim*/,
+   virtual void onMessageReceiptChanged(zim::ZIM * /*zim*/,
                 const std::vector<zim::ZIMMessageReceiptInfo> & infos) override {
         for (const auto &info : infos) {
             if (info.isSelfOperated) {
-                // Message receipt set as read by the user
+                // 用户将消息回执设置为已读
             }
         }
     }
@@ -682,7 +682,7 @@ class zim_event_handler : public zim::ZIMEventHandler {
                 const std::vector<zim::ZIMMessageReceiptInfo> &infos) override {
         for (const auto &info : infos) {
             if (info.isSelfOperated) {
-                // Conversation receipt set as read by the user
+                // 用户将会话回执设置为已读
             }
         }
     }
@@ -696,7 +696,7 @@ class zim_event_handler : public zim::ZIMEventHandler {
 zim.on('messageReceiptChanged', (zim, { infos }) => {
     infos.forEach((info) => {
         if (info.isSelfOperated) {
-            // Message receipt set as read by the user
+            // 用户将消息回执设置为已读
         }
     });
 });
@@ -704,16 +704,17 @@ zim.on('messageReceiptChanged', (zim, { infos }) => {
 zim.on('conversationMessageReceiptChanged', (zim, { infos }) => {
     infos.forEach((info) => {
         if (info.isSelfOperated) {
-            // Conversation receipt set as read by the user
+            // 用户将会话回执设置为已读
         }
     });
 });
 ```
 :::
 
-### Room management
+### 房间管理
 
-The room module's related interfaces and events do not support multi-device login. When a user joins a room on device A, and then joins the same room on device B, device A will be kicked out of the room. Device A will receive the `event` as `KickedOutByOtherDevice` through the {getPlatformData(props,onRoomStateChangedMap)}.
+房间模块相关接口和事件不支持多端登录。用户在 A 设备加入房间后，然后在 B 设备再加入相同的房间后，会把 A 设备踢出房间，A 设备会通过 [onRoomStateChanged\|_blank](@onRoomStateChanged) 回调收到 `event` 为 `KickedOutByMultiDevice`。
+
 
 :::if{props.platform=undefined}
 ```java
@@ -722,7 +723,7 @@ public class ZIMEventHandler {
     public void onRoomStateChanged(ZIM zim, ZIMRoomState state, ZIMRoomEvent event, JSONObject extendedData, String roomID) {
         if (state == ZIMRoomState.DISCONNECTED &&
             event == ZIMRoomEvent.KICKED_OUT) {
-            // Kicked out of the room due to multi-device login
+            // 多端登录加入房间，被踢出房间
         }
     }
 ...
@@ -736,12 +737,12 @@ ZIMEventHandler.onRoomStateChanged = (ZIM zim, ZIMRoomState state, ZIMRoomEvent 
     Map extendedData, String roomID){
         if (state == ZIMRoomState.disconnected &&
             event == ZIMRoomEvent.kickedOut) {
-        // Kicked out of the room due to multi-device login
+        // 由于多设备登录而被踢出房间
         }
     };
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 - (void)zim:(ZIM *)zim
     roomStateChanged:(ZIMRoomState)state
@@ -750,7 +751,7 @@ ZIMEventHandler.onRoomStateChanged = (ZIM zim, ZIMRoomState state, ZIMRoomEvent 
               roomID:(NSString *)roomID{
         if (state == ZIMConnectionStateDisconnected &&
             event == ZIMRoomEventKickedOutByOtherDevice) {
-            // Kicked out of the room due to multi-device login
+           // 由于多设备登录而被踢出房间
         }
 }
 
@@ -767,7 +768,7 @@ class zim_event_handler : public zim::ZIMEventHandler {
                                     const std::string &roomID) override {
         if (state == zim::ZIMRoomState::ZIM_ROOM_STATE_DISCONNECTED &&
             event == zim::ZIMRoomEvent::ZIM_ROOM_EVENT_KICKED_OUT_BY_OTHER_DEVICE) {
-            // Kicked out of the room due to multi-device login
+           // 由于多设备登录被踢出房间
         }
     }
 ...
@@ -779,25 +780,25 @@ class zim_event_handler : public zim::ZIMEventHandler {
 // When a user joins a room on device A, and then joins the same room on device B, device A will be kicked out of the room
 zim.on('roomStateChanged', (zim, { roomID, state, event }) => {
     if (state == 0 && event == 10) {
-        // Kicked out of the room due to multi-device login
+       // 由于多设备登录被踢出房间
     }
 });
 ```
 :::
 
-### Group management
+### 群组管理
 
-After enabling the multi-device login service, ZIM SDK will automatically synchronize group-related data between multiple devices.
+在开通多端登录服务后，ZIM SDK 会自动在多端设备之间同步群组相关数据。
 
-### Call invitation management
+### 呼叫邀请管理
 
-When the user is logged in on both device A and device B, and receives a call invitation, if the user accepts the invitation on device A（calling {getPlatformData(props,callAcceptMap)}）or after rejecting the invitation（calling {getPlatformData(props,callRejectMap)}) ：
-1. Device A can know the result of the operation through the callbacks（{getPlatformData(props,ZIMCallAcceptanceSentCallbackMap)} or {getPlatformData(props,ZIMCallRejectionSentCallbackMap)}）, and close the invitation popup window to perform other business operations.
-2. Device B should use the {getPlatformData(props,onCallUserStateChangedMap)} callback to know the call user state of the current user（{getPlatformData(props,ZIMCallUserStateMap)}）as `Accepted` or `Rejected`，and close the invitation popup window to perform other business operations.
+当用户同时登录设备 A 和 B，用户收到呼叫邀请，在设备 A 上接受邀请（调用 [callAccept\|_blank](@callAccept)）或者拒绝邀请（调用 [callReject\|_blank](@callReject)) 后：
+1. 设备 A 可以通过相关操作的回调（[ZIMCallAcceptanceSentCallback\|_blank](@-ZIMCallAcceptanceSentCallback) 或 [ZIMCallRejectionSentCallback\|_blank](@-ZIMCallRejectionSentCallback)） 得知操作结果，关闭邀请弹窗，实现其他业务操作；
+2. 设备 B 应当通过 [onCallUserStateChanged\|_blank](@onCallUserStateChanged) 回调，得知本用户的呼叫用户状态（[ZIMCallUserState\|_blank](@-ZIMCallUserState)）是 `Accepted` 还是 `Rejected`，关闭邀请弹窗，实现其他业务操作
 
-Each device can receive user state change events within the call invitation, as shown in the following table:
+各个设备能收到该呼叫内的用户状态变更事件 [onCallUserStateChanged\|_blank](@onCallUserStateChanged) 如下表所示：
 
-| callUserState | Device A | Device B |
+| callUserState | 设备 A | 设备 B |
 |-|-|-|
 | Inviting | ✔️ | ✔️ |
 | Received | ✔️ | ✔️ |
@@ -807,7 +808,7 @@ Each device can receive user state change events within the call invitation, as 
 | Cancelled | ✖ | ✖ |
 | Quit | ✔️ | ✖ |
 
-#### Example of calling the interface
+#### 调用接口示例
 
 
 :::if{props.platform=undefined}
@@ -821,30 +822,29 @@ acceptConfig.extendedData = "extra_1";
 ZIMCallRejectConfig rejectConfig;
 rejectConfig.extendedData = "extra_1";
 
-// Device A accepts the invitation
+// 设备 A 接受邀请
 zim.callAccept(currentCallID, acceptConfig, new ZIMCallAcceptanceSentCallback() {
      @Override
      public void onCallAcceptanceSent(String callID, ZIMError errorInfo) {
-        // Close the popup box for call waiting operation. Call ends.
- }];
+         // 关闭呼叫等待操作的弹框。
+     }
+});
 
-// Device A rejects the invitation
+// 设备 A 拒绝邀请
 zim.callReject(currentCallID, rejectConfig, new ZIMCallRejectionSentCallback() {
      @Override
      public void onCallRejectionSent(String callID, ZIMError errorInfo) {
-        // Close the popup box for call waiting operation. Call ends.
- }];
+         // 关闭呼叫等待操作的弹框。
+     }
+});
 
-// Device B listens for callUserStateChanged
+// 设备 B 监听 onCallUserStateChanged
 
-- (void)zim:(ZIM *)zim
--
 public class ZIMEventHandler {
 ...
     public void onCallUserStateChanged(ZIM zim, ZIMCallUserStateChangeInfo info, String callID) {
          if (currentCallID == callID) {
-
-                 // When Device A has accepted or rejected, close the popup box for call waiting operation.
+                // 设备 A 已经接受或者拒绝时，关闭呼叫等待操作的弹框
             }
         });
     }
@@ -865,30 +865,30 @@ acceptConfig.extendedData = "extra_1";
 ZIMCallRejectConfig rejectConfig;
 rejectConfig.extendedData = "extra_1";
 
-// Device A accepts the invitation
+// 设备A接受邀请
 ZIM.getInstance()!.callAccept(currentCallID, acceptConfig).then((value) {
-    // Close the popup for call waiting operation.
+    // 关闭呼叫等待操作的弹窗。
 }).catchError((onError){
-    // Handle exceptions
+    // 处理异常
 });
 
-// Device A rejects the invitation
+// 设备A拒绝邀请
 ZIM.getInstance()!.callReject(currentCallID, rejectConfig).then((value) {
-    // Close the popup for call waiting operation.
+    // 关闭呼叫等待操作的弹窗。
 }).catchError((onError){
-    // Handle exceptions
+    // 处理异常
 });
 
-// Device B listens to onCallUserStateChanged
+// 设备B监听onCallUserStateChanged事件
 ZIMEventHandler.onCallUserStateChanged = (ZIM zim, ZIMCallUserStateChangeInfo callUserStateChangeInfo, String callID){
     if (currentCallID == callID) {
-         // Close the popup for call waiting operation when Device A has accepted or rejected.
+         // 当设备A接受或拒绝时，关闭呼叫等待操作的弹窗。
     }
 };
 ```
 :::
 
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 
 ```objc
 NSString *selfUserId = @"user_id";
@@ -900,27 +900,26 @@ acceptConfig.extendedData = @"extra_1";
 ZIMCallRejectConfig *rejectConfig = [[ZIMCallRejectConfig alloc] init];
 rejectConfig.extendedData = @"extra_1";
 
-// Device A accepts the invitation
+// 设备A接受邀请
 [[ZIM getInstance] callAcceptWithCallID:currentCallId config:acceptConfig callback:^(NSString * _Nonnull callID, ZIMError * _Nonnull errorInfo) {
-        // Close the popup box for call waiting operation. Call ends.
+        // 关闭呼叫等待操作的弹出框，呼叫结束。
  }];
-// Device A rejects the invitation
+// 设备A拒绝邀请
 [[ZIM getInstance] callRejectWithCallID:currentCallId config:rejectConfig callback:^(NSString * _Nonnull callID, ZIMError * _Nonnull errorInfo) {
-        // Close the popup box for call waiting operation. Call ends.
+        // 关闭呼叫等待操作的弹出框，呼叫结束。
  }];
 
-// Device B listens for callUserStateChanged
+// 设备B监听callUserStateChanged
 - (void)zim:(ZIM *)zim
     callUserStateChanged:(ZIMCallUserStateChangeInfo *)info
                   callID:(NSString *)callID{
         for(ZIMCallUserInfo *userInfo in info.callUserList){
             if(userInfo.userID == selfUserId && (userInfo.state == ZIMCallUserStateAccepted ||  userInfo.state == ZIMCallUserStateRejected)){
-                 // When Device A has accepted or rejected, close the popup box for call waiting operation.
+                 // 当设备A接受或拒绝时，关闭呼叫等待操作的弹出框。
             }
             }
         }
 }
-
 ```
 :::
 
@@ -935,16 +934,16 @@ accept_config.extendedData = "extra_1";
 zim::ZIMCallRejectConfig reject_config;
 reject_config.extendedData = "extra_1";
 
-// Device A accepts the invitation
+// 设备A接受邀请
 zim_->callAccept(current_call_id, accept_config, [=] (const std::string &callID, const ZIMError &errorInfo) {
-        // Close the popup box for call waiting operation. Call ends.
+        // 关闭呼叫等待操作的弹出框。呼叫结束。
 });
-// Device A rejects the invitation
+// 设备A拒绝邀请
 zim_->callReject(current_call_id, reject_config, [=] (const std::string &callID, const ZIMError &errorInfo) {
-        // Close the popup box for call waiting operation. Call ends.
+        // 关闭呼叫等待操作的弹出框。呼叫结束。
  }];
 
-// Device B listens for callUserStateChanged
+// 设备B监听callUserStateChanged事件
 
 class zim_event_handler : public zim::ZIMEventHandler {
 ...
@@ -956,7 +955,7 @@ class zim_event_handler : public zim::ZIMEventHandler {
             if (user_info.userID == self_user_id &&
                 (user_info.state == zim::ZIMCallUserState::ZIM_CALL_USER_STATE_ACCEPTED ||
                  user_info.state == zim::ZIMCallUserState::ZIM_CALL_USER_STATE_REJECTED)) {
-                 // When Device A has accepted or rejected, close the popup box for call waiting operation.
+                 // 当设备A接受或拒绝时，关闭呼叫等待操作的弹出框。
             }
         });
     }
@@ -971,21 +970,21 @@ class zim_event_handler : public zim::ZIMEventHandler {
 var selfUserID = '';
 var curCallID = '';
 
-// Device A accepts the invitation
-zim.callAccept(curCallID, { extendedData: 'Device A accepts the invitation' }).then((res) => {
-    //  Close the popup box for call waiting operation. Start stream publishing and  playing, proceed with audio and video call.
+// 设备A接受邀请
+zim.callAccept(curCallID, { extendedData: '设备A接受邀请' }).then((res) => {
+    // 关闭呼叫等待操作的弹出框。开始流发布和播放，进行音视频通话。
 });
-// Device A rejects the invitation
-zim.callReject(curCallID, { extendedData: 'Device A rejects the invitation' }).then((res) => {
-    // Close the popup box for call waiting operation. Call ends.
+// 设备A拒绝邀请
+zim.callReject(curCallID, { extendedData: '设备A拒绝邀请' }).then((res) => {
+    // 关闭呼叫等待操作的弹出框。通话结束。
 });
 
-// Device B listens for callUserStateChanged
+// 设备B监听callUserStateChanged事件
 zim.on('callUserStateChanged', (zim, { callID, callUserList }) => {
     if (curCallID == callID) {
         callUserList.forEach((item) => {
             if (item.userID == selfUserID && (item.state == 1 || item.state == 2)) {
-                // When Device A has accepted or rejected, close the popup box for call waiting operation.
+                // 当设备A接受或拒绝时，关闭呼叫等待操作的弹出框。
             }
         });
     }
