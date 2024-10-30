@@ -1,27 +1,27 @@
-# Customize member's avatar
+# Customize member avatars
 
-This doc describes how to customize member's avatar in member list.
+This doc describes how to customize user avatars in the member list.
 
 
 <Frame width="30%" height="auto" caption="">
-  <img src="https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/live/live_duration.jpeg" />
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/59dc307c64.jpeg" alt="MemberAvatar.jpeg"/>
 </Frame> 
 
-To custom member's avatar in member list, do the following:
+To customize user avatars in the member list, perform the following steps:
 
-1. Implement a function to retrieve the user's avatar URL using the userID.
-
+<Steps>
+<Step title="Get the user avatar URL">
+Implement a function to retrieve the user avatar URL by the userID.
 <Warning title="Warning">
-
 Please note that here you need to set different avatars url for different users in the `getUserAvatar` function. If you hardcode a URL, then everyone's avatar will be the one you hardcoded.
-
 </Warning>
+</Step>
+<Step title="Set the member avatars">
+Set the avatars of live streaming members through `memberListConfig.avatarBuilder` in both HostPage and AudiencePage, so that all live streaming roles can see the same avatars in the member list. 
+</Step>
+</Steps>
 
-2. Customize avatar display style through `memberListConfig.avatarBuilder` for each role, such as HostPage or AudiencePage.
-
-Here is the reference code:
-
-```typescript {8-11,25-47}
+```typescript ReferenceCodeForHostPage {8-11,25-47}
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import ZegoUIKitPrebuiltLiveStreaming, { HOST_DEFAULT_CONFIG, ZegoLiveStreamingRole } from '@zegocloud/zego-uikit-prebuilt-live-streaming-rn';
