@@ -1,6 +1,16 @@
 ---
 articleID: 17533
 ---
+
+import { getPlatformData2 } from "/snippets/utils-content-parser.js"
+
+export const ZIMPushConfig = {
+  'default': <a href="@-ZIMPushConfig" target="_blank">ZIMPushConfig</a>,
+  'Flutter': <a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig-class.html" target="_blank">ZIMPushConfig</a>,
+  'RN': <a href="@ZIMPushConfig" target="_blank">ZIMPushConfig</a>
+}
+
+
 # Implement VoIP notification
 
 
@@ -88,7 +98,7 @@ Enter the correct value of the isProduct for the development or production envir
 Obtain `resourceID` with the **VoIP policy** from ZEGOCLOUD Technical Support.
 </Note>
 
-In the [`Call invitation`](./../Guides/Call%20invitation%20signaling.mdx) scenario or other scenarios that require VoIP notifications, pass in `resourceID` in the [`ZIMPushConfig`](@-ZIMPushConfig) method to set the push to a VoIP push.
+In the [`Call invitation`](./../Guides/Call%20invitation%20signaling.mdx) scenario or other scenarios that require VoIP notifications, pass in `resourceID` in the {getPlatformData2(props, ZIMPushConfig)} method to set the push to a VoIP push.
 
      
 ```objc
@@ -149,7 +159,7 @@ ZPNsEventHandler.onRegistered = (ZPNsRegisterMessage registerMessage) {
 Obtain `resourceID` with the **VoIP policy** from ZEGOCLOUD Technical Support.
 </Note>
  
-In the [`Call invitation`](./../Guides/Call%20invitation%20signaling.mdx) scenario or other scenarios that require VoIP notifications, pass in `resourceID` in the [`ZIMPushConfig`](@-ZIMPushConfig) method to set the push to a VoIP push.
+In the [`Call invitation`](./../Guides/Call%20invitation%20signaling.mdx) scenario or other scenarios that require VoIP notifications, pass in `resourceID` in the {getPlatformData2(props, ZIMPushConfig)} method to set the push to a VoIP push.
 
 
 ```dart
