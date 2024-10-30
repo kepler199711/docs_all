@@ -1,96 +1,57 @@
 ---
-articleID: 14207
+articleID: 12880
 ---
 
 import { getPlatformData } from '/snippets/utils-content-parser.js'
 
 export const createRoomMap = {
   'Android': <a href='@createRoom' target='_blank'>createRoom</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/createRoom.html' target='_blank'>createRoom</a>,
 }
-export const ZIMRoomInfoMap = {
-  'Android': <a href='@-ZIMRoomInfo' target='_blank'>ZIMRoomInfo</a>,
-  'iOS': <a href='@-ZIMRoomInfo' target='_blank'>ZIMRoomInfo *</a>,
+export const onRoomAttributesUpdatedMap = {
+  'Android': <a href='@onRoomAttributesUpdated' target='_blank'>onRoomAttributesUpdated</a>,
+  'U3d': <a href='@OnRoomAttributesUpdated' target='_blank'>OnRoomAttributesUpdated</a>,
+  'iOS': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_iOS|mac~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id' target='_blank'>roomAttributesUpdated</a>,
+  'mac': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macOS|mac~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id' target='_blank'>roomAttributesUpdated</a>,
+  'Web': <a href='@roomAttributesUpdated' target='_blank'>roomAttributesUpdated</a>,
 }
-export const ZIMRoomAdvancedConfigMap = {
-  'Android': <a href='@-ZIMRoomAdvancedConfig' target='_blank'>ZIMRoomAdvancedConfig</a>,
-  'iOS': <a href='@-ZIMRoomAdvancedConfig' target='_blank'>ZIMRoomAdvancedConfig *</a>,
-}
-export const ZIMRoomCreatedCallbackMap = {
-  'Android': <a href='@-ZIMRoomCreatedCallback' target='_blank'>ZIMRoomCreatedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomCreatedCallback' target='_blank'>ZIMRoomCreatedCallback</a>,
-}
-export const ZIMRoomAttributesSetConfigMap = {
-  'Android': <a href='@-ZIMRoomAttributesSetConfig' target='_blank'>ZIMRoomAttributesSetConfig</a>,
-  'iOS': <a href='@-ZIMRoomAttributesSetConfig' target='_blank'>ZIMRoomAttributesSetConfig *</a>,
-}
-export const ZIMRoomAttributesOperatedCallbackMap = {
-  'Android': <a href='@-ZIMRoomAttributesOperatedCallback' target='_blank'>ZIMRoomAttributesOperatedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomAttributesOperatedCallback' target='_blank'>ZIMRoomAttributesOperatedCallback</a>,
-}
-export const ZIMRoomAttributesDeleteConfigMap = {
-  'Android': <a href='@-ZIMRoomAttributesDeleteConfig' target='_blank'>ZIMRoomAttributesDeleteConfig</a>,
-  'iOS': <a href='@-ZIMRoomAttributesDeleteConfig' target='_blank'>ZIMRoomAttributesDeleteConfig *</a>,
-}
-export const ZIMRoomAttributesQueriedCallbackMap = {
-  'Android': <a href='@-ZIMRoomAttributesQueriedCallback' target='_blank'>ZIMRoomAttributesQueriedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomAttributesQueriedCallback' target='_blank'>ZIMRoomAttributesQueriedCallback</a>,
+export const queryRoomAllAttributesMap = {
+  'Android': <a href='@queryRoomAllAttributes' target='_blank'>queryRoomAllAttributes</a>,
+  'iOS,mac': <a href='@queryRoomAllAttributesByRoomID' target='_blank'>queryRoomAllAttributesByRoomID</a>,
+  'U3d': <a href='@QueryRoomAllAttributes' target='_blank'>QueryRoomAllAttributes</a>,
 }
 export const beginRoomAttributesBatchOperationMap = {
   'Android': <a href='@beginRoomAttributesBatchOperation' target='_blank'>beginRoomAttributesBatchOperation</a>,
-  'iOS': <a href='@beginRoomAttributesBatchOperationWithRoomID' target='_blank'>beginRoomAttributesBatchOperationWithRoomID</a>,
-}
-export const ZIMRoomAttributesBatchOperationConfigMap = {
-  'Android': <a href='@-ZIMRoomAttributesBatchOperationConfig' target='_blank'>ZIMRoomAttributesBatchOperationConfig</a>,
-  'iOS': <a href='@-ZIMRoomAttributesBatchOperationConfig' target='_blank'>ZIMRoomAttributesBatchOperationConfig *</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/beginRoomAttributesBatchOperation.html' target='_blank'>beginRoomAttributesBatchOperation</a>,
+  'iOS,mac': <a href='@beginRoomAttributesBatchOperationWithRoomID' target='_blank'>beginRoomAttributesBatchOperationWithRoomID</a>,
 }
 export const endRoomAttributesBatchOperationMap = {
   'Android': <a href='@endRoomAttributesBatchOperation' target='_blank'>endRoomAttributesBatchOperation</a>,
-  'iOS': <a href='@endRoomAttributesBatchOperationWithRoomID' target='_blank'>endRoomAttributesBatchOperationWithRoomID</a>,
-}
-export const ZIMRoomAttributesBatchOperatedCallbackMap = {
-  'Android': <a href='@-ZIMRoomAttributesBatchOperatedCallback' target='_blank'>ZIMRoomAttributesBatchOperatedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomAttributesBatchOperatedCallback' target='_blank'>ZIMRoomAttributesBatchOperatedCallback</a>,
-}
-export const HashMap = {
-  'Android': "HashMap<String, String>",
-  'U3d': "Dictionary<string, string>",
-  'iOS': "NSDictionary<NSString *, NSString *> *",
-  'window': "std::unordered_map",
-}
-export const StringMap = {
-  'Android': "String",
-  'U3d': "string",
-  'iOS': "NSString *",
-  'window': "std::string",
-}
-export const ListMap = {
-  'Android': "List",
-  'U3d': "List<string>",
-  'iOS': "NSArray<NSString *> *",
-  'window': "std::vector",
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/endRoomAttributesBatchOperation.html' target='_blank'>endRoomAttributesBatchOperation</a>,
+  'iOS,mac': <a href='@endRoomAttributesBatchOperationWithRoomID' target='_blank'>endRoomAttributesBatchOperationWithRoomID</a>,
 }
 
 
-# Manage room properties
+
+# 房间属性管理
 
 - - -
+## 功能简介
 
-ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of room property management, allowing you to customize the properties of a specified room.
+ZIM SDK 的房间属性功能，提供了可在指定房间中，设置自定义属性的能力。
 
-With this feature, you can build your app to meet different requirements of various scenarios: customize the in-room properties in a live audio streaming or live chatroom, manage your speaker seats in a live audio room, mark player role and the latest facts and figures in an online Werewolf and other online board games.
-
-<Video src="https://www.youtube.com/embed/ga-wHRhsbvE"/>
+通常可以应用在语音直播、聊天室等的属性同步、语聊房的麦位管理、以及狼人杀等卡牌类游戏中，记录用户的角色和牌局状态等场景中。
 
 
-## Set room properties
+## 实现流程
 
-To set room properties, set them when you call the {getPlatformData(props,createRoomMap)} method to create a room.
+开发者需要在调用 {getPlatformData(props,createRoomMap)} 接口时，设置房间属性参数，创建并加入房间。
 
 
 <Warning title="Warning">
 
-- Up to 20 room properties can be set in a room. The room property is stored in the format of `Key-Value`. The maximum length of `Key` is 16 bytes, the maximum length of `Value` is 1024 bytes, and the total length of all properties must not exceed 5120 bytes. For more customizable room properties, contact ZEGOCLOUD Technical Support. 
-- The customized room properties you set will be cleared after the room is destroyed.
+- 每个房间中，最多允许设置 20 个属性，以 `Key-Value` 的方式进行存储。`Key`的长度上限为 16 字节，`Value`的长度上限为 1024 字节，所有属性的总长度不得超过 5120 字节。开发者如果需要提高属性上限，请联系 ZEGO 技术支持。
+- 房间销毁后，设置的自定义属性也会同时销毁。
 </Warning>
 
 
@@ -98,7 +59,9 @@ To set room properties, set them when you call the {getPlatformData(props,create
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
+```java title="示例代码"
+// roomID 最大 128 字节的字符串。仅支持数字，英文字符 和 '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '-', '`', ';', '’', ',', '.', '<', '>', '/', '\'。
+// roomName 最大 64 字节的字符串，无特殊字符限制。
 ZIMRoomInfo zimRoomInfo = new ZIMRoomInfo();
 zimRoomInfo.roomID = roomID;
 zimRoomInfo.roomName = "roomName" + roomID;
@@ -116,14 +79,14 @@ zim.createRoom(zimRoomInfo, zimRoomAdvancedInfo, new ZIMRoomCreatedCallback() {
 </CodeGroup>
 
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc title="Sample code"
+```objc title="示例代码"
 ZIMRoomInfo *zimRoomInfo = [[ZIMRoomInfo alloc] init];        
-//Create a ZIMRoomInfo object.
+// 创建一个 ZIMRoomInfo 对象。
 ZIMRoomAdvancedConfig *config = [[ZIMRoomAdvancedConfig alloc] init];
 NSMutableDictionary *roomAttributes = [[NSMutableDictionary alloc] init];
-NSString *myValue = @"room_info_value"
+NSString *myValue = @"room_info_value";
 NSString *myKey = @"room_info";
        
 [roomAttributes setObject:myValue forKey:myKey];
@@ -136,11 +99,11 @@ config.roomAttributes = roomAttributes;
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
+```cpp title="示例代码"
 zim::ZIMRoomInfo room_info;
 
-room_info.roomID = "room_id";
-room_info.roomName = "room_name";
+room_info.roomID = "房间ID";
+room_info.roomName = "房间名称";
 
 zim::ZIMRoomAdvancedConfig advanced_info;
 advanced_info.roomAttributes.emplace("key", "value");
@@ -154,11 +117,11 @@ zim_->createRoom(
 :::
 :::if{props.platform="U3d"}
 <CodeGroup>
-```C# title="Sample code"
+```C# title="示例代码"
 ZIMRoomInfo zimRoomInfo = new ZIMRoomInfo();
-// roomID is a string with a maximum length of 32 bytes. It only supports numbers, English characters, and the following special characters: '~', '!', ' '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '-', '`', ';', '’', ',', '.', '<', '>', '/', '\'.
+// roomID 是一个最大长度为32字节的字符串。它只支持数字、英文字母和以下特殊字符：'~', '!', ' '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '-', '`', ';', '’', ',', '.', '<', '>', '/', '\'.
 zimRoomInfo.roomID = "roomID";
-// roomName is a string with a maximum length of 64 bytes, with no special character restrictions.
+// roomName 是一个最大长度为64字节的字符串，没有特殊字符限制。
 zimRoomInfo.roomName = "roomName";
 Dictionary<string, string> roomAttributes = new Dictionary<string, string>();
 roomAttributes.Add("test1", "test2");
@@ -168,26 +131,77 @@ ZIM.GetInstance().CreateRoom(zimRoomInfo, zimRoomAdvancedInfo, (ZIMRoomFullInfo 
     {
         if (errorCode.code == ZIMErrorCode.Success)
         {
-            // Successfully created
+            // 创建成功
         }
     }
 );
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="示例代码"
+ZIMRoomMemberQueryConfig roomMemberQueryConfig = ZIMRoomMemberQueryConfig();
+roomMemberQueryConfig.count = 100;
 
-### Modify room properties
+// roomID 最大 128 字节的字符串。仅支持数字，英文字符 和 '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '-', '`', ';', '’', ',', '.', '<', '>', '/', '\'。
+// roomName 最大 64 字节的字符串，无特殊字符限制。
+ZIMRoomInfo roomInfo = ZIMRoomInfo();
+roomInfo.roomID = 'roomID';
+roomInfo.roomName = 'roomName';
+ZIMRoomAdvancedConfig advancedConfig = ZIMRoomAdvancedConfig();
+advancedConfig.roomAttributes = {'key': 'value'};
 
-The room properties you set are stored as `key-value`.
+ZIM
+    .getInstance()
+    !.createRoom(roomInfo,advancedConfig)
+    .then((value) => {
+        //创建成功触发此处
+    })
+    .catchError((onError) {
+        //创建失败触发此处
+    });
+```
+</CodeGroup>
+:::
+:::if{props.platform="Web|RN"}
+<CodeGroup>
+```javascript title="示例代码"
+// roomID 最大 128 字节的字符串。仅支持数字，英文字符和 '!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'。
+// roomName 最大 64 字节的字符串，无特殊字符限制。
+var roomInfo = { roomID: '', roomName: '' };
+var config = { 
+    roomAttributes: { key1: 'value1', key2: 'value2' }
+};
 
-- When Key does not exist: Setting room property means adding room property.
-- When the Key already exists: Setting the room property means updating the value of the existing room property.
+zim.createRoom(roomInfo, config)
+    .then(function ({ roomInfo }) {
+        // 操作成功
+    })
+    .catch(function (err) {
+        // 操作失败
+    });
+```
+</CodeGroup>
+:::
+
+
+### 设置房间属性
+
+每个房间中，设置的属性以 `Key-Value` 的形式存储。
+
+- 当 Key 不存在时，设置房间属性表示增加属性。
+- 当 key 已经存在时，设置房间属性表示更新已有属性的取值。
+
+:::if{props.platform="Flutter"}
+设置房间属性后，可以通过 [ZIMRoomAttributesOperatedCallResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomAttributesOperatedCallResult-class.html) 类型的异步返回值，返回设置房间属性的操作结果。 
+:::
 
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
+```java title="示例代码"
 ZIMRoomAttributesSetConfig config = new ZIMRoomAttributesSetConfig();
 config.isUpdateOwner = false;
 config.isForce = false;
@@ -202,9 +216,9 @@ zim.setRoomAttributes(hashMap, roomID, config, new ZIMRoomAttributesOperatedCall
 </CodeGroup>
 
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc title="Sample code"
+```objc title="示例代码"
 NSString *key = @"room_info";
 NSString *value = @"room_info_value";
 NSMutableDictionary *roomAttributes = [[NSMutableDictionary alloc] init];
@@ -218,17 +232,17 @@ setConfig.isForce = false;
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
+```cpp title="示例代码"
 std::unordered_map<std::string, std::string> roomAttributes;
 roomAttributes.emplace("key", "value");
-    
+
 zim->setRoomAttributes(roomAttributes, room_id, nullptr, [=](const std::string &roomID, const std::vector<std::string> &errorKeyList,const ZIMError &errorInfo){});
 ```
 </CodeGroup>
 :::
 :::if{props.platform="U3d"}
 <CodeGroup>
-```c# title="Sample code"
+```c# title="示例代码"
 ZIMRoomAttributesSetConfig config = new ZIMRoomAttributesSetConfig();
 config.isUpdateOwner = false;
 config.isForce = false;
@@ -240,24 +254,70 @@ ZIM.GetInstance().SetRoomAttributes(roomAttributes, "roomID", config, (string ro
     {
         if(errorInfo.code == ZIMErrorCode.Success)
         {
-           // Set successfully.
+           // 设置成功。
        }
    }
 );
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="示例代码"
+Map<String, String> roomAttributes = {'key': 'value'};
+ZIMRoomAttributesSetConfig roomAttributesSetConfig = ZIMRoomAttributesSetConfig();
+ZIM
+    .getInstance()
+    !.setRoomAttributes(roomAttributes, 'roomID', roomAttributesSetConfig)
+    .then((value) => {
+      //成功触发此处
+    })
+    .catchError((onError) {
+      //失败触发此处
+    });
+```
+</CodeGroup>
+:::
+:::if{props.platform="Web|RN"}
+<CodeGroup>
+```javascript title="示例代码"
+var roomID = '';
+var roomAttributes = { key1: 'value1', key2: 'value2' };
+var config = { 
+    isForce: false,
+    isUpdateOwner: false,
+    isDeleteAfterOwnerLeft: false
+};
 
-## Delete room properties
+zim.setRoomAttributes(roomAttributes, roomID, config)
+    .then(function ({ roomID, errorKeys }) {
+        // 操作成功
+    })
+    .catch(function (err) {
+        // 操作失败
+    });
 
-Generally, you can only delete the room properties that you own. You can also delete the room properties created by others by setting the `isForce` value in `config`.
+// 设置 roomAttributesUpdated 回调
+zim.on('roomAttributesUpdated', function (zim, { roomID, infos }) {
+    console.log(''roomAttributesUpdated'', roomID, infos);
+});
+```
+</CodeGroup>
+:::
+
+
+### 删除房间属性
+
+通常开发者只能删除自己拥有的属性，也可以设置 “config” 中的 “isForce” 参数取值，删除他人创建的属性。
+
+
 
 
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
+```java title="示例代码"
 ArrayList<String> attributeList = new ArrayList<>();
 attributeList.add("xxxx");
 ZIMRoomAttributesDeleteConfig config = new ZIMRoomAttributesDeleteConfig();
@@ -271,9 +331,9 @@ zim.deleteRoomAttributes(keys, roomID, config, new ZIMRoomAttributesOperatedCall
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc title="Sample code"
+```objc title="示例代码"
 NSString *key = [NSString stringWithFormat:@"seat_%d",targetIndex];
 NSMutableArray *keys = [[NSMutableArray alloc] init];
 [keys addObject:key];
@@ -285,7 +345,7 @@ config.isForce = true;
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
+```cpp title="示例代码"
 std::vector<std::string> keys;
 keys.push_back("key");
 
@@ -295,7 +355,7 @@ zim->deleteRoomAttributes(keys, room_id, nullptr, [=](const std::string &roomID,
 :::
 :::if{props.platform="U3d"}
 <CodeGroup>
-```c# title="Sample code"
+```c# title="示例代码"
 List<string> attributeKeyList = new List<string>();
 attributeKeyList.Add("xxxx");
 ZIMRoomAttributesDeleteConfig config = new ZIMRoomAttributesDeleteConfig();
@@ -308,24 +368,73 @@ ZIM.GetInstance().DeleteRoomAttributes(attributeKeyList, "roomID", config, (stri
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="示例代码"
+List<String> keys = ['key1', 'key2'];
+ZIMRoomAttributesDeleteConfig roomAttributesDeleteConfig = ZIMRoomAttributesDeleteConfig();
 
-## Get room properties
-:::if{props.platform="U3d"}
-By calling the [QueryRoomAllAttributes\|_blank](@QueryRoomAllAttributes), you can retrieve all the attributes of a room.
+ZIM
+    .getInstance()
+    !.deleteRoomAttributes(keys, 'roomID', roomAttributesDeleteConfig)
+    .then((value) => {
+        //成功触发此处
+    })
+    .catchError((onError) {
+        //失败触发此处
+    });
+```
 
+</CodeGroup>
+:::
+:::if{props.platform="Web|RN"}
+<CodeGroup>
+```javascript title="示例代码"
+var roomID = '';
+var keys = ['key1'];
+var config = { 
+    isForce: false
+};
+
+zim.deleteRoomAttributes(keys, roomID, config)
+    .then(function ({ roomID, errorKeys }) {
+        // 操作成功
+    })
+    .catch(function (err) {
+        // 操作失败
+    });
+
+// 设置 roomAttributesUpdated 回调
+zim.on('roomAttributesUpdated', function (zim, { roomID, infos }) {
+    console.log(''roomAttributesUpdated'', roomID, infos);
+});
+```
+</CodeGroup>
 :::
 
-<Warning title="Warning">
+### 获取房间属性
 
-When logging into a room, the latest room attributes will be returned through the [OnRoomAttributesUpdated\|_blank](@OnRoomAttributesUpdated), and there is no need to call [QueryRoomAllAttributes\|_blank](@QueryRoomAllAttributes).
+:::if{props.platform="U3d"}
+通过调用 [QueryRoomAllAttributes](@QueryRoomAllAttributes) 接口，可以获取房间的所有属性。
+:::
+
+:::if{props.platform="Flutter"}
+获取房间属性后，可以通过 [ZIMRoomAttributesQueriedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomAttributesQueriedResult-class.html) 类型的异步返回值，返回获取房间属性的操作结果。
+:::
+
+:::if{props.platform="iOS|mac|undefined|window|U3d|Web"}
+<Warning title="Warning">
+登录房间时，房间最新属性将通过 {getPlatformData(props,onRoomAttributesUpdatedMap)} 回调返回，无需调用 {getPlatformData(props,queryRoomAllAttributesMap)} 。
 </Warning>
+:::
+
 
 
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
+```java title="示例代码"
 zim.queryRoomAllAttributes(roomID, new ZIMRoomAttributesQueriedCallback() {
             @Override
             public void onRoomAttributesQueried(String roomID, HashMap<String, String> roomAttributes, ZIMError errorInfo) {
@@ -337,43 +446,74 @@ zim.queryRoomAllAttributes(roomID, new ZIMRoomAttributesQueriedCallback() {
 
 :::
 
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc title="Sample code"
-[zim queryRoomAllAttributesByRoomID:roomID callback:^(NSString * _Nonnull roomID, NSDictionary<NSString *,NSString *> * _Nonnull roomAttributes, ZIMError * _Nonnull errorInfo) {}];
+```objc title="示例代码"
+[zim queryRoomAllAttributesByRoomID:roomID callback:^(NSString * _Nonnull roomID, NSDictionary<NSString *,NSString * > * _Nonnull roomAttributes, ZIMError * _Nonnull errorInfo) {}];
 ```
 </CodeGroup>
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
+```cpp title="示例代码"
 zim->queryRoomAllAttributes(room_id,[=](const std::string &roomID, const std::unordered_map<std::string, std::string> &roomAttributes,const ZIMError &errorInfo){});
 ```
 </CodeGroup>
 :::
 :::if{props.platform="U3d"}
 <CodeGroup>
-```c# title="Sample code"
+```c# title="示例代码"
 ZIM.GetInstance().QueryRoomAllAttributes("roomID", (string roomID, Dictionary<string, string> roomAttributes, ZIMError errorInfo) =>
     {
         if(errorInfo.code == ZIMErrorCode.Success)
         {
-            // Operation successful.
+           // 操作成功。
         }
     }
 );
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="示例代码"
+ZIM
+    .getInstance()
+    !.queryRoomAllAttributes('roomID')
+    .then((value) => {
+      //成功触发此处
+    })
+    .catchError((onError) {
+      //失败触发此处
+    });
+```
+</CodeGroup>
+:::
+:::if{props.platform="Web|RN"}
+<CodeGroup>
+```javascript title="示例代码"
+var roomID = '';
+zim.queryRoomAllAttributes(roomID)
+    .then(function ({ roomID, roomAttributes }) {
+        // 查询成功
+    })
+    .catch(function (err) {
+        // 查询失败
+    });
+```
+</CodeGroup>
+:::
 
-## Combined room properties operation
 
-The merge operation means that you can combine multiple operations within the same room into one operation using the {getPlatformData(props,beginRoomAttributesBatchOperationMap)} and {getPlatformData(props,endRoomAttributesBatchOperationMap)} methods. This is typically used when you want to perform consecutive operations without being interrupted by other users' operations.
+### 房间属性组合操作
+
+组合操作可以使用 {getPlatformData(props,beginRoomAttributesBatchOperationMap)} 和 {getPlatformData(props,endRoomAttributesBatchOperationMap)} 方法将同一房间中，多个不同操作合并为一个原子操作进行执行，通常用于连续操作时不想被其他用户操作插入执行的情况。
+
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
+```java title="示例代码"
 ZIMRoomAttributesBatchOperationConfig operationConfig = new ZIMRoomAttributesBatchOperationConfig();
 operationConfig.isForce = false;
 operationConfig.isDeleteAfterOwnerLeft = true;
@@ -390,46 +530,47 @@ zim.endRoomAttributesBatchOperation(roomID, new ZIMRoomAttributesBatchOperatedCa
 
 :::
 
-:::if{props.platform="iOS"}
+:::if{props.platform="U3d"}
 <CodeGroup>
-```objc title="Sample code"
-//Combined operation 
-NSMutableDictionary *roomAttributes = [[NSMutableDictionary alloc] init];
-NSString *key = @"key";
-NSString *value = @"value";
-[roomAttributes setObject:value forKey:key];
-//Set the configurations for adding a new room property.
-ZIMRoomAttributesSetConfig *config = [[ZIMRoomAttributesSetConfig alloc] init];
-config.isForce = false;
-config.isDeleteAfterOwnerLeft = true;
-//Delete related configurations of room properties.
-NSString *deleteKey = @"key";
-NSMutableArray *keys = [[NSMutableArray alloc] init];
-[keys addObject:deleteKey];
-ZIMRoomAttributesDeleteConfig *deleteConfig = [[ZIMRoomAttributesDeleteConfig alloc] init];
-//Set a combined room properties operation.
-ZIMRoomAttributesBatchOperationConfig *setConfig = [[ZIMRoomAttributesBatchOperationConfig alloc] init];
-setConfig.isDeleteAfterOwnerLeft = true;
-setConfig.isForce = false;
-setConfig.isUpdateOwner = true;
-[zim beginRoomAttributesBatchOperationWithRoomID:roomID config:setConfig];
+```c# title="示例代码"
+ZIMRoomAttributesBatchOperationConfig operationConfig = new ZIMRoomAttributesBatchOperationConfig();
+operationConfig.isForce = false;
+operationConfig.isDeleteAfterOwnerLeft = true;
+ZIM.GetInstance().BeginRoomAttributesBatchOperation("房间ID", operationConfig);
 
-//Modify room properties
-   
-//Add a room property first.
-[zim setRoomAttributes:roomAttributes roomID:roomID config:config callback:^(NSString * _Nonnull roomID, NSArray<NSString *> * _Nonnull errorKeys, ZIMError * _Nonnull errorInfo) {}];
-    
-//Then delete a room property.
-[zim deleteRoomAttributesByKeys:keys roomID:roomID config:config callback:^(NSString * _Nonnull roomID, NSArray<NSString *> * _Nonnull errorKeys, ZIMError * _Nonnull errorInfo) {}];
-    
-//Combine the two operations.
-[zim endRoomAttributesBatchOperationWithRoomID:roomID callback:^(NSString * _Nonnull roomID, ZIMError * _Nonnull errorInfo) {}];
+ZIM.GetInstance().EndRoomAttributesBatchOperation("房间ID", (string roomID, ZIMError errorInfo) => { } );
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="示例代码"
+ZIM
+    .getInstance()
+    !.beginRoomAttributesBatchOperation('roomID', batchOperationConfig)
+    .then((value) => {
+        //成功触发此处
+    })
+    .catchError((onError) {
+        //失败触发此处 
+    });
+
+ZIM
+    .getInstance()
+    !.endRoomAttributesBatchOperation('roomID')
+    .then((value) => {
+        //成功触发此处
+    })
+    .catchError((onError) {
+        //失败触发此处
+    });
+```
+</CodeGroup>
+:::
+
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
+```cpp title="示例代码"
 std::unordered_map<std::string, std::string> roomAttributes;
 std::vector<std::string> keys;
 
@@ -443,15 +584,90 @@ zim->endRoomAttributesBatchOperation(room_id,[=](const std::string &roomID, cons
 ```
 </CodeGroup>
 :::
-:::if{props.platform="U3d"}
-<CodeGroup>
-```c# title="Sample code"
-ZIMRoomAttributesBatchOperationConfig operationConfig = new ZIMRoomAttributesBatchOperationConfig();
-operationConfig.isForce = false;
-operationConfig.isDeleteAfterOwnerLeft = true;
-ZIM.GetInstance().BeginRoomAttributesBatchOperation("RoomID", operationConfig);
 
-ZIM.GetInstance().EndRoomAttributesBatchOperation("roomID", (string roomID, ZIMError errorInfo) => { } );
+:::if{props.platform="iOS|mac"}
+<CodeGroup>
+```objc title="示例代码"
+//组合操作
+NSMutableDictionary *roomAttributes = [[NSMutableDictionary alloc] init];
+NSString *key = @"key";
+NSString *value = @"value";
+[roomAttributes setObject:value forKey:key];
+//设置添加新房间属性的配置。
+ZIMRoomAttributesSetConfig *config = [[ZIMRoomAttributesSetConfig alloc] init];
+config.isForce = false;
+config.isDeleteAfterOwnerLeft = true;
+//删除房间属性的相关配置。
+NSString *deleteKey = @"key";
+NSMutableArray *keys = [[NSMutableArray alloc] init];
+[keys addObject:deleteKey];
+ZIMRoomAttributesDeleteConfig *deleteConfig = [[ZIMRoomAttributesDeleteConfig alloc] init];
+//设置组合房间属性操作。
+ZIMRoomAttributesBatchOperationConfig *setConfig = [[ZIMRoomAttributesBatchOperationConfig alloc] init];
+setConfig.isDeleteAfterOwnerLeft = true;
+setConfig.isForce = false;
+setConfig.isUpdateOwner = true;
+[zim beginRoomAttributesBatchOperationWithRoomID:roomID config:setConfig];
+
+//修改房间属性
+
+//首先添加一个房间属性。
+[zim setRoomAttributes:roomAttributes roomID:roomID config:config callback:^(NSString * _Nonnull roomID, NSArray<NSString *> * _Nonnull errorKeys, ZIMError * _Nonnull errorInfo) {}];
+
+//然后删除一个房间属性。
+[zim deleteRoomAttributesByKeys:keys roomID:roomID config:config callback:^(NSString * _Nonnull roomID, NSArray<NSString *> * _Nonnull errorKeys, ZIMError * _Nonnull errorInfo) {}];
+
+//组合两个操作。
+[zim endRoomAttributesBatchOperationWithRoomID:roomID callback:^(NSString * _Nonnull roomID, ZIMError * _Nonnull errorInfo) {}];
+```
+</CodeGroup>
+:::
+:::if{props.platform="Web|RN"}
+<CodeGroup>
+```javascript title="示例代码"
+var roomID = '';
+var config = { 
+    isForce: false,
+    isUpdateOwner: false,
+    isDeleteAfterOwnerLeft: false
+};
+
+// 开始 批量操作
+zim.beginRoomAttributesBatchOperation(roomID, config);
+
+// 批量操作时，使用 `Promise.then` 获取操作结果。请不要使用 `async-await` 等待操作结果。
+var roomAttributes = { key1: 'value1', key2: 'value2' };
+zim.setRoomAttributes(roomAttributes, roomID, config)
+   .then(function ({ roomID, errorKeys }) {
+        // 操作成功
+    })
+    .catch(function (err) {
+        // 操作失败
+    });
+
+// 批量操作时，使用 `Promise.then` 获取操作结果。请不要使用 `async-await` 等待操作结果。
+var keys = ['key1'];
+zim.deleteRoomAttributes(keys, roomID, config)
+   .then(function ({ roomID, errorKeys }) {
+        // 操作成功
+    })
+    .catch(function (err) {
+        // 操作失败
+    });
+
+// 结束 批量操作
+zim.endRoomAttributesBatchOperation(roomID)
+    .then(function ({ roomID }) {
+        // 操作成功
+    })
+    .catch(function (err) {
+        // 操作失败
+    });
+
+// 设置 roomAttributesBatchUpdated 回调
+zim.on('roomAttributesBatchUpdated', function (zim, { roomID, infos }) {
+    console.log(''roomAttributesBatchUpdated'', roomID, infos);
+});
 ```
 </CodeGroup>
 :::
