@@ -1,27 +1,27 @@
 # Customize the host avatar
 
-This doc describes how to customize the host's avatar.
+This doc describes how to customize the host avatar.
 
 
 <Frame width="30%" height="auto" caption="">
-  <img src="https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/live/live_duration.jpeg" />
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/175a7cddb1.jpeg" alt="HostAvatar.jpeg"/>
 </Frame> 
 
-To custom host's avatar, do the following:
+To customize the host avatar, perform the following steps:
 
-1. Implement a function to retrieve the user's avatar URL using the userID.
-
+<Steps>
+<Step title="Get the user avatar URL">
+Implement a function to retrieve the user avatar URL by the userID.
 <Warning title="Warning">
-
 Please note that here you need to set different avatars url for different users in the `getUserAvatar` function. If you hardcode a URL, then everyone's avatar will be the one you hardcoded.
-
 </Warning>
+</Step>
+<Step title="Set the user avatar">
+Set the user avatar through `topMenuBarConfig.buttonBuilders.hostAvatarBuilder` in both HostPage and AudiencePage, so that all live streaming roles can see the same host avatar.
+</Step>
+</Steps>
 
-2. Customize avatar display style through `topMenuBarConfig.buttonBuilders.hostAvatarBuilder` for each role, such as HostPage or AudiencePage.
-
-Here is the reference code:
-
-```typescript {8-11,26-37}
+```typescript ReferenceCodeForHostPage {8-11,26-37}
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import ZegoUIKitPrebuiltLiveStreaming, { HOST_DEFAULT_CONFIG } from '@zegocloud/zego-uikit-prebuilt-live-streaming-rn';
