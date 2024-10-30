@@ -139,6 +139,7 @@
     },
     {
       "id": "zim_android_zh",
+      "label": "即时通讯 (Android)",
       "path": "core_products/zim/zh/docs_zim_android_zh",
       "routeBasePath": "zh/zim-android",
       "locale": "zh",
@@ -157,6 +158,7 @@
     },
     {
       "id": "zim_flutter_zh",
+      "label": "即时通讯 (Flutter)",
       "path": "core_products/zim/zh/docs_zim_flutter_zh",
       "routeBasePath": "zh/zim-flutter",
       "locale": "zh",
@@ -175,6 +177,7 @@
     },
     {
       "id": "zim_ios_zh",
+      "label": "即时通讯 (iOS)",
       "path": "core_products/zim/zh/docs_zim_ios_zh",
       "routeBasePath": "zh/zim-ios",
       "locale": "zh",
@@ -192,6 +195,7 @@
     },
     {
       "id": "zim_macos_zh",
+      "label": "即时通讯 (macOS)",
       "path": "core_products/zim/zh/docs_zim_macos_zh",
       "routeBasePath": "zh/zim-macos",
       "locale": "zh",
@@ -209,6 +213,7 @@
     },
     {
       "id": "zim_rn_zh",
+      "label": "即时通讯 (RN)",
       "path": "core_products/zim/zh/docs_zim_rn_zh",
       "routeBasePath": "zh/zim-rn",
       "locale": "zh",
@@ -226,6 +231,7 @@
     },
     {
       "id": "zim_u3d_zh",
+      "label": "即时通讯 (Unity 3D)",
       "path": "core_products/zim/zh/docs_zim_u3d_zh",
       "routeBasePath": "zh/zim-u3d",
       "locale": "zh",
@@ -243,6 +249,7 @@
     },
     {
       "id": "zim_web_zh",
+      "label": "即时通讯 (Web)",
       "path": "core_products/zim/zh/docs_zim_web_zh",
       "routeBasePath": "zh/zim-web",
       "locale": "zh",
@@ -260,6 +267,7 @@
     },
     {
       "id": "zim_windows_zh",
+      "label": "即时通讯 (Windows)",
       "path": "core_products/zim/zh/docs_zim_windows_zh",
       "routeBasePath": "zh/zim-win",
       "locale": "zh",
@@ -277,6 +285,7 @@
     },
     {
       "id": "zim_miniprogram_zh",
+      "label": "即时通讯 (小程序)",
       "path": "core_products/zim/zh/docs_zim_miniprogram_zh",
       "routeBasePath": "zh/zim-miniprogram",
       "locale": "zh",
@@ -294,6 +303,7 @@
     },
     {
       "id": "zim_uniapp_zh",
+      "label": "即时通讯 (uni-app)",
       "path": "core_products/zim/zh/docs_zim_uniapp_zh",
       "routeBasePath": "zh/zim-uniapp",
       "locale": "zh",
@@ -311,6 +321,7 @@
     },
     {
       "id": "zim_server_zh",
+      "label": "即时通讯 (服务端 API)",
       "path": "core_products/zim/zh/docs_zim_server_zh",
       "routeBasePath": "zh/zim-server",
       "locale": "zh",

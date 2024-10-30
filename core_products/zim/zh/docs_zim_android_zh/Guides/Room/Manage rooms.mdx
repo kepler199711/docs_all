@@ -1,5 +1,5 @@
 ---
-articleID: 14198
+articleID: 14314
 ---
 
 import { getPlatformData } from "/snippets/utils-content-parser.js"
@@ -25,15 +25,15 @@ export const sendRoomMessageMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendRoomMessage.html' target='_blank'>sendRoomMessage</a>,
 }
 export const setEventHandlerMap = {
-  'Android': <a href='@setEventHandler' target='_blank'>setEventHandler</a>,
-  'Web,RN': <a href='@on' target='_blank'>on</a>,
+  'Android': <span><a href='@setEventHandler' target='_blank'>setEventHandler</a>的</span>,
+  'Web,RN,uniapp': <span><a href='@on' target='_blank'>on</a>的</span>,
   'Flutter': "",
 }
 export const onRoomMemberJoinedMap = {
   'Android': <a href='@onRoomMemberJoined' target='_blank'>onRoomMemberJoined</a>,
-  'Web,RN': <a href='@roomMemberJoined' target='_blank'>roomMemberJoined</a>,
-  'iOS': <a href='/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
-  'mac': <a href='/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
+  'Web,RN,uniapp': <a href='@roomMemberJoined' target='_blank'>roomMemberJoined</a>,
+  'iOS': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
+  'mac': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMemberJoined.html' target='_blank'>onRoomMemberJoined</a>,
 }
 export const leaveRoomMap = {
@@ -42,9 +42,9 @@ export const leaveRoomMap = {
 }
 export const onRoomMemberLeftMap = {
   'Android': <a href='@onRoomMemberLeft' target='_blank'>onRoomMemberLeft</a>,
-  'Web,RN': <a href='@roomMemberLeft' target='_blank'>roomMemberLeft</a>,
-  'iOS': <a href='/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
-  'mac': <a href='/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
+  'Web,RN,uniapp': <a href='@roomMemberLeft' target='_blank'>roomMemberLeft</a>,
+  'iOS': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
+  'mac': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMemberLeft.html' target='_blank'>onRoomMemberLeft</a>,
 }
 export const leaveAllRoomMap = {
@@ -53,7 +53,7 @@ export const leaveAllRoomMap = {
 }
 export const onRoomStateChangedMap = {
   'Android': <a href='@onRoomStateChanged' target='_blank'>onRoomStateChanged</a>,
-  'Web,RN': <a href='@roomStateChanged' target='_blank'>roomStateChanged</a>,
+  'Web,RN,uniapp': <a href='@roomStateChanged' target='_blank'>roomStateChanged</a>,
   'iOS': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data' target='_blank'>roomStateChanged</a>,
   'mac': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-state-changed-event-extended-data' target='_blank'>roomStateChanged</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomStateChanged.html' target='_blank'>onRoomStateChanged</a>,
@@ -77,54 +77,249 @@ export const ZIMRoomAdvancedConfigMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomAdvancedConfig-class.html' target='_blank'>config</a>,
 }
 
-# Manage rooms
+export const CONNECTEDMap = {
+  'Android': "CONNECTED",
+  'Flutter': "connected",
+  'Web,RN,uniapp': "Connected",
+  'iOS,mac': "ZIMRoomStateConnected",
+  "window": "ZIM_ROOM_STATE_CONNECTED"
+}
+export const SUCCESSMap = {
+  'Android': "SUCCESS",
+  'Flutter': "success",
+  'Web,RN,uniapp': "Success",
+  'iOS,mac': "ZIMRoomEventSuccess",
+  "window": "ZIM_ROOM_EVENT_SUCCESS"
+}
+export const DISCONNECTEDMap = {
+  'Android': "DISCONNECTED",
+  'Flutter': "disconnected",
+  'Web,RN,uniapp': "Disconnected",
+  "window": "ZIM_ROOM_STATE_DISCONNECTED"
+}
+export const KICKED_OUTMap = {
+  'Android': `KICKED_OUT`,
+  'Flutter': `kickedOut`,
+  'Web,RN,uniapp': `KickedOut`,
+  'iOS,mac': `ZIMRoomEventKickedOut`,
+  "window": `ZIM_ROOM_EVENT_KICKED_OUT`
+}
+export const ROOM_NOT_EXISTMap = {
+  'Android': `ROOM_NOT_EXIST`,
+  'Flutter': `roomNotExist`,
+  'Web,RN,uniapp': `RoomNotExist`,
+  'iOS,mac': `ZIMRoomEventRoomNotExist`,
+  "window": `ZIM_ROOM_EVENT_ROOM_NOT_EXIST`
+}
+
+export const platformMap = {
+  'Android':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=android" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'window':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=windows" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'Flutter':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=flutter" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'mac':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=macos" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'iOS':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=ios" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'Web':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=web" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'U3d':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=unity3d" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'RN':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=react-native" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'uniapp':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=uni-app" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+  'wxxcx':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=wxxcx" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
+}
+
+
+# 房间管理
 
 - - -
 
-ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of room messaging, allows multiple users to send text or custom messages to a room, and chat and share ideas in real time.
+## 功能简介
 
-With the room messaging feature, you can build your app to meet different requirements of various scenarios, such as one-to-many classes, online conferences, and more. 
-
-## Join a room 
-
-Now, we provide two methods to join a room:
-
-- <b>[Method 1: Manually create a room & Join a room ](#method-1-manually-create-a-room--join-a-room-)</b>: Call the {getPlatformData(props,createRoomMap)} method with the {getPlatformData(props,ZIMRoomInfoMap)} info to manually create a room first. And other client users call the {getPlatformData(props,joinRoomMap)}  with the roomID to join the room.
-
-- <b>[Method 2: Join a room directly (room will be created automatically)](#method-2-join-a-room-directly-room-will-be-created-automatically)</b>: Call the {getPlatformData(props,enterRoomMap)}  method with  {getPlatformData(props,ZIMRoomInfoMap)} info to join a room directly (if the room doesn't exist, the room will be created automatically). Other client users can call the {getPlatformData(props,enterRoomMap)} method with the roomID to join the room.
-
-For in-room users to send messages to a room, call the {getPlatformData(props,sendRoomMessageMap)} method. For details, see [Send & Receive messages](./../Messaging/Send%20and%20receive%20messages.mdx).
+:::if{props.platform="Flutter"}
 
 <Note title="Note">
 
-If the room (roomID) already exists:
+本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
+</Note>
+:::
 
-- Call the {getPlatformData(props,createRoomMap)}  method: returns an error code. For details, see [Error codes](./../../SDK%20Error%20Codes/ZIM.mdx#room-errors).
-- Call the {getPlatformData(props,enterRoomMap)} method: you will join the room directly. 
 
-If the room (roomID) doesn't exist:
+ZIM SDK 提供多人房间聊天功能，支持用户向房间内发送文本消息或自定义消息，实现了多人在线交流、同步分享。
 
-- Call the {getPlatformData(props,createRoomMap)} method: you can create a room, and you will join the room upon creation. 
-- Call the {getPlatformData(props,enterRoomMap)} method: a room will be created automatically, and you will join the room directly. 
+多人房间聊天功能可应用于小班课或者会议室等场景，房间成员数量上限请参考 [计费说明](./../../Introduction/Billing%20instructions.mdx)。
+
+
+
+## 实现流程
+
+用户可以通过以下两种方式，创建房间并进入房间。
+
+- <b>[方式一：创建房间、加入房间](#创建房间加入房间)</b>：用户 A 调用 {getPlatformData(props,createRoomMap)} 接口，传入 {getPlatformData(props,ZIMRoomInfoMap)} 信息，即可创建并加入房间。其他用户调用 {getPlatformData(props,joinRoomMap)} 接口，传入由 A 创建的房间 roomID，即可加入房间。
+- <b>[方式二：进入房间](#进入房间)</b>：用户 X 调用 {getPlatformData(props,enterRoomMap)} 接口，传入 {getPlatformData(props,ZIMRoomInfoMap)} 信息，如果 roomID 不存在，会自动创建一个房间然后进入。其他用户需要调用 {getPlatformData(props,enterRoomMap)} 接口，传入由 X 创建的房间 roomID，进入房间。
+
+房间内的用户，可以通过 {getPlatformData(props,sendRoomMessageMap)} 接口，向房间内发送消息，详情请参考 [收发房间消息](./../../Send%20and%20receive%20messages.mdx)。
+
+<Note title="Note">
+
+如果 roomID 已存在：
+
+- 调用 {getPlatformData(props,createRoomMap)} 接口，会返回相关错误码，详情请参考 [常见错误码](./../../SDK%20Error%20Codes/ZIM.mdx)。
+- 调用 {getPlatformData(props,enterRoomMap)} 接口，会直接进入此房间内。
+
+如果 roomID 不存在：
+
+- 调用 {getPlatformData(props,createRoomMap)}  接口，可以直接创建、并加入到此房间内。
+- 调用 {getPlatformData(props,enterRoomMap)} 接口，会直接创建一个房间、并进入到此房间内。
 </Note>
 
-### Method 1: Manually create a room & Join a room 
+### 创建房间、加入房间
 
-#### Manually create a room
+以下流程中，我们以客户端 A 创建并加入房间，客户端 B 加入房间为例。
 
-Let's suppose we have Client A and Client B. The following shows how Client A creates a room, how Client B and other client users join the room. 
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/create_joinRoom2.jpg" /></Frame>
 
-For Client A to create a room after login, he can call the {getPlatformData(props,createRoomMap)} method with the {getPlatformData(props,ZIMRoomInfoMap)} info. And he can be told whether the room is created successfully by the `ZIMError` parameter. For related error codes, see [Error codes](./../../SDK%20Error%20Codes/ZIM.mdx).
+#### 1. 注册回调
 
+所有进入房间的用户，都需注册 {getPlatformData(props,onRoomMemberJoinedMap)}、 {getPlatformData(props,onRoomMemberLeftMap)} 和 {getPlatformData(props,onRoomStateChangedMap)} 回调，用于监听房间其他成员的变动和接收房间连接状态发生改变的事件通知。
+
+注册 {getPlatformData(props,onRoomMemberJoinedMap)} 回调示例源码：
+
+:::if{props.platform=undefined}
+```java
+@Override
+public void onRoomMemberJoined(ZIM zim, ArrayList<ZIMUserInfo> memberList, String roomID) {
+    super.onRoomMemberJoined(zim, memberList, roomID);
+    }
+```
+:::
+:::if{props.platform="window"}
+```c++
+void onRoomMemberJoined(ZIM * /*zim*/, const std::vector<ZIMUserInfo> & /*memberList*/,
+    const std::string & /*roomID*/) override{
+        
+    }
+```
+:::
+:::if{props.platform="iOS|mac"}
+```objc
+- (void)zim:(ZIM *)zim roomMemberJoined:(NSArray<ZIMUserInfo * > *)memberList roomID:(NSString *)roomID {
+}
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+ZIMEventHandler.onRoomMemberJoined = (ZIM zim, List<ZIMUserInfo> memberList, String roomID){
+
+  };
+```
+:::
+:::if{props.platform="Web|RN|uniapp"}
+```javascript
+zim.on('roomMemberJoined', (zim, data) => {
+    // to do something
+});
+```
+:::
+
+
+注册 {getPlatformData(props,onRoomMemberLeftMap)} 回调示例源码：
+
+:::if{props.platform=undefined}
+```java
+@Override
+public void onRoomMemberLeft(ZIM zim, ArrayList<ZIMUserInfo> memberList, String roomID) {
+    super.onRoomMemberLeft(ZIM zim, ArrayList<ZIMUserInfo> memberList, String roomID);
+}
+```
+:::
+:::if{props.platform="window"}
+```c++
+void onRoomMemberLeft(ZIM * /*zim*/, const std::vector<ZIMUserInfo> & /*memberList*/,
+    const std::string & /*roomID*/) override{
+        
+    }
+```
+:::
+:::if{props.platform="iOS|mac"}
+```objc
+- (void)zim:(ZIM *)zim roomMemberLeft:(NSArray<ZIMUserInfo * > *)memberList roomID:(NSString *)roomID {
+}
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+ZIMEventHandler.onRoomMemberLeft = (ZIM zim, List<ZIMUserInfo> memberList, String roomID) {
+    
+  };
+```
+:::
+:::if{props.platform="Web|RN|uniapp"}
+```javascript
+zim.on('roomMemberLeft', (zim, data) => {
+    // to do something
+});
+```
+:::
+
+注册 {getPlatformData(props,onRoomStateChangedMap)} 回调示例源码：
+
+:::if{props.platform=undefined}
+```java
+@Override
+public void onRoomStateChanged(ZIM zim, ZIMRoomState state, ZIMRoomEvent event, JSONObject extendedData, String roomID) {
+    super.onRoomStateChanged(zim, state, event, extendedData, roomID);
+}
+```
+:::
+:::if{props.platform="window"}
+```c++
+void onRoomStateChanged(ZIM * /*zim*/, ZIMRoomState /*state*/, ZIMRoomEvent /*event*/,
+    const std::string & /*extendedData*/,
+    const std::string & /*roomID*/)override{
+        
+    }
+```
+:::
+:::if{props.platform="iOS|mac"}
+```objc
+- (void)zim:(ZIM *)zim
+    roomStateChanged:(ZIMRoomState)state
+               event:(ZIMRoomEvent)event
+        extendedData:(NSDictionary *)extendedData
+     roomID:(NSString *)roomID{
+}
+
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+ZIMEventHandler.onRoomStateChanged = (ZIM zim, ZIMRoomState state, ZIMRoomEvent event,
+Map extendedData, String roomID){
+    
+  };
+```
+:::
+:::if{props.platform="Web|RN|uniapp"}
+```javascript
+zim.on('roomStateChanged', (zim, data) => {
+    // to do something
+});
+```
+:::
+
+#### 2. 创建房间
+
+客户端 A 登录后，创建一个房间，可以调用 {getPlatformData(props,createRoomMap)} 接口，传入 {getPlatformData(props,ZIMRoomInfoMap)} 信息，即可创建并加入房间。同时可以通过错误码 `ZIMError` 的参数值，判断是否创建成功。相关错误码请查看 [常见错误码](./../../SDK%20Error%20Codes/ZIM.mdx)。
+
+创建成功后会收到 {getPlatformData(props,onRoomStateChangedMap)} 的通知回调， {getPlatformData(props,ZIMRoomStateMap)} 为 {getPlatformData(props,CONNECTEDMap)}, {getPlatformData(props,ZIMRoomEventMap)} 为 {getPlatformData(props,SUCCESSMap)} 。
 
 <Warning title="Warning">
 
-- You can customize the **roomID** and **roomName**, and we recommend you set the **roomID** to a meaningful value and associate them with the account system of your application.
-- After creating a room by calling the {getPlatformData(props,createRoomMap)}  method, you will directly join the room you just created, you don't need to call the {getPlatformData(props,joinRoomMap)}  method to join the room.
+- “roomID”、“roomName” 支持开发者自定义规则生成。建议开发者将 “roomID” 设置为一个有意义的值，可将其与自己的业务账号系统进行关联。
+- 调用 {getPlatformData(props,createRoomMap)} 接口创建房间后，会直接加入房间，无需再调用 {getPlatformData(props,joinRoomMap)} 接口加入房间。
 </Warning>
 
 :::if{props.platform=undefined}
 ```java
+// roomID 最大 32 字节的字符串。仅支持数字，英文字符 和 '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'。
+// roomName 最大 64 字节的字符串，无特殊字符限制。
 ZIMRoomInfo zimRoomInfo = new ZIMRoomInfo();
 zimRoomInfo.roomID = roomID;
 zimRoomInfo.roomName = roomName;
@@ -132,9 +327,9 @@ zim.createRoom(zimRoomInfo, new ZIMRoomCreatedCallback() {
     @Override
     public void onRoomCreated(ZIMRoomFullInfo zimRoomFullInfo, ZIMError error) {
         if (error.code == ZIMErrorCode.SUCCESS) {
-            // Room created successfully.            
+            // 创建成功             
         } else {
-            // Failed to create a room.        
+            // 创建失败             
         }                                
     }
 });
@@ -142,51 +337,40 @@ zim.createRoom(zimRoomInfo, new ZIMRoomCreatedCallback() {
 :::
 :::if{props.platform="Flutter"}
 ```dart
-// Set the room configurations.
+// 设置房间配置。
 ZIMRoomInfo roomInfo = ZIMRoomInfo();
-roomInfo.roomID = 'roomID';
-roomInfo.roomName = 'roomName';
+roomInfo.roomID = '房间ID';
+roomInfo.roomName = '房间名称';
 
-//Creates a room.
+// 创建房间。
 ZIM
     .getInstance()
     .createRoom(roomInfo)
     .then((value) {
-        //This will be triggered when room created successfully.
+        // 当房间创建成功时触发此操作。
     })
     .catchError((onError) {
-        //This will be triggered when room creation failed.
+        // 当房间创建失败时触发此操作。
     });
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Set the room configurations.
+// 设置房间配置。
 ZIMRoomInfo *roomInfo = [[ZIMRoomInfo alloc]init];
 roomInfo.roomID = @"" ;
 roomInfo.roomName = @"" ;
 
-//Creates a room.
+// 创建房间。
 [zim createRoom:roomInfo callback:^(ZIMRoomFullInfo * _Nonnull roomInfo, ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for creating a room here. 
-}];
-```
-:::
-:::if{props.platform="mac"}
-```objc
-// Set the room configurations.
-ZIMRoomInfo *roomInfo = [[ZIMRoomInfo alloc]init];
-roomInfo.roomID = @"" ;
-roomInfo.roomName = @"" ;
-
-//Creates a room.
-[zim createRoom:roomInfo callback:^(ZIMRoomFullInfo * _Nonnull roomInfo, ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for creating a room here. 
+    // 在这里实现创建房间的事件回调。
 }];
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
+// roomID 最大 32 字节的字符串。仅支持数字，英文字符 和 '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'。
+// roomName 最大 64 字节的字符串，无特殊字符限制。
 ZIMRoomInfo room_info;
 room_info.roomID = room_id;
 room_info.roomName = room_name;
@@ -195,31 +379,34 @@ zim_->createRoom(room_info, [=](ZIMRoomFullInfo room_info, zim::ZIMError error_i
     global_main_dialog_->PostUiThread([=] {});
     if (error_info.code != 0)
     {
-        ShowMsg(L"Create room failed, roomID: %s, error code: %d", room_info.baseInfo.roomID, error_info.code);
+        ShowMsg(L"创建房间失败，房间ID: %s, 错误码: %d", room_info.baseInfo.roomID, error_info.code);
     }
     else
     {
-        ShowMsg(L"Create room successfully, roomID: %s", room_info.baseInfo.roomID);
+        ShowMsg(L"创建房间成功，房间ID: %s", room_info.baseInfo.roomID);
     }
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN|uniapp"}
 ```javascript
 var roomInfo = { roomID: '', roomName: '' };
 zim.createRoom(roomInfo)
     .then(function ({ roomInfo }) {
-        // Operation successful. 
+        // 操作成功。
     })
     .catch(function (err) {
-        // Operation failed. 
+        // 操作失败。
     });
 ```
 :::
 
-#### Join a room 
 
-For Client B and other client users to join the room created by Client A, call the {getPlatformData(props,joinRoomMap)}  method with the roomID of client A's room. And Client B and other client users can be told whether they joined the room successfully by the `ZIMError` parameter. For related error codes, see [Error codes](./../../SDK%20Error%20Codes/ZIM.mdx).
+#### 3. 加入房间
+
+客户端 B 加入房间，可以调用 {getPlatformData(props,joinRoomMap)} 接口，传入由 A 创建的房间 roomID，即可加入房间。同时可以根据错误码 `ZIMError` 的参数值，判断用户是否加入成功。相关错误码请查看 [常见错误码](./../../SDK%20Error%20Codes/ZIM.mdx)。
+
+加入成功后会收到 {getPlatformData(props,onRoomStateChangedMap)} 的通知回调， {getPlatformData(props,ZIMRoomStateMap)} 为 {getPlatformData(props,CONNECTEDMap)} , {getPlatformData(props,ZIMRoomEventMap)} 为 {getPlatformData(props,SUCCESSMap)} 。
 
 :::if{props.platform=undefined}
 ```java
@@ -227,9 +414,9 @@ zim.joinRoom(roomID, new ZIMRoomJoinedCallback() {
     @Override
     public void onRoomJoined(ZIMRoomFullInfo zimRoomFullInfo, ZIMError error) {
         if (error.code == ZIMErrorCode.SUCCESS) {
-            // Room joined successfully.
+            // 加入房间成功。
         } else {
-            // Failed to join the room.
+            // 加入房间失败。
         }     
     }
 });
@@ -239,26 +426,19 @@ zim.joinRoom(roomID, new ZIMRoomJoinedCallback() {
 ```dart
 ZIM
     .getInstance()
-    .joinRoom('roomID')
+    .joinRoom('房间ID')
     .then((value) {
-        //This will be triggered when room joined successfully. 
+        //成功加入房间时触发此代码块。
     })
     .catchError((onError) {
-        //This will be triggered when failed to join room.
+        //无法加入房间时触发此代码块。
     });
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 [zim joinRoom:RoomID callback:^(ZIMRoomFullInfo * _Nonnull roomInfo, ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for joining a room here. 
-}];
-```
-:::
-:::if{props.platform="mac"}
-```objc
-[zim joinRoom:RoomID callback:^(ZIMRoomFullInfo * _Nonnull roomInfo, ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for joining a room here. 
+    //在这里实现加入房间的事件回调。
 }];
 ```
 :::
@@ -268,98 +448,94 @@ zim_->joinRoom(roomId, [=](ZIMRoomFullInfo room_info, zim::ZIMError error_info) 
     global_main_dialog_->PostUiThread([=] {});
     if (error_info.code != 0)
     {
-        ShowMsg(L"Join room failed, roomID: %s, error code: %d", room_info.baseInfo.roomID, error_info.code);
+        ShowMsg(L"加入房间失败，房间ID：%s，错误代码：%d", room_info.baseInfo.roomID, error_info.code);
     }
     else
     {
-        ShowMsg(L"Join room successfully, roomIDID: %s, roomName: %s", room_info.baseInfo.roomID, room_info.baseInfo.roomName);
+        ShowMsg(L"成功加入房间，房间ID：%s，房间名称：%s", room_info.baseInfo.roomID, room_info.baseInfo.roomName);
     }
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN|uniapp"}
 ```javascript
 var roomID = '';
 zim.joinRoom(roomID)
     .then(function ({ roomInfo }) {
-        // Operation successful. 
+        // 操作成功。
     })
     .catch(function (err) {
-        // Operation failed. 
+        // 操作失败。
     });
 ```
 :::
 
+#### 4. 房间成员变动通知
 
-To receive notifications when a new room member joins the room, call the {getPlatformData(props,setEventHandlerMap)} method to set up the callback {getPlatformData(props,onRoomMemberJoinedMap)}. 
+当房间有其他成员加入时，可以使用 {getPlatformData(props,setEventHandlerMap)} 回调接口 {getPlatformData(props,onRoomMemberJoinedMap)} 方法，实现对其他房间成员加入的监听。
 
-The following shows Client A receives the callback notification when Client B joins the room created by Client A:
-
+例如，当客户端 B 加入由 A 创建的房间时，A 将收到房间内成员变动的通知。
 
 :::if{props.platform=undefined}
 ```java
 zim.setEventHandler(new ZIMEventHandler() {
+    // 加入房间通知
     @Override
     public void onRoomMemberJoined(ZIM zim, ArrayList<ZIMUserInfo> memberList, final String roomID) {
-    // Implement the event callback for new room members join the room.    
+    // 通过该通知收到加入房间的用户信息        
     }
 });
 ```
+
 :::
 :::if{props.platform="Flutter"}
 ```dart
 ZIMEventHandler.onRoomMemberJoined = (memberList, roomID) {
-    //Implement the event callback for new room members join the room. 
+    //实现新成员加入房间的事件回调。
 };
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 - (void)zim:(ZIM *)zim
-    roomMemberJoined:(NSArray<ZIMUserInfo *> *)memberList
+    roomMemberJoined:(NSArray<ZIMUserInfo * > *)memberList
               roomID:(NSString *)roomID{
-    //Implement the event callback for new room members join the room. 
+    //这里写房间成员加入后的自定义代码
 }
 ```
 :::
-:::if{props.platform="mac"}
-```objc
-- (void)zim:(ZIM *)zim
-    roomMemberJoined:(NSArray<ZIMUserInfo *> *)memberList
-              roomID:(NSString *)roomID{
-    //Implement the event callback for new room members join the room. 
-}
-```
-:::
+
 :::if{props.platform="window"}
 ```cpp
 void onRoomMemberJoined(ZIM* zim, const std::vector<ZIMUserInfo>& member_list, const std::string& room_id)
 {
     for (auto member : member_list)
     {
-        ShowMsg(L"User: (%s%s), enter the room: %s", member.userID, member.userName, room_id);
+        ShowMsg(L"用户: (%s%s) 进入房间: %s", member.userID, member.userName, room_id);
     }
 }
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN|uniapp"}
 ```javascript
-// Callback for receiving event notification when new room members join the room. And it also returns the information of the user who just joined the room. 
+// 当有新的房间成员加入房间时，用于接收事件通知的回调函数。它还会返回刚刚加入房间的用户信息。
 zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
     console.log(roomID, memberList);
 });
 ```
 :::
 
-### Method 2: Join a room directly (room will be created automatically)
+### 进入房间
 
-Let's suppose we have Client A and Client B. The following shows how Client A joins the room without creating a room manually, and how Client B and other client users join the room.
+以下流程中，我们以客户端 X 创建并进入房间，客户端 Y 直接进入房间为例。
 
-1. After logs in, Client A calls the {getPlatformData(props,enterRoomMap)}  method with the {getPlatformData(props,ZIMRoomInfoMap)} information. The room will be created automatically when the passed roomID doesn't exist.
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/enterRoom2_new.jpg" /></Frame>
 
-2. Client B and other client users call the {getPlatformData(props,enterRoomMap)}  method with the roomID to join the room created by Client A. 
-
-3. For in-room client users to receive notifications when a new room member joins the room, call the {getPlatformData(props,setEventHandlerMap)}  method to set up the callback {getPlatformData(props,onRoomMemberJoinedMap)}.
+1. 注册 {getPlatformData(props,onRoomMemberJoinedMap)}、 {getPlatformData(props,onRoomMemberLeftMap)} 和 {getPlatformData(props,onRoomStateChangedMap)} 回调，详情请参考 <a href="#1-注册回调">创建房间、加入房间 - 1. 注册回调</a>。
+2. 客户端 X 登录后，调用 {getPlatformData(props,enterRoomMap)} 接口，传入 {getPlatformData(props,ZIMRoomInfoMap)} 信息，进入房间；如果传入的 roomID 不存在，将会自动创建一个房间并进入该房间。
+3. 客户端 Y 登录后，调用 {getPlatformData(props,enterRoomMap)} 接口，传入由 X 创建的房间 roomID，直接进入房间。
+4. 进入房间成功后会收到 {getPlatformData(props,onRoomStateChangedMap)} 的通知回调， {getPlatformData(props,ZIMRoomStateMap)} 为 {getPlatformData(props,CONNECTEDMap)} , {getPlatformData(props,ZIMRoomEventMap)} 为 {getPlatformData(props,SUCCESSMap)}。
+5. 房间内的用户，同样可以使用 {getPlatformData(props,setEventHandlerMap)} 的回调接口 {getPlatformData(props,onRoomMemberJoinedMap)} 方法，实现对房间内成员加入的监听。
 
 :::if{props.platform=undefined}
 ```java
@@ -373,57 +549,43 @@ zim.enterRoom(zimRoomInfo, config, new ZIMRoomEnteredCallback() {
     @Override
     public void onRoomEntered(ZIMRoomFullInfo zimRoomFullInfo, ZIMError error) {
         if (error.code == ZIMErrorCode.SUCCESS) {
-            // Room joined successfully.            
+            // 进入成功             
         } else {
-            // Failed to join the room.            
+            // 进入失败             
         }                                
     }
 });
 ```
+
 :::
 :::if{props.platform="Flutter"}
 ```dart
-// Set up the configuration of a room.
+// 设置房间的配置信息。
 ZIMRoomInfo roomInfo = ZIMRoomInfo();
-roomInfo.roomID = 'roomID';
-roomInfo.roomName = 'roomName';
+roomInfo.roomID = '房间ID';
+roomInfo.roomName = '房间名称';
 ZIMRoomAdvancedConfig advancedConfig = ZIMRoomAdvancedConfig();
 
-//Join a room directly.
+// 直接加入房间。
 ZIM.getInstance().enterRoom(roomInfo, advancedConfig).then((value) {
-        // enter This will be triggered when operation successful.
+        // 当操作成功时触发此处代码。
     }).catchError((onError){
-        // enter This will be triggered when operation failed.
+        // 当操作失败时触发此处代码。
     });
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Set up the configuration of a room.
+// 设置房间的配置
 ZIMRoomInfo *roomInfo = [[ZIMRoomInfo alloc]init];
 roomInfo.roomID = @"" ;
 roomInfo.roomName = @"" ;
 
 ZIMRoomAdvancedConfig *config = [[ZIMRoomAdvancedConfig alloc] init];
 
-//Join a room directly.
+// 直接加入房间
 [zim enterRoom:roomInfo config:config callback:^(ZIMRoomFullInfo * _Nonnull roomInfo, ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for join a room. 
-}];
-```
-:::
-:::if{props.platform="mac"}
-```objc
-// Set up the configuration of a room.
-ZIMRoomInfo *roomInfo = [[ZIMRoomInfo alloc]init];
-roomInfo.roomID = @"" ;
-roomInfo.roomName = @"" ;
-
-ZIMRoomAdvancedConfig *config = [[ZIMRoomAdvancedConfig alloc] init];
-
-//Join a room directly.
-[zim enterRoom:roomInfo config:config callback:^(ZIMRoomFullInfo * _Nonnull roomInfo, ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for join a room. 
+    // 实现加入房间的事件回调
 }];
 ```
 :::
@@ -439,49 +601,47 @@ zim_->enterRoom(room_info, config, [=](ZIMRoomFullInfo room_info, zim::ZIMError 
     global_main_dialog_->PostUiThread([=] {});
     if (error_info.code != 0)
     {
-        ShowMsg(L"Failed to join room. roomID: %s, Error code: %d", room_info.baseInfo.roomID, error_info.code);
+        ShowMsg(L"加入房间失败。房间ID：%s，错误代码：%d", room_info.baseInfo.roomID, error_info.code);
     }
     else
     {
-        ShowMsg(L"Room joined successfully. roomID: %s", room_info.baseInfo.roomID);
+        ShowMsg(L"成功加入房间。房间ID：%s", room_info.baseInfo.roomID);
     }
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN|uniapp"}
 ```javascript
 var roomInfo = { roomID: '', roomName: '' };
 zim.enterRoom(roomInfo)
     .then(function ({ roomInfo }) {
-        // Operation successful. 
+        // 操作成功。
     })
     .catch(function (err) {
-        // Operation failed. 
+        // 操作失败。
     });
 
-// Callback for receiving event notification when new room members join the room. And it also returns the information of the user who just joined the room. 
+// 当有新的房间成员加入房间时，接收事件通知的回调函数。它还返回刚刚加入房间的用户信息。
 zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
     console.log(roomID, memberList);
 });
 ```
 :::
-:::if{props.platform="ios|undefined|RN|window"}
-## Switch Rooms
 
-If a user wants to switch from one room to another, the user can call the {getPlatformData(props,switchRoomMap)} method, passing in the ID of the original room (`fromRoomID`) and the information of the target room (`toRoomInfo`), which includes the room ID and room name. This will allow the user to switch rooms.
+### 切换房间
 
-However, it is possible for the room switch to fail if the target room does not exist. To avoid this failure, you can also pass `isCreateWhenRoomNotExisted` as `true` (allowing ZIM to create a new room if the target room does not exist) and {getPlatformData(props,ZIMRoomAdvancedConfigMap)} (used to configure the new room) when calling the {getPlatformData(props,switchRoomMap)} method. In this case, when ZIM finds that the target room does not exist, it will create a new room based on `toRoomInfo` and `config` (if provided) for the switch.
+如果用户想要从一个房间切换至另一个房间，可以调用 {getPlatformData(props,switchRoomMap)} 接口，传入原房间的 ID（`fromRoomID`）以及目标房间信息（`toRoomInfo`，含房间 ID 和房间名称），即可切换房间。
 
-After a successful room switch, other users in the original room can be notified of a user leaving the room through the {getPlatformData(props,onRoomMemberJoinedMap)} callback, and other users in the target room can be notified of a user joining the room through the callback interface {getPlatformData(props,onRoomMemberLeftMap)}.
+然而，可能因目标房间不存在而导致房间切换失败。如需避免这种失败，也可以在调用 {getPlatformData(props,switchRoomMap)} 接口时，传入 `isCreateWhenRoomNotExisted` 为 `true`（允许 ZIM 在房间不存在时创建新房间）和 {getPlatformData(props,ZIMRoomAdvancedConfigMap)} （用于配置新房间）。如此，当 ZIM 判断目标房间不存在时，就会根据 `toRoomInfo` 和 `config`（如有）创建新房间用于切换。 
 
-- Please refer to the following flowchart for the complete process:
+房间切换成功后，原房间内的其他用户可通过 {getPlatformData(props,setEventHandlerMap)} 的回调接口 {getPlatformData(props,onRoomMemberLeftMap)} ，得知有用户离开房间；目标房间内的其他用户可通过 {getPlatformData(props,setEventHandlerMap)} 的回调接口 {getPlatformData(props,onRoomMemberJoinedMap)} ，得知有用户进入了房间。
 
-    <Frame width="800" height="auto" caption="">        
-        <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Switch_Room_en.jpeg" />
-    </Frame>
+- 完整流程请参考下图：
 
-- Sample code:
-:::
+    <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Switch_Room_zh.jpeg" /></Frame>
+
+- 示例代码：
+
 :::if{props.platform=undefined}
 ```java
 String fromRoomID = "fromRoomID";
@@ -489,72 +649,47 @@ ZIMRoomInfo toRoomInfo = new ZIMRoomInfo();
 roomInfo.roomID = "toRoomID";
 roomInfo.roomName = "toRoomName";
 
-// Whether to create a room if it does not exist.
-// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
+// 如果房间不存在时，是否创建房间。
+// 只有此为 true 且切换到的房间不存在时，toRoomInfo 中的 toRoomName 以及 config 才有意义
 boolean isCreateWhenRoomNotExisted = true;
 
-// Advanced configuration for creating a room
+// 进阶配置，用于创建房间
 ZIMRoomAdvancedConfig config = new ZIMRoomAdvancedConfig();
 config.roomAttributes.put("key1", "value1");
 config.roomDestroyDelayTime = 90;
 
-// Switch rooms
+// 切换房间
 zim.switchRoom(fromRoomID, toRoomInfo, isCreateWhenRoomNotExisted, config, new ZIMRoomSwitchedCallback() {
     @Override
     public void onRoomSwitched(ZIMRoomFullInfo roomInfo, ZIMError errorInfo) {
         if (errorInfo.code == ZIMErrorCode.SUCCESS) {
-            // Room switch successful, you can obtain information about the switched room from roomInfo
+            // 切换房间成功，开发者可以从 roomInfo 中获取切换后房间的信息
         }
     }
 });
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 NSString *fromRoomID = @"fromRoomID";
 ZIMRoomInfo *toRoomInfo = [[ZIMRoomInfo alloc] init];
 toRoomInfo.roomID = @"toRoomID";
 toRoomInfo.roomName = @"toRoomName";
-// Whether to create a room if it does not exist.
-// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
+// 如果房间不存在，是否创建一个新的房间。
+// 只有当这个值为true并且目标房间不存在时，toRoomName和toRoomInfo中的config才有意义。
 BOOL isCreateWhenRoomNotExisted = YES; 
-// Advanced configuration for creating a room
+// 创建房间的高级配置
 ZIMRoomAdvancedConfig *config = [[ZIMRoomAdvancedConfig alloc] init];
 [config insertRoomAttribute:@"key1" value:@"value1"];
 config.roomDestroyDelayTime = 90;
-// Switch rooms
+// 切换房间
 [zim switchRoomFromRoomID:fromRoomID 
             toRoomInfo:toRoomInfo 
 isCreateWhenRoomNotExisted:isCreateWhenRoomNotExisted
                 config:config
                 callback:^(ZIMRoomFullInfo *_Nonnull roomInfo, ZIMError *_Nonnull errorInfo) {
         if (errorInfo.code == 0) {
-            // Room switch successful, you can obtain information about the switched room from roomInfo
-        }
-    }];
-```
-:::
-:::if{props.platform="mac"}
-```objc
-NSString *fromRoomID = @"fromRoomID";
-ZIMRoomInfo *toRoomInfo = [[ZIMRoomInfo alloc] init];
-toRoomInfo.roomID = @"toRoomID";
-toRoomInfo.roomName = @"toRoomName";
-// Whether to create a room if it does not exist.
-// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
-BOOL isCreateWhenRoomNotExisted = YES; 
-// Advanced configuration for creating a room
-ZIMRoomAdvancedConfig *config = [[ZIMRoomAdvancedConfig alloc] init];
-[config insertRoomAttribute:@"key1" value:@"value1"];
-config.roomDestroyDelayTime = 90;
-// Switch rooms
-[zim switchRoomFromRoomID:fromRoomID 
-            toRoomInfo:toRoomInfo 
-isCreateWhenRoomNotExisted:isCreateWhenRoomNotExisted
-                config:config
-                callback:^(ZIMRoomFullInfo *_Nonnull roomInfo, ZIMError *_Nonnull errorInfo) {
-        if (errorInfo.code == 0) {
-            // Room switch successful, you can obtain information about the switched room from roomInfo
+            // 房间切换成功，您可以从roomInfo中获取有关切换后的房间的信息
         }
     }];
 ```
@@ -564,38 +699,38 @@ isCreateWhenRoomNotExisted:isCreateWhenRoomNotExisted
 std::string fromRoomID = "fromRoomID";
 auto toRoomInfo = zim::ZIMRoomInfo("toRoomID", "toRoomName");
 
-// Whether to create a room if it does not exist.
-// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
+// 当房间不存在时是否创建房间。
+// 只有当此值为true且目标房间不存在时，toRoomName和toRoomInfo中的config才有意义。
 bool isCreateWhenRoomNotExisted = true; 
 
-// Advanced configuration for creating a room
+// 创建房间的高级配置
 auto config = zim::ZIMRoomAdvancedConfig();
 config.roomAttributes.emplace("key1", "value1");
 config.roomDestroyDelayTime = 90;
 
-// Switch rooms
+// 切换房间
 zim->switchRoom(
     fromRoomID, toRoomInfo, isCreateWhenRoomNotExisted, config,
     [=](const zim::ZIMRoomFullInfo &roomInfo, const zim::ZIMError &errorInfo) {
         if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
-            // Room switch successful, you can obtain information about the switched room from roomInfo
+            // 房间切换成功，您可以从roomInfo中获取有关切换后房间的信息
         }
     });
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="Web|RN|uniapp"}
 ```javascript
 const fromRoomID = 'fromRoomID';
 const toRoomInfo = { roomID: 'toRoomID', roomName: 'toRoomName' };
 const isCreateWhenRoomNotExisted = true;
-// Advanced configuration for creating a room
+// 创建房间的高级配置
 const to_room_attr = {
-    key1: 'value1', // Replace this code to the actual key-value pair
-    key2: 'value2', // Another key-value pair
-    // You can add more pairs
+    key1: 'value1', // 将此代码替换为实际的键值对
+    key2: 'value2', // 另一个键值对
+    // 可以添加更多的键值对
 };
 
-// Set room destruction delay time (in seconds)
+// 设置房间销毁延迟时间（以秒为单位）
 const to_room_delay_destroy_time = 90; 
 
 const config = {
@@ -605,96 +740,88 @@ const config = {
 
 zim.switchRoom(fromRoomID, toRoomInfo, isCreateWhenRoomNotExisted, config)
     .then(function (res) {
-        // Operation successful
+        // 操作成功
     })
     .catch(function (err) {
-        // Operation failed
+        // 操作失败
     });
 ```
 :::
 
-## Leave the room 
+### 离开房间
 
-For Client B to leave the room, call the {getPlatformData(props,leaveRoomMap)}  method with `roomID`.
-And Client A and other client users in the room will receive notifications through the callback {getPlatformData(props,onRoomMemberLeftMap)}  of the {getPlatformData(props,setEventHandlerMap)} method. 
+用户如果想要离开房间，可以调用 {getPlatformData(props,leaveRoomMap)} 接口，传入房间的 roomID，即可退出此房间；房间内的其他用户可以通过 {getPlatformData(props,setEventHandlerMap)} 的回调接口 {getPlatformData(props,onRoomMemberLeftMap)} ，收到成员变动通知。
 
-Room members who leave the room cannot receive messages in the room anymore.
+离开房间成功后会收到 {getPlatformData(props,onRoomStateChangedMap)} 的通知回调， {getPlatformData(props,ZIMRoomStateMap)} 为 {getPlatformData(props,DISCONNECTEDMap)} ， {getPlatformData(props,ZIMRoomEventMap)} 为 {getPlatformData(props,SUCCESSMap)} 。
+
+离开房间后，将不能收到房间内的消息。
+
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/leaveRoom2.jpg" /></Frame>
 
 
 :::if{props.platform=undefined}
 ```java
+// 离开房间
 zim.leaveRoom(roomID, new ZIMRoomLeftCallback() {
-     @Override
-     public void onRoomLeft(String roomID, ZIMError errorInfo) {
+            @Override
+            public void onRoomLeft(String roomID, ZIMError errorInfo) {
                 
-     }
+            }
 });
 ```
 
 ```java
 zim.setEventHandler(new ZIMEventHandler() {
+     // 离开房间通知
     @Override
     public void onRoomMemberLeft(ZIM zim, ArrayList<ZIMUserInfo> memberList, final String roomID) {
-    // Implement the event callback for exisiting users leave the room. 
+    // 通过该通知收到离开房间的用户信息        
     }
 });
 ```
+
 :::
 :::if{props.platform="Flutter"}
 ```dart
- ZIM
+ZIM
     .getInstance()
     .leaveRoom('roomID')
     .then((value) {
-        //This will be triggered when leave a room successfully. 
+        //当成功离开房间时触发此代码块。
     })
     .catchError((onError) {
-        //This will be triggered when failed to leave a room.
+        //当离开房间失败时触发此代码块。
     });
 ```
 
 ```dart
 ZIMEventHandler.onRoomMemberLeft = (memberList, roomID) {
-    //Fill in your custom code here when room members leave.
+    //当房间成员离开时，在此处填写自定义代码。
 };
 ```
 
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 [zim leaveRoom:roomID callback:^(ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for exisiting users leave the room.
+    //实现房间成员离开时的事件回调。
 }];
 ```
 
 ```objc
 - (void)zim:(ZIM *)zim 
-    roomMemberLeft:(NSArray<ZIMUserInfo *> *)memberList
+    roomMemberLeft:(NSArray<ZIMUserInfo * > *)memberList
             roomID:(NSString *)roomID{
-	//Fill in your custom code here when room members leave.
+	//在房间成员离开时填写自定义代码。
 }
 ```
 :::
-:::if{props.platform="mac"}
-```objc
-[zim leaveRoom:roomID callback:^(ZIMError * _Nonnull errorInfo) {
-    //Implement the event callback for exisiting users leave the room.
-}];
-```
 
-```objc
-- (void)zim:(ZIM *)zim 
-    roomMemberLeft:(NSArray<ZIMUserInfo *> *)memberList
-            roomID:(NSString *)roomID{
-	//Fill in your custom code here when room members leave.
-}
-```
-:::
 :::if{props.platform="window"}
 ```cpp
 zim_->leaveRoom(room_id, [=](zim::ZIMError error_info) {
     global_main_dialog_->PostUiThread([=] {
-        ShowMsg(L"Logout result：%d", error_info.code);
+        ShowMsg(L"退出房间结果：%d", error_info.code);
     });
 });
 ```
@@ -704,26 +831,26 @@ void onRoomMemberLeft(ZIM* zim, const std::vector<ZIMUserInfo>& member_list, con
 {
     for (auto member : member_list)
     {
-        ShowMsg(L"User: (%s,%s), logout the room: %s", member.userID, member.userName, room_id);
+        ShowMsg(L"用户: (%s,%s) 退出房间: %s", member.userID, member.userName, room_id);
     }
 }
 ```
 
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN|uniapp"}
 ```javascript
 var roomID = '';
 zim.leaveRoom(roomID)
     .then(function ({ roomID }) {
-        // Operation successful. 
+        // 操作成功。
     })
     .catch(function (err) {
-        // Operation failed. 
+        // 操作失败。
     });
 ```
 
 ```javascript
-// Callback for receiving event notification when existing room members leave the room. And it also returns the information of the user who just left the room. 
+// 当现有房间成员离开房间时，用于接收事件通知的回调函数。它还返回刚刚离开房间的用户的信息。
 zim.on('roomMemberLeft', function (zim, { roomID, memberList }) {
     console.log(roomID, memberList);
 });
@@ -731,13 +858,13 @@ zim.on('roomMemberLeft', function (zim, { roomID, memberList }) {
 :::
 
 <Note title="Note">
-The room will be automatically destroyed after all room members left the room. You can also delay the destruction with the room settings.
+
+当所有成员离开房间后，房间将自动销毁。ZIM SDK 支持通过 {getPlatformData(props,ZIMRoomAdvancedConfigMap)} 设置房间延迟销毁，最大延迟为 3 小时。
 </Note>
 
+### 退出所有房间
 
-## Leave all rooms
-
-Call the {getPlatformData(props,leaveAllRoomMap)}  method to leave all joined rooms and obtain a list of the rooms. If a user logs in to multiple platforms, calling this method on a platform lets the user leave rooms on the that platform only. Other platforms are not affected.
+调用 {getPlatformData(props,leaveAllRoomMap)} 接口，即可立即离开当前加入的所有房间，并返回离开的房间列表。如果用户多端登录，则用户在一端调用此接口后，仅会退出在该端上加入的房间，在其他端加入的房间不受影响。
 
 :::if{props.platform=undefined}
 ```java
@@ -745,74 +872,74 @@ ZIM.getInstance().leaveAllRoom(new ZIMRoomAllLeftCallback() {
     @Override
     public void onRoomAllLeft(ArrayList<String> roomIDList, ZIMError errorInfo) {
         if(errorInfo.code == ZIMErrorCode.SUCCESS){
-        // `roomIDList` contains the IDs of all rooms that the user have left from.
-    }else{
-        // Handle the error based on the corresponding error code table.
+            //roomIDList 为离开的房间列表
+        }else{
+            //根据官网错误码表处理
+        }
     }
-}];
+});
 ```
-
 :::
 :::if{props.platform="Flutter"}
 ```dart
 try{
     ZIMRoomAllLeftResult result = await ZIM.getInstance()!.leaveAllRoom();
-    result.roomIDs; // List of rooms left
-} on PlatformException catch (onError) {
+    result.roomIDs; // 离开的房间列表
+} catch (PlatformException onError) {
     onError.code;
     onError.message;
 }
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 [[ZIM getInstance] leaveAllRoom:^(NSArray<NSString *> * _Nonnull roomIDList, ZIMError * _Nonnull errorinfo) {
     if(errorinfo.code == ZIMErrorCodeSuccess){
-        // `roomIDList` contains the IDs of all rooms that the user have left from.
+        // `roomIDList` 包含用户已离开的所有房间的ID。
     }else{
-        // Handle the error based on the corresponding error code table.
+        // 根据相应的错误代码表处理错误。
     }
 }];
 ```
 :::
-:::if{props.platform="mac"}
-```objc
-[[ZIM getInstance] leaveAllRoom:^(NSArray<NSString *> * _Nonnull roomIDList, ZIMError * _Nonnull errorinfo) {
-    if(errorinfo.code == ZIMErrorCodeSuccess){
-        // `roomIDList` contains the IDs of all rooms that the user have left from.
-    }else{
-        // Handle the error based on the corresponding error code table.
-    }
-}];
-```
-:::
+
 :::if{props.platform="window"}
 ```cpp
 zim->leaveAllRoom([](const std::vector<std::string>& roomIDList, const ZIMError& errorInfo) {
     if (errorInfo.errorCode == 0) {
-        // `roomIDList` contains the IDs of all rooms that the user have left from.
+        // `roomIDList` 包含用户已离开的所有房间的ID。
     }else{
-        // Handle the error based on the corresponding error code table.
+        // 根据相应的错误代码表处理错误。
     }
-}];
+});
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN|uniapp"}
 ```js
 var roomIDs = [];
 zim.leaveAllRoom(roomIDs)
     .then(function ({ roomIDs }) {
-        // Operation successful.
+        // 操作成功。
     })
     .catch(function (err) {
-        // Operation failed.
+        // 操作失败。
     });
 ```
 :::
 
-Other users in the room receive the member change notification in the {getPlatformData(props,setEventHandlerMap)}  callback of the {getPlatformData(props,onRoomMemberLeftMap)}  method.
 
-After leaving all rooms, the user receives the {getPlatformData(props,onRoomStateChangedMap)} callback multiple times based on the number of rooms. The value of {getPlatformData(props,ZIMRoomStateMap)} is `DISCONNECTED`, and the value of {getPlatformData(props,ZIMRoomEventMap)} is `SUCCESS`.
+房间内的其他用户可以通过 {getPlatformData(props,setEventHandlerMap)} 的回调接口 {getPlatformData(props,onRoomMemberLeftMap)} ，收到成员变动通知。
 
-After leaving a room, the user no longer receives messages in the room.
+退出所有房间成功后，用户会根据所离开房间的数量，多次收到 {getPlatformData(props,onRoomStateChangedMap)} 的通知回调， {getPlatformData(props,ZIMRoomStateMap)} 为 {getPlatformData(props,DISCONNECTEDMap)} ， {getPlatformData(props,ZIMRoomEventMap)} 为 {getPlatformData(props,SUCCESSMap)} 。
 
+离开房间后，将不能收到房间内的消息。
+
+### 销毁房间
+
+开发者可以在后台调用 ZIM 服务端接口进行 [销毁房间](/zh/zim-server/room/destroy-the-room)。房间被销毁后，用户通过 {getPlatformData(props,onRoomStateChangedMap)} 收到房间状态（ {getPlatformData(props,ZIMRoomStateMap)} ）从 {getPlatformData(props,CONNECTEDMap)} 转变为 {getPlatformData(props,DISCONNECTEDMap)} 的事件通知。根据 ZIM SDK 版本不同，回调中描述导致房间连接状态发生变更的事件（ {getPlatformData(props,ZIMRoomEventMap)} ）如下所示：
+- 当 ZIM SDK 版本小于 2.13.0 时，事件为 {getPlatformData(props,KICKED_OUTMap)} 。
+- 当 ZIM SDK 版本为 2.13.0 及之后版本时，事件为 {getPlatformData(props,ROOM_NOT_EXISTMap)} 。
+
+## 网络中断对房间生命周期的影响
+
+ZIM 房间类似于在线聊天室、网络中断会导致房间进入重连状态并抛出 {getPlatformData(props,onRoomStateChangedMap)} 。详情请参考 {getPlatformData(props,platformMap)}。

@@ -133,7 +133,8 @@
     },
     {
       "id": "zim_android_zh",
-      "path": "https://doc-zh.zego.im/article/11588",
+      "label": "即时通讯 (Android)",
+      "path": "core_products/zim/zh/docs_zim_android_zh",
       "routeBasePath": "zim-android",
       "locale": "zh",
       "navigationInfo": {

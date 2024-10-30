@@ -1,72 +1,88 @@
 ---
-articleID: 16361
+articleID: 17253
 ---
 
-
-# Manage rooms
+# 房间管理
 
 - - -
 
+<Note title="Note">
+
+本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
+</Note>
+
+## 功能简介
+
+ZIM SDK 提供多人房间聊天功能，支持用户向房间内发送文本消息或自定义消息，实现了多人在线交流、同步分享。
+
+多人房间聊天功能可应用于小班课或者会议室等场景，房间成员数量上限请参考 [计费说明](../../Introduction/Billing%20instructions.mdx)。
+
+
+## 实现流程
+
+用户可以通过以下两种方式，创建房间并进入房间。
+
+- <b>[方式一：创建房间、加入房间](#创建房间加入房间)</b>：用户 A 调用 [CreateRoom](@CreateRoom) 接口，传入 [ZIMRoomInfo](@-ZIMRoomInfo) 信息，即可创建并加入房间。其他用户调用 [JoinRoom](@JoinRoom) 接口，传入由 A 创建的房间 roomID，即可加入房间。
+- <b>[方式二：进入房间](#进入房间)</b>：用户 X 调用 [EnterRoom](@EnterRoom) 接口，传入 [ZIMRoomInfo](@-ZIMRoomInfo) 信息，如果 roomID 不存在，会自动创建一个房间然后进入。其他用户需要调用 [EnterRoom](@EnterRoom) 接口，传入由 X 创建的房间 roomID，进入房间。
+
+房间内的用户，可以通过 [SendMessage](@SendMessage) 接口，向房间内发送消息，详情请参考 [收发房间消息](../../Send%20and%20receive%20messages.mdx)。
 
 <Note title="Note">
 
-This document is applicable to the following platforms of Unity framework: iOS, Android, macOS, and Windows.
+如果 roomID 已存在：
+
+- 调用 [CreateRoom](@CreateRoom) 接口，会返回相关错误码，详情请参考 [常见错误码](../../SDK%20Error%20Codes/ZIM.mdx)。
+- 调用 [EnterRoom](@EnterRoom) 接口，会直接进入此房间内。
+
+如果 roomID 不存在：
+
+- 调用 [CreateRoom](@CreateRoom) 接口，可以直接创建、并加入到此房间内。
+- 调用 [EnterRoom](@EnterRoom) 接口，会直接创建一个房间、并进入到此房间内。
 </Note>
 
-## Overview
+### 创建房间、加入房间
 
-ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of room messaging, allows multiple users to send text or custom messages to a room, and chat and share ideas in real time.
+以下流程中，我们以客户端 A 创建并加入房间，客户端 B 加入房间为例。
 
-With the room messaging feature, you can build your app to meet different requirements of various scenarios, such as one-to-many classes, online conferences, and more. 
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/CreateRoom3_new.jpg" /></Frame>
 
+#### 1. 注册回调
 
+所有进入房间的用户，都需注册 [OnRoomMemberJoined](@OnRoomMemberJoined)、[OnRoomMemberLeft](@OnRoomMemberLeft) 和 [OnRoomStateChanged](@OnRoomStateChanged) 回调，用于监听房间其他成员的变动和接收房间连接状态发生改变的事件通知。
 
-## Join a room 
+注册 [OnRoomMemberJoined](@OnRoomMemberJoined) 回调示例源码：
 
-Now, we provide two methods to join a room:
+```c#
+ZIM.GetInstance().onRoomMemberJoined += (ZIM zim, List<ZIMUserInfo> memberList, string roomID) = {}
+```
 
-- <b>[Method 1: Manually create a room & Join a room ](#method-1-manually-create-a-room--join-a-room-)</b>: Call the [CreateRoom](@CreateRoom) method with the [ZIMRoomInfo](@-ZIMRoomInfo) info to manually create a room first. And other client users call the [JoinRoom](@JoinRoom) with the roomID to join the room.
+注册 [OnRoomMemberLeft](@OnRoomMemberLeft) 回调示例源码：
 
+```c#
+ZIM.GetInstance().onRoomMemberLeft += (ZIM zim, List<ZIMUserInfo> memberList, string roomID) => {};
+```
 
-- <b>[Method 2: Join a room directly (room will be created automatically)](#method-2-join-a-room-directly-room-will-be-created-automatically)</b>: Call the [EnterRoom](@EnterRoom) method with [ZIMRoomInfo](@-ZIMRoomInfo) info to join a room directly (if the room doesn't exist, the room will be created automatically). Other client users can call the [EnterRoom](@EnterRoom) method with the roomID to join the room.
+注册 [OnRoomStateChanged](@OnRoomStateChanged) 回调示例源码：
 
-For in-room users to send messages to a room, call the [SendMessage](@SendMessage) method. For details, see [Send & Receive messages](./../Messaging/Send%20and%20receive%20messages.mdx#sendreceive-custom-messages).
+```c#
+ZIM.GetInstance().onRoomStateChanged += (ZIM zim, ZIMRoomState state, ZIMRoomEvent roomEvent, Dictionary<string, string> extendedData, string roomID) => {};
+```
 
+#### 2. 创建房间
 
-<Note title="Note">
+客户端 A 登录后，创建一个房间，可以调用 [CreateRoom](@CreateRoom) 接口，传入 [ZIMRoomInfo](@-ZIMRoomInfo) 信息，即可创建并加入房间。同时可以通过错误码 `ZIMError` 的参数值，判断是否创建成功。相关错误码请查看 [常见错误码](../../SDK%20Error%20Codes/ZIM.mdx)。
 
-If the room (roomID) already exists:
-
-- Call the [CreateRoom](@CreateRoom) method: returns an error code. For details, see [Error codes](./../../SDK%20Error%20Codes/ZIM.mdx#room-errors).
-- Call the [EnterRoom](@EnterRoom) method: you will join the room directly. 
-
-If the room (roomID) doesn't exist:
-
-- Call the [CreateRoom](@CreateRoom) method: you can create a room, and you will join the room upon creation. 
-- Call the [EnterRoom](@EnterRoom) method: a room will be created automatically, and you will join the room directly. 
-</Note>
-
-
-### Method 1: Manually create a room & Join a room 
-
-#### Manually create a room
-
-Let's suppose we have Client A and Client B. The following shows how Client A creates a room, how Client B and other client users join the room. 
-
-For Client A to create a room after login, he can call the [CreateRoom](@CreateRoom) method with the [ZIMRoomInfo](@-ZIMRoomInfo) info. And he can be told whether the room is created successfully by the `ZIMError` parameter. For related error codes, see [Error codes](./../../SDK%20Error%20Codes/ZIM.mdx).
-
-
+创建成功后会收到 [OnRoomStateChanged](@OnRoomStateChanged) 的通知回调，[ZIMRoomState](@-ZIMRoomState) 为 Connected，[ZIMRoomEvent](@-ZIMRoomEvent) 为 Success。
 
 <Warning title="Warning">
 
-- You can customize the **roomID** and **roomName**, and we recommend you set the **roomID** to a meaningful value and associate them with the account system of your application.
-- After creating a room by calling the [CreateRoom](@CreateRoom) method, you will directly join the room you just created, you don't need to call the [JoinRoom](@JoinRoom) method to join the room.
+- “roomID”、“roomName” 支持开发者自定义规则生成。建议开发者将 “roomID” 设置为一个有意义的值，可将其与自己的业务账号系统进行关联。
+- 调用 [CreateRoom](@CreateRoom) 接口创建房间后，会直接加入房间，无需再调用 [JoinRoom](@JoinRoom) 接口加入房间。
 </Warning>
 
-
 ```c#
-// The roomID is a string with a maximum length of 32 bytes and can only contain numbers, English characters, and these special characters: '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '[', ']', '^', '_', '{', '}', '|', '~'.
-// The roomName is a string with a maximum length of 64 bytes and has no special character restrictions.
+// roomID 最大 32 字节的字符串。仅支持数字，英文字符 和 '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'。
+// roomName 最大 64 字节的字符串，无特殊字符限制。
 ZIMRoomInfo zimRoomInfo = new ZIMRoomInfo();
 zimRoomInfo.roomID = "roomID";
 zimRoomInfo.roomName = "roomName";
@@ -74,59 +90,60 @@ ZIM.GetInstance().CreateRoom(zimRoomInfo, (ZIMRoomFullInfo zimRoomFullInfo, ZIME
 {
     if (error.code == ZIMErrorCode.Success)
     {
-        // Created successfully.          
+        // 创建成功             
     }
     else
     {
-        // Failed to create.            
+        // 创建失败             
     }
 });
 ```
 
-#### Join a room 
+#### 3. 加入房间
 
-For Client B and other client users to join the room created by Client A, call the [JoinRoom](@JoinRoom) method with the roomID of client A's room. And Client B and other client users can be told whether they joined the room successfully by the `ZIMError` parameter. For related error codes, see [Error codes](./../../SDK%20Error%20Codes/ZIM.mdx).
+客户端 B 加入房间，可以调用 [JoinRoom](@JoinRoom) 接口，传入由 A 创建的房间 roomID，即可加入房间。同时可以根据错误码 `ZIMError` 的参数值，判断用户是否加入成功。相关错误码请查看 [常见错误码](../../SDK%20Error%20Codes/ZIM.mdx)。
 
+加入成功后会收到 [OnRoomStateChanged](@OnRoomStateChanged) 的通知回调，[ZIMRoomState](@-ZIMRoomState) 为 Connected，[ZIMRoomEvent](@-ZIMRoomEvent) 为 Success。
 
 ```C#
 ZIM.GetInstance().JoinRoom("roomID", (ZIMRoomFullInfo zimRoomFullInfo, ZIMError error) =>
 {
     if (error.code == ZIMErrorCode.Success)
     {
-        //Joined successfully.
+        // 加入房间成功。
     }
     else
     {
-        // Failed to join.
+        // 加入房间失败。
     }
 });
 ```
 
-To receive notifications when a new room member joins the room, set up and listen for the callback [OnRoomMemberJoined](@OnRoomMemberJoined). 
+#### 4. 房间成员变动通知
 
-The following shows Client A receives the callback notification when Client B joins the room created by Client A:
+当房间有其他成员加入时，可以使用回调接口 [OnRoomMemberJoined](@OnRoomMemberJoined) 方法，实现对其他房间成员加入的监听。
 
+例如，当客户端 B 加入由 A 创建的房间时，A 将收到房间内成员变动的通知。
 
 ```c#
-ZIM.GetInstance().onRoomMemberJoined = (ZIM zim, List<ZIMUserInfo> memberList,
+ZIM.GetInstance().OnRoomMemberJoined = (ZIM zim, List<ZIMUserInfo> memberList,
                                             string roomID) =>
 {
-    // Info of the member who join the room.
+    //加入房间的成员信息
 };
 ```
 
+### 进入房间
 
-### Method 2: Join a room directly (room will be created automatically)
+以下流程中，我们以客户端 X 创建并进入房间，客户端 Y 直接进入房间为例。
 
-Let's suppose we have Client A and Client B. The following shows how Client A joins the room without creating a room manually, and how Client B and other client users join the room.
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/EnterRoom3_new.jpg" /></Frame>
 
-1. After logs in, Client A calls the [EnterRoom](@EnterRoom) method with the [ZIMRoomInfo](@-ZIMRoomInfo) information. The room will be created automatically when the passed roomID doesn't exist.
-
-2. Client B and other client users call the [EnterRoom](@EnterRoom) method with the roomID to join the room created by Client A. 
-
-3. For in-room client users to receive notifications when a new room member joins the room, set up and listen for the callback [OnRoomMemberJoined](@OnRoomMemberJoined).
-
-
+1. 注册 [OnRoomMemberJoined](@OnRoomMemberJoined)、[OnRoomMemberLeft](@OnRoomMemberLeft) 和 [OnRoomStateChanged](@OnRoomStateChanged) 回调，详情请参考 <a href="#callback">创建房间、加入房间 - 1. 注册回调</a>。
+2. 客户端 X 登录后，调用 [EnterRoom](@EnterRoom) 接口，传入 [ZIMRoomInfo](@-ZIMRoomInfo) 信息，进入房间；如果传入的 roomID 不存在，将会自动创建一个房间并进入该房间。
+3. 客户端 Y 登录后，调用 [EnterRoom](@EnterRoom) 接口，传入由 X 创建的房间 roomID，直接进入房间。
+4. 进入房间成功后会收到 [OnRoomStateChanged](@OnRoomStateChanged) 的通知回调，[ZIMRoomState](@-ZIMRoomState) 为 Connected，[ZIMRoomEvent](@-ZIMRoomEvent) 为 Success。
+5. 房间内的用户，同样可以使用回调接口 [OnRoomMemberJoined](@OnRoomMemberJoined) 方法，实现对房间内成员加入的监听。
 
 ```C#
 ZIMRoomInfo zimRoomInfo = new ZIMRoomInfo();
@@ -139,60 +156,64 @@ ZIM.GetInstance().EnterRoom(zimRoomInfo, config, (ZIMRoomFullInfo zimRoomFullInf
 {
     if (error.code == ZIMErrorCode.Success)
     {
-        // Entered successfully.           
+        // 进入成功             
     }
     else
     {
-        // Failed to enter.           
+        // 进入失败             
     }
 });
 ```
 
 ```c#
-// Listen for the callback. 
-ZIM.GetInstance().onRoomMemberJoined = (ZIM zim, List<ZIMUserInfo> memberList,
+//回调监听
+ZIM.GetInstance().OnRoomMemberJoined = (ZIM zim, List<ZIMUserInfo> memberList,
                                                     string roomID) =>
 {
-    // Info of the member who join the room.
+    //进入房间的成员信息
 };
 ```
 
+### 离开房间
 
-## Leave a room 
+用户如果想要离开房间，可以调用 [LeaveRoom](@LeaveRoom) 接口，传入房间的 roomID，即可退出此房间；房间内的其他用户可以通过回调接口 [OnRoomMemberLeft](@OnRoomMemberLeft)，收到成员变动通知。
 
+离开房间成功后会收到 [OnRoomStateChanged](@OnRoomStateChanged) 的通知回调，[ZIMRoomState](@-ZIMRoomState) 为 Disconnected，[ZIMRoomEvent](@-ZIMRoomEvent) 为 Success。
 
-For Client B to leave the room, call the [LeaveRoom](@LeaveRoom) method with `roomID`.
-And Client A and other client users in the room will receive notifications through the callback [OnRoomMemberLeft](@OnRoomMemberLeft) method. 
+离开房间后，将不能收到房间内的消息。
 
-Room members who leave the room cannot receive messages in the room anymore.
-
-
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/LeaveRoom3_new.jpg" /></Frame>
 
 ```c#
-// Leave the room.
+// 离开房间
 ZIM.GetInstance().LeaveRoom("roomID", (string roomID, ZIMError errorInfo) =>
 {
     if (errorInfo.code == ZIMErrorCode.Success)
     {
-        // Left successfully.
+        //离开房间成功
     }
     else
     {
-        // Failed to leave.
+        //离开房间失败
     }
 });
 ```
 
 ```c#
-ZIM.GetInstance().onRoomMemberLeft = (ZIM zim, List<ZIMUserInfo> memberList,
+ZIM.GetInstance().OnRoomMemberLeft = (ZIM zim, List<ZIMUserInfo> memberList,
                                   string roomID) =>
 {
-    // Info of the member who left the room.
+    //离开房间成员的信息
 };
 ```
 
 <Note title="Note">
 
-When all members leave the room, the room will be automatically destroyed. ZIM SDK supports setting the room delay destruction through [ZIMRoomAdvancedConfig], with a maximum delay of 3 hours.
-
+当所有成员离开房间后，房间将自动销毁。ZIM SDK 支持通过 [ZIMRoomAdvancedConfig](@-ZIMRoomAdvancedConfig) 设置房间延迟销毁，最大延迟为 3 小时。
 </Note>
+
+
+## 网络中断对房间生命周期的影响
+
+ZIM 房间类似于在线聊天室、网络中断会导致房间进入重连状态并抛出 [OnRoomStateChanged](@OnRoomStateChanged)。详情请参考 [场景 4 : ZIM 房间断网](https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=unity3d)。
+
