@@ -77,6 +77,28 @@ export const ZIMRoomAdvancedConfigMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomAdvancedConfig-class.html' target='_blank'>config</a>,
 }
 
+export const CONNECTEDMap = {
+  'Android': "CONNECTED",
+  'Flutter': "connected",
+  'Web,RN,uniapp': "Connected",
+  'iOS,mac': "ZIMRoomStateConnected",
+  "window": "ZIM_ROOM_STATE_CONNECTED"
+}
+export const SUCCESSMap = {
+  'Android': "SUCCESS",
+  'Flutter': "success",
+  'Web,RN,uniapp': "Success",
+  'iOS,mac': "ZIMRoomEventSuccess",
+  "window": "ZIM_ROOM_EVENT_SUCCESS"
+}
+export const DISCONNECTEDMap = {
+  'Android': "DISCONNECTED",
+  'Flutter': "disconnected",
+  'Web,RN,uniapp': "Disconnected",
+  "window": "ZIM_ROOM_STATE_DISCONNECTED",
+  "iOS,mac": "ZIMRoomStateDisconnected"
+}
+
 # Manage rooms
 
 - - -
@@ -812,7 +834,7 @@ zim.leaveAllRoom(roomIDs)
 
 Other users in the room receive the member change notification in the {getPlatformData(props,setEventHandlerMap)}  callback of the {getPlatformData(props,onRoomMemberLeftMap)}  method.
 
-After leaving all rooms, the user receives the {getPlatformData(props,onRoomStateChangedMap)} callback multiple times based on the number of rooms. The value of {getPlatformData(props,ZIMRoomStateMap)} is `DISCONNECTED`, and the value of {getPlatformData(props,ZIMRoomEventMap)} is `SUCCESS`.
+After leaving all rooms, the user receives the {getPlatformData(props,onRoomStateChangedMap)} callback multiple times based on the number of rooms. The value of {getPlatformData(props,ZIMRoomStateMap)} is {getPlatformData(props,DISCONNECTEDMap)} , and the value of {getPlatformData(props,ZIMRoomEventMap)} is {getPlatformData(props,SUCCESSMap)} .
 
 After leaving a room, the user no longer receives messages in the room.
 
