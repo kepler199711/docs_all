@@ -103,7 +103,7 @@
             {
               "type": "doc",
               "label": "Online Status Subscription",
-              "id": "guides/users/online-status-subscription" 
+              "id": "guides/users/online-status-subscription"
             }
           ]
         },
@@ -125,6 +125,11 @@
               "type": "doc",
               "label": "Manage room properties",
               "id": "guides/room/room-properties"
+            },
+            {
+              "type": "doc",
+              "label": "Room user attributes",
+              "id": "guides/room/room-user-attributes"
             }
           ]
         },

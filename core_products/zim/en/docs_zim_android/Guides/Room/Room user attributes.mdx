@@ -6,68 +6,49 @@ import { getPlatformData } from "/snippets/utils-content-parser.js"
 
 export const setRoomMembersAttributesMap = {
   'Android': <a href='@setRoomMembersAttributes' target='_blank'>setRoomMembersAttributes</a>,
-}
-export const ZIMRoomMemberAttributesSetConfigMap = {
-  'Android': <a href='@-ZIMRoomMemberAttributesSetConfig' target='_blank'>ZIMRoomMemberAttributesSetConfig</a>,
-}
-export const ZIMRoomMembersAttributesOperatedCallbackMap = {
-  'Android': <a href='@-ZIMRoomMembersAttributesOperatedCallback' target='_blank'>ZIMRoomMembersAttributesOperatedCallback</a>,
-  'U3d': <a href='@ZIMRoomMembersAttributesOperatedCallback' target='_blank'>ZIMRoomMembersAttributesOperatedCallback</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setRoomMembersAttributes.html' target='_blank'>setRoomMembersAttributes</a>,
 }
 export const queryRoomMembersAttributesMap = {
   'Android': <a href='@queryRoomMembersAttributes' target='_blank'>queryRoomMembersAttributes</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMembersAttributes.html' target='_blank'>queryRoomMembersAttributes</a>,
   'iOS,mac': <a href='@queryRoomMembersAttributesByUserIDS' target='_blank'>queryRoomMembersAttributesByUserIDs</a>,
-}
-export const ZIMRoomAttributesQueriedCallbackMap = {
-  'Android': <a href='@-ZIMRoomAttributesQueriedCallback' target='_blank'>ZIMRoomAttributesQueriedCallback</a>,
-  'iOS,mac,U3d': <a href='@ZIMRoomAttributesQueriedCallback' target='_blank'>ZIMRoomAttributesQueriedCallback</a>,
 }
 export const queryRoomMemberAttributesListMap = {
   'Android': <a href='@queryRoomMemberAttributesList' target='_blank'>queryRoomMemberAttributesList</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMemberAttributesList.html' target='_blank'>queryRoomMemberAttributesList</a>,
   'iOS,mac': <a href='@queryRoomMemberAttributesListByRoomID' target='_blank'>queryRoomMemberAttributesListByRoomID</a>,
 }
-export const ZIMRoomMemberAttributesQueryConfigMap = {
-  'Android': <a href='@-ZIMRoomMemberAttributesQueryConfig' target='_blank'>ZIMRoomMemberAttributesQueryConfig</a>,
-}
-export const ZIMRoomMemberAttributesListQueriedCallbackMap = {
-  'Android': <a href='@-ZIMRoomMemberAttributesListQueriedCallback' target='_blank'>ZIMRoomMemberAttributesListQueriedCallback</a>,
-  'iOS,mac,U3d': <a href='@ZIMRoomMemberAttributesListQueriedCallback' target='_blank'>ZIMRoomMemberAttributesListQueriedCallback</a>,
-}
+
 export const onRoomMemberAttributesUpdatedMap = {
   'Android': <a href='@onRoomMemberAttributesUpdated' target='_blank'>onRoomMemberAttributesUpdated</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMemberAttributesUpdated.html' target='_blank'>onRoomMemberAttributesUpdated</a>,
   'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-attributes-updated-infos-operated-info-room-id' target='_blank'>onRoomMemberAttributesUpdated</a>,
   'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-attributes-updated-infos-operated-info-room-id' target='_blank'>onRoomMemberAttributesUpdated</a>,
 }
 export const setEventHandlerMap = {
   'Android': <a href='@setEventHandler' target='_blank'>setEventHandler</a>,
+  'Web': <a href='@on' target='_blank'>on</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler-class.html' target='_blank'>setEventHandler</a>,
 }
 export const queryRoomMembersMap = {
   'Android': <a href='@queryRoomMembers' target='_blank'>queryRoomMembers</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMembers.html' target='_blank'>queryRoomMembers</a>,
   'iOS,mac': <a href='@queryRoomMembersByUserIDs' target='_blank'>queryRoomMembersByUserIDs</a>,
 }
 export const ZIMRoomMembersQueriedCallbackMap = {
   'Android': <a href='@ZIMRoomMembersQueriedCallback' target='_blank'>ZIMRoomMembersQueriedCallback</a>,
-}
-
-
-export const HashMap = {
-  'Android': "HashMap<String,String>",
-  'iOS,mac': "NSDictionary",
-  'U3d': "Dictionary<string, string>",
-}
-export const stringMap = {
-  'Android': "String",
-  'iOS,mac': "NSString",
-  'U3d': "string",
-}
-export const listMap = {
-  'Android': "ArrayList",
-  'iOS,mac': "NSArray",
-  'U3d': "List<string>",
+  'Flutter': "callback",
+  'Web':"callback"
 }
 
 # Manage room user attributes
 - - -
+:::if{props.platform="U3d"}
+<Note title="Note">
+
+This document is applicable to the following platforms of Unity framework: iOS, Android, macOS, and Windows.
+</Note>
+:::
 
 ## Overview
 
@@ -99,11 +80,6 @@ Developers can call the {getPlatformData(props,setRoomMembersAttributesMap)} API
 - When a key does not exist, configuring user attributes indicates adding a user attribute.
 - When a key already exists, configuring user attributes indicates updating the value of an existing attribute.
 
-:::if{props.platform="U3d"}
-```c#
-public abstract void SetRoomMembersAttributes(Dictionary<string, string> attributes, List<string> userIDs, string roomID, ZIMRoomMemberAttributesSetConfig config, ZIMRoomMembersAttributesOperatedCallback callback);
-```
-:::
 
 
 
@@ -125,20 +101,12 @@ ZIM.getInstance().setRoomMembersAttributes(attributes, "roomID", userIDs, setCon
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title="Sample code"
-[[ZIM getInstance] queryRoomMembersAttributesByUserIDs:@[@"userID1",@"userID2"] roomID:@"roomID" callback:^(NSString * _Nonnull roomID, NSArray<ZIMRoomMemberAttributesInfo *> * _Nonnull infos, ZIMError * _Nonnull errorInfo) {
-        // The service logic after the query result is returned. 
-}];
-```
-</CodeGroup>
-:::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc title="Sample code"
-[[ZIM getInstance] queryRoomMembersAttributesByUserIDs:@[@"userID1",@"userID2"] roomID:@"roomID" callback:^(NSString * _Nonnull roomID, NSArray<ZIMRoomMemberAttributesInfo *> * _Nonnull infos, ZIMError * _Nonnull errorInfo) {
-        // The service logic after the query result is returned. 
+ZIMRoomMemberAttributesSetConfig *setConfig = [[ZIMRoomMemberAttributesSetConfig alloc] init];
+[[ZIM getInstance] setRoomMembersAttributes:@{@"key1":@"value1"} userIDs:@[@"user1",@"user2"] roomID:@"roomID" config:setConfig callback:^(NSString * _Nonnull roomID, NSArray<ZIMRoomMemberAttributesOperatedInfo *> * _Nonnull operatedInfos, NSArray<NSString *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
+        // The service logic after the configuration result is returned. 
 }];
 ```
 </CodeGroup>
@@ -162,15 +130,56 @@ ZIM.GetInstance().SetRoomMembersAttributes(attributes, userIDs, "roomID",
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="Sample code"
+Map<String, String> attributes = {"key1": "value1"};
+List<String> userIDs = ["userID1"];
+ZIM
+    .getInstance()
+    ?.setRoomMembersAttributes(
+        attributes, userIDs, 'roomID', ZIMRoomMemberAttributesSetConfig())
+    .then((value) {
+        // The logic after the configuration is successful.
+    })
+    .catchError((onError) {
+        // The logic after the configuration fails.
+});
+```
+</CodeGroup>
+:::
+:::if{props.platform="Web"}
+<CodeGroup>
+```javascript title="Sample code"
+const config = {
+    isDeleteAfterOwnerLeft: false
+};
+zim.setRoomMembersAttributes({'key1': 'value1'}, ['user1', 'user2'], 'roomID', config).then(res => {
+    // The service logic after the configuration result is returned. 
+});
+```
+</CodeGroup>
+:::
+:::if{props.platform="window"}
+<CodeGroup>
+```cpp title="Sample code"
+std::unordered_map<std::string, std::string> attributes;
+attributes.emplace(std::string("key1"),std::string("value1"));
+std::vector<std::string> userIDs;
+userIDs.push_back(std::string("userID1"));
+ZIMRoomMemberAttributesSetConfig setConfig;
+setConfig.isDeleteAfterOwnerLeft = true;
+ZIM::getInstance()->setRoomMembersAttributes(attributes, userIDs, std::string("roomID"), setConfig, [=](const std::string &roomID, const std::vector<ZIMRoomMemberAttributesOperatedInfo> &infos,                                                                                                           const std::vector<std::string> &errorUsers, const ZIMError &errorInfo){
+        // Fill in the logic for handling the operation result here
+    });
+```
+</CodeGroup>
+:::
 
 ### Query user attributes of some users
 
 Users in a room can call the {getPlatformData(props,queryRoomMembersAttributesMap)} API to query the user attributes of some users in the room.
-:::if{props.platform="U3d"}
-```c#
-public abstract void QueryRoomMembersAttributes(List<string> userIDs, string roomID, ZIMRoomMembersAttributesQueriedCallback callback);
-```
-:::
+
 
 :::if{props.platform=undefined}
 <CodeGroup>
@@ -186,28 +195,16 @@ ZIM.getInstance().queryRoomMembersAttributes(userIDs, "roomID", new ZIMRoomMembe
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title="Sample code"
-ZIMRoomMemberAttributesQueryConfig *queryConfig = [[ZIMRoomMemberAttributesQueryConfig alloc] init];
-queryConfig.count = 100;
-[[ZIM getInstance] queryRoomMemberAttributesListByRoomID:@"roomID" config:queryConfig callback:^(NSString * _Nonnull roomID, NSArray<ZIMRoomMemberAttributesInfo *> * _Nonnull infos, NSString * _Nonnull nextFlag, ZIMError * _Nonnull errorInfo) {
-      // The service logic after the query result is returned.  
- }];
+[[ZIM getInstance] queryRoomMembersAttributesByUserIDs:@[@"userID1",@"userID2"] roomID:@"roomID" callback:^(NSString * _Nonnull roomID, NSArray<ZIMRoomMemberAttributesInfo *> * _Nonnull infos, ZIMError * _Nonnull errorInfo) {
+        // The service logic after the query result is returned. 
+}];
 ```
 </CodeGroup>
 :::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc title="Sample code"
-ZIMRoomMemberAttributesQueryConfig *queryConfig = [[ZIMRoomMemberAttributesQueryConfig alloc] init];
-queryConfig.count = 100;
-[[ZIM getInstance] queryRoomMemberAttributesListByRoomID:@"roomID" config:queryConfig callback:^(NSString * _Nonnull roomID, NSArray<ZIMRoomMemberAttributesInfo *> * _Nonnull infos, NSString * _Nonnull nextFlag, ZIMError * _Nonnull errorInfo) {
-      // The service logic after the query result is returned.  
- }];
-```
-</CodeGroup>
-:::
+
 :::if{props.platform="U3d"}
 <CodeGroup>
 ```c# title="Sample code"
@@ -221,19 +218,48 @@ ZIM.GetInstance().QueryRoomMembersAttributes(userIDs, "roomID", (string roomID, 
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="Sample code"
+Map<String, String> attributes = {"key1": "value1"};
+List<String> userIDs = ["userID1"];
+ZIM
+    .getInstance()
+    ?.queryRoomMembersAttributes(userIDs, 'roomID')
+    .then((value) {
+        // The logic after the configuration is successful.
+    })
+    .catchError((onError) {
+        // The logic after the configuration fails.
+    });
+```
+</CodeGroup>
+:::
+:::if{props.platform="Web"}
+<CodeGroup>
+```javascript title="Sample code"
+ zim.queryRoomMembersAttributes['user1', 'user2'], 'roomID').then(res => {
+    // The service logic after the query result is returned. 
+});
+```
+</CodeGroup>
+:::
+:::if{props.platform="window"}
+<CodeGroup>
+```cpp title="Sample code"
+std::vector<std::string> userIDs;
+userIDs.push_back(std::string("userID1"));
+ZIM::getInstance()->queryRoomMembersAttributes(userIDs, std::string("roomID"), [=](const std::string &roomID, const std::vector<ZIMRoomMemberAttributesInfo> &infos, const ZIMError &errorInfo){
+        // Fill in the logic for handling the query result here
+});
+```
+</CodeGroup>
+:::
 
 
 ### Query user attributes of all users
 
 Users in a room can call the {getPlatformData(props,queryRoomMemberAttributesListMap)} API to query the user attributes of all users in the room.
-
-:::if{props.platform="U3d"}
-```c#
-public abstract void QueryRoomMemberAttributesList(string roomID, ZIMRoomMemberAttributesQueryConfig config, ZIMRoomMemberAttributesListQueriedCallback callback);
-```
-
-:::
-
 
 
 :::if{props.platform=undefined}
@@ -300,20 +326,59 @@ ZIM.GetInstance().QueryRoomMemberAttributesList(
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Flutter"}
+<CodeGroup>
+```dart title="Sample code"
+ZIM
+    .getInstance()
+    ?.queryRoomMemberAttributesList(
+        'roomID', ZIMRoomMemberAttributesQueryConfig())
+    .then((value) {
+        // The logic after the configuration is successful.
+    })
+    .catchError((onError) {
+        // The logic after the configuration fails.
+    });
+```
+</CodeGroup>
+:::
+:::if{props.platform="Web"}
+<CodeGroup>
+
+```javascript
+const config = {
+    nextFlag: '',
+    count: 100
+}
+zim.queryRoomMemberAttributesList('roomID', config).then(res => {
+    // The service logic after the query result is returned.  
+});
+```
+</CodeGroup>
+:::
+:::if{props.platform="window"}
+<CodeGroup>
+```cpp title="Sample code"
+ZIMRoomMemberAttributesQueryConfig queryConfig = ZIMRoomMemberAttributesQueryConfig(std::string(""), 100);
+ZIM::getInstance()->queryRoomMemberAttributesList(std::string("roomID"), queryConfig, [=](const std::string &roomID, const std::vector<ZIMRoomMemberAttributesInfo> &infos,const std::string &nextFlag, const ZIMError &errorInfo){
+    if (nextFlag == "") {
+        // All room member attributes for all users have been queried
+    }else{
+        // Continue querying the next page
+    }
+});
+```
+</CodeGroup>
+:::
 
 ### User attribute change notification
 :::if{props.platform="U3d"}
 When user attributes of members in a room are changed, you can register the [`OnRoomMemberAttributesUpdated`\|_blank](@OnRoomMemberAttributesUpdated) callback API to listen for user attribute change notifications of members in the room.
 :::
-:::if{props.platform=undefined}
+:::if{props.platform="undefined|iOS|mac|Web|window|Flutter"}
 When user attributes of members in a room are changed, developers can register the {getPlatformData(props,onRoomMemberAttributesUpdatedMap)} method of the {getPlatformData(props,setEventHandlerMap)} callback API to listen for user attribute change notifications of members in the room.
 :::
-:::if{props.platform="iOS"}
-When user attributes of members in a room are changed, developers can register the {getPlatformData(props,onRoomMemberAttributesUpdatedMap)} method of the {getPlatformData(props,setEventHandlerMap)} callback API to listen for user attribute change notifications of members in the room.
-:::
-:::if{props.platform="mac"}
-When user attributes of members in a room are changed, developers can register the {getPlatformData(props,onRoomMemberAttributesUpdatedMap)} method of the {getPlatformData(props,setEventHandlerMap)} callback API to listen for user attribute change notifications of members in the room.
-:::
+
 
 
 :::if{props.platform=undefined}
@@ -353,6 +418,29 @@ ZIM.GetInstance().onRoomMemberAttributesUpdated = (
 {
     // The service logic after user attributes of members in a room are changed.
 };
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+
+   ZIMEventHandler.onRoomMemberAttributesUpdated = (
+       ZIM zim,List<ZIMRoomMemberAttributesUpdateInfo> infos,ZIMRoomOperatedInfo operatedInfo, String roomID){
+    //The service logic after user attributes of members in a room are changed.
+   };
+```
+:::
+:::if{props.platform="Web"}
+```typescript
+zim.on('roomMemberAttributesUpdated', (zim, data) => {
+    //The service logic after user attributes of members in a room are changed.
+});
+```
+:::
+:::if{props.platform="window"}
+```cpp
+void onRoomMemberAttributesUpdated(ZIM * /*zim*/, const std::vector<ZIMRoomMemberAttributesUpdateInfo> & /*infos*/,ZIMRoomOperatedInfo /*operatedInfo*/, const std::string & /*roomID*/) override{
+     // Write the business logic after the room member attributes are updated
+}
 ```
 :::
 
@@ -487,6 +575,61 @@ ZIM.GetInstance().QueryRoomMembers(userIDs, "roomID", (string roomID, List<ZIMRo
     if (errorInfo.code == ZIMErrorCode.Success){
         // Operation successful.
     }
+});
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+ZIM.getInstance().queryRoomMembers(["userA","userB"], "roomID")
+.then((ZIMRoomMembersQueriedResult value) {
+    // Map of userID mapped to ZIMErrorUserInfo, if there is a need to pay attention to the failure reason, you can read this data structure
+    Map<String, ZIMErrorUserInfo> targetErrorUserInfoMap = {};
+
+    Map<String, ZIMRoomMemberInfo> targetRoomMemberMap = {};    
+
+    for (ZIMRoomMemberInfo currentMemberInfo in value.memberList) {
+        targetRoomMemberMap[currentMemberInfo.userID] = currentMemberInfo;
+    }
+    for (ZIMErrorUserInfo currentErrorUserInfo in value.errorUserList) {
+       targetErrorUserInfoMap[currentErrorUserInfo.userID] = currentErrorUserInfo;
+    }
+    // Check if the target member is in the room
+    bool isTargetUserIdAInTheRoom = targetRoomMemberMap.containsKey(userIdA);    
+}).catchError((onError){
+    // Handle failure
+});
+```
+:::
+:::if{props.platform="Web"}
+```javascript
+
+const userIDs = ['user1', 'user2'];
+
+zim.queryRoomMembers(userIDs, 'roomID').then(res => {
+    // Write your business logic here after receiving the query result  
+});
+```
+:::
+:::if{props.platform="window"}
+```cpp
+std::vector<std::string> targetUserIDs;
+ZIM::getInstance().queryRoomMembers(targetUserIDs, roomID, [targetRoomMemberMap](const std::string &roomID, const std::vector<ZIMRoomMemberInfo> &memberList,const std::vector<ZIMErrorUserInfo> &errorUserList, const ZIMError &errorInfo) {
+    if (errorInfo.code != ZIMErrorCodeSuccess) {
+        std::cout << "Query room members failed! error code: " << errorInfo.code << ", error message: " << errorInfo.message << std::endl;
+        return;
+    }
+    // Map of userID to ZIMRoomMemberInfo, can be cached for subsequent UI display. Currently, ZIMRoomMemberInfo exposes userID and userName.
+    std::map<std::string, ZIMRoomMemberInfo> targetRoomMemberMap;
+    // Map of userID to ZIMErrorUserInfo, can be used to track failure reasons if needed.
+    std::map<std::string, ZIMErrorUserInfo> targetErrorUserInfoMap;
+    for (auto const& currentMemberInfo : memberList) {
+        targetRoomMemberMap[currentMemberInfo.userID] = currentMemberInfo;
+    }
+    for (auto const& currentErrorUserInfo : errorUserList) {
+        targetErrorUserInfoMap[currentErrorUserInfo.userID] = currentErrorUserInfo;
+    }
+    // Check if the target user ID is in the room
+    bool isTargetUserIdAInTheRoom = std::find(targetRoomMemberMap.begin(), targetRoomMemberMap.end(), userIdA) != targetRoomMemberMap.end();
 });
 ```
 :::
