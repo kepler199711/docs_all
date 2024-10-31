@@ -1,187 +1,179 @@
 ---
-articleID: 17554
+articleID: 16852
 ---
 
-# ZPNs release notes
+# ZPNs 发布日志
 
-- - -
+---
 
-## Version 2.6.0
+## 2.6.0 版本
 
-**Release Date: November 23, 2023**
+**发布日期：2023-11-23**
 
 <Warning title="Warning">
 
-[Upgrade guide for version 2.6.0, please read before upgrading >> >>](./ZPNs%20upgrade%20guide.mdx)
+[升级到 2.6.0 版本的编译问题，升级前必看 >>](./ZPNs%20upgrade%20guide.mdx#260-升级指南)
 </Warning>
 
-<h4>New Features</h4>
+<h5>新增功能</h5>
 
-| Feature | Description | Related APIs |
+| 功能项  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Custom Notification Icon | In addition to displaying the app's default icon in offline push notifications, you can now customize the notification icon for offline pushes with ZPNs. This can be used to display the sender's avatar in push notifications for one-on-one or group messages. For more details, please refer to [Custom notification icon](./../Offline%20push%20notifications/Best%20Practices/Custom%20notification%20icon.mdx). | - |
-| Notification with Image | Supports including an image in offline push notifications. For more details, please refer to [Notify with photo attachment](./../Offline%20push%20notifications/Best%20Practices/Notify%20with%20photo%20attachment.mdx). | <ul><li>[ZIMPushConfig > resourceID](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/resourcesID.html)</li><li>[Push message to all users](/zim-server/push-message-to-all-users)</li></ul> |
-| Update App Icon Badge | Supports updating the app icon badge to remind users of unread messages when they are offline. For more details, please refer to [Modify a notification badge](./../Offline%20push%20notifications/Best%20Practices/Modify%20a%20notification%20badge.mdx). | <ul><li>[setServerBadge](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/setServerBadge.html)</li><li>[ZIMPushConfig > enableBadge](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/enableBadge.html)</li><li>[ZIMPushConfig > badgeIncrement](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/badgeIncrement.html)</li></ul> |
-| Replace Notification | Supports replacing the content of a previously sent push notification. For more details, please refer to [Update a push notification](./../Offline%20push%20notifications/Best%20Practices/Update%20a%20push%20notification.mdx). | - |
+| 自定义通知图标 | 在离线推送默认展示 APP 的图标的基础上，您还可以凭借 ZPNs 自定义离线推送的通知图标，可用于在推送单聊、群聊消息时携带发送方头像，详情请参考 [自定义通知图标](./../Offline%20push%20notifications/Best%20Practices/Custom%20notification%20icon.mdx)。 | - |
+| 通知携带图片 | 支持在离线推送通知中携带一张图片，详情请参考 [通知携带图片附件](./../Offline%20push%20notifications/Best%20Practices/Notify%20with%20photo%20attachment.mdx)。 | <ul><li>[ZIMPushConfig > resourceID](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/resourcesID.html)</li><li>[全员推送](/zh/zim-server/messaging/push-message-to-all-users)</li></ul> |
+| 更新图标角标 | 支持用户离线情况下，更新 App 图标角标，提醒用户消息未读数，详情请参考 [更新图标角标](./../Offline%20push%20notifications/Best%20Practices/Modify%20a%20notification%20badge.mdx)。 | <ul><li>[setServerBadge](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/setServerBadge.html)</li><li>[ZIMPushConfig > enableBadge](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/enableBadge.html)</li><li>[ZIMPushConfig > badgeIncrement](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/badgeIncrement.html)</li></ul> |
+| 替换通知 | 支持撤回原来推送通知内容，详情请参考 [替换通知](./../Offline%20push%20notifications/Best%20Practices/Update%20a%20push%20notification.mdx)。 | - |
 
-<h4>New Features</h4>
 
-| Feature | Description | Related APIs |
+<h5>新增功能</h5>
+
+| 功能项  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Improved iOS VoIP development experience | To facilitate Flutter developers in implementing VoIP functionality, ZEGO has encapsulated some functions of iOS CallKit and PushKit libraries into a separate plugin called zego_callkit. For more details, please refer to the [CallKit User Guide](./../Offline%20push%20notifications/Best%20Practices/CallKit%20user%20guide.mdx). | - |
+| 优化 iOS VoIP 开发体验 | 为方便 Flutter 开发者实现 VoIP 功能，ZEGO 将 iOS CallKit 、PushKit 库的部分功能封装到独立插件 zego_callkit，详情请参考 [CallKit 使用指南](./../Offline%20push%20notifications/Best%20Practices/CalKit%20user%20guide.mdx)。 | - |
 
-<br/>
 ---
 
-## Version 2.5.0
+## 2.5.0 版本
 
-**Release Date: September 15, 2023**
+**发布日期：2023-09-15**
 
-<h4>New Features</h4>
+<h5>新增功能</h5>
 
-| Feature | Description | Related APIs |
+| 功能项  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Web Development | Support developing web applications using the Flutter framework, and implement offline push. For more details, please refer to [Implement Push Notification (Web)](./../Offline%20push%20notifications/Implement%20offline%20push%20notification.mdx#implementation-on-web). | - |
-| Local Logs | Add ZPNs local log component, call [uploadLog](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/uploadLog.html) of ZIM SDK to upload logs of both ZIM and ZPNs simultaneously. | [uploadLog](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/uploadLog.html) |
-| Unregister Push | Support unregistering offline push and disabling push notifications. | [unregisterPush](https://pub.dev/documentation/zego_zpns/2.5.0/zego_zpns/ZPNs/unregisterPush.html) |
-| iOS Push Display Settings | [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) adds parameter [ZPNsIOSNotificationArrivedConfig](https://pub.dev/documentation/zego_zpns/2.5.0/zego_zpns/ZPNsIOSNotificationArrivedConfig-class.html), which allows specifying whether to display iOS push alerts, sounds, and badges when registering for offline push. | [ZPNsIOSNotificationArrivedConfig](https://pub.dev/documentation/zego_zpns/2.5.0/zego_zpns/ZPNsIOSNotificationArrivedConfig-class.html) |
-| Push Private Messages to Android Devices | [ZIMPushConfig > resourcesID](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/resourcesID.html) |
+| Web 开发 | 支持使用 Flutter 框架开发 Web 应用，实现离线推送，详情请参考 [实现离线推送 - Web 端接入流程](!IM-Offline_Push/Offline_Push_zim#web_integration)。 | - |
+| 本地日志 | 增加 ZPNs 本地日志组件，调用 ZIM SDK 的 [uploadLog](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/uploadLog.html)，即可同时上传 ZIM 和 ZPNs 的日志。 | [uploadLog](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/uploadLog.html) |
+| 注销推送 | 支持注销离线推送，关闭推送通知。 | [unregisterPush](https://pub.dev/documentation/zego_zpns/2.5.0/zego_zpns/ZPNs/unregisterPush.html) |
+| iOS 推送展示设置 | [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) 新增参数 [ZPNsIOSNotificationArrivedConfig](https://pub.dev/documentation/zego_zpns/2.5.0/zego_zpns/ZPNsIOSNotificationArrivedConfig-class.html)，可在注册离线推送时指定是否展示 iOS 推送的弹窗、声音和角标。 | [ZPNsIOSNotificationArrivedConfig](https://pub.dev/documentation/zego_zpns/2.5.0/zego_zpns/ZPNsIOSNotificationArrivedConfig-class.html) |
+| 向 Android 设备推送私信 | 支持通过安卓设备厂商的私信通道推送消息，实现无上限推送。如何创建私信通道，请查看 [小米](!IM-Offline_Push/Offline_Push_xiaomi#private_push)、[华为](!IM-Offline_Push/Offline_Push_huawei#private_push)、[OPPO](!IM-Offline_Push/Offline_Push_oppo#private_push)、[vivo](!IM-Offline_Push/Offline_Push_vivo#private_push) 推送集成指南的相关内容。 | [ZIMPushConfig > resourcesID](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig/resourcesID.html) |
 
-<h4>Improvements</h4>
+<h5>改进优化</h5>
 
-| Feature | Description | Related APIs |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Automatic Detection of iOS Environment | [ZPNsIOSEnvironment](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsIOSEnvironment.html) enum adds `Automatic`. When developers call [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) to register for offline push and are not familiar with the iOS environment, they can pass this enum and ZPNs will automatically detect the environment. | [ZPNsIOSEnvironment > Automatic](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsIOSEnvironment.html#Automatic) |
-| Initiate iOS Callkit Call Interface | Add `reportIncomingCall` interface to support initiating the iOS Callkit call interface. | `reportIncomingCall` |
+| 自动检测 iOS 环境 | [ZPNsIOSEnvironment](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsIOSEnvironment.html) 枚举类新增 `Automatic`。开发者在调用 [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) 注册离线推送时，如果不了解 iOS 环境，可传入此枚举，ZPNs 将自动识别环境。 | [ZPNsIOSEnvironment > Automatic](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsIOSEnvironment.html#Automatic) |
+| 主动拉起 iOS Callkit 通话界面 | 新增 `reportIncomingCall` 接口，支持主动拉起 iOS Callkit 通话界面。 | `reportIncomingCall` |
 
-<h4>API Changes</h4>
+<h5>接口改动</h5>
 
-| Feature | Description | Related APIs |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Data Class Member Variable Type Change | The type of `extras` in [ZPNsMessage](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsMessage-class.html) changes from `Map<String, Object>` to `Map<String, Object?>` to accommodate cases where the value of the Map field may be null when converting from JSON to Map. For more details, please refer to [ZPNs 升级指南 - 2.5.0 升级指南ZPNs Upgrade Guide - 2.5.0 Upgrade Guide](17218#2_5_0). | [ZPNsMessage > extras](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsMessage/extras.html) |
+| 数据类成员变量类型变更 | [ZPNsMessage](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsMessage-class.html) 中的 extras 的类型由 Map 字段的 value 类型由 Map\<String, Object> 修改为 Map\<String, Object?> 类型，以兼容 Json 转 map 时，value 可能为 null 的情况。详情请参考 [ZPNs 升级指南 - 2.5.0 升级指南 ](17218#2_5_0)。 | [ZPNsMessage > extras](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsMessage/extras.html) |
 
-<br/>
 ---
 
-## Version 2.3.2
+## 2.3.2 版本
 
-**Release Date: 2023-04-21**
+**发布日期：2023-04-21**
 
-<h4>Interface Changes</h4>
+<h5>接口改动</h5>
 
-| Feature | Description | Related Interfaces |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Interface Change | The callback method `performSetMutedCallAction` in `CallKitEventHandler` has been changed to `performSetMutedCallAction` | `performSetMutedCallAction` |
+| 接口改动 | `CallKitEventHandler` 中 `performSetMutedCallAction` 回调方法变更为 `performSetMutedCallAction` | `performSetMutedCallAction` |
 
-<h4>Bug Fixes</h4>
+<h5>问题修复</h5>
 
-Fixed known issues.
+修复已知问题。
 
-<br/>
 ---
 
-## Version 2.3.1
+## 2.3.1 版本
 
-**Release Date: 2023-03-29**
+**发布日期：2023-03-29**
 
-<h4>Interface Changes</h4>
+<h5>接口改动</h5>
 
-| Feature | Description | Related Interfaces |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Interface Change | <ul><li>Added `setBackgroundMessageHandler` interface for setting the callback triggered by Android silent push.</li><li>Renamed `didReceiveIncomingPushWithPayload` method to `didReceiveIncomingPush`, with parameters changed from `payload` and `completion` to `extras` and `uuid`.</li></ul> | <ul><li>[setBackgroundMessageHandler](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/setBackgroundMessageHandler.html)</li><li>`didReceiveIncomingPush`</li></ul>|
+| 接口改动 | <ul><li>新增 setBackgroundMessageHandler 接口用于设置安卓静默推送所触发的回调。</li><li>didReceiveIncomingPushWithPayload 方法更名为 didReceiveIncomingPush，参数由 payload 和 completion 变更为 extras 和 uuid。</li></ul> | <ul><li>[setBackgroundMessageHandler](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/setBackgroundMessageHandler.html)</li><li>`didReceiveIncomingPush`</li></ul> |
 
-<h4>Bug Fixes</h4>
+<h5>问题修复</h5>
 
-Fixed known issues.
+修复已知问题。
 
-<br/>
 ---
 
-## Version 2.3.0
+## 2.3.0 版本
 
-**Release Date: 2023-03-14**
+**发布日期：2023-03-14**
 
-<h4>New Features</h4>
+<h5>新增功能</h5>
 
-| Feature | Description | Related Interfaces |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Support iOS VoIP Push | Support VoIP notification functionality through iOS CallKit. | - |
-| Encapsulate iOS CallKit System API | Encapsulate iOS CallKit for easier cross-platform usage. | - |
-| Support Silent Push | Support synchronizing data between the background-running app and the server through silent push. | - |
-| Encapsulate Android Local Notification API | Flutter's local notification interface now supports Android platform. | [addLocalNotification](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/addLocalNotification.html) |
+| 支持 iOS VoIP 推送类型 | 支持通过 iOS CallKit 实现 VoIP 通知功能。 | - |
+| 封装 iOS CallKit 系统 API | 封装了 iOS CallKit，方便跨平台用户使用。 | - |
+| 支持静默推送 | 支持通过静默推送，同步处于后台运行的 App 和服务端的数据。 | - |
+| 封装 Android 发送本地通知 API | Flutter 发送本地通知接口现在支持 Android 平台。 | [addLocalNotification](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/addLocalNotification.html) |
 
-<h4>Interface Changes</h4>
+<h5>接口改动</h5>
 
-| Feature | Description | Related Interfaces |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Interface Change | Based on the requirements for implementing silent push on iOS, the [onThroughMessageReceived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onThroughMessageReceived.html) callback method has added a parameter `iOSOnThroughMessageReceiveCompletion`, so that when the operations triggered by [onThroughMessageReceived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onThroughMessageReceived.html) are completed, `iOSOnThroughMessageReceiveCompletion()` can be called to notify the iOS system that the relevant operations have been completed. | [onThroughMessageReceived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onThroughMessageReceived.html) |
+| 接口改动 | 基于 iOS 对于实现静默推送的要求，[onThroughMessageReceived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onThroughMessageReceived.html) 回调方法新增了参数 `iOSOnThroughMessageReceiveCompletion`，以便当 [onThroughMessageReceived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onThroughMessageReceived.html) 触发的操作结束后，调用 `iOSOnThroughMessageReceiveCompletion()` 向 iOS 系统通知相关操作已完成。 | [onThroughMessageReceived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onThroughMessageReceived.html) |
 
-<br/>
 ---
 
-## Version 2.2.0
+## 2.2.0 版本
 
-**Release Date: 2023-01-11**
+**发布日期：2023-01-11**
 
-<h4>New Features</h4>
+<h5>新增功能</h5>
 
-| Feature | Description | Related API |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Encapsulate Android channel creation | For custom ringtones on Android 8.0 and above, a channel needs to be created. Flutter has simplified this API for easy use by customers. | [createNotificationChannel](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/createNotificationChannel.html) |
-| Encapsulate iOS local notification sending | Simplify the iOS local notification sending function for easy use by developers. | [addLocalNotification](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/addLocalNotification.html) |
+| 封装 Android 创建 channel 功能 | 针对 Android 8.0 以上自定义铃声需要创建 channel 通道，flutter 简单封装了此 API，方便客户使用。 | [createNotificationChannel](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/createNotificationChannel.html) |
+| 封装 iOS 发送本地通知功能 | 简单封装 iOS 发送本地通知功能，方便开发者使用。 | [addLocalNotification](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/addLocalNotification.html) |
 
-<h4>Improvements</h4>
+<h5>改进优化</h5>
 
-| Feature | Description | Related API |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Changes to APIs | <ul><li>Differentiate between static functions and member functions.</li><li>Removed meaningless asynchronous return values.</li><li>[enableDebug](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/enableDebug.html) is no longer aligned with both iOS and Android platforms, only available on Android.</li><li>[registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) added optional named parameter [ZPNsIOSEnvironment](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsIOSEnvironment.html). If running in iOS environment and this parameter is not filled, ZPNs SDK will throw an exception.</li><li>In [ZPNsEventHandler](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler-class.html), the extendedData string in ZPNsMessage has been changed to an extra dictionary to resolve potential review issues on the Google Play Store.</li></ul> | - |
+| 接口改动 | <ul><li>区分了静态函数和成员函数。</li><li>删除了无意义的异步返回值。</li><li>[enableDebug](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/enableDebug.html) 不再对齐iOS/Andorid 两个平台，仅限在 Android 使用。</li><li>[registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) 增加可选具名参数 [ZPNsIOSEnvironment](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsIOSEnvironment.html)。如果在 iOS 环境运行且没有填写此参数，ZPNs SDK 会抛异常提醒。</li><li>[ZPNsEventHandler](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler-class.html) 各接口的 ZPNsMessage 中，extendedData 字符串改为了 extra 字典，以解决上架谷歌商店潜在的审核问题。</li></ul> | - |
 
-<br/>
 ---
 
-## Version 2.1.3
+## 2.1.3 版本
 
-**Release Date: 2022-09-01**
+**发布日期：2022-09-01**
 
-<h4>Improvements</h4>
+<h5>改进优化</h5>
 
-| Feature | Description | Related API |
+| 功能项 | 功能描述 | 相关接口 |
 | -- | -- | -- |
-| Android version compatibility | Compatible with Android 12. | - |
+| Android 版本兼容 | 兼容 Android 12 版本。 | - |
 
-<br/>
 ---
 
-## Version 2.1.2
+## 2.1.2 版本
 
-**Release Date: 2022-08-31**
+**发布日期：2022-08-31**
 
-<h4>Bug Fixes</h4>
+<h5>问题修复</h5>
 
-Fixed an error related to Android dependencies.
+修复了一个有关 Android 依赖的错误。
 
-<br/>
 ---
 
-## Version 2.1.1
+## 2.1.1 版本
 
-**Release Date: 2022-08-28**
+**发布日期：2022-08-28**
 
-<h4>Bug Fixes</h4>
+<h5>问题修复</h5>
 
-Fixed known issues.
+修复已知问题。
 
-<br/>
 ---
 
-## Version 2.1.0
+## 2.1.0 版本
 
-**Release Date: 2022-07-28**
+**发布日期：2022-07-28**
 
-ZPNs SDK is first released .To use it, please use it with ZIM SDK.
+ZPNs SDK 首次发布，支持接收 Apple、华为、小米、OPPO、vivo 五个厂商的离线推送。若需使用，请搭配 ZIM SDK。
 
-| Feature | Description | Related API |
+| 功能项  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Register for offline push | Register for offline push notifications from vendors. Please configure the vendor information before using. | <ul><li>[setPushConfig](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/setPushConfig.html)</li><li>[registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html)</li></ul> |
-| Receive vendor notification click callback | Vendor-specific notification click callbacks are unified and thrown in the related APIs. | [onNotificationClicked](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onNotificationClicked.html)|
-| Receive vendor notification display callback | Vendor-specific notification display callbacks are thrown in this interface. | [onNotificationArrived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onNotificationArrived.html)|
+| 注册离线推送  | 注册厂商通道的离线推送，使用前请先配置好需要使用的厂商信息。 | <ul><li>[setPushConfig](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/setPushConfig.html)</li><li>[registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html)</li></ul> |
+| 接收厂商通知点击回调 | 各厂商的通知点击回调，统一在相关接口抛出。 | [onNotificationClicked](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onNotificationClicked.html)|
+| 接收厂商通知展示回调 | 厂商通知展示回调，统一在此接口抛出。 | [onNotificationArrived](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onNotificationArrived.html)|
