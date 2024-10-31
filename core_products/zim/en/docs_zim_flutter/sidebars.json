@@ -320,7 +320,7 @@
         },
         {
           "type": "doc",
-          "label": "Integrate FCM",
+          "label": "Integrate FCM (for Android)",
           "id": "offline-push-notifications/integrate-fcm"
         },
         {
