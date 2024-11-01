@@ -1,30 +1,25 @@
 ---
-articleID: 17553
+articleID: 16851
 ---
 
-# ZPNs release notes
+## 2.5.0 版本
 
----
+**发布日期：2022-11-30**
 
-## Version 2.5.0
+<h5>改进优化</h5>
 
-**Release Date: November 30, 2022**
-
-<h4>Improvements and Optimizations</h4>
-
-| Feature  | Description | Related API |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| ZPNsMessage Property Optimization  | Changed the type of the `extras` property in `ZPNsMessage` from string to `Record<string, string>`.  | [ZPNsMessage](@-ZPNsMessage) |
+| ZPNsMessage 属性优化  | ZPNsMessage 属性 extras 的类型由 string 改为 Record\<string, string>。  | [ZPNsMessage](@-ZPNsMessage) |
 
-<br/>
 ---
 
-## Version 2.3.0
+## 2.3.0 版本
 
-**Release Date: August 22, 2022**
+**发布日期：2022-08-22**
 
-Initial release, only supports Google FCM push channel. Please use it with ZIM SDK.
+首次发布，仅支持谷歌 FCM 推送通道。若需使用，请搭配 ZIM SDK。
 
-| Feature  | Description | Related API |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| Register Offline Push | Register offline push for vendor channels. Please configure the vendor information before using. | [register](@register) |
+| 注册离线推送 | 注册厂商通道的离线推送，使用前请先配置好需要使用的厂商信息。 | [register](@register) |
