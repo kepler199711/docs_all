@@ -50,7 +50,7 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 内容审核 | 无需额外开发，即可实现对消息的安全审核。<ul><li>支持消息类型多样，涵盖文本消息、图片消息、语音消息和视频消息。</li><li>支持先审后发和先发后审两种审核方式。</li><li>支持根据不同会话类型的消息定制审核标签和尺度</li><li>支持针对审核结果配置不同的审核强度。</li><li>除了默认的敏感词汇外，您可以自行定义需要处理的词汇。</li></ul>详情请参考 [内容审核 - 能力概述](./../Guides/Content%20Moderation/Overview.mdx)。 | - |
 | 会话标记 | 支持用户对会话设置标记，适用于需要关注某会话或无法处理某条会话的场景。可使用本功能实现会话分组，即对多个会话设置相同的标记。客户端实现流程请参考 [标记会话](./../Guides/Conversation/Mark%20conversations.mdx)，服务端实现流程请参考 [设置会话标记](/zh/zim-server/conversation/set-conversation-marks)。  | <ul><li>[setConversationMark](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setConversationMark.html)</li><li>[设置会话标记](/zh/zim-server/conversation/set-conversation-marks)</li></ul> |
@@ -62,7 +62,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 计费优化 | 优化 ZIM 各个版本间的计费梯度和规格，新增内容审核的费用说明，详情请参考 [计费说明](./../Introduction/Billing%20instructions.mdx)。 | - |
 
@@ -74,20 +74,20 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 服务端管理呼叫邀请 | 支持在服务端发起、接受和拒绝呼叫邀请。 | <ul><li>[发起呼叫邀请](/zh/zim-server/call-invitation/send-a-call-invitation)</li><li>[接受呼叫邀请](/zh/zim-server/call-invitation/accept-a-call-invitation)</li><li>[拒绝呼叫邀请](/zh/zim-server/call-invitation/reject-a-call-invitation)</li></ul> |
 | 服务端管理禁言 | 支持在服务端禁言群组和特定群成员。 | <ul><li>[设置群禁言](/zh/zim-server/group/mute-a-group)</li><li>[设置群成员禁言](/zh/zim-server/group/mute-group-members)</li></ul> |
 | 服务端设置群成员角色 | 支持在服务端修改群成员的角色。 | [设置群成员角色](/zh/zim-server/group/set-group-member-roles) |
-| 支持 iOS 17.0 版本 | <div class="mk-warning"><p>从该版本起，不再支持 iOS 11.0 及之前的版本。</p></div>从 2024-04-29 开始，所有上架 App Store 的应用必须支持 iOS 17.0 版本，详情请参考 [Apple 开发者网站官方说明](https://developer.apple.com/news/upcoming-requirements/?id=04292024a)。 | - |
+| 支持 iOS 17.0 版本 | 注意：从该版本起，不再支持 iOS 11.0 及之前的版本。<br />>从 2024-04-29 开始，所有上架 App Store 的应用必须支持 iOS 17.0 版本，详情请参考 [Apple 开发者网站官方说明](https://developer.apple.com/news/upcoming-requirements/?id=04292024a)。 | - |
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 优化回执 | 包含回执过期状态实时感知，支持离线查询回执详情，支持查询群人数超过 100 人的群回执详情； | <ul><li>[queryGroupMessageReceiptReadMemberList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryGroupMessageReceiptReadMemberList.html)</li><li>[queryGroupMessageReceiptUnreadMemberList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryGroupMessageReceiptUnreadMemberList.html)</li></ul> |
 | 呼叫邀请 | 支持用户进行进阶模式呼叫邀请时，通过 [callCancel](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/callCancel.html) 接口单独传入某个指定的 userID，仅对该用户取消呼叫，不影响全局呼叫状态。 |   [callCancel](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/callCancel.html)|
-| 隐私文件 | 本次迭代 ZIM iOS SDK 内添加了隐私清单文件 PrivacyInfo.xcprivacy。<div class="mk-warning"><p>如果开发者已集成 2.16.0 版本之前的 SDK，为了防止上架 App Store 没有隐私清单文件出现审核风险，请更新最新版本的 SDK。</p></div> | - |
+| 隐私文件 | 本次迭代 ZIM iOS SDK 内添加了隐私清单文件 PrivacyInfo.xcprivacy。<br />注意：如果开发者已集成 2.16.0 版本之前的 SDK，为了防止上架 App Store 没有隐私清单文件出现审核风险，请更新最新版本的 SDK。</p></div> | - |
 
 ---
 
@@ -98,7 +98,7 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 群组角色 | 新增群组角色 “管理员”，拥有大部分群主上限，可以对修改普通群成员昵称、撤回普通群成员消息、踢人、禁言单独群成员和特定群角色。<br />如需了解群组角色与对应权限，请参考 [群成员管理 - 设置群成员角色](./../Guides/Group/Group%20members.mdx)。 | [setGroupMemberRole](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setGroupMemberRole.html) |
 | 入群验证 | <ul><li>[ZIMGroupAdvancedConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupAdvancedConfig-class.html) 新增属性 [joinMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupAdvancedConfig/joinMode.html)、[inviteMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupAdvancedConfig/inviteMode.html) 和 [beInviteMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupAdvancedConfig/beInviteMode.html)，支持在创建群组时设置入群验证模式、邀请模式、和邀请目标用户验证模式，从而方便群主和管理员限制外部用户入群。</li><li>当群组的入群验证模式修改为需要目标用户审批后，群内用户需要向外部用户发起入群邀请申请，等待目标用户审批。</li><li>当群组的邀请目标用户验证模式修改为需要群主和管理员审批后，外部用户发起入群申请，经由群主或管理员审批。</li><li>支持用户查询入群申请相关的列表。</li><li>支持在群组创建后调用客户端 API 和服务端 API 更新上述模式。</li></ul>如需了解接口调用细节，请参考 [群组管理](./../Guides/Group/Manage%20groups.mdx) | <ul><li>[createGroup](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/createGroup.html)</li><li>[ZIMGroupAdvancedConfig > joinMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupAdvancedConfig/joinMode.html)</li><li>[ZIMGroupAdvancedConfig > inviteMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupAdvancedConfig/inviteMode.html)</li><li>[ZIMGroupAdvancedConfig > beInviteMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupAdvancedConfig/beInviteMode.html)</li><li>[sendGroupJoinApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendGroupJoinApplication.html)</li><li>[acceptGroupJoinApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/acceptGroupJoinApplication.html)</li><li>[rejectGroupJoinApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/rejectGroupJoinApplication.html)</li><li>[sendGroupInviteApplications](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendGroupInviteApplications.html)</li><li>[acceptGroupInviteApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/acceptGroupInviteApplication.html)</li><li>[rejectGroupInviteApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/rejectGroupInviteApplication.html)</li><li>[queryGroupApplicationList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryGroupApplicationList.html)</li><li>[updateGroupJoinMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateGroupJoinMode.html)</li><li>[updateGroupInviteMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateGroupInviteMode.html)</li><li>[updateGroupBeInviteMode](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateGroupBeInviteMode.html)</li><li>[修改群规格限制](/zh/zim-server/group/modify-group-specification-limits)</li></ul>|
@@ -115,7 +115,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 检测邀请是否送达 | 支持在发起呼叫邀请时配置参数 [enableNotReceivedCheck](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCallInviteConfig/enableNotReceivedCheck.html)，检测呼叫是否触达被叫，以便主叫更快感知被叫网络状态并实现提示。 | [ZIMCallInviteConfig > enableNotReceivedCheck](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCallInviteConfig/enableNotReceivedCheck.html) |
 | 服务端创建群组接口新增参数 | 新增 `CreateGroupTime` 参数，支持设置创建群组的事件。 | [创建群组](/zh/zim-server/group/create-a-group) |
@@ -139,16 +139,16 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| 合并转发 | <ul><li>支持用户在收发消息后，通过构造合并消息体，传入发送消息接口即可实现转发合并消息；<div class="mk-hint"><p>如需实现逐条转发，只需将已有消息作为参数传入发送消息接口即可。</p></div></li><li>支持查询合并消息包含的子消息具体内容。</li></ul> | <ul><li>[ZIMCombineMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCombineMessage-class.html)</li><li>[sendMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendMessage.html)</li><li>[queryCombineMessageDetail](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryCombineMessageDetail.html)</li></ul> |
+| 合并转发 | <ul><li>支持用户在收发消息后，通过构造合并消息体，传入发送消息接口即可实现转发合并消息；<br />注意：如需实现逐条转发，只需将已有消息作为参数传入发送消息接口即可。</li><li>支持查询合并消息包含的子消息具体内容。</li></ul> | <ul><li>[ZIMCombineMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCombineMessage-class.html)</li><li>[sendMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendMessage.html)</li><li>[queryCombineMessageDetail](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryCombineMessageDetail.html)</li></ul> |
 | 收发 @ 消息 | 支持用户在某个会话发送消息时，为消息设置提及指定用户（可以不在当前会话）或提及全部会话内成员。 | <ul><li>[ZIMMessage > mentionedUserIDs](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/mentionedUserIds.html)</li><li>[ZIMMessage > isMentionAll](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/isMentionAll.html)</li></ul> |
 | 删除消息 | 支持用户一次性删除全部会话的所有消息。 | [deleteAllConversationMessages](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteAllConversationMessages.html) |
 | 保存会话草稿 | ZIM 支持用户退出单聊和群聊会话后仍在本地保存会话草稿，以便后续编辑。 | [setConversationDraft](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setConversationDraft.html) |
 | 单聊会话免打扰 | 在原有“群聊会话免打扰”的基础上，新增支持对单聊会话设置免打扰。单聊会话接收新消息后，不推送通知。 | [setConversationNotificationStatus](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setConversationNotificationStatus.html) |
 | 禁止发言 | 支持群主对群组实现群组禁言和指定群成员禁言。群组禁言支持全体禁言、普通成员禁言、指定角色成员禁言。 | <ul><li>[muteGroup](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/muteGroup.html)</li><li>[muteGroupMembers](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/muteGroupMembers.html)</li></ul> |
 | 好友管理 | 用户可以直接添加和删除好友、查看看好友列表、向用户发起好友申请、同意或拒绝好友申请、查看好友申请列表、检查其他用户与自己的好友关系、查询或修改好友信息，以及搜索好友。 | <ul><li>[addFriend](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/addFriend.html)</li><li>[deleteFriends](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteFriends.html)</li><li>[sendFriendApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendFriendApplication.html)</li><li>[acceptFriendApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/acceptFriendApplication.html)</li><li>[rejectFriendApplication](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/rejectFriendApplication.html)</li><li>[checkFriendsRelation](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/checkFriendsRelation.html)</li><li>[queryFriendList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryFriendList.html)</li><li>[queryFriendApplicationList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryFriendApplicationList.html)</li><li>[updateFriendAlias](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateFriendAlias.html)</li><li>[updateFriendAttributes](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateFriendAttributes.html)</li><li>[queryFriendsInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryFriendsInfo.html)</li><li>[searchLocalFriends](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/searchLocalFriends.html)</li></ul> |
-| 设置安全审核敏感词 | 开通安全审核后，支持开发者添加额外敏感词。当用户发送消息包含敏感词时，对该消息进行审核、替换内容或拦截。<div class="mk-hint"><p>如需使用此功能，请联系 ZEGO 技术支持。</p></div> | - |
+| 设置安全审核敏感词 | 开通安全审核后，支持开发者添加额外敏感词。当用户发送消息包含敏感词时，对该消息进行审核、替换内容或拦截。<br />注意：如需使用此功能，请联系 ZEGO 技术支持。 | - |
 | 服务端设置会话免打扰 | 支持在服务端对群聊会话和单聊会话设置免打扰状态。 | [设置会话消息免打扰](/zh/zim-server/conversation/mute-notifications-for-conversations) |
 | 服务端置顶会话 | 支持在服务端为用户设置会话的置顶状态。 | [置顶会话](/zh/zim-server/conversation/pin-conversations-to-the-top) |
 | 服务端修改群资料 | 支持在服务端修改置顶群组的头像、名称和公告。**说明**：如需使用此功能，请联系 ZEGO 技术支持了解详情。 | - |
@@ -171,14 +171,14 @@ articleID: 15260
 
 **发布日期：2024-01-08**
 
-<div class="mk-warning">
+<Warning title="注意">
 
-[升级到 2.13.0 版本的编译问题，升级前必看 >>](#16129#2_13_0)
-</div>
+[升级到 2.13.0 版本的编译问题，升级前必看 >>](./ZIM%20upgrade%20guide.mdx#2130-升级指南)
+</Warning>
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 多端登录 | “多平台登录”策略支持配置互踢逻辑，当前仅支持 android、iOS 设备互踢，Windows、Mac 设备互踢。 | [login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html) |
 | 离线登录 | 支持用户在离线状态登录 IM 服务，访问本地 SDK 数据。 | [login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html) |
@@ -191,10 +191,10 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 优化 roomID 长度限制 | 支持最长 128 字节的 [roomID](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomInfo/roomID.html)。| [ZIMRoomInfo > roomID](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomInfo/roomID.html) |
-| 用户信息相关类新增用户头像字段 | [ZIMUserInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserInfo-class.html) 和 [ZIMGroupMemberInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupMemberInfo-class.html) 新增 `userAvatarUrl` 字段，用于设置或说明用户头像地址。<div class="mk-warning"><p>暂不支持获取房间成员的用户头像字段，即通过 [queryRoomMemberList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMemberList.html) 和 [queryRoomMembers](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMembers.html) 拿到的 `ZIMUserInfo` 的 `userAvatarUrl` 为空。</p></div> | <ul><li>[ZIMUserInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserInfo-class.html)</li><li>[ZIMGroupMemberInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupMemberInfo-class.html)</li></ul> |
+| 用户信息相关类新增用户头像字段 | [ZIMUserInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserInfo-class.html) 和 [ZIMGroupMemberInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupMemberInfo-class.html) 新增 `userAvatarUrl` 字段，用于设置或说明用户头像地址。<br />注意：暂不支持获取房间成员的用户头像字段，即通过 [queryRoomMemberList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMemberList.html) 和 [queryRoomMembers](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMembers.html) 拿到的 `ZIMUserInfo` 的 `userAvatarUrl` 为空。 | <ul><li>[ZIMUserInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserInfo-class.html)</li><li>[ZIMGroupMemberInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupMemberInfo-class.html)</li></ul> |
 | 优化 [onRoomStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomStateChanged.html) 回调逻辑  | 当开发者调用 ZIM 服务端接口在后台销毁房间后，[roomStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomStateChanged.html) 回调描述房间状态变化的原因修改为 `roomNotExist`。 | [onRoomStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomStateChanged.html) |
 | 发送单聊消息服务端接口新增响应参数 | 新增 `SuccessList` 参数，成员参数包含 `UserId`、`MsgId` 和 `MsgSeq`，说明消息接受成功用户的相关信息。`MsgSeq` 可用于 [撤回单聊消息](/zh/zim-server/messaging/recall-a-one-to-one-message)。 | [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) |
 | 发送群聊消息服务端接口新增响应参数 | 新增 `MsgSeq`，可用于 [撤回群聊消息](/zh/zim-server/messaging/send-a-one-to-one-message)。 | [发送群聊消息](/zh/zim-server/messaging/send-group-messages) |
@@ -202,7 +202,7 @@ articleID: 15260
 
 <h5>废弃删除</h5>
 
-| 废弃项  | 废弃描述 | 相关接口 |
+| <div style={{width:"130px"}}>废弃项</div>  | 废弃描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 废弃 `login` 接口 | 废弃旧版登录接口，新增新版登录接口 [login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html)。新版登录接口支持通过 [ZIMLoginConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMLoginConfig-class.html) 进行更多配置，如是否使用 Token 鉴权、是否离线登录。 | [login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html) |
 | 部分用户信息相关类废弃旧版头像字段  | <ul><li>[ZIMGroupMemberInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupMemberInfo-class.html) 废弃 `memberAvatarUrl`，请使用新字段 `userAvatarUrl`。</li><li>[ZIMUserFullInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserFullInfo-class.html) 废弃 `userAvatarUrl`，请从 `baseInfo` 获取 `userAvatarUrl`。</li></ul> | <ul><li>[ZIMGroupMemberInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupMemberInfo-class.html)</li><li>[ZIMUserFullInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserFullInfo-class.html)</li></ul> |
@@ -228,10 +228,10 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 地理围栏 | 提供地理围栏服务，保证 IM 数据存储在运营本地，适用于海外高安全场景。 | [setGeofencingConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setGeofencingConfig.html) |
-| 群消息管理 | 支持新进入群组成员自动获取群历史消息。<div class="mk-hint"><p>如需使用此功能，请联系 ZEGO 技术支持配置。</p></div> | <ul><li>[joinGroup](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/joinGroup.html)</li><li>[inviteUsersIntoGroup](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/inviteUsersIntoGroup.html)</li></ul> |
+| 群消息管理 | 支持新进入群组成员自动获取群历史消息。<br />注意：如需使用此功能，请联系 ZEGO 技术支持配置。 | <ul><li>[joinGroup](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/joinGroup.html)</li><li>[inviteUsersIntoGroup](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/inviteUsersIntoGroup.html)</li></ul> |
 | 一键已读 | 支持清除所有会话的消息未读数和总消息未读数。 | [clearConversationTotalUnreadMessageCount](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/clearConversationTotalUnreadMessageCount.html) |
 | 呼叫邀请 | 支持呼叫外用户主动加入进阶模式呼叫，或呼叫内用户切换设备。 | [callJoin](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/callJoin.html) |
 | 删除所有会话列表 | 支持清空当前会话列表 | [deleteAllConversations](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteAllConversations.html) |
@@ -245,7 +245,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 登录逻辑优化 | 优化登录逻辑，避免了弱网环境下多设备异常互踢的情况。 | - |
 | 呼叫创建服务端回调 | 呼叫创建服务端回调新增 `caller` 字段说明发起呼叫的用户，详情请参考 [呼叫创建回调](/zh/zim-server/callbacks/call-invitation-sent)。 | - |
@@ -258,14 +258,14 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 多端登录 | 支持配置双平台或多平台登录策略，用户可在多平台、多设备上同时登录同一账户，实现会话、消息、群组等数据多端互通。如需了解多端登录对其他功能的影响，请参考 [多端登录](./../Guides/Users/Multi-device%20login.mdx)。<br />**注意**：仅支持专业版或旗舰版套餐用户使用此功能，且需联系 ZEGO 技术支持进行配置登录策略。 | [login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html) |
 
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 新增服务端信令消息支持类型 | 支持通过服务端发送经 base64 编码后的二进制信令消息，详情请参考 [MessageBody 说明](/zh/zim-server/messaging/messagebody-introduction)。 | - |
 | 优化删除会话后的置顶逻辑 | 删除某置顶会话后，不会自动更改该会话的置顶状态（[ZIMConversation > isPinned](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConversation/isPinned.html)）为 `No`。当该会话有新消息，再次出现在会话列表时，仍为置顶会话。 | - |
@@ -278,7 +278,7 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 |  消息表态 | 支持对单聊和群聊消息做出反应（即表态），一般可用于表情回复消息等场景，也可用于发起群组投票、确认群组结果等操作。此外，还支持删除自己做出的表态，以及查询某个表态相关的用户信息。 | <ul><li>[addMessageReaction](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/addMessageReaction.html)</li><li>[deleteMessageReaction](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteMessageReaction.html)</li><li>[queryMessageReactionUserList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessageReactionUserList.html)</li></ul> |
 | 服务端发送房间消息接口支持发送者有感知 | 新增 `SenderUnaware` 字段，允许通过服务端发送房间消息后，请求参数中的 `FromUserId`（发送方用户 ID）所对应的客户端对此次发送有感知。 | [发送房间消息](/zh/zim-server/messaging/send-room-messages) |
@@ -287,7 +287,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 用户昵称 UserName 长度上限调整 | 从 64 字节扩展至 256 字节，支持更长昵称，适用于 2.0.0 及以后版本的 ZIM SDK。 | [ZIMUserInfo > userName](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserInfo/userName.html) |
 
@@ -297,14 +297,14 @@ articleID: 15260
 
 **发布日期：2023-07-19**
 
-<div class="mk-warning">
+<Warning title="注意">
 
 [升级到 2.9.0 版本的编译问题，升级前必看 >>](./ZIM%20upgrade%20guide.mdx##290-升级指南)
-</div>
+</Warning>
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 |  呼叫邀请新增模式 | 新增进阶模式，支持用户在呼叫中邀请、退出呼叫和结束呼叫。 | <ul><li>[callingInvite](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/callingInvite.html)</li><li>[callQuit](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/callQuit.html)</li><li>[callEnd](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/callEnd.html)</li></ul> |
 | 撤回他人消息 | 群组会话中，群主可以撤回他人发送的消息。 | [revokeMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/revokeMessage.html) |
@@ -318,13 +318,13 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 呼叫邀请接收回调 | 优化呼叫邀请普通模式，支持在呼叫邀请的超时时间内，离线用户收到呼叫邀请在上线后能够立即被通知。| [onCallUserStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onCallUserStateChanged.html) |
 
 <h5>废弃删除</h5>
 
-| 废弃接口 | 废弃说明 | 废弃版本 |
+| <div style={{width:"130px"}}>废弃接口</div> | 废弃说明 | 废弃版本 |
 | -----  | ---- | ----- |
 | <ul><li>[onCallInvitationAccepted](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onCallInvitationAccepted.html)</li><li>[onCallInvitationRejected](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onCallInvitationRejected.html)</li><li>[onCallInviteesAnsweredTimeout](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onCallInviteesAnsweredTimeout.html)</li></ul> | 为便利开发者监听呼叫邀请中用户的呼叫状态变化，新增 [onCallUserStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onCallUserStateChanged.html)，替代原呼叫邀请回调 `onCallInvitationAccepted`、`onCallInvitationRejected` 和 `onCallInviteesAnsweredTimeout`。 | 2.9.0 |
 
@@ -336,12 +336,12 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 置顶会话 | 用户可以选择想要优先查看的会话，将其固定在会话列表顶部。 | <ul><li>[updateConversationPinnedState](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateConversationPinnedState.html)</li><li>[queryConversationPinnedList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryConversationPinnedList.html)</li></ul> |
 | 自定义消息类型 | 新增自定义类型消息，开发者可自定义消息的类型，如投票类型、接龙类型、视频卡片类型等，并自行完成消息的解析。ZIM SDK 不负责定义和解析自定义消息的具体内容。 | [ZIMCustomMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCustomMessage-class.html) |
 | 查询会话信息 | 通过指定会话 ID 查询会话的详细信息。 | [queryConversation](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryConversation.html) |
-| 查询房间内用户状态 | 通过指定若干 userID 和 roomID，查询目标用户是否在指定房间内，从而进行业务逻辑设计，如邀请连麦。<div class="mk-hint"><p>最多支持一次性查询 10 名用户的信息。</p></div> | [queryRoomMember](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMembers.html) |
+| 查询房间内用户状态 | 通过指定若干 userID 和 roomID，查询目标用户是否在指定房间内，从而进行业务逻辑设计，如邀请连麦。<br />注意：最多支持一次性查询 10 名用户的信息。 | [queryRoomMember](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMembers.html) |
 | 消息发送前回调 | 通过设置服务端回调，在用户发送单聊、群聊或房间聊天消息时，ZIM 向开发者服务端发送请求，开发者可实现：<ul><li>拦截违规消息。</li><li>建立用户黑白名单。</li></ul>  | [消息发送前回调](/zh/zim-server/callbacks/message-not-sent-yet) |
 | 消息发送后回调 | 通过设置服务端回调，在用户发送单聊、群聊、房间消息成功或失败后，ZIM 向开发者服务端发送请求，开发者可实现：<ul><li>实时记录用户发送的消息。</li><li>统计用户发送的消息。</li><li>直播录屏场景中，通过录制视频的时间戳，将聊天记录嵌入到录播视频中。</li></ul>  | [消息发送后回调](/zh/zim-server/callbacks/message-sent) |
 | 批量注册用户 | 支持调用服务端接口，指定用户信息（用户 ID 等），开发者可实现发起一次请求，注册多名用户。**说明**：最多支持一次性注册 100 名用户。 | [批量注册用户](/zh/zim-server/user/batch-register-users) |
@@ -350,7 +350,7 @@ articleID: 15260
 | 移除群成员 | 支持调用服务端接口，指定群组 ID 和用户 ID，批量群成员。<br />**注意：**最多支持一次性移除 50 名群成员。 | [移除群成员](/zh/zim-server/group/remove-group-member) |
 <h5>废弃删除</h5>
 
-| 废弃项  | 废弃描述 | 相关接口 |
+| <div style={{width:"130px"}}>废弃项</div>  | 废弃描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 废弃系统消息类型 | [ZIMMessageType](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageType.html) 废弃了系统消息（值为 30），开发者请使用功能更完善的自定义消息（值为 200）替代。 | [ZIMMessageTypeCustom](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageType.html#custom) |
 
@@ -388,7 +388,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 优化用户登录时 userName 置空逻辑 | 区分了用户名修改接口和登录接口。用户登录时，若将 userName 置空，不再会因此修改 userName，优化用户登录体验。 | [userName](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserInfo/userName.html) |
 | 优化会话消息拉取时机 | SDK 会智能检测当前用户的会话活跃情况，优化数据同步的时机，提升用户查询速度与体验。 | - |
@@ -402,7 +402,7 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 服务端新增呼叫邀请相关回调 | 用户可以通过 ZIM 服务端的回调，明确呼叫邀请的结果，适用于网络环境不好时，SDK 反馈的结果不稳定。 | <ul><li>[呼叫创建回调](/zh/zim-server/callbacks/call-invitation-sent)</li><li>[呼叫取消回调](/zh/zim-server/callbacks/call-invitation-canceled)</li><li>[呼叫接受回调](/zh/zim-server/callbacks/call-invitation-accepted)</li><li>[呼叫拒绝回调](/zh/zim-server/callbacks/call-invitation-rejected)</li><li>[呼叫超时回调](/zh/zim-server/callbacks/call-invitation-timed-out)</li></ul> |
 | 消息体增加扩展字段 | [ZIMMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage-class.html) 增加 [extendedData](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/extendedData.html) 字段，用户可以将用户头像和昵称等信息传入该字段，在聊天对话发送消息时实时展示。	| [extendedData](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/extendedData.html) |
@@ -410,7 +410,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 优化弱网情况下消息发送的逻辑 | 用户在弱网环境下发送消息时，SDK 会通过策略逻辑尽可能保证消息发送状态的正确性。 | - |
 
@@ -422,15 +422,15 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-|消息撤回|  撤回发送成功的消息，默认撤回 2 分钟内的消息。撤回操作仅支持撤回单聊和群聊的消息，不支持撤回房间内消息。<div class="mk-hint"><p>如需配置撤回时间，请联系 ZEGO 技术支持。</p></div>| <ul><li>[revokeMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/revokeMessage.html)</li><li>[ZIMMessageRevokedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRevokedResult-class.html)</li></ul>|
+|消息撤回|  撤回发送成功的消息，默认撤回 2 分钟内的消息。撤回操作仅支持撤回单聊和群聊的消息，不支持撤回房间内消息。<br />说明：如需配置撤回时间，请联系 ZEGO 技术支持。| <ul><li>[revokeMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/revokeMessage.html)</li><li>[ZIMMessageRevokedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRevokedResult-class.html)</li></ul>|
 |消息回执| [ZIMMessageSendConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageSendConfig-class.html) 新增 hasReceipt 参数，支持在单聊和群聊会话中发送附带回执的消息。<br />ZIM SDK 支持在单聊和群聊会话查看其他用户是否阅读本端发送的信息，以及支持查看群聊中已读消息和未读消息的数量，以及对应的用户信息，**但是不支持信令消息、弹幕消息、以及房间内消息使用回执。**| <ul><li>[ZIMMessageSendConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageSendConfig-class.html)</li><li>[sendMessageReceiptsRead](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendMessageReceiptsRead.html)</li><li>[sendConversationMessageReceiptRead](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendConversationMessageReceiptRead.html)</li><li>[queryGroupMessageReceiptReadMemberList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryGroupMessageReceiptReadMemberList.html)</li><li>[queryGroupMessageReceiptUnreadMemberList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryGroupMessageReceiptUnreadMemberList.html)</li><li>[queryMessageReceiptsInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessageReceiptsInfo.html)</li></ul> |
 | 呼叫邀请支持离线推送 | [ZIMCallInviteConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCallInviteConfig-class.html) 新增 pushConfig 参数，支持向离线用户推送呼叫邀请。离线用户接受呼叫邀请需要搭配 ZPNs SDK 一起使用。 | [ZIMCallInviteConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCallInviteConfig-class.html) |
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | [ZIMPushConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig-class.html) 的额外字段命名变更| 为避免开发者接入概念混淆，[ZIMPushConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig-class.html) 的 extendedData 参数修改为 payload 参数，功能不变。开发者在使用 ZPNs SDK 时，通过厂商通道的 extras 里面的 payload 字段即可获取到发送端传入的额外字段。<br />说明：若集成 ZIM SDK 2.5.0 版本后，开发者使用了离线推送功能后出现了接口编译失败的问题，请将 extendedData 改为 payload。 | - |
 
@@ -448,7 +448,7 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 |管理房间用户属性| 支持房间内的用户自定义用户属性。例如：用户等级、勋章、状态等信息。| <ul><li>[setRoomMembersAttributes](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setRoomMembersAttributes.html)</li><li>[queryRoomMembersAttributes](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMembersAttributes.html)</li><li>[queryRoomMemberAttributesList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryRoomMemberAttributesList.html)</li></ul>|
 |新增系统消息| 新增系统消息类型，支持 SDK 触发进群通知、群主替换等系统性消息。可以通过 [插入本地消息](./../Guides/Messaging/Insert%20local%20messages.mdx) 功能实现。|- |
@@ -456,7 +456,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 优化消息发送接口 | 优化消息对象，在发送前和发送后是同一个对象。开发者在发送“视频”等内容较大的消息时，可以在消息上传完成前，缓存该消息对象，直到收到 SDK 发送成功通知时，通过比较对象相同来实现发送前 Loading 的效果。 |  [sendMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendMessage.html) |
 | 优化断网重连逻辑 | 优化在无网状态下、以及断网重连后的逻辑。 | -|
@@ -474,7 +474,7 @@ articleID: 15260
 
 - **废弃接口**
 
-| 废弃接口 | 变更说明 | 废弃版本 |
+| <div style={{width:"130px"}}>废弃接口</div> | 变更说明 | 废弃版本 |
 | :-------- | :------- | :----- |
 | <ul><li>[sendPeerMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendPeerMessage.html)</li><li>[sendRoomMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendRoomMessage.html)</li><li>[sendGroupMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendGroupMessage.html)</li></ul> | 废弃单聊消息 [sendPeerMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendPeerMessage.html)、房间消息 [sendRoomMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendRoomMessage.html)、群组消息 [sendGroupMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendGroupMessage.html) 3 个消息发送接口，统一使用 [sendMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendMessage.html) 接口替代，发送消息方式更加规范。    | 2.4.0 |
 
@@ -486,13 +486,13 @@ articleID: 15260
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 支持 Web 平台| 支持使用 Flutter 框架开发 Web 应用。|-|
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 鉴权方式优化 | 从当前版本开始，开发者可以自主进行 “AppSign 鉴权” 和 “Token 鉴权” 的切换。| <ul><li>[create](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/create.html)</li><li>[login](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html)</li></ul> |
 
@@ -506,14 +506,14 @@ articleID: 15260
 
 **发布日期：2022-09-02**
 
-<div class="mk-warning">
+<Warning title="注意">
 
-[升级到 2.3.0 版本的编译问题，升级前必看 >>](#16129#2.3.0)
-</div>
+[升级到 2.3.0 版本的编译问题，升级前必看 >>](./ZIM%20upgrade%20guide.mdx##230-升级指南)
+</Warning>
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 新增扩展字段 | 支持用户通过扩展字段，设置自己的个人信息，例如用户头像、个性签名、性别等个人信息。| [updateUserExtendedData](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateUserExtendedData.html)|
 | 新增头像字段 | 用户信息及群组新增头像字段，用户可以上传自己的头像、或自定义群组头像。| <ul><li>[updateUserAvatarUrl](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateUserAvatarUrl.html)</li><li>[ZIMUserFullInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserFullInfo-class.html)</li><li>[updateGroupAvatarUrl](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateGroupAvatarUrl.html)</li><li>[ZIMGroupInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupInfo-class.html)</li><li>[ZIMConversation](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConversation-class.html)</li></ul>|
@@ -523,7 +523,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 逻辑优化 | <ul><li>优化网络断开时、API 的逻辑表现。</li><li>优化获取房间成员列表的逻辑。</li></ul> | - |
 | 性能优化 | 优化线程切换性能。 | - |
@@ -532,7 +532,7 @@ articleID: 15260
 
 - **废弃接口**
 
-| 废弃接口 | 变更说明 | 废弃版本 |
+| <div style={{width:"130px"}}>废弃接口</div> | 变更说明 | 废弃版本 |
 | :-------- | :------- | :----- |
 | [create](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/create.html) | 原有的 `create` 接口废弃，替换为同名的 [create](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/create.html) 接口，开发者可以通过传入 AppSign 进行鉴权，接入更加便捷。   | 2.3.0 |
 
@@ -542,14 +542,14 @@ articleID: 15260
 
 **发布日期：2022-06-06**
 
-<div class="mk-hint">
+<Note title="Note">
 
 Flutter 2.1.5 版本首次发布，对齐 iOS/Android/macOS/Windows 等平台的 2.1.5 版本。
-</div>
+</Note>
 
 首次发布，支持功能如下：
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 会话管理 | <ul><li>支持用户更新、查询、删除会话列表。</li><li>支持拉取会话列表，承载所有会话，实现消息列表。</li></ul>| <ul><li>[queryConversationList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryConversationList.html)</li><li>[deleteConversation](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/deleteConversation.html)</li></ul>|
 | 房间系统 | <ul><li>支持用户登录后，创建、加入、进入、退出、房间。</li><li>进入房间时，如果房间不存在，支持自动创建房间。</li><li>支持房间属性</li></ul>| <ul><li>[createRoom](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/createRoom.html)</li><li>[joinRoom](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/joinRoom.html)</li><li>[enterRoom](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/enterRoom.html)</li><li>[leaveRoom](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/leaveRoom.html)</li><li>[setRoomAttributes](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setRoomAttributes.html)</li></ul>|
