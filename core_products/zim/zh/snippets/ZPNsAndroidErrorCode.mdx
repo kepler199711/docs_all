@@ -1,8 +1,8 @@
-| Return Code | Possible Cause and Solutions                                  |
-|--------------|--------------------------------------------------------------|
-| 0            | Success.                          |
-| 6000401      | Connection failed. Check network status and retry.          |
-| 6000402      | Incorrect AppIDs or AppKeys related to device manufacturers provided. Verify the configuration for accuracy. |
-| 6000403      | Error from calling device manufacturers' API to obtain PushID. Refer to the provided content  in the error message from device manufacturers for resolution. |
-| 6000404      | Exception or failure in Push registration for other reasons. Address the issue based on the details in the error message. |
-| 6000405      | Exception or failure in Push unregistration for other reasons. Resolve the problem according to the information in the error message. |
+| 错误码 |  说明 | 处理建议 | 
+|--|--|--|
+| 0 | 成功。  | - |
+| 6000401 | 连接失败。  | 网络状态良好时重试。 |
+| 6000402 | 提供的厂商相关的 AppID 或 AppKey 错误。  | 检查填入的厂商配置内容是否有误。 |
+| 6000403 | 获取 PushID 时，厂商 API 报错。  | 根据 Error Message 中厂商所提供内容处理。 |
+| 6000404 | 注册 Push 出现异常、其他失败。  | 根据 Error Message 所提供内容处理。 |
+| 6000405 | 注销 Push 出现异常、其他失败。  | 根据 Error Message 所提供内容处理。 |
