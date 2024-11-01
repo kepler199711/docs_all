@@ -141,7 +141,16 @@ ZPNs.getInstance().registerPush(webConfig: config);
 :::
 </Step>
 <Step title="Get the firebase-messaging-sw.js file">
-Navigate to [SDK downloads](./../Client%20SDKs/SDK%20downloads.mdx) to get the latest version of the ZPNs SDK, and copy the firebase-messaging-sw.js file from the SDK to the root directory of your project.
+Navigate to [SDK downloads](./../Client%20SDKs/SDK%20downloads.mdx) to get the latest version of the ZPNs SDK.
+:::if{props.platform=undefined}
+Copy the firebase-messaging-sw.js file from the SDK to the root directory of your project.
+:::
+:::if{props.platform="Flutter"}
+In a Flutter project, you only need to copy the `firebase-messaging-sw.js` file to the root directory of the web build, in the same directory as the `index.html` file. There is no need to import it.
+:::
+</Step>
+<Step title="Contact ZEGOCLOUD Technical Support">
+Contact ZEGOCLOUD technical support for further configuration after you have completed the steps mentioned above.
 </Step>
 </Steps>
 
