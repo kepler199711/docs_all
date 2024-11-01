@@ -2,7 +2,16 @@
 articleID: 14839
 ---
 
+:::if{props.platform=undefined}
 # Integrate FCM
+:::
+:::if{props.platform="Flutter"}
+# Integrate FCM (for Web)
+:::
+
+<Note title="Note">
+This article is applicable for integrating Google FCM on Web.
+</Note>
 
 
 [Google FCM](https://firebase.google.com) (Firebase Cloud Messaging) is a cross-platform messaging solution that lets you reliably deliver messages.
@@ -85,6 +94,63 @@ Copy the firebaseConfig info.
 <Frame width="512" height="auto" caption="">
   <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Web/firebase_config.png" />
 </Frame>
+</Step>
+<Step title="Paste the firebaseConfig info">
+Paste the copied firebaseConfig info to your project, and set up the ZPNs configurations in the project.
+:::if{props.platform=undefined}
+```javascript
+var appID = 0; // Your Application ID of ZEGO ZIM
+var zim = ZIM.create({ appID: appID });
+
+var config = {
+    // From firebaseConfig
+    apiKey: '',
+    authDomain: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
+    measurementId: '',
+
+    // From Web Push certificates
+    vapidKey: '',
+}
+ZPNs.getInstance().register(config, zim);
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+ZIMAppConfig appConfig = ZIMAppConfig();
+appConfig.appID = 0;
+appConfig.appSign = "";
+
+ZIM.create(appConfig);
+
+ZPNsWebConfig config = ZPNsWebConfig();
+config.apiKey = "";
+config.authDomain = "";
+config.projectID = "";
+config.storageBucket = "";
+config.messagingSenderID = "";
+config.appID = "";
+config.measurementID = "";
+// From Key pair 
+config.vapidKey = "";
+ZPNs.getInstance().registerPush(webConfig: config);
+```
+:::
+</Step>
+<Step title="Get the firebase-messaging-sw.js file">
+Navigate to [SDK downloads](./../Client%20SDKs/SDK%20downloads.mdx) to get the latest version of the ZPNs SDK.
+:::if{props.platform=undefined}
+Copy the firebase-messaging-sw.js file from the SDK to the root directory of your project.
+:::
+:::if{props.platform="Flutter"}
+In a Flutter project, you only need to copy the `firebase-messaging-sw.js` file to the root directory of the web build, in the same directory as the `index.html` file. There is no need to import it.
+:::
+</Step>
+<Step title="Contact ZEGOCLOUD Technical Support">
+Contact ZEGOCLOUD technical support for further configuration after you have completed the steps mentioned above.
 </Step>
 </Steps>
 

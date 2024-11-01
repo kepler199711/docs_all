@@ -325,6 +325,11 @@
         },
         {
           "type": "doc",
+          "label": "Integrate FCM (for Web)",
+          "id": "offline-push-notifications/integrate-fcm-(for-web)"
+        },
+        {
+          "type": "doc",
           "label": "Integrate APNs",
           "id": "offline-push-notifications/integrate-apns"
         },
