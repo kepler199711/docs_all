@@ -398,7 +398,7 @@
             {
               "type": "doc",
               "label": "Web 推送集成指南",
-              "id": "offline-push-notifications/integrate-web"
+              "id": "offline-push-notifications/integrate-fcm-(for-web)"
             },
             {
               "type": "doc",
