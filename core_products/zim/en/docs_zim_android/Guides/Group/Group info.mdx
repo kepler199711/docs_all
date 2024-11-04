@@ -507,7 +507,7 @@ ZIM.GetInstance().UpdateGroupNotice("new_group_notice", "group_id", (string grou
 </CodeGroup>
 :::
 
-:::if{props.platform="undefined|Android|window|RN"}
+:::if{props.platform="undefined|Android|window|RN|Web"}
 ## Modify the group alias
 
 Group alias is a personalized nickname set by users for a group chat to distinguish from other group chats. For example, you can set the alias for a work group as "Work Group" and the alias for a family group as "Family Group", which makes it more convenient to identify the group chats.
@@ -576,7 +576,7 @@ zim_->updateGroupAlias(group_alias, group_id,
 ```
 </CodeGroup>
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN|Web"}
 ```javascript SampleCode
 // Modify the group alias
 try {
