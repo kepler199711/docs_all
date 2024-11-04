@@ -2,129 +2,125 @@
 articleID: 17828
 ---
 
-
-# Overview
+# 能力概述
 
 - - -
 
-ZEGOCLOUD In-app Chat (ZIM) supports content moderation for messages. Currently, there are two ways to meet your moderation needs:
+## 概述
 
-- (**Recommended**) You can enable and use the <a href="#built-in-content-moderation-capability">built-in content moderation capability</a> in ZIM. This allows you to quickly moderate text messages, image messages, voice messages, and video messages without additional development. Additionally, ZIM supports <a href="#customize-sensitive-word-lists">custom sensitive word lists</a> to customize the text message moderation.
+ZEGO 即时通讯（ZIM）支持审核消息内容。目前，您可以使用多种方式满足审核需要；
+- （**推荐**）开通并使用 ZIM <a href="#内置审核功能">内置的内容审核能力</a>，无需额外开发，即可快速实现文本消息、图片消息、语音消息以及视频消息的安全审核。此外，ZIM 还支持您 <a href="#自定义敏感词">自定义敏感词列表</a>，实现自定义**文本消息**审核。
+- 如需自行实现审核或对接第三方审核服务，您可以使用 [消息发送前回调](/zh/zim-server/callbacks/message-not-sent-yet) 实现。
 
-- If you prefer to moderate messages by yourself or integrate with a third-party content moderation service, you can use the [Callback on message not sent yet](!zim-callback_before_message_sent).
 
+## 内置审核功能
 
-## Built-in content moderation capability
+在通过 [ZEGO 控制台](https://console.zego.im/) 或者 ZEGO 技术支持开通内容审核服务之后，无需您额外配置，即可实现获取内容审核能力。ZIM 会根据您预设的审核等级返回审核结果，您只需根据该结果实现相关业务逻辑即可。
 
-After contacting ZEGOCLOUD technical support to enable the content moderation service, you can obtain the content moderation capability without additional configuration. ZIM will return the moderation results based on the preset moderation level, and you only need to implement relevant business logic based on the results.
-
-The following table provides to an introduction to content moderation capability:
+下表是目前支持的审核能力介绍：
 
 <table>
 <tbody><tr>
-<th>Message Type</th>
-<th>Moderation Method</th>
-<th>Moderation Channel</th>
-<th>Moderation Tags</th>
+<th>审核内容</th>
+<th>审核方式</th>
+<th>审核渠道</th>
+<th>审核标签</th>
 </tr>
 <tr>
-<td>Text Message</td>
-<td>Moderate before sending</td>
-<td><ul><li>One-on-one chat</li><li>Group chat</li><li>Room</li></ul></td>
-<td>Default detection of the following content: politics, terrorism, prohibition, erotic, abuse, advertisement, privacy, advertising law violations, etc. If adjustments are needed, please contact ZEGOCLOUD technical support.</td>
+<td>文本消息</td>
+<td>先审后发</td>
+<td><ul><li>单聊消息</li><li>群聊消息</li><li>房间消息</li></ul></td>
+<td>默认检测以下违禁内容：涉政、暴恐、违禁、色情、辱骂、广告、隐私、广告法等。如需调整，请联系 ZEGO 技术支持处理。</td>
 </tr>
 <tr>
-<td>Image Message</td>
-<td><ul><li>Send before moderation (default)</li><li>Moderate before sending</li></ul>
-To adjust the method, please contact ZEGOCLOUD technical support.</td>
-<td><ul><li>One-on-one chat</li><li>Group chat</li><li>Room</li></ul></td>
-<td>Default detection of the following content: politics, pornography, terrorism, QR code, advertisement, etc. Additionally, it can support identifying whether the text in the image is in violation. If adjustments are needed, please contact ZEGOCLOUD technical support.</td>
+<td>图片消息</td>
+<td><ul><li>先发后审（默认）</li><li>先审后发</li></ul>
+如需调整，请联系 ZEGO 技术支持。</td>
+<td><ul><li>单聊消息</li><li>群聊消息</li><li>房间消息</li></ul></td>
+<td>默认检测以下违禁内容：涉政、色情、暴恐、二维码、广告等，并可支持识别图片文字是否违规。如需调整，请联系 ZEGO 技术支持处理。</td>
 </tr>
 <tr>
-<td>Audio Message</td>
-<td>Moderate before sending</td>
-<td><ul><li>One-on-one chat</li><li>Group chat</li></ul></td>
-<td>Default detection of the following content: politics, pornography, terrorism, etc. Additionally, it can support identifying the following content: statesman voiceprints, advertisement, prohibition, abuse, etc. If adjustments are needed, please contact ZEGOCLOUD technical support.</td>
+<td>语音消息</td>
+<td>先发后审</td>
+<td><ul><li>单聊消息</li><li>群聊消息</li></ul></td>
+<td>默认检测以下违规内容：涉政、色情、暴恐等，并可支持识别以下违规内容：领导人声纹、广告、违禁、辱骂等。如需调整，请联系 ZEGO 技术支持处理。</td>
 </tr>
 <tr>
-<td>Video Message</td>
-<td>Moderate before sending</td>
-<td><ul><li>One-on-one chat</li><li>Group chat</li><li>Room</li></ul></td>
-<td>Video moderation includes the moderation of <strong>images</strong> and <strong>audio</strong> in the video.
-<ul><li>Images: Default detection of the following content: politics, pornography, terrorism, etc. Additionally, it can support identifying the following content: QR code, text in images, etc. If adjustments are needed, please contact ZEGOCLOUD technical support.</li>
-<li>Audio: Default detection of the following content: politics, pornography, terrorism, etc. Additionally, it can support identifying the following content: statesman voiceprints, advertisement, prohibition, abuse, etc. If adjustments are needed, please contact ZEGOCLOUD technical support.</li></ul></td>
+<td>视频消息</td>
+<td>先发后审</td>
+<td><ul><li>单聊消息</li><li>群聊消息</li><li>房间消息</li></ul></td>
+<td>视频审核分为视频中 <strong>图像</strong> 和 <strong>音频</strong> 两方面内容的审核。<ul><li>图像：默认检测以下违规内容：涉政、色情、暴恐等，并可支持识别以下违规内容：二维码、图像文字等违规内容。如需调整，请联系 ZEGO 技术支持处理。</li><li>音频：默认检测以下违规内容：涉政，色情，暴恐等，并可支持识别以下违规内容：领导人声纹、广告、违禁、辱骂等。如需调整，请联系 ZEGO 技术支持处理。</li></ul></td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-- Explanation of Moderation Methods:
-    - Moderate before sending: ZIM moderates the message before sending it. If the moderation passes, the message is sent successfully; if the moderation fails, the message fails to be sent.
-    - Send before moderation: ZIM sends the message first and then moderates it. If the moderation passes, the message is displayed normally; if the moderation fails, the message is withdrawn.
+- 审核方式说明：
+    - 先审后发：ZIM 先审核消息，再发送消息。审核通过，消息发送成功；审核不通过，消息发送失败。
+    - 先发后审：ZIM 先发送消息，再审核消息。审核通过，消息正常显示；审核不通过，消息会被撤回。
 
-- When using the content moderation service, you can configure corresponding moderation tags and thresholds based on the moderation channels. For example, in some social scenarios, stricter thresholds and tags are used for group chats, while looser thresholds and tags are used for one-on-one chats.
-- Different moderation level can be configured based on the moderation results. The moderation results are divided into "pass," "uncertain," and "fail."
-    - If you set the moderation intensity to "Weak Moderation": When the result is "uncertain," ZIM will still send the message.
-    - If you set the moderation intensity to "Strong Moderation": When the result is "uncertain," ZIM will stop sending the message.
+- 您在使用内容审核服务时，可以根据审核渠道配置对应的审核标签和尺度。例如，部分社交场景中，群聊使用相对严格的尺度和标签，单聊使用相对宽松的尺度和标签。   
+- 支持针对审核结果，配置不同的审核强度。审核结果分为“通过”，“不确定”，“不通过”三种。
+    - 如果您设置的审核强度是“弱审核”：审核结果为“不确定”时，ZIM 将依旧发送此条消息。
+    - 如果您设置的审核强度是“强审核”：审核结果为“不确定”时，ZIM 将停止发送此条消息。
 </Note>
 
-To understand the full process including enabling and using the content moderation service, please refer to the [instruction](./Instruction.mdx).
+如需了解审核服务从开通到运行的全流程，请参考 [实现流程](./Instruction.mdx)。
 
-## Customize sensitive word lists
+## 自定义敏感词
 
-If the default sensitive words used for the built-in text message moderation capability do not satisfy your demands, you can customize word lists.
+敏感词，是指在内置**文本消息**审核能力上扩展出的一种自定义审核策略。
 
-To use this feature, please provide ZEGOCLOUD technical support with custom lists of sensitive words and explain the processing strategy.
+如需使用此功能，请向 ZEGO 技术支持提供自定义的敏感词名单并说明处理策略。
 
-After the configuration is completed by ZEGOCLOUD technical support, ZIM will process the content in user messages that matches the list. Currently, ZIM provides three processing strategies:
+在 ZEGO 技术支持完成配置后，ZIM 会对用户消息中命中名单的内容进行处理。目前 ZIM 提供三种处理策略：
 
 <table>
-
 <tbody><tr>
-<th rowspan="2">Processing Strategy</th>
-<th rowspan="2">Description</th>
-<th colspan="3">Examples</th>
+<th rowspan="2">处理策略</th>
+<th rowspan="2">说明</th>
+<th colspan="3">举例</th>
 </tr>
 <tr>
-<th>Sensitive Words</th>
-<th>Original Text</th>
-<th>Result</th>
+<th>敏感词</th>
+<th>原文本</th>
+<th>发送结果</th>
 </tr>
 <tr>
-<td>Block Sensitive Words</td>
-<td>If a message contains sensitive words, the message will be blocked and the sending will fail.</td>
-<td>Hello</td>
-<td>Hello, welcome.</td>
-<td>Send failed.</td>
+<td>拦截敏感词</td>
+<td>只要消息包含了敏感词，该消息将被直接拦截，导致消息发送失败。</td>
+<td>您好</td>
+<td>您好，欢迎您。</td>
+<td>发送失败。</td>
 </tr>
 <tr>
-<td>Replace Sensitive Words</td>
-<td>If a message contains sensitive words, ZIM will replace the sensitive words with other content and send the message. The receiving user will see the replaced content.</td>
-<td>Hello</td>
-<td>Hello, welcome.</td>
-<td>**, welcome.</td>
+<td>替换敏感词</td>
+<td>如果消息包含了敏感词，ZIM 将用其他内容替换该敏感词，并发送该消息。消息接收端用户将看到替换后内容。</td>
+<td>您好</td>
+<td>您好，欢迎您。</td>
+<td>**，欢迎您</td>
 </tr>
 <tr>
-<td>Send Original Text</td>
-<td>Even if a message contains sensitive words, ZIM will still send the message.</td>
-<td>Hello</td>
-<td>Hello, welcome.</td>
-<td>Hello, welcome.</td>
+<td>发送原文文本</td>
+<td>即便消息包含了敏感词，ZIM 仍继续发送该消息。</td>
+<td>您好</td>
+<td>您好，欢迎您。</td>
+<td>您好，欢迎您。</td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-When providing lists of sensitive words, please follow these practices:
-- The list files should be in Excel format.
-- Classify the sensitive words according to the processing strategy, and then place them in separate list files.
-    - A sensitive word can only appear in one list file, which means only one processing strategy can be configured.
-    - If a sensitive word is configured with multiple strategies, ZIM will prioritize the processing of the word according to the following order: block > replace > send original text.
-- If the sensitive words contain vocabulary from different languages, please classify them according to the language and place them in separate list files.
+在提供敏感词名单时，请遵循以下做法：
+- 名单文件需为 Excel 格式。
+- 将敏感词按照处理策略分类，随后分别放置在独立的名单文件中。
+    - 一个敏感词只能出现在一个名单文件中，即只能配置一个处理策略。
+    - 如果一个敏感词被配置了多种策略，ZIM 将按照以下优先级对该词进行处理：拦截 > 敏感词替换 > 原文发送。
+- 如果敏感词中包含不同语种的词汇，请将他们按照语种分类，随后放置在独立的名单文件中。
 
-For example, if your custom sensitive words include both Chinese and English languages, and you need to use all the 3 processing strategies, you need to provide ZEGOCLOUD technical support with 6 sensitive word list files in Excel. 3 files should only contain Chinese vocabulary (file names: project_name_block_zh, project_name_replace_zh, project_name_send_zh), and the other 3 files should only contain English vocabulary (file names: project_name_block_en, project_name_replace_en, project_name_send_en).
+例如，您自定义的敏感词包含中英文两种语言，且都需要对它们使用3 种处理策略，则您需要向 ZEGO 技术支持提供 6 份敏感词名单 Excel 文件，其中 3 份仅包含中文词汇（文件命名为：项目名称_拦截_zh、项目名称_替换_zh、项目名称_发送_zh），另外 3 份仅包含英文词汇（文件命名为：项目名称_拦截_en、项目名称_替换_en、项目名称_发送_en）。
 </Note>
 
-## Pricing
+## 审核功能计费
 
-Please contact ZEGOCLOUD business personnel for pricing details.
+内容审核服务为付费服务，开发环境可免费体验 7 天，生产环境下需要按照实际用量进行付费。如需进一步了解审核服务收费细节，请参考 [计费说明](./../../Introduction/Billing%20instructions.mdx)。
