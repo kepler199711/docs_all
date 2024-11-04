@@ -226,7 +226,7 @@ zim_->createRoom(room_info, [=](ZIMRoomFullInfo room_info, zim::ZIMError error_i
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomInfo = { roomID: '', roomName: '' };
 zim.createRoom(roomInfo)
@@ -299,7 +299,7 @@ zim_->joinRoom(roomId, [=](ZIMRoomFullInfo room_info, zim::ZIMError error_info) 
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomID = '';
 zim.joinRoom(roomID)
@@ -364,7 +364,7 @@ void onRoomMemberJoined(ZIM* zim, const std::vector<ZIMUserInfo>& member_list, c
 }
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 // Callback for receiving event notification when new room members join the room. And it also returns the information of the user who just joined the room. 
 zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
@@ -470,7 +470,7 @@ zim_->enterRoom(room_info, config, [=](ZIMRoomFullInfo room_info, zim::ZIMError 
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomInfo = { roomID: '', roomName: '' };
 zim.enterRoom(roomInfo)
@@ -487,7 +487,7 @@ zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
 });
 ```
 :::
-:::if{props.platform="ios|undefined|RN|window"}
+:::if{props.platform="ios|undefined|RN|window|Web"}
 ## Switch Rooms
 
 If a user wants to switch from one room to another, the user can call the {getPlatformData(props,switchRoomMap)} method, passing in the ID of the original room (`fromRoomID`) and the information of the target room (`toRoomInfo`), which includes the room ID and room name. This will allow the user to switch rooms.
@@ -605,7 +605,7 @@ zim->switchRoom(
     });
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 const fromRoomID = 'fromRoomID';
 const toRoomInfo = { roomID: 'toRoomID', roomName: 'toRoomName' };
@@ -732,7 +732,7 @@ void onRoomMemberLeft(ZIM* zim, const std::vector<ZIMUserInfo>& member_list, con
 ```
 
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomID = '';
 zim.leaveRoom(roomID)
@@ -819,7 +819,7 @@ zim->leaveAllRoom([](const std::vector<std::string>& roomIDList, const ZIMError&
 }];
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```js
 var roomIDs = [];
 zim.leaveAllRoom(roomIDs)
