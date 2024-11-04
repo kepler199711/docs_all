@@ -98,23 +98,83 @@ config.bottomConfig.expandButtons.append(.voiceCall)
 
 </Accordion>
 
-<Accordion title="Customize long-press message operations" defaultOpen="false">
+<Accordion title="Modify the message action menu" defaultOpen="false">
 
-To customize what happens after a message is long pressed, you can configure it using 'ZIMKitMessageConfig' :
-
-The system includes text messages, picture messages, video messages, file messages, voice messages, and merge and forward messages
+Upon long-pressing a message, a message action menu is displayed, offering options such as copying, replying, and forwarding the message, along with other actions. To modify this menu, you can use the `ZIMKitMessageConfig`. This configuration allows for the customization of the action menu for different message types (text, image, video, voice, and combined message):
 
 Here is the reference code:
 
 ```swift
 let config = ZIMKitConfig()
-config.messageConfig.textMessageConfig.operations = [.copy, .reply, .forward, .multipleChoice, .delete, .revoke, .reaction] 
+
+// Text message
+config.messageConfig.textMessageConfig.operations = [
+    .copy,               
+    .reply,              
+    .forward,            
+    .multipleChoice,    
+    .delete,             
+    .revoke,             
+    .reaction            
+] 
+
+// Image message
+config.messageConfig.imageMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// Video message
+config.messageConfig.videoMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// File message
+config.messageConfig.fileMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// Audio message 
+config.messageConfig.audioMessageConfig.operations = [
+    .speaker,          
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// Combined message
+config.messageConfig.combineMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
 ```
 
 </Accordion>
 
-<Accordion title="Custom text input box default text" defaultOpen="false">
-To customize the default prompt text for the bottom input box, you can configure it using 'inputPlaceholder'
+<Accordion title="Modify the default input box text" defaultOpen="false">
+
+To change the default prompt text for the bottom input box, you can configure it using 'inputPlaceholder'
 
 Here is the reference code:
 ```swift

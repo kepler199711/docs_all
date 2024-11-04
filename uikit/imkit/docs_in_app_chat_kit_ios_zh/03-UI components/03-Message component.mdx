@@ -98,21 +98,84 @@ config.bottomConfig.expandButtons.append(.voiceCall)
 </Accordion>
 
 
-<Accordion title="自定义长按消息操作" defaultOpen="false">
+<Accordion title="修改消息操作菜单" defaultOpen="false">
 
-要自定义消息长按之后的操作，您可以使用 `ZIMKitMessageConfig` 进行配置：
-包括文字消息、图片消息、视频消息、文件消息、语音消息、合并转发消息
+长按一条消息后，界面会显示一个消息操作菜单，提供复制、回复、转发消息以及其他操作的选项。如需修改此菜单，可以使用`ZIMKitMessageConfig`。该配置允许自定义不同消息类型（文本、图片、视频、文件、语音和组合消息）的操作菜单：
+
 以下是参考代码：
 
 ```swift
 let config = ZIMKitConfig()
-config.messageConfig.textMessageConfig.operations = [.copy, .reply, .forward, .multipleChoice, .delete, .revoke, .reaction] 
+
+// 文本消息
+config.messageConfig.textMessageConfig.operations = [
+    .copy,               // 复制
+    .reply,              // 回复
+    .forward,            // 转发
+    .multipleChoice,     // 多选 
+    .delete,             // 删除
+    .revoke,             // 撤回
+    .reaction            // 表态
+] 
+
+// 图片消息 
+config.messageConfig.imageMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// 视频消息 
+config.messageConfig.videoMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// 文件消息 
+config.messageConfig.fileMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// 语音消息 
+config.messageConfig.audioMessageConfig.operations = [
+    .speaker,           // 使用扬声器播放
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
+
+// 合并转发消息
+config.messageConfig.combineMessageConfig.operations = [
+    .reply, 
+    .forward, 
+    .multipleChoice, 
+    .delete, 
+    .reaction, 
+    .revoke
+]
 ```
 
 </Accordion>
 
-<Accordion title="自定义文本输入框默认文字" defaultOpen="false">
-要自定义底部输入框的默认提示文字，您可以使用 `inputPlaceholder` 进行配置
+<Accordion title="修改输入框默认文本" defaultOpen="false">
+
+如需修改底部输入框的默认提示文字，您可以使用 `inputPlaceholder`。
+
 以下是参考代码:
 ```swift
 let config = ZIMKitConfig()
@@ -121,28 +184,28 @@ config.inputPlaceholder =  NSAttributedString(string: "请输入", attributes: [
 ```
 </Accordion>
 
-<Accordion title="自定义顶部导航栏" defaultOpen="false">
-要自定义回话页面的导航栏，您可以通过 `ZIMKitMessagesListVCDelegate` 进行配置
+<Accordion title="自定义会话顶部导航栏" defaultOpen="false">
+
+如需自定义会话页面的顶部导航栏，您可以通过 `ZIMKitMessagesListVCDelegate` 进行配置
 以下是参考代码:
 ```swift
- 
-    func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
-        var header: ZIMKitHeaderBar = ZIMKitHeaderBar()
-        header.titleView = UIView()
-        let button:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
+func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
+    var header: ZIMKitHeaderBar = ZIMKitHeaderBar()
+    header.titleView = UIView()
+    let button:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
 
-        header.leftItems: [UIBarButtonItem] = [button]
-        header.rightItems: [UIBarButtonItem] = [button]
-        return header
-    }
-    
-    func getMessageListHeaderCustomerview(_ messageListVC: ZIMKitMessagesListVC) -> UIView?
-        let view = UIView().withoutAutoresizingMaskConstraints
-        let button = UIButton(type: .contactAdd)
-        button.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
-        button.addTarget(self, action: #selector(customerButtonClick(_:)), for: .touchUpInside)
-        view.addSubview(button)
-    return view
+    header.leftItems: [UIBarButtonItem] = [button]
+    header.rightItems: [UIBarButtonItem] = [button]
+    return header
+}
+
+func getMessageListHeaderCustomerview(_ messageListVC: ZIMKitMessagesListVC) -> UIView?
+    let view = UIView().withoutAutoresizingMaskConstraints
+    let button = UIButton(type: .contactAdd)
+    button.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
+    button.addTarget(self, action: #selector(customerButtonClick(_:)), for: .touchUpInside)
+    view.addSubview(button)
+return view
 ``` 
 </Accordion>
 
