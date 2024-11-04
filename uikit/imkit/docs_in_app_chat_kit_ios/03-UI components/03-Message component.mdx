@@ -102,6 +102,10 @@ config.bottomConfig.expandButtons.append(.voiceCall)
 
 Upon long-pressing a message, a message action menu is displayed, offering options such as copying, replying, and forwarding the message, along with other actions. To modify this menu, you can use the `ZIMKitMessageConfig`. This configuration allows for the customization of the action menu for different message types (text, image, video, voice, and combined message):
 
+<Frame width="40%" height="auto">
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/961b3dc8ed.jpeg" alt="MessageActionMenu_1.jpeg"/>
+</Frame>
+
 Here is the reference code:
 
 ```swift
@@ -179,7 +183,7 @@ To change the default prompt text for the bottom input box, you can configure it
 Here is the reference code:
 ```swift
 let config = ZIMKitConfig()
-config.inputPlaceholder =  NSAttributedString(string: "请输入", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, 
+config.inputPlaceholder =  NSAttributedString(string: "Enter", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, 
                                                                             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)])
 ```
 </Accordion>
