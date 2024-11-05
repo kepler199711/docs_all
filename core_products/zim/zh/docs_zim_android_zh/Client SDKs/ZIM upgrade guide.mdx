@@ -1,47 +1,152 @@
 ---
-articleID: 17558
+articleID: 20615
 ---
-# ZIM upgrade Guide
+
+# ZIM 升级指南
 
 - - -
 
-import {getPlatformData} from "/snippets/utils-content-parser.js"
+本文介绍 ZIM Android 平台 SDK 版本升级时的一些说明和注意事项。
 
-export const platformMap = {
-  'Android': 'Android',
-  'window': 'Windows',
-  'Web': 'Web/Mini Program',
-  'RN': 'React Native'
-}
-
-
-This article provides some instructions and considerations for upgrading the ZIM {getPlatformData(props,platformMap)} platform SDK version.
-
-## 2.16.0 Upgrade Guide
+## 2.18.0 升级指南
 
 <Warning title="Warning">
 
-Starting from version 2.16.0, there are significant changes to the following interfaces. Therefore, when upgrading from an older version to version 2.16.0, please read the following guide.
+从 2.18.0 版本开始，以下接口有重大变更，因此在从旧版本升级到 2.18.0 版本时，请您阅读以下指南。
+</Warning>
+
+### 单聊消息接收回调
+
+原单聊消息接收回调 `onReceivePeerMessage` 已被废弃，请使用 [onPeerMessageReceived](@onPeerMessageReceived) 代替。
+
+新回调支持以下功能：
+- 用户在线时，可通过此回调接收在线单聊消息。
+- 用户重新登录 ZIM SDK 后，可以通过此回调接收离线期间（最长7天）收到的所有单聊消息。
+
+:::if{props.platform=undefined}
+```java
+//新接口
+public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    ZIMMessageReceivedInfo info, String fromUserID) {}
+
+//老接口
+public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    String fromUserID) {}
+```
+:::
+
+:::if{props.platform="window"}
+```cpp
+//新接口
+virtual void 
+onPeerMessageReceived(ZIM * /*zim*/, 
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const ZIMMessageReceivedInfo & /*info*/, 
+                        const std::string & /*fromUserID*/) {}
+
+//老接口
+virtual void
+onReceivePeerMessage(ZIM * /*zim*/,
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const std::string & /*fromUserID*/) {}
+```
+:::
+
+
+### 房间消息接收回调
+
+原房间消息接收回调 `onReceiveRoomMessage` 已被废弃，请使用 [onRoomMessageReceived](@onRoomMessageReceived) 代替。
+
+新回调支持以下功能：
+- 用户在线时，可通过此回调接收在线房间消息。
+- 用户从离线恢复到在线后，若仍在房间中，即可通过此回调接收离线期间内的所有房间消息。
+
+:::if{props.platform=undefined}
+```java
+//新接口
+public void onRoomMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    ZIMMessageReceivedInfo info, String fromRoomID) {}
+
+//老接口
+public void onReceiveRoomMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    String fromRoomID) {}
+```
+:::
+:::if{props.platform="window"}
+```cpp
+//新接口
+virtual void 
+onRoomMessageReceived(ZIM * /*zim*/, 
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const ZIMMessageReceivedInfo & /*info*/, 
+                        const std::string & /*fromRoomID*/) {}
+
+//老接口
+virtual void
+onReceiveRoomMessage(ZIM * /*zim*/,
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const std::string & /*fromRoomID*/) {}
+```
+:::
+
+### 群组消息接收回调
+
+原群组消息接收回调 `onReceiveGroupMessage` 已被废弃，请使用 [onGroupMessageReceived](@onGroupMessageReceived) 代替。
+ 
+新回调支持以下功能：
+- 用户在线时，可通过此回调接收在线群组消息。
+- 用户重新登录 ZIM SDK 后，可以通过通过此回调接收离线期间（最长7天）收到的所有群聊消息。
+
+:::if{props.platform=undefined}
+```java
+//新接口
+public void onGroupMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    ZIMMessageReceivedInfo info, String fromGroupID) {}
+
+//老接口
+public void onReceiveGroupMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    String fromGroupID) {}
+```
+:::
+:::if{props.platform="window"}
+```cpp
+//新接口
+virtual void onGroupMessageReceived(ZIM * /*zim*/, 
+                                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                                        const ZIMMessageReceivedInfo & /*info*/, 
+                                        const std::string & /*fromGroupID*/) {}
+    
+//老接口
+virtual void onReceiveGroupMessage(ZIM * /*zim*/, 
+                                    const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/, 
+                                    const std::string & /*fromGroupID*/) {}
+```
+:::
+
+## 2.16.0 升级指南
+
+<Warning title="Warning">
+
+从 2.16.0 版本开始，以下接口有重大变更，因此在从旧版本升级到 2.16.0 版本时，请您阅读以下指南。
 </Warning>
 
 #### callCancel
 
 <Note title="Note">
 
-The following changes only apply to **advanced mode** call invitations.
+以下变更仅对**进阶模式**呼叫邀请而言。
 </Note>
 
-In the new version of [callCancel](@callCancel), if the parameter userIDs contains a userID, this interface will only cancel the invitation for that callee. If the userIDs parameter is empty, this interface will cancel the invitation for all callees.
+在新版本的 [callCancel](@callCancel) 中，如果参数 userIDs 包含一个 userID，则该接口将仅取消邀请该被叫用户。如果 userIDs 参数为空，则该接口将对所有被叫用户取消邀请。
 
-For the old version of the `callCancel` interface, regardless of whether the userIDs parameter is empty or not, it is considered as canceling the invitation for all callees.
+而对于旧版本的 `callCancel` 接口，无论参数 userIDs 是否为空，均视为对所有被叫用户取消邀请。
 
-Since the old version of the ZIM SDK is not compatible with separate cancellation logic, if you need to retain the cancellation logic implemented using the old version of ZIM and also need to use the separate cancellation feature of the new version, please isolate the call functionality between the old and new versions of ZIM.
-
+由于旧版 ZIM SDK 不兼容单独取消逻辑，因此如果您既需要保留使用老版本 ZIM 实现的取消逻辑，又需要使用新版本的单独取消功能，请隔离新老版本 ZIM 之间的呼叫功能。
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Usage in 2.16.0 version"
-// Cancel userIdA and userIdB separately
+```java 2.16.0版本用法
+// 单独取消 userIdA 、userIdB
 List<String> invitees = new ArrayList<>();
 invitees.add("userIdA");
 invitees.add("userIdB");
@@ -53,7 +158,7 @@ ZIM.getInstance().callCancel(invitees, "callID", cancelConfig, new ZIMCallCancel
     }
 });;
 
-// Cancel the entire call invitation, can be called successfully when none of the callees in the entire call have accepted    
+// 取消整个呼叫邀请,当整个呼叫中所有被叫都未接受时可以调用成功    
 List<String> invitees = new ArrayList<>();
 ZIMCallCancelConfig cancelConfig = new ZIMCallCancelConfig();
 ZIM.getInstance().callCancel(invitees, "callID", cancelConfig, new ZIMCallCancelSentCallback() {
@@ -63,8 +168,9 @@ ZIM.getInstance().callCancel(invitees, "callID", cancelConfig, new ZIMCallCancel
     }
 });
 ```
-```java title="Usage in old versions"
-// Regardless of whether the userID is passed in the userIDs, it is considered as canceling the entire call, can be called successfully when none of the callees in the entire call have accepted
+
+```java 旧版本用法
+// 无论 userIDs 中是否传递 userID,均为取消整个呼叫，当整个呼叫中所有被叫都未接受时可以调用成功
 List<String> invitees = new ArrayList<>();
 invitees.add("userIdA");
 invitees.add("userIdB");
@@ -76,7 +182,7 @@ ZIM.getInstance().callCancel(invitees, "callID", cancelConfig, new ZIMCallCancel
     }
 });;
 
-// Cancel the entire call invitation, can be called successfully when none of the callees in the entire call have accepted    
+// 取消整个呼叫邀请,当整个呼叫中所有被叫都未接受时可以调用成功    
 List<String> invitees = new ArrayList<>();
 ZIMCallCancelConfig cancelConfig = new ZIMCallCancelConfig();
 ZIM.getInstance().callCancel(invitees, "callID", cancelConfig, new ZIMCallCancelSentCallback() {
@@ -87,13 +193,11 @@ ZIM.getInstance().callCancel(invitees, "callID", cancelConfig, new ZIMCallCancel
 });
 ```
 </CodeGroup>
-
 :::
-
 :::if{props.platform="window"}
 <CodeGroup>
-```c title="Usage in version 2.16.0"++
-// Cancel userIdA and userIdB separately
+```cpp 2.16.0版本用法
+// 单独取消 userIdA 、userIdB
 std::vector<std::string> invitees;
 invitees.emplace_back("userIdA");
 invitees.emplace_back("userIdB");
@@ -102,15 +206,15 @@ zim->callCancel(invitees, "callID", config, [=](const std::string& callID, const
     const ZIMError& errorInfo) {
 });
 
-// Cancel the entire call invitation, can be called successfully when none of the callees in the call have accepted
+// 取消整个呼叫邀请,当整个呼叫中所有被叫都未接受时可以调用成功    
 std::vector<std::string> invitees;
 ZIMCallCancelConfig config;
 zim->callCancel(invitees, "callID", config, [=](const std::string& callID, const std::vector<std::string>& errorInvitees,
     const ZIMError& errorInfo) {
 });
 ```
-```c title="Usage in old versions"++
-// Regardless of whether the userID is passed in the userIDs, it is considered as canceling the entire call, can be called successfully when none of the callees in the call have accepted
+```cpp 旧版本用法
+// 无论 userIDs 中是否传递 userID,均为取消整个呼叫，当整个呼叫中所有被叫都未接受时可以调用成功
 std::vector<std::string> invitees;
 invitees.emplace_back("userIdA");
 invitees.emplace_back("userIdB");
@@ -119,7 +223,7 @@ zim->callCancel(invitees, "callID", config, [=](const std::string& callID, const
     const ZIMError& errorInfo) {
 });
 
-// Cancel the entire call invitation, can be called successfully when none of the callees in the call have accepted
+// 取消整个呼叫邀请,当整个呼叫中所有被叫都未接受时可以调用成功    
 std::vector<std::string> invitees;
 ZIMCallCancelConfig config;
 zim->callCancel(invitees, "callID", config, [=](const std::string& callID, const std::vector<std::string>& errorInvitees,
@@ -127,118 +231,4 @@ zim->callCancel(invitees, "callID", config, [=](const std::string& callID, const
 });
 ```
 </CodeGroup>
-
 :::
-
-:::if{props.platform="Web"}
-<CodeGroup>
-```javascript title="Usage in version 2.16.0"
-// Cancel userIdA and userIdB separately
-var callID = 'xxxx';
-var invitees = ['userIdA','userIdB'];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-
-// Cancel the entire call invitation, can be called successfully when none of the callees in the call have accepted    
-var callID = 'xxxx';
-var invitees = [];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-```
-```javascript title="Usage in old versions"
-// Regardless of whether userID is passed in userIDs, it is considered as canceling the entire call, can be called successfully when none of the callees in the call have accepted
-var callID = 'xxxx';
-var invitees = ['userIdA','userIdB'];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-
-// Cancel the entire call invitation, can be called successfully when none of the callees in the call have accepted    
-var callID = 'xxxx';
-var invitees = [];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-```
-</CodeGroup>
-
-:::
-
-:::if{props.platform="RN"}
-<CodeGroup>
-```javascript title="Usage in version 2.16.0"
-// Cancel userIdA and userIdB separately
-var callID = 'xxxx';
-var invitees = ['userIdA','userIdB'];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-
-// Cancel the entire call invitation, can be called successfully when none of the callees in the call have accepted    
-var callID = 'xxxx';
-var invitees = [];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-```
-```javascript title="Usage in old versions"
-// Regardless of whether userID is passed in userIDs, it is considered as canceling the entire call, can be called successfully when none of the callees in the call have accepted
-var callID = 'xxxx';
-var invitees = ['userIdA','userIdB'];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-
-// Cancel the entire call invitation, can be called successfully when none of the callees in the call have accepted    
-var callID = 'xxxx';
-var invitees = [];  // List of invitees' IDs
-var config = { extendedData: 'xxxx' }; 
-zim.callCancel(invitees, callID, config)
-    .then(res => {
-          // Operation successful
-    })
-    .catch(err => {
-        // Operation failed
-    })
-```
-</CodeGroup>
-
-:::
-
