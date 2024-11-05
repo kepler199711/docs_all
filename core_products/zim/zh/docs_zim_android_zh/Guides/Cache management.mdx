@@ -1,5 +1,5 @@
 ---
-articleID: 17415
+articleID: 19423
 ---
 
 import { getPlatformData } from '/snippets/utils-content-parser.js';
@@ -34,61 +34,47 @@ export const ZIMFileCacheClearedCallbackMap = {
   'iOS,window': <a href='@ZIMFileCacheClearedCallback' target='_blank'>ZIMFileCacheClearedCallback</a>,
 }
 
-# Cache management
+
+# 缓存管理
 
 - - -
 
-## Function overview
+## 功能简介
 
-With the ZIM SDK, you can query the local cache file size of the currently logged-in user and clear the local cache.
+凭借 ZIM SDK，您可以查询当前登录用户的本地缓存文件大小，并清理本地缓存。
 
 
-## Query cache
+## 查询缓存
 
-After creating a ZIM object and logging in, you can invoke the {getPlatformData(props,queryLocalFileCacheMap)} interface and pass {getPlatformData(props,ZIMFileCacheQueryConfigMap)} to query the size of the cache for the current user locally.
+创建 ZIM 对象并登录后，调用 {getPlatformData(props,queryLocalFileCacheMap)} 接口，传入 {getPlatformData(props,ZIMFileCacheQueryConfigMap)}
+查询结果将通过 {getPlatformData(props,ZIMFileCacheQueriedCallbackMap)} 回调接口返回。
 
-The query result will be returned through the callback interface {getPlatformData(props,ZIMFileCacheQueriedCallbackMap)}.
 
 :::if{props.platform=undefined}
 ```java
 ZIMFileCacheQueryConfig config = new ZIMFileCacheQueryConfig ();
-config.endTime = 0; // Query the cache size of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to get the full cache size of the current user.
+config.endTime = 0; // 查询当前用户在这个时间戳（UNIX）之前的缓存大小。
+                    // 填 0 或晚于当前时间的值，将获取当前用户的完整缓存大小。
 zim.queryLocalFileCache(config,  new ZIMFileCacheQueriedCallback() {
     @Override
     public void onFileCacheQueried(ZIMFileCacheInfo fileCacheInfo, ZIMError errorInfo) {
         if(errorInfo.code == ZIMErrorCode.SUCCESS) {
-          // Query results
+          // 查询缓存结果
         } else {
           // ......
         }      
     }
 });
 ```
-
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 ZIMFileCacheQueryConfig *config = [[ZIMFileCacheQueryConfig alloc] init];
-config.endTime = 0; // Query the cache size of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to get the full cache size of the current user.
+config.endTime = 0; // 查询当前用户在这个时间戳（UNIX）之前的缓存大小。
+                    // 填 0 或晚于当前时间的值，将获取当前用户的完整缓存大小。
 [self.zim queryLocalFileCacheWithConfig:config callback:^(ZIMFileCacheInfo *fileCacheInfo, ZIMError *errorInfo) {
     if(errorInfo.code == ZIMErrorCodeSuccess) {
-          // Query results
-    } else {
-      // ......
-    }
-}];
-```
-:::
-:::if{props.platform="mac"}
-```objc
-ZIMFileCacheQueryConfig *config = [[ZIMFileCacheQueryConfig alloc] init];
-config.endTime = 0; // Query the cache size of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to get the full cache size of the current user.
-[self.zim queryLocalFileCacheWithConfig:config callback:^(ZIMFileCacheInfo *fileCacheInfo, ZIMError *errorInfo) {
-    if(errorInfo.code == ZIMErrorCodeSuccess) {
-          // Query results
+          // 查询结果
     } else {
       // ......
     }
@@ -98,10 +84,10 @@ config.endTime = 0; // Query the cache size of the current user before this time
 :::if{props.platform="window"}
 ```cpp
 zim::ZIMFileCacheQueryConfig config;
-config.endTime = 0; // Query the cache size of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to get the full cache size of the current user.
+config.endTime = 0; // 查询当前用户在这个时间戳（UNIX）之前的缓存大小。
+                    // 填 0 或晚于当前时间的值，将获取当前用户的完整缓存大小。
 zim::ZIM::getInstance()->queryLocalFileCache(config, [=](const zim::ZIMFileCacheInfo& fileCacheInfo, const zim::ZIMError& errorInfo) {
-    // Query results
+    // 查询结果
 });
 ```
 :::
@@ -109,10 +95,10 @@ zim::ZIM::getInstance()->queryLocalFileCache(config, [=](const zim::ZIMFileCache
 ```dart
 try{
     ZIMFileCacheQueryConfig config = ZIMFileCacheQueryConfig();
-    config.endTime = 0; // Query the cache size of the current user before this timestamp (UNIX).
-                        // Fill in 0 or a value later than the current time to get the complete cache size of the current user.
+    config.endTime = 0; // 查询当前用户在这个时间戳（UNIX）之前的缓存大小。
+                        // 填 0 或晚于当前时间的值，将获取当前用户的完整缓存大小。
     ZIMFileCacheQueriedResult result = await ZIM.getInstance()!.queryLocalFileCache(config);
-    // Query cache result
+    // 查询缓存结果
 } on PlatformException catch (onError) {
     onError.code;
     onError.message;
@@ -122,70 +108,53 @@ try{
 :::if{props.platform="RN"}
 ```javascript
 var config = {
-    endTime: 0 // Query the cache size for the current user before this timestamp (UNIX). Fill in 0 or a value later than the current time to get the complete cache size for the current user.
+    endTime: 0 // 查询当前用户在这个时间戳（UNIX）之前的缓存大小。填 0 或晚于当前时间的值，将获取当前用户的完整缓存大小。
 };
 
 zim.queryLocalFileCache(config)
     .then(function ({ totalFileSize }) {
-        // Operation succeeded
+        // 操作成功
     })
     .catch(function (err) {
-        // Operation failed
+        // 操作失败
     });
 ```
 :::
 
-## Clear cache
+## 清除缓存
 
-After creating a ZIM object and logging in, you can invoke the {getPlatformData(props,clearLocalFileCacheMap)} interface and pass {getPlatformData(props,ZIMFileCacheClearConfigMap)} to clear the cache for the current user locally.
+创建 ZIM 对象并登录后，调用 {getPlatformData(props,clearLocalFileCacheMap)} 接口，传入 {getPlatformData(props,ZIMFileCacheClearConfigMap)} ，即可清理当前用户在本地的缓存。
+
+:::if{props.platform="undefined|iOS|window|Flutter"}
+清理结果将通过 {getPlatformData(props,ZIMFileCacheClearedCallbackMap)} 回调接口返回。
+:::
 
 
 :::if{props.platform=undefined}
-The clearing result will be returned through the callback interface {getPlatformData(props,ZIMFileCacheClearedCallbackMap)}.
-
 ```java
 ZIMFileCacheClearConfig config = new ZIMFileCacheClearConfig ();
-config.endTime = 0; // Clear the cache of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to clear the complete cache of the current user.
+config.endTime = 0; // 清理当前用户在这个时间戳（UNIX）之前的缓存大小。
+                    // 填 0 或晚于当前时间的值，将清除当前用户的完整缓存大小。
 zim.clearLocalFileCache(config,  new ZIMFileCacheClearedCallback() {
     @Override
     public void onFileCacheCleared(ZIMError errorInfo) {
         if(errorInfo.code == ZIMErrorCode.SUCCESS) {
-          // Get the result of clearing the cache.
+          // 清理缓存结果
         } else {
           // ......
         }      
     }
 });
 ```
-
 :::
-:::if{props.platform="iOS"}
-The clearing result will be returned through the callback interface {getPlatformData(props,ZIMFileCacheClearedCallbackMap)}.
-
+:::if{props.platform="iOS|mac"}
 ```objc
 ZIMFileCacheClearConfig *config = [[ZIMFileCacheClearConfig alloc] init];
-config.endTime = 0; // Clear the cache of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to clear the complete cache of the current user.
+config.endTime = 0; // 清理当前用户在这个时间戳（UNIX）之前的的缓存
+                    // 填 0 或晚于当前时间的值，将清除当前用户的完整缓存。
 [self.zim clearLocalFileCacheWithConfig:config callback:^(ZIMError *errorInfo) {
     if(errorInfo.code == ZIMErrorCodeSuccess) {
-           // Get the result of clearing the cache.
-    } else {
-      // ......
-    }
-}];
-```
-:::
-:::if{props.platform="mac"}
-The clearing result will be returned through the callback interface {getPlatformData(props,ZIMFileCacheClearedCallbackMap)}.
-
-```objc
-ZIMFileCacheClearConfig *config = [[ZIMFileCacheClearConfig alloc] init];
-config.endTime = 0; // Clear the cache of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to clear the complete cache of the current user.
-[self.zim clearLocalFileCacheWithConfig:config callback:^(ZIMError *errorInfo) {
-    if(errorInfo.code == ZIMErrorCodeSuccess) {
-           // Get the result of clearing the cache.
+           // 获得清除缓存结果
     } else {
       // ......
     }
@@ -193,42 +162,40 @@ config.endTime = 0; // Clear the cache of the current user before this timestamp
 ```
 :::
 :::if{props.platform="window"}
-The clearing result will be returned through the callback interface {getPlatformData(props,ZIMFileCacheClearedCallbackMap)}.
-
 ```cpp
 zim::ZIMFileCacheClearConfig config;
-config.endTime = 0; // Clear the cache of the current user before this timestamp (UNIX).
-                    // Fill in 0 or a value later than the current time to clear the complete cache of the current user.
+config.endTime = 0; // 清理当前用户在这个时间戳（UNIX）之前的的缓存
+                    // 填 0 或晚于当前时间的值，将清除当前用户的完整缓存。
 zim::ZIM::getInstance()->clearLocalFileCache(config, [=](const zim::ZIMError& errorInfo) {
-    // Get the result of clearing the cache.
-});
+    // 获得清除缓存结果
+    });
 ```
 :::
 :::if{props.platform="Flutter"}
 ```dart
 try{
     ZIMFileCacheClearConfig config = ZIMFileCacheClearConfig();
-    config.endTime = 0; // Clear the cache size before this timestamp (UNIX) for the current user.
-                        // Fill in 0 or a value later than the current time to clear the complete cache for the current user.
+    config.endTime = 0; // 清除当前用户在这个时间戳（UNIX）之前的缓存大小。
+                        // 填 0 或晚于当前时间的值，将清除当前用户的完整缓存。
     await ZIM.getInstance()!.clearLocalFileCache(config);
 } on PlatformException catch (onError) {
     onError.code;
     onError.message;
-}
+  }
 ```
 :::
 :::if{props.platform="RN"}
 ```javascript
 var config = {
-    endTime: 0 // Clear the cache size for the current user before this timestamp (UNIX). Fill in 0 or a value later than the current time to clear the complete cache size for the current user.
+    endTime: 0 // 清理当前用户在这个时间戳（UNIX）之前的缓存大小。填 0 或晚于当前时间的值，将清除当前用户的完整缓存大小。
 };
 
 zim.clearLocalFileCache(config)
     .then(function () {
-        // Operation succeeded
+        // 操作成功
     })
     .catch(function (err) {
-        // Operation failed
+        // 操作失败
     });
 ```
 :::
