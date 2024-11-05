@@ -192,18 +192,12 @@ config.inputPlaceholder =  NSAttributedString(string: "Enter", attributes: [NSAt
 Navigation bar to customize the answer page, you can use ` ZIMKitMessagesListVCDelegate ` configured
 
 Here is the reference code:
+Registered delegate of ZIMKitMessagesListVCDelegate
 ```swift
- 
-    func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
-        var header: ZIMKitHeaderBar = ZIMKitHeaderBar()
-        header.titleView = UIView()
-        let button:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
-
-        header.leftItems: [UIBarButtonItem] = [button]
-        header.rightItems: [UIBarButtonItem] = [button]
-        return header
-    }
-    
+    let vc = ZIMKitConversationListVC()
+    vc.messageDelegate = self
+```
+```swift    
     func getMessageListHeaderCustomerview(_ messageListVC: ZIMKitMessagesListVC) -> UIView?
         let view = UIView().withoutAutoresizingMaskConstraints
         let button = UIButton(type: .contactAdd)
@@ -212,6 +206,23 @@ Here is the reference code:
         view.addSubview(button)
     return view
 ``` 
+```swift
+    func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
+        let header = ZIMKitHeaderBar()
+        let button1:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .detailDisclosure))
+        let button2:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .contactAdd))
+        let button3:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoDark))
+                             
+        let button4:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
+        header.rightItems = [button1,button2]
+        header.leftItems = [button3,button4]
+        let titleView = UIView()
+        titleView.backgroundColor = UIColor.red
+        titleView.frame = CGRectMake(0, 0, 100, 40)
+        header.titleView = titleView
+      return header
+    }
+```
 </Accordion>
 
 <Accordion title="Destruction of the listening session page" defaultOpen="false">
