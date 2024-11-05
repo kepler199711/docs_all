@@ -1,5 +1,5 @@
 ---
-articleID: 14248
+articleID: 13998
 ---
 
 import {getPlatformData} from "/snippets/utils-content-parser.js"
@@ -27,90 +27,93 @@ export const ZIMConversationQueryConfigMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConversationQueryConfig-class.html' target='_blank'>ZIMConversationQueryConfig</a>,
 }
 
-# Get the conversation list
 
----
+# 获取会话列表
 
-## Overview
-
-`Conversation` is the logic automatically established by the ZIM SDK for users sending one-to-one or group messages(only text message ore rich media messages, excluding custom messages). 
-
-ZIM supports users to listen for conversation changes and get a conversation list from the local database. It also supports developers to retrieve the complete conversation list of a specific user from the ZIM server.
-
-You can obtain and display the one-on-one and group chat conversation lists in scenarios such as chats, gaming communities, and online consulting.
-
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/in_app_chat/Conversation.jpeg" /></Frame>
+- - -
 
 
+## 功能简介
 
-## Listen for conversation changes
+`会话`，指只有在用户发送“**单聊/群聊**”消息（文本/富媒体消息，不包含信令消息）时，ZIM SDK 才会自动建立的逻辑关系。
 
-Before logging in, users should  {getPlatformData(props,setEventHandlerMap)} listen for the callback {getPlatformData(props,onConversationChangedMap)}, After login, the users will receive notifications of conversation changes when the following events happen: 
+ZIM SDK 支持用户监听会话变更，并从本地数据库拉取会话列表，也支持开发者从 ZIM 服务端获取指定用户的全量会话列表。
+
+开发者可在社交聊天、游戏社区、在线咨询等场景中获取并展示单聊、群聊会话列表。
+
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Common/messagesList.png" /></Frame>
+
+
+
+## 监听会话变更
+
+在用户登录之前，请调用 {getPlatformData(props,setEventHandlerMap)} 接口，监听 {getPlatformData(props,onConversationChangedMap)} 回调，将会在如下情形时收到会话变更通知：
 
 <table>
 <tbody><tr>
-<th>Category</th>
-<th>Event</th>
-<th>Event Value</th>
-<th>ZIMConversation Property</th>
+<th>类别</th>
+<th>事件</th>
+<th>对应 Event</th>
+<th>对应 ZIMConnversation 属性</th>
 </tr>
 <tr>
-<td rowspan="4">Basic Conversation Properties</td>
-<td>Change conversation name.</td>
+<td rowspan="4">会话内基础属性</td>
+<td>会话名称变更。</td>
 <td rowspan="11"><code>Updated</code></td>
+<td><code>conversationName</code></td>
 </tr>
 <tr>
-<td>Change conversation avatar URL.</td>
+<td>会话头像 URL 变更。</td>
 <td><code>conversationAvatarUrl</code></td>
 </tr>
 <tr>
-<td><ul><li>When a user sets a remark (friendAlias) for a friend, the ZIM SDK synchronously modifies the corresponding <strong>alias of the one-on-one conversation</strong>.</li><li>When a user sets a remark (groupAlias) for a group, the ZIM SDK will synchronize and modify the corresponding conversation <strong>alias for the group chat</strong>.</li></ul></td>
+<td><ul><li>用户为好友设置备注（<code>friendAlias</code>）后，ZIM SDK 同步修改相关单聊的会话别名。</li><li>用户为群组设置备注（<code>groupAlias</code>）后，ZIM SDK 同步修改相关群聊的会话别名</li></ul></td>
 <td><code>conversationAlias</code></td>
 </tr>
 <tr>
-<td>Change unread message count.</td>
+<td>会话未读数变更。</td>
 <td><code>unreadMessageCount</code></td>
 </tr>
 <tr>
-<td rowspan="4">Additional Conversation Properties</td>
-<td>User sets/cancels a conversation as pinned.</td>
+<td rowspan="4">会话内额外属性</td>
+<td>用户设置/取消置顶会话。</td>
 <td><code>isPinned</code></td>
 </tr>
 <tr>
-<td>User sets notification status for a conversation.</td>
+<td>用户对会话设置通知状态。</td>
 <td><code>notificationStatus</code></td>
 </tr>
 <tr>
-<td>User saves a conversation draft.</td>
+<td>用户保存会话草稿。</td>
 <td><code>draft</code></td>
 </tr>
 <tr>
-<td>User is mentioned in a conversation.</td>
+<td>用户在会话中被提醒。</td>
 <td><code>mentionedInfoList</code></td>
 </tr>
 <tr>
-<td rowspan="3">Last Message in Conversation Changes</td>
-<td>User receives a new message.</td>
+<td rowspan="3">会话最后一条消息变更</td>
+<td>用户收到新消息。</td>
 <td rowspan="3"><code>lastMessage</code></td>
 </tr>
 <tr>
-<td>User sends a new message.</td>
+<td>用户发送新消息。</td>
 </tr>
 <tr>
-<td>Last message status or content changes.</td>
+<td>最后一条消息状态、内容变更。</td>
 </tr>
 <tr>
-<td rowspan="6">Conversation Status Changes</td>
-<td>User has a new conversation.</td>
+<td rowspan="6">会话状态变更</td>
+<td>用户有新会话。</td>
 <td><code>Added</code></td>
 <td>-</td>
 </tr>
 <tr>
 <td>
-User voluntarily leaves/is kicked out of a group conversation.
+用户主动离开/被踢出群组会话。
 <Note title="Note">
 
-This assumes that the group conversation already exists (i.e., there are messages in the conversation).
+前提是群组会话已存在（即会话内有消息）。
 </Note>
 </td>
 <td rowspan="4"><code>Disabled</code></td>
@@ -118,39 +121,38 @@ This assumes that the group conversation already exists (i.e., there are message
 </tr>
 <tr>
 <td>
-Group conversation is dissolved.
-<Note title="Note">
-This assumes that the group conversation already exists (i.e., there are messages in the conversation).
-</Note>
-</td>
+群组会话被解散。
+<div class="mk-hint">
+前提是群组会话已存在（即会话内有消息）。
+</div></td>
 </tr>
 <tr>
-<td>Recipient user does not exist when sending a one-on-one message.</td>
+<td>发送单聊消息时对端用户不存在。</td>
 </tr>
 <tr>
-<td>User sends a message to a group they have not joined.</td>
+<td>在未加入某群组时，用户向该群组发送消息。</td>
 </tr>
 <tr>
-<td>User deletes a conversation.</td>
+<td>用户删除一个会话。</td>
 <td><code>Deleted</code></td>
 <td>-</td>
 </tr>
 </tbody>
 </table>
 
-
-At this time, you can <a href="#get-the-conversation-list">get the conversation list</a> based on your demands.
+此时开发者可根据需求 <a href="#获取会话列表">获取会话列表</a>。
 
 <Note title="Note">
 
-Currently, the callback {getPlatformData(props,onConversationChangedMap)} only supports notification of incremental changes of the conversation list in the local database and the conversation list on the ZIM server.    
+{getPlatformData(props,onConversationChangedMap)} 回调接口，目前仅通知“存放于当前本地数据库和 ZIM 服务端的会话列表增量变化情况”。   
 
-You need to maintain the array of conversation lists retrieved from the {getPlatformData(props,queryConversationListMap)} method, and based on current conversation updates, perform property changes, inserts, and sorted displays .
+开发者需要通过维护从 {getPlatformData(props,queryConversationListMap)} 接口中获取到的会话列表数组，根据当前会话更新情况，进行相应的属性更改、插入、和排序展示。
 </Note>
+
 
 :::if{props.platform=undefined}
 ```java
-// Set up the event handler
+// 注册 SDK 事件通知回调
 zim.setEventHandler(this);
 
 ...
@@ -161,39 +163,20 @@ public void onConversationChanged(ZIM zim, ArrayList<ZIMConversationChangeInfo> 
 }
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Set up the event handler
+// 注册 SDK 事件通知回调
 [self.zim setEventHandler:self];
 
 ...
 
 - (void)zim:(ZIM *)zim conversationChanged:(NSArray<ZIMConversationChangeInfo *> *)conversationChangeInfoList {
-    // Get the conversation change list.
+    // 获取会话变更列表
     for (ZIMConversationChangeInfo *info in conversationChangeInfoList) {
         if (info.event == ZIMConversationEventAdded) {
-            // Add to your self-maintained list and set up a UI fresh here.
+            // 添加到开发者自行维护的列表中，同时刷新 UI
         } else if (info.event == ZIMConversationEventUpdated) {
-           // Edit the conversation properties, and set up a UI fresh here.
-        }
-    }
-}
-```
-:::
-:::if{props.platform="mac"}
-```objc
-// Set up the event handler
-[self.zim setEventHandler:self];
-
-...
-
-- (void)zim:(ZIM *)zim conversationChanged:(NSArray<ZIMConversationChangeInfo *> *)conversationChangeInfoList {
-    // Get the conversation change list.
-    for (ZIMConversationChangeInfo *info in conversationChangeInfoList) {
-        if (info.event == ZIMConversationEventAdded) {
-            // Add to your self-maintained list and set up a UI fresh here.
-        } else if (info.event == ZIMConversationEventUpdated) {
-           // Edit the conversation properties, and set up a UI fresh here.
+           // 修改会话属性，同时刷新 UI
         }
     }
 }
@@ -201,18 +184,18 @@ public void onConversationChanged(ZIM zim, ArrayList<ZIMConversationChangeInfo> 
 :::
 :::if{props.platform="window"}
 ```cpp
-// Set up the event handler and listen for related event callbacks. 
-zim.setEventHandler(shared_from_this());
+// 注册 SDK 事件通知回调
+zim->setEventHandler(shared_from_this());
 
 ...
 
 void onConversationChanged(ZIM * zim, const std::vector<ZIMConversationChangeInfo> & conversationChangeInfoList) {
-    // Get the conversation change list.
+    // 获取会话变更列表
     for (auto &info : conversationChangeInfoList) {
         if (info.event == ZIMConversationEventAdded) {
-        // Add to your self-maintained list and set up a UI fresh here.
+            // 添加到开发者自行维护的列表中，同时刷新 UI
         } else if (info.event == ZIMConversationEventUpdated) {
-        // UI Edit the conversation properties, and set up a UI fresh here.
+           // 修改会话属性，同时刷新 UI
         }
     }
 }
@@ -224,9 +207,10 @@ void onConversationChanged(ZIM * zim, const std::vector<ZIMConversationChangeInf
 ZIM.GetInstance().onConversationChanged = (
     ZIM zim, List<ZIMConversationChangeInfo> conversationChangeInfoList) =>
 {
-    // Notification of the conversation changes.
+    //会话变更通知
 };
 ```
+
 :::
 :::if{props.platform="Web"}
 ```javascript
@@ -237,7 +221,7 @@ zim.on('conversationChanged', function(zim, { infoList }){
 :::
 :::if{props.platform="Flutter"}
 ```dart
-ZIMEventHandler.onConversationChanged = (conversationChangeInfoList) {
+ZIMEventHandler.onConversationChanged = (zim, conversationChangeInfoList) {
     
 };
 ```
@@ -245,40 +229,43 @@ ZIMEventHandler.onConversationChanged = (conversationChangeInfoList) {
 :::
 
 
-## Get the conversation list
 
-ZIM supports developers to call SDK interfaces to retrieve the current user's conversation list from the local database. It also supports making requests to the ZIM server to retrieve the complete conversation list of a specific user.
+## 获取会话列表
 
-After fetching the conversation list, developers can use it to customize the UI display of the conversation list.
+ZIM 支持开发者调用 SDK 接口从本地数据库获取当前用户的会话列表，也支持向 ZIM 服务端发起请求获取指定用户的全量会话列表。
 
-### From the local database
+拉取到会话列表后，开发者可以用于自定义会话列表的 UI 展示。
+
+### 从本地数据库获取
 
 <Note title="Note">
 
-- The ZIM SDK currently only supports fetching one-to-one and group conversation lists, and does not support fetching the room conversation list.
-- The conversation list is stored in the local database, and when getting the conversation list, relevant data will be retrieved from the local database.
-- It is recommended for you to use this feature on the first screen of the conversation page.
+- ZIM SDK 当前仅支持拉取“单聊”和“群聊”会话列表，暂不支持拉取“房间”会话列表。
+- 会话列表存于本地数据库，拉取会话列表时，会从本地数据库中获取相关数据。
+- 建议开发者在首屏会话页里使用本功能。
 </Note>
 
-After login, if users want to know what conversations they have joined, they can call the {getPlatformData(props,queryConversationListMap)} method to query the conversation list.
 
-To avoid the problem of pulling too many conversations at the same time, which takes a long time and causes slow loading of the conversation interface, you can customize the number of conversations by setting the {getPlatformData(props,ZIMConversationQueryConfigMap)} object for paging query when pulling conversations.
+用户登录后，如果想要查询自己参与过的会话记录，可以调用 {getPlatformData(props,queryConversationListMap)} 接口，拉取会话数据列表。
+
+由于本地会话可能数量较多，拉取会话时，开发者可以通过 {getPlatformData(props,ZIMConversationQueryConfigMap)} 对象，设置自定义分页拉取会话的数量，避免引起一次性拉取过多的会话导致耗时较久、会话界面加载较慢等问题。
+
 
 :::if{props.platform=undefined}
 ```java
 ZIMConversationQueryConfig config = new ZIMConversationQueryConfig();
-// conversation query anchor. Empty indicates that the query starts from the latest.
+// 会话锚点，传空则代表从最新开始查询
 config.nextConversation = null;
-// The number of queries per page.
+// 会话一次分页查询数
 config.count = 20;
 
-// Get the conversation list.
+// 拉取会话列表
 zim.queryConversationList(config, new ZIMConversationListQueriedCallback() {
     @Override
     public void onConversationListQueried(ArrayList<ZIMConversation> conversationList, ZIMError errorInfo) {
-        // Get the results of query the conversation list.
+        // 获取会话列表查询结果
         if(errorInfo.code == ZIMErrorCode.SUCCESS) {
-          // You will need to save and maintain the conversation objects in the array.
+          // 开发者需要保存和维护数组内的会话对象
         } else {
           // ......
         }      
@@ -286,59 +273,40 @@ zim.queryConversationList(config, new ZIMConversationListQueriedCallback() {
 });
 ```
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 ZIMConversationQueryConfig *config = [[ZIMConversationQueryConfig alloc] init];
-// conversation query anchor. Empty indicates that the query starts from the latest.
+// 会话锚点，传空则代表从最新开始查询
 config.nextConversation = nil;
-// The number of queries per page.
+// 会话一次分页查询数
 config.count = 20;
 
-// Get the conversation list.
+// 拉取会话列表
 [self.zim queryConversationListWithConfig:config callback:^(NSArray<ZIMConversation *> * _Nonnull conversationList, ZIMError * _Nonnull errorInfo) {
-    // Get the results of query the conversation list.
+    // 获取会话列表查询结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
-        // You will need to save and maintain the conversation objects in the array.
+      // 开发者需要保存和维护数组内的会话对象
     } else {
-        // ......
-    }
-}];
-```
-:::
-:::if{props.platform="mac"}
-```objc
-ZIMConversationQueryConfig *config = [[ZIMConversationQueryConfig alloc] init];
-// conversation query anchor. Empty indicates that the query starts from the latest.
-config.nextConversation = nil;
-// The number of queries per page.
-config.count = 20;
-
-// Get the conversation list.
-[self.zim queryConversationListWithConfig:config callback:^(NSArray<ZIMConversation *> * _Nonnull conversationList, ZIMError * _Nonnull errorInfo) {
-    // Get the results of query the conversation list.
-    if(errorInfo.code == ZIMErrorCodeSuccess) {
-        // You will need to save and maintain the conversation objects in the array.
-    } else {
-        // ......
+      // ......
     }
 }];
 ```
 :::
 :::if{props.platform="window"}
-```cpp
+```Cpp
 ZIMConversationQueryConfig config;
-// conversation anchor point. Empty indicates that the query starts from the latest.
+// 会话锚点，传空则代表从最新开始查询
 config.nextConversation = nullptr;
-// The number of queries per page.
+// 会话一次分页查询数
 config.count = 20;
 
-// Get the conversation list.
-zim.queryConversationList(config, [=](std::vector<std::shared_ptr<ZIMConversation>> conversationList, ZIMError errorInfo) {
-    // Get the results of query the conversation list.
+// 拉取会话列表
+zim->queryConversationList(config, [=](std::vector<std::shared_ptr<ZIMConversation>> conversationList, ZIMError errorInfo) {
+    // 获取会话列表查询结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
-    // You will need to save and maintain the conversation objects in the array.
+      // 开发者需要保存和维护数组内的会话对象
     } else {
-    // ......
+      // ......
     }
 });
 ```
@@ -346,35 +314,35 @@ zim.queryConversationList(config, [=](std::vector<std::shared_ptr<ZIMConversatio
 :::if{props.platform="U3d"}
 ```c#
 ZIMConversationQueryConfig config = new ZIMConversationQueryConfig();
-// Conversation anchor, pass null to start querying from the latest
+// 会话锚点，传空则代表从最新开始查询
 config.nextConversation = null;
-// Number of conversations to query at a time
+// 会话一次分页查询数
 config.count = 20;
 
-// Retrieve the conversation list
+// 拉取会话列表
 ZIM.GetInstance().QueryConversationList(config, (List<ZIMConversation> conversationList,
                    ZIMError errorInfo) => 
 {
-        // Callback of the retrieval result
+        //拉取结果的回调           
 });
 ```
 :::
 :::if{props.platform="Web"}
 ```javascript
 var config = {
-    // The conversation flag. If it is set to `null`, the flag is the latest conversation.
+    // 会话锚点，传空则代表从最新开始查询
     nextConversation: null,
-    // The number of conversations queried per page.
+    // 会话一次分页查询数
     count: 20
 };
 
-// Pull the conversation list.
+// 拉取会话列表
 zim.queryConversationList(config)
     .then(function({ conversationList }){
-        // Query succeeded. You need to store and maintain the conversation objects in the array.
+        // 查询成功，开发者需要保存和维护数组内的会话对象
     })
     .catch(function(err){
-        // Query failed.
+        // 查询失败
     })
 ```
 :::
@@ -383,21 +351,22 @@ zim.queryConversationList(config)
 ZIMConversationQueryConfig conversationQueryConfig =
     ZIMConversationQueryConfig();
 conversationQueryConfig.nextConversation = null;
-// The number of queries per page.
+// 会话一次分页查询数
 conversationQueryConfig.count = 20;
 
-//Get the conversation list.
+//拉取会话列表
 ZIM
     .getInstance()
-    .queryConversationList(conversationQueryConfig)
+    !.queryConversationList(conversationQueryConfig)
     .then((value) => {
-      // You will need to save and maintain the conversation objects in the array.
+      // 开发者需要保存和维护数组内的会话对象
     })
     .catchError((onError) {});
 ```
 :::
 
-### From the ZIM server
+### 从 ZIM 服务端获取
 
-You can get a user's conversation list by calling the server API. For more details, please refer to the server API documentation [Query conversation list](/zim-server/conversation/query-conversation-list)
+开发者可以通过调用服务端 API 获取用户的会话列表，详情请参考服务端 API 文档 [查询会话列表](./Query%20a%20conversation.mdx)。
+
 

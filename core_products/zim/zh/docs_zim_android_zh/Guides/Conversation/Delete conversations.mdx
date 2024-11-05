@@ -1,5 +1,5 @@
 ---
-articleID: 17756
+articleID: 20850
 ---
 
 import {getPlatformData} from "/snippets/utils-content-parser.js"
@@ -29,38 +29,40 @@ export const deleteAllConversationsMap = {
   'iOS,mac': <a href='@deleteAllConversationsWithConfig' target='_blank'>deleteAllConversationsWithConfig</a>,
 }
 
-# Delete conversations
+
+# 删除会话
 
 - - -
 
-## Introduction
+## 功能简介
 
-ZIM supports users to delete a specific conversation or all conversations in the conversation list.
+ZIM 支持用户删除会话列表中的某个会话和全部会话。
 
-## Delete a conversation
+## 删除单个会话
 
-To delete a specified conversation after login, call the {getPlatformData(props,deleteConversationMap)} with the `conversationID` parameter.
+用户登录后，可以删除自己的会话列表中的某个会话。开发者通过调用 {getPlatformData(props,deleteConversationMap)} 接口，传入 conversationID 指定会话，删除某个会话。
 
 <Note title="Note">
 
-When deleting a specified conversation:
+删除某个会话时：
 
-- All messages in the conversation are not automatically deleted. If you need to delete both the conversation and all messages in the conversation, call the {getPlatformData(props,deleteAllMessageMap)} method. For details, see the chapter **Delete all messages of the specified conversation** of [Delete messages](./../Messaging/Delete%20messages.mdx).
-- If the conversation has unread messages, the total number of unread messages will be reduced and shown in the {getPlatformData(props,onConversationTotalUnreadMessageCountUpdatedMap)} callback. For details, see the chapter **Get the number of unread messages** above.
+- 会话内的所有消息并不会自动删除。开发者如果需要同时删除会话和会话内的所有消息，请先调用 {getPlatformData(props,deleteAllMessageMap)} 接口（详情请参考 [删除消息](../Messaging/Delete%20messages.mdx#删除指定会话的全部消息)）删除所有消息，再调用 {getPlatformData(props,deleteConversationMap)} 接口删除该会话。
+- 如果这个会话存在未读消息，将会通过 {getPlatformData(props,onConversationTotalUnreadMessageCountUpdatedMap)} 回调接口，减少消息未读总数，详情请参考 [4 获取消息未读总数](./Get%20the%20conversation%20list.mdx)。
 </Note>
+#### 示例代码
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title = "Sample code"
-// Delete a specified conversation
+```java title="示例代码"
+// 删除某个会话，以下为 删除单聊会话
 ZIMConversationDeleteConfig config = new ZIMConversationDeleteConfig();
 config.isAlsoDeleteServerConversation = true;
 
-zim.deleteConversation("CONV_ID", ZIMConversationType.PEER, config, new ZIMConversationDeletedCallback() {
+zim.deleteConversation("CONV_ID", ZIMConversationType.GROUP, config, new ZIMConversationDeletedCallback() {
     @Override
     public void onConversationDeleted(ZIMError errorInfo) {
-        // The results of delete a specified result. 
+        // 获取删除会话的结果
         if(errorInfo.code == ZIMErrorCodeSuccess) {
           // ......
         } else {
@@ -72,14 +74,14 @@ zim.deleteConversation("CONV_ID", ZIMConversationType.PEER, config, new ZIMConve
 </CodeGroup>
 
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc title = "Sample code"
-// Delete a specified conversation.
+```objc title="示例代码"
+// 删除某个会话，以下为 删除单聊会话
 ZIMConversationDeleteConfig *config = [[ZIMConversationDeleteConfig alloc] init];
 config.isAlsoDeleteServerConversation = YES;
 [self.zim deleteConversation:@"CONV_ID" conversationType: ZIMConversationTypePeer config:config callback:^(ZIMError * _Nonnull errorInfo) {
-    // The results of delete a specified result. 
+    // 获取删除会话的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -87,36 +89,17 @@ config.isAlsoDeleteServerConversation = YES;
     }
 }];
 ```
-
-</CodeGroup>
-:::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc title = "Sample code"
-// Delete a specified conversation.
-ZIMConversationDeleteConfig *config = [[ZIMConversationDeleteConfig alloc] init];
-config.isAlsoDeleteServerConversation = YES;
-[self.zim deleteConversation:@"CONV_ID" conversationType: ZIMConversationTypePeer config:config callback:^(ZIMError * _Nonnull errorInfo) {
-    // The results of delete a specified result. 
-    if(errorInfo.code == ZIMErrorCodeSuccess) {
-      // ......
-    } else {
-      // ......
-    }
-}];
-```
-
 </CodeGroup>
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title = "Sample code"
-// Delete a specified conversation
+```cpp title = "示例代码"
+// 删除某个会话，以下为 删除单聊会话
 ZIMConversationDeleteConfig config;
 config.isAlsoDeleteServerConversation = true;
 
-zim.deleteConversation("CONV_ID", ZIMConversationTypePeer, config, [=](ZIMError errorInfo) {
-    // The results of delete a specified result. 
+zim->deleteConversation("CONV_ID", ZIMConversationTypePeer, config, [=](ZIMError errorInfo) {
+    // 获取删除会话的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -128,65 +111,72 @@ zim.deleteConversation("CONV_ID", ZIMConversationTypePeer, config, [=](ZIMError 
 :::
 :::if{props.platform="Web"}
 <CodeGroup>
-```javascript title="Sample code"
-// Delete an one-to-one chat.
+```javascript title="示例代码"
+// 删除某个会话，以下为 删除单聊会话
 var conversationID = '';
 var conversationType = 0;
 var config = { isAlsoDeleteServerConversation: true };
 zim.deleteConversation(conversationID, conversationType, config)
     .then(function(res){
-        // Operation succeeded.
+        // 操作成功
     })
     .catch(function(err){
-        // Operation failed.
+        // 操作失败
     })
 ```
 </CodeGroup>
 :::
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
-// Delete a specified conversation.
+```dart title="示例代码"
+// 删除某个会话，以下为 删除单聊会话
 ZIMConversationDeleteConfig conversationDeleteConfig =
       ZIMConversationDeleteConfig();
 conversationDeleteConfig.isAlsoDeleteServerConversation = true;
 ZIM
     .getInstance()
-    .deleteConversation(
+    !.deleteConversation(
         'conversationID', ZIMConversationType.peer, conversationDeleteConfig)
-    .then((value) {})
+    .then((value) => {})
     .catchError((onError) {});
 ```
 </CodeGroup>
 :::
 
-## Delete all conversations
 
-After the login, a user can delete all conversations in the conversation list by calling the {getPlatformData(props,deleteAllConversationsMap)} interface.
+## 删除全部会话
+
+用户登录后，可以删除会话列表中的所有会话。开发者通过调用 {getPlatformData(props,deleteAllConversationsMap)} 接口删除全部会话。
+
+#### 示例代码
+
 
 :::if{props.platform=undefined}
-```java
+<CodeGroup>
+```java title="示例代码"
+// 删除全部会话
 ZIMConversationDeleteConfig config = new ZIMConversationDeleteConfig();
 config.isAlsoDeleteServerConversation = true;
 
 zim.deleteAllConversations(config, new ZIMConversationsAllDeletedCallback() {
     @Override
     public void onConversationsAllDeleted(ZIMError errorInfo) {
-             // Callback of deletion
+             // 删除全部会话后的回调。
         }
 });
 ```
-
+</CodeGroup>
 :::
-:::if{props.platform="iOS"}
-```objc
-// Delete all conversations
+:::if{props.platform="iOS|mac"}
+<CodeGroup>
+```objc title="示例代码"
+// 删除全部会话
 
 ZIMConversationDeleteConfig *config = [[ZIMConversationDeleteConfig alloc] init];
 config.isAlsoDeleteServerConversation = YES;
 
 [self.zim deleteAllConversationsWithConfig:config callback:^(ZIMError * _Nonnull errorInfo) {
-    // Get the result of deleting conversations
+    // 获取删除会话的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -194,32 +184,17 @@ config.isAlsoDeleteServerConversation = YES;
     }
 }];
 ```
-:::
-:::if{props.platform="mac"}
-```objc
-// Delete all conversations
-
-ZIMConversationDeleteConfig *config = [[ZIMConversationDeleteConfig alloc] init];
-config.isAlsoDeleteServerConversation = YES;
-
-[self.zim deleteAllConversationsWithConfig:config callback:^(ZIMError * _Nonnull errorInfo) {
-    // Get the result of deleting conversations
-    if(errorInfo.code == ZIMErrorCodeSuccess) {
-      // ......
-    } else {
-      // ......
-    }
-}];
-```
+</CodeGroup>
 :::
 :::if{props.platform="window"}
-```cpp
-// Delete all conversations
+<CodeGroup>
+```Cpp title="示例代码"
+// 删除全部会话
 ZIMConversationDeleteConfig config;
 config.isAlsoDeleteServerConversation = true;
 
 zim->deleteAllConversations(config, [=](ZIMError errorInfo) {
-    // Operation result
+    // 获取删除全部会话的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -227,27 +202,33 @@ zim->deleteAllConversations(config, [=](ZIMError errorInfo) {
     }
 });
 ```
+</CodeGroup>
 :::
 :::if{props.platform="Web"}
-```javascript
-// Delete all conversations
+<CodeGroup>
+```javascript title="示例代码"
+// 删除全部会话
 var config = { isAlsoDeleteServerConversation: true };
 zim.deleteAllConversations(config)
     .then(function(){
-        // Operation succeeded
+        // 操作成功
     })
     .catch(function(err){
-        // Operation failed
+        // 操作失败
     })
 ```
+</CodeGroup>
 :::
 :::if{props.platform="Flutter"}
-```dart
-// Delete all conversations
+<CodeGroup>
+```dart title="示例代码"
+// 删除全部会话
 ZIMConversationDeleteConfig config = ZIMConversationDeleteConfig();
 config.isAlsoDeleteServerConversation = true;
 
 ZIM.getInstance()!.deleteAllConversations(config).then((value) => {})
     .catchError((onError) {});
 ```
+</CodeGroup>
 :::
+
