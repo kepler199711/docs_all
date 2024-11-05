@@ -1,68 +1,69 @@
 ---
-articleID: 14837
+articleID: 15966
 ---
 
-# Implement offline push notification
+# 实现离线推送
 
-ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of sending offline push notifications. 
-That is, in one-on-one chat or group chat, if your app is frozen, killed by the system or a user in the backend, and get disconnected with the ZEGOCLOUD service backend due to timeout, with the offline push notification feature, the ZEGOCLOUD backend will send offline push notifications to the target users.
+ZEGO 即时通讯（ZIM）支持离线推送消息的功能。例如在“单聊”或“群组聊天”时，如果您的网页被关闭，与 ZEGO 服务后台的长连接超时断开后，此时如果您已接入“离线推送”功能，ZEGO 后台会为目标用户发送离线推送的消息。
 
-You can integrate the ZPNs SDK and use it together with the ZIM SDK to implement the offline push notification feature.
+开发者可以通过集成 ZPNs SDK，与 ZIM SDK 搭配使用，实现离线推送功能。
 
 
 <Warning title="Warning">
-For Web apps to use this feature: 
-- only Chrome and Edge browsers are supported because its implementation depends on the Google FCM.
-- The ZPNs SDK needs to be used together with a ZIM SDK 2.3.0 or later. 
+- Web 平台离线推送，仅支持 Chrome 和 Edge 浏览器。由于是基于 Google FCM 功能实现，国内访问可能受限，建议开发者搭建 VPN 使用。 
+- Web 平台的 ZPNs SDK 需要搭配 ZIM SDK 2.3.0 或以上版本使用。
 </Warning>
 
 
-## Solution
+## 方案介绍
 
-The solution we provide is as follows: 
+ZIM 实现离线推送的方案如下：
+
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/OfflinePush/Android.png" />
+</Frame>
+
+1. 首先消息接收方（即接收离线消息的用户），开启 Google 推送通道，向 Google 推送服务器发送请求，获取 Token。
+2. Google 推送服务器，将 Token 返回给接收方。
+3. 接收方生成 PushID，并向 ZIM 服务器发送请求，绑定用户与 PushID 的关系。
+
+    开发者需要将 ZPNs SDK 与 ZIM SDK 搭配使用，SDK 内部会自动绑定用户与 PushID 的关系，无需特殊处理。**请注意，同一设备切换 userID 前，请调用 zim.[logout](@logout) 接口，该接口会清除 userID 绑定的 PushID。**
+
+4. 发送方开始发送消息，消息存储到 ZIM 服务器。
+5. ZIM 服务器会确认接收方的客户端是否在线。
+6. 如果接收方的客户端不在线，ZIM 服务器会将消息转发给 ZPNs 服务器。
+7. ZPNs 服务器将离线消息转发给 Google 的推送服务器。
+8. Google 的服务器将消息通过“离线推送”的方式，推送给接收方；接收方登录后（至少登录一次），即可收到离线消息。
 
 
-1. The receiver (the client user that receives the offline push notifications) enables Google's push notification channel, and sends a request to get the Token from the Google Server. 
-2. Google Server returns the Token to the receiver. 
-3. The receiver generates a PushID, and sends it to the ZIM Server for binding the client user and PushID.   
-   
-    You need to use the ZPNs SDK together with the ZIM SDK, the SDK will automatically bind the client user to PushID, and you don't need to do other operations; **Note: Before switching the userID on the same device, remember to call the [`logout`](@logout) method to remove the PushID that userID is binding.**
+## 实现流程
 
+### 接入 Google 离线推送通道
 
-4. The sender starts sending messages, and the messages are stored in the ZIM Server.
-5. The ZIM Server checks whether the receiver is online. 
-6. If the receiver is offline, then the messages will be transferred to the ZPNs Server.
-7. The ZPNs Server sends offline push notifications to the Google Server.
-8. Google Server pushes the offline push notifications to the receiver. The receiver receives the offline messages when gets back online. 
+请参考 [Web 推送集成指南](./Integrate%20FCM.mdx)，接入 Google 离线推送通道。
 
-
-## Implementation steps
-
-### Integrate Google push notification channel 
-
-Integrate Google's push notification channel by referring to the [Integrate FCM](./Integrate%20FCM.mdx).
-
-### Integrate the ZPNs SDK 
+### 集成 ZPNs SDK
  
-1. Download the latest version of the [ZPNs SDK](./../Client%20SDKs/SDK%20downloads.mdx).
-2. Extract the downloaded SDK package to your project folder, such as the `zego-zpns-web` folder.
-3. Import the SDK.
+1. 请参考 [ZPNs SDK](./../Client%20SDKs/SDK%20downloads.mdx)，下载最新版本的 ZPNs SDK。
+2. 将 SDK 包解压至项目目录下，例如 “zego-zpns-web”。 
+3. 添加 SDK 引用。
 
-    1. Modify the project's `index.html` file and add the following code: 
+    1. 编辑项目的 “index.html” 文件，添加如下代码。
     
-    ```html
+    ```JavaScript
     <script src="./zego-zpns-web/index.js"></script>
     ```
 
-    2. Copy the `zego-zpns-web/firebase-messaging-sw.js` file to your project's root directory. 
+    2. 将 “zego-zpns-web/firebase-messaging-sw.js” 文件，拷贝到项目根目录。 
 
-### Set up the offline push notification feature using the ZPNs SDK 
+### 使用 ZPNs SDK 注册离线推送功能
 
-1. Set up the offline push notification feature. 
+1. 注册离线推送功能。
 
     ```JavaScript
     var appID = 0; // Your Application ID of ZEGO ZIM
-    var zim = ZIM.create({ appID: appID });
+    ZIM.create({ appID: appID });
+    var zim = ZIM.getInstance();
 
     var config = {
         // From firebaseConfig
@@ -80,38 +81,37 @@ Integrate Google's push notification channel by referring to the [Integrate FCM]
     ZPNs.getInstance().register(config, zim);
     ```
 
-2. After finishing using this feature, call the [`unregister`](@unregister) method to cancel this feature. Users can't receive any notifications after it is canceled successfully. 
+2. 如果不再需要离线推送功能，开发者可以调用 [unregister](@unregister) 接口，注销该功能，注销后用户将不再能收到推送消息。
 
     ```JavaScript
     ZPNs.getInstance().unregister();
     ```
 
 
-### Implement the offline push notification feature with the ZIM SDK 
+### 使用 ZIM SDK 实现离线推送功能
 
-ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of sending offline push notifications for one-on-one or group chats, and call invitations .
+ZIM 支持在发送单聊消息、发送群组消息、以及发送呼叫邀请时，使用离线推送消息的功能。
 
 <Warning title="Warning">
-Before implementing offline push, you should:
-- refer to [Send and receive messages](./../Send%20and%20receive%20messages.mdx) to send one-on-one/group chat messages.
-- refer to [Call invitation](./../Guides/Call%20invitation%20signaling.mdx) to send and receive call invitations.
+实现离线推送之前：
+- 请参考 [发送消息](./../Send%20and%20receive%20messages.mdx)，实现发送单聊/群聊消息的功能。
+- 请参考 [呼叫邀请](./../Guides/Call%20invitation%20signaling.mdx)，实现呼叫邀请。
 </Warning>
 
-#### Send one-on-one messages with offline push notification
+#### 场景 1：发送单聊消息时使用离线推送功能
 
-1. Set the offline push notification title, content, and other properties in the [`ZIMPushConfig`](@-ZIMPushConfig) object. 
+1. 首先开发者需要通过 [ZIMPushConfig](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
 
     ```JavaScript
     var pushConfig = {
-        title = "offline push notification title";
-        content = "offline push notification content";
-        // extendedData = "Customizable field, optional."; //  applicable when ZIM version < 2.5.0
-        // payload = "Customizable field, optional.";  // applicable when ZIM version >= 2.5.0
-        resourcesID = "resource ID, optional";
+        title = "离线推送标题";
+        content = "离线推送内容";
+        // extendedData = "自定义透传字段,非必填"; // ZIM 版本 < 2.5.0 时使用该字段
+        // payload = "自定义透传字段,非必填"; // ZIM 版本 >= 2.5.0 时使用该字段
     }
     ```
 
-2. Set up the configurations for offline push notification by modifying the `pushConfig` parameter of the [`ZIMMessageSendConfig`](@-ZIMMessageSendConfig) object. 
+2. 然后通过 [ZIMMessageSendConfig](@-ZIMMessageSendConfig) 对象的 `pushConfig` 参数，配置离线消息的相关配置等。
 
     ```JavaScript
     var sendConfig = {
@@ -120,38 +120,36 @@ Before implementing offline push, you should:
     };
     ```
 
-3. The message sender calls the [`sendMessage`](@sendMessage) method with the `sendConfig` to send one-to-one messages. 
+3. 发送方调用 [sendPeerMessage](@sendPeerMessage)，传入 “sendConfig”，向接收方发送单聊消息。
 
-    ```javascript
+    ```JavaScript
     var toUserID = '';
-    var messageTextObj = { type: 1, message: 'content' };
+    var messageTextObj = { type: 1, message: '文本消息内容' };
     zim.sendMessage(messageTextObj, toUserID, 0, sendConfig)
-    .then(function ({ message }) {
-        // Operation succeeded
-    })
-    .catch(function (err) {
-        // Operation failed
-    });
+        .then(function ({ message }) {
+            // 发送成功
+        })
+        .catch(function (err) {
+            // 发送失败
+        });
     ```
 
+4. 接收方如果处于离线状态，将会在上线后，接收到发送方之前发送的离线消息。
 
-4. The offline receiver will receive the offline messages when gets back online. 
+#### 场景 2：发送群组消息时使用离线推送功能
 
-#### Send group messages with offline push notification
-
-1. Set the offline push notification title, content, and other properties in the [`ZIMPushConfig`](@-ZIMPushConfig) object. 
+1. 开发者通过 [ZIMPushConfig](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
 
     ```JavaScript
     var pushConfig = {
-        title = "offline push notification title";
-        content = "offline push notification content";
-        // extendedData = "Customizable field, optional."; //  applicable when ZIM version < 2.5.0
-        // payload = "Customizable field, optional.";  // applicable when ZIM version >= 2.5.0
-        resourcesID = "resource ID, optional";
+        title = "离线推送标题";
+        content = "离线推送内容";
+        // extendedData = "自定义透传字段,非必填"; // ZIM 版本 < 2.5.0 时使用该字段
+        // payload = "自定义透传字段,非必填"; // ZIM 版本 >= 2.5.0 时使用该字段
     }
     ```
 
-2. Set up the configurations for offline push notification by modifying the `pushConfig` parameter of the [`ZIMMessageSendConfig`](@-ZIMMessageSendConfig) object.  
+2. 然后通过 [ZIMMessageSendConfig](@-ZIMMessageSendConfig) 对象的 `pushConfig` 参数，配置离线消息的相关配置等。
 
     ```JavaScript
     var sendConfig = {
@@ -160,37 +158,36 @@ Before implementing offline push, you should:
     };
     ```
 
-3. The message sender calls the [`sendMessage`](@sendMessage) method with the `sendConfig` to send group messages. 
-
-    ```javascript
-    var toGroupID = '';
-    var messageTextObj = { type: 1, message: 'content' };
-    zim.sendMessage(messageTextObj, toGroupID, 2, sendConfig)
-    .then(function ({ message }) {
-        // operation succeeded
-    })
-    .catch(function (err) {
-        // operation failed
-    });
-    ```
-
-4. The group members who are offline can receive offline messages when getting back online in the group.
-
-#### Send call invitations with offline push notification
-
-1. Set the offline push notification title, content, and other properties in the [`ZIMPushConfig`](@-ZIMPushConfig) object. 
+3. 发送方调用 [sendGroupMessage](@sendGroupMessage)，传入 “sendConfig”，向群组内的所有用户发送消息。
 
     ```JavaScript
-    var pushConfig = {
-        title = "offline push notification title";
-        content = "offline push notification content";
-        // extendedData = "Customizable field, optional."; //  applicable when ZIM version < 2.5.0
-        // payload = "Customizable field, optional.";  // applicable when ZIM version >= 2.5.0
-        resourcesID = "resource ID, optional";
-    }
+    var toGroupID = '';
+    var messageTextObj = { type: 1, message: '文本消息内容' };
+    zim.sendMessage(messageTextObj, toGroupID, 2, sendConfig)
+        .then(function ({ message }) {
+            // 发送成功
+        })
+        .catch(function (err) {
+            // 发送失败
+        });
     ```
 
-2. Set up the configurations for offline push notification by modifying the `pushConfig` parameter of the [`ZIMCallInviteConfig`](@-ZIMCallInviteConfig) object.  
+4. 群组内的用户，如果有人处于离线状态，将会在上线后，接收到发送方之前发送的群组离线消息。
+
+#### 场景 3：发送呼叫邀请时使用离线推送功能
+
+1. 开发者通过 [ZIMPushConfig](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
+
+    ```javascript
+    var pushConfig = {
+        title = "离线推送标题";
+        content = "离线推送内容";
+        // extendedData = "自定义透传字段,非必填"; // ZIM 版本 < 2.5.0 时使用该字段
+        // payload = "自定义透传字段,非必填";  // ZIM 版本 >= 2.5.0 时使用该字段
+        resourcesID = "资源 ID，非必填";
+    }
+    ```
+2. 然后通过 [ZIMCallInviteConfig](@-ZIMCallInviteConfig) 对象的 `pushConfig` 参数，配置离线消息的相关配置等。
 
     ```javascript
     var callInviteConfig = {
@@ -199,47 +196,47 @@ Before implementing offline push, you should:
     }
     ```
 
-3. The message sender calls the [`callInvite`](@callInvite) method with the `callInviteConfig` to send group messages. 
+3. 发送方调用 [callInvite](@callInvite)，传入 “callInviteConfig”，发起呼叫邀请。
 
     ```javascript
-    var invitees = ['xxxx'];  // Invitee ID list
+    var invitees = ['xxxx'];  // 被邀请人ID列表
     zim.callInvite(invitees, callInviteConfig)
         .then(function({ callID, timeout, errorInvitees }){
-            // Operation succeeded
-            // The callID here is the ID generated internally by the SDK after the user initiates a call, which is used to uniquely identify a call invitation. Afterwards, when the initiator cancels the call or the invitee accepts/rejects the call, this callID will be used.
+            // 操作成功
+            // 此处的 callID 是用户发起呼叫后，SDK 内部生成的 ID，用于唯一标识一次呼叫邀请；之后发起人取消呼叫、被邀请人接受/拒绝呼叫，都会使用此 callID
         })
         .catch(function(err){
-            // Operation failed
+            // 操作失败
         })
     ```
+4. 被邀请的用户若处于离线状态，将会收到对应的离线推送，上线后，若呼叫邀请还未结束，将会收到 [callInvitationReceived](@callInvitationReceived) 回调。
 
-4. The invitees who are offline can receive an offline push notification. Once they come online, if the call invitation is still ongoing, they will receive the callback [callInvitationReceived](@callInvitationReceived).
 
-### Unregister Offline Push
+### 注销离线推送
 
-If you want a device to stop receiving offline push notifications, you can unregister by calling the [unRegisterPush](@unRegisterPush) interface. After unregistering, popup push notifications and silent push notifications will no longer take effect.
+若开发者希望某台设备不再接收离线推送，可通过调用 [unRegisterPush](@unRegisterPush) 接口注销。注销后，发送弹窗推送、静默推送也将不再生效。
 
 ```js
 ZPNs.getInstance().unregisterPush();
 ```
 
-## More Features
+## 更多功能
 
-### Get Additional Information
+### 获取 payload 透传字段
 
-The offline push sender sends additional information to the recipient through the `payload` (`extendedData` for versions before 2.5.0) of the [ZIMPushConfig](@-ZIMPushConfig). When the recipient uses the ZPNs SDK, the user can retrieve this information from the payload field in the extras of the service provider channel.
+离线推送发送端通过配置 [ZIMPushConfig](@-ZIMPushConfig)的 payload 参数（2.5.0 之前版本为 extendedData 参数）向接收端发送额外信息，接收端需使用 ZPNs SDK 时，通过厂商通道的 extras 里面的 payload 字段获取该信息。
 
-1. Download version 2.5.0 or above of the ZPNs SDK from [SDK downloads](./../Client%20SDKs/SDK%20downloads.mdx) and copy the `firebase-messaging-sw.js` file to the root directory of your project.
+1. 从 [下载](./../Client%20SDKs/SDK%20downloads.mdx) 获取 2.5.0 或以上版本的 ZPNs SDK，将其中的 `firebase-messaging-sw.js` 文件，拷贝到您的项目的根目录。
 
-2. Open the `firebase-messaging-sw.js` file and rewrite the following methods as needed, then save the file.
+2. 打开 `firebase-messaging-sw.js` 文件，按需重写以下方法后保存。
 
 ```javascript
 self.onNotificationArrived = function onNotificationArrived(message) {
-    // Get the payload field
+    // 获取 payload 字段
     console.log(message.extra ? message.extra.payload : message.extra);
 }
 self.onNotificationClicked = function onNotificationClicked(message) {
-    // Get the payload field
+    // 获取 payload 字段
     console.log(message.extra ? message.extra.payload : message.extra);
 }
 ```
