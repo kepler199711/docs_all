@@ -1,5 +1,5 @@
 ---
-articleID: 17734
+articleID: 20839
 ---
 
 import {getPlatformData} from "/snippets/utils-content-parser.js"
@@ -45,84 +45,71 @@ export const clearConversationTotalUnreadMessageCountMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/clearConversationTotalUnreadMessageCount.html' target='_blank'>clearConversationTotalUnreadMessageCount</a>,
 }
 
-# Manage unread message counts
+
+# 管理会话未读数
 
 - - -
 
-## Introduction
+## 功能简介
 
-Through ZIM, you can get the unread message count for an individual conversation, acquire the total unread message count for all conversations, and clear the aforementioned values.
-
-
-## Get the unread message count of one conversation
-
-ZIM supports actively or passively obtaining the number of unread messages of a conversation.
-
-### Actively obtaining
-
-To actively obtain the number of unread messages in a conversation, first call {getPlatformData(props,queryConversationListMap)} or {getPlatformData(props,queryConversationMap)} to obtain the target conversation object. Then, you can use the {getPlatformData(props,unreadMessageCountMap)} property of the target conversation object to know the number of unread messages in that conversation.
-
-### Passively obtaining
-
-Listen for the {getPlatformData(props,onConversationChangedMap)} callback to obtain the {getPlatformData(props,unreadMessageCountMap)} property of a conversation and know the latest number of unread messages in that conversation. For more details, refer to [Get conversation list - Listen for conversation changes](./Get%20the%20conversation%20list.mdx).
-
-## Get the total unread message count of all conversations
-To know how many unread messages you currently have after login, listen for the callback {getPlatformData(props,onConversationTotalUnreadMessageCountUpdatedMap)}  {getPlatformData(props,setEventHandlerMap)}. 
+通过 ZIM，您可以获取单个会话的消息未读数，计算所有会话消息未读数的总和，并支持清除上述数值。
 
 
-After a successful login, the client user is notified of the update of the total number of unread messages through the callback in any of the following situations:
+## 获取单个会话消息未读数
 
-- The user receives a new message and the message notification is enabled for the current conversation.
-- The user proactively clears the number of unread conversation messages. For details, see the chapter above **Clear the number of unread conversation messages**.
+ZIM 支持主动或被动获取某个会话的未读数。
 
-With this callback, you can adjust your app's UI display to remind the client user how many messages are currently unread.  
+### 主动获取
+
+如需主动获取某个会话的未读数，请先调用 {getPlatformData(props,queryConversationListMap)} 或 {getPlatformData(props,queryConversationMap)} 获取到目标会话对象，即可从目标会话对象的 {getPlatformData(props,unreadMessageCountMap)} 属性了解该会话的消息未读数。
+
+### 被动获取
+
+请监听 {getPlatformData(props,onConversationChangedMap)} 回调，获取会话的 {getPlatformData(props,unreadMessageCountMap)} 属性，了解会话的最新消息未读数，详情请参考 [获取会话列表 - 监听会话变更](./Get%20the%20conversation%20list.mdx#监听会话变更)。
+
+
+## 获取消息未读总数
+
+用户登录后，可以查询自己当前有多少未读消息。开发者可以通过 {getPlatformData(props,setEventHandlerMap)} 监听的 {getPlatformData(props,onConversationTotalUnreadMessageCountUpdatedMap)} 回调接口，获取消息的未读总数。
+
+用户登录成功后，以下情况出现时，均会通过该接口，获取消息未读总数更新的通知：
+
+- 用户接收到新消息、且当前会话没有开启消息免打扰。
+- 用户主动清理了会话未读数量，具体请参考 [清除会话消息未读数](./Get%20the%20conversation%20list.mdx)。
+
+开发者可以通过此回调通知，调整自己应用的 UI 展示，用于提醒用户当前有多少条消息未读。    
+
 
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
-// Set up the event handler and listen for related callbacks.
+```java title="示例代码"
+// 注册 SDK 事件通知监听
 zim.setEventHandler(this);
 
 ...
 
-// Callback for getting the total number of unread messages.
+// 接收消息未读总数的回调通知
 public void onConversationTotalUnreadMessageCountUpdated(ZIM zim, int totalUnreadMessageCount) {
-    // Get the number of unread messages for UI dispaly.
+    // 获取会话总未读数用于 UI 展示
     // ......
 }
 ```
 
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc titile="Sample code"
-// Set up the event handler and listen for related callbacks.
+```objc title="示例代码"
+// 注册 SDK 事件通知监听
 [self.zim setEventHandler:self];
 
 ...
 
-// Callback for getting the total number of unread messages.
+// 接收消息未读总数的回调通知
 - (void)zim:(ZIM *)zim conversationTotalUnreadMessageCountUpdated:(unsigned int)totalUnreadMessageCount {
-    // Get the number of unread messages for UI dispaly.
-    // ......
-}
-```
-</CodeGroup>
-:::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc titile="Sample code"
-// Set up the event handler and listen for related callbacks.
-[self.zim setEventHandler:self];
-
-...
-
-// Callback for getting the total number of unread messages.
-- (void)zim:(ZIM *)zim conversationTotalUnreadMessageCountUpdated:(unsigned int)totalUnreadMessageCount {
-    // Get the number of unread messages for UI dispaly.
+    // 获取会话总未读数用于 UI 展示
     // ......
 }
 ```
@@ -130,15 +117,15 @@ public void onConversationTotalUnreadMessageCountUpdated(ZIM zim, int totalUnrea
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
-// Set up the event handler and listen for related callbacks.
-zim.setEventHandler(shared_from_this());
+```Cpp title="示例代码"
+// 注册 SDK 事件通知监听
+zim->setEventHandler(shared_from_this());
 
-//...
+...
 
-// Callback for getting the total number of unread messages.
+// 接收消息未读总数的回调通知
 virtual void onConversationTotalUnreadMessageCountUpdated(ZIM * zim, unsigned int totalUnreadMessageCount) {
-    // Get the number of unread messages for UI dispaly.
+    // 获取会话总未读数用于 UI 展示
     // ......
 }
 ```
@@ -146,45 +133,49 @@ virtual void onConversationTotalUnreadMessageCountUpdated(ZIM * zim, unsigned in
 :::
 :::if{props.platform="Web"}
 <CodeGroup>
-```javascrtipt
+```javascript title="示例代码"
 zim.on('conversationTotalUnreadMessageCountUpdated', function(zim, { totalUnreadMessageCount }){
-    // Obtain the total number of unread messages of all conversations and display it on the UI.
+    // 获取会话总未读数用于 UI 展示
 })
 ```
 </CodeGroup>
 :::
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
-// Callback for getting the total number of unread messages.
+
+```dart title="示例代码"
+// 接收消息未读总数的回调通知
 ZIMEventHandler.onConversationTotalUnreadMessageCountUpdated =
-      (totalUnreadMessageCount) {
-     // Get the number of unread messages for UI dispaly.
+      (zim, totalUnreadMessageCount) {
+     // 获取会话总未读数用于 UI 展示
     // ......        
 };
 ```
 </CodeGroup>
 :::
 
-## Clear the unread message count of one conversation
 
-To clear the unread message number of one conversation after getting the conversation list, call the {getPlatformData(props,clearConversationUnreadMessageCountMap)} method.
 
-Because the ZIM SDK does not know when your app users should clear the unread count of the conversation, you need to call this method when your app users interact with specific pages. The following are some common scenarios to call this method:
+## 清除单个会话消息未读数
 
-- Users click a conversation to enter the chat interface. 
-- Users stay in the same conversation, and this method should be called every time the user receiving a new message. 
-- Users mark a specified conversation as read in the conversation list interface. 
+用户登录并成功拉取到会话列表后，可以通过调用 {getPlatformData(props,clearConversationUnreadMessageCountMap)} 接口，清除某个会话的未读消息数。
+
+由于 SDK 并不知道用户何时应该清除会话未读数，因此开发者需要在用户与某些页面交互时触发调用该接口，以下为常见的调用时机：
+
+- 点击会话，进入了该会话的聊天界面内，需要调用该接口。
+- 用户一直处于聊天界面，每次收到消息后，都需要调用该接口。
+- 在会话列表界面中，标记某条未读的会话为已读时，需要调用该接口。
+
 
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
+```java title="示例代码"
 zim.clearConversationUnreadMessageCount("CONV_ID", ZIMConversationType.PEER, new ZIMConversationUnreadMessageCountClearedCallback() {
     @Override
     public void onConversationUnreadMessageCountCleared(ZIMError errorInfo) {
-        // Returned results of the clear operation.
+        // 获取清除未读数的结果
         if(errorInfo.code == ZIMErrorCodeSuccess) {
           // ......
         } else {
@@ -195,27 +186,12 @@ zim.clearConversationUnreadMessageCount("CONV_ID", ZIMConversationType.PEER, new
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc title="Sample code"
-// To clear the number of unread messages of specifed conversation.
+```objc title="示例代码"
+// 清除指定会话的未读消息数量
 [self.zim clearConversationUnreadMessageCount:@"CONV_ID" conversationType: ZIMConversationTypePeer callback:^(ZIMError * _Nonnull errorInfo) {
-    // Returned results of the clear operation.
-    if(errorInfo.code == ZIMErrorCodeSuccess) {
-      // ......
-    } else {
-      // ......
-    }
-}];
-```
-</CodeGroup>
-:::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc title="Sample code"
-// To clear the number of unread messages of specifed conversation.
-[self.zim clearConversationUnreadMessageCount:@"CONV_ID" conversationType: ZIMConversationTypePeer callback:^(ZIMError * _Nonnull errorInfo) {
-    // Returned results of the clear operation.
+    // 获取清除未读数的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -227,10 +203,10 @@ zim.clearConversationUnreadMessageCount("CONV_ID", ZIMConversationType.PEER, new
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
-// Clear the unread message count of a specified conversation
+```Cpp title="示例代码"
+// 清除指定会话的未读消息数量
 zim->clearConversationUnreadMessageCount("CONV_ID", ZIMConversationTypePeer, [=](ZIMError errorInfo) {
-    // Get the result of clearing the unread count
+    // 获取清除未读数的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -242,46 +218,51 @@ zim->clearConversationUnreadMessageCount("CONV_ID", ZIMConversationTypePeer, [=]
 :::
 :::if{props.platform="Web"}
 <CodeGroup>
-```javascrtipt titile="Sample code"
+```javascript title="示例代码"
 var conversationID = '';
 var conversationType = 0;
 zim.clearConversationUnreadMessageCount(conversationID, conversationType)
     .then(function(res){
-        // Operation succeeded.
+        // 操作成功
     })
     .catch(function(err){
-        // Operation failed.
+        // 操作失败
     })
 ```
+
 </CodeGroup>
 :::
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
+```dart title="示例代码"
 ZIM
     .getInstance()
-    .clearConversationUnreadMessageCount(
+    !.clearConversationUnreadMessageCount(
         'conversationID', ZIMConversationType.peer)
-    .then((value) {})
+    .then((value) => {})
     .catchError((onError) {});
 ```
 </CodeGroup>
 :::
 
+<a id="clearConversationTotalUnreadMessageCount"></a>
+## 清除全部会话消息未读数
 
-## Clear the total unread message count of all conversations 
+用户登录并成功拉取到会话列表后，可以通过调用 {getPlatformData(props,clearConversationTotalUnreadMessageCountMap)} 接口，清除全部会话的未读消息数。
 
-To clear the unread message numbers of all conversations after getting the conversation list, call the {getPlatformData(props,clearConversationTotalUnreadMessageCountMap)} method.
+当开发者想实现清除**全部会话消息未读数**和**消息未读总数**时，可使用该接口。
 
-When you want to clear the **unread message counts of all conversations** and **total unread conversation count**, you can use this interface.
+
+
 
 :::if{props.platform=undefined}
-```java
-// Clear the unread message counts of all conversations
+<CodeGroup>
+```java title="示例代码"
+// 清除全部会话的未读消息数量
 zim.clearConversationTotalUnreadMessageCount(new ZIMConversationTotalUnreadMessageCountClearedCallback() {
     @Override
     public void onConversationTotalUnreadMessageCountCleared(ZIMError errorInfo) {
-        // Get the operation result
+        // 获取清除未读数的结果
         if(errorInfo.code == ZIMErrorCodeSuccess) {
           // ......
         } else {
@@ -290,26 +271,13 @@ zim.clearConversationTotalUnreadMessageCount(new ZIMConversationTotalUnreadMessa
     }
 });
 ```
-
+</CodeGroup>
 :::
-:::if{props.platform="iOS"}
-```objc
-// Clear the unread message counts of all conversations
+:::if{props.platform="iOS|mac"}
+```objc title="示例代码"
+// 清除全部会话的未读消息数量
 [self.zim clearConversationTotalUnreadMessageCount:callback:^(ZIMError * _Nonnull errorInfo) {
-    // Get the operation result
-    if(errorInfo.code == ZIMErrorCodeSuccess) {
-      // ......
-    } else {
-      // ......
-    }
-}];
-```
-:::
-:::if{props.platform="mac"}
-```objc
-// Clear the unread message counts of all conversations
-[self.zim clearConversationTotalUnreadMessageCount:callback:^(ZIMError * _Nonnull errorInfo) {
-    // Get the operation result
+    // 获取清除未读数的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -319,10 +287,10 @@ zim.clearConversationTotalUnreadMessageCount(new ZIMConversationTotalUnreadMessa
 ```
 :::
 :::if{props.platform="window"}
-```cpp
-// Clear the unread message counts of all conversations
+```Cpp
+// 清除全部会话的未读消息数量
 zim->clearConversationTotalUnreadMessageCount([=](ZIMError errorInfo) {
-// Get the result of the clear operation
+    // 获取清除操作结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -332,23 +300,27 @@ zim->clearConversationTotalUnreadMessageCount([=](ZIMError errorInfo) {
 ```
 :::
 :::if{props.platform="Web"}
-```javascript
-// Clear the unread message counts of all conversations
+<CodeGroup>
+```javascript title="示例代码"
+// 清除全部会话的未读消息数量
 zim.clearConversationTotalUnreadMessageCount()
     .then(function(){
-        // Operation succeeded
+        // 操作成功
     })
     .catch(function(err){
-        // Operation failed
+        // 操作失败
     })
 ```
+</CodeGroup>
 :::
 :::if{props.platform="Flutter"}
-```dart
-// Clear the unread message counts of all conversations
+<CodeGroup>
+```dart title="示例代码"
+// 清除全部会话的未读消息数量
 ZIM.getInstance()!.clearConversationTotalUnreadMessageCount().
 then((value) => {})
     .catchError((onError) {});
 ```
+</CodeGroup>
 :::
 
