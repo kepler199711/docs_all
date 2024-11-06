@@ -1,35 +1,38 @@
 ---
-articleID: 17785
+articleID: 20888
 ---
 
 
-# Set conversation draft
+# 保存会话草稿
 
 - - -
 
-## Introduction
+## 功能简介
 
-A conversation draft refers to a text message that the user is currently editing but has not yet sent. ZIM supports saving conversation drafts locally even after the user exits the conversation, so that the user can continue editing.
+会话草稿，指用户正在编辑但尚未发送的文本消息。ZIM 支持用户退出会话后仍在本地保存会话草稿，以便继续编辑。
 
-## Procedures
+## 实现流程
 
-By calling the [setConversationDraft](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setConversationDraft.html) interface and specifying the conversation ID and conversation type, you can save the draft to the conversation.
+调用 [setConversationDraft](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setConversationDraft.html) 接口，传入 conversationID 与conversationType 指定某个会话，即可将草稿保存到会话。
 
 <Note title="Note">
 
-To clear the conversation draft, pass an empty string for the `draft` field.
+如需清除会话草稿，`draft` 字段请传空字符串。
 </Note>
 
-After successfully saving the draft, the operation result will be asynchronously returned through [ZIMConversationDraftSetResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConversationDraftSetResult-class.html).
 
-The user can use the [onConversationChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConversationChanged.html) callback to obtain the updated conversation information after the draft has been changed.
+保存草稿成功后，操作结果通过 [ZIMConversationDraftSetResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMConversationDraftSetResult-class.html) 异步返回。
 
-```dart
-// Set a draft for a conversation
-// Take a group conversation as an example
+操作用户可以通过[onConversationChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConversationChanged.html) 回调接口获取草稿变更后的会话信息。
+
+<CodeGroup>
+```dart title="示例代码"
+// 为某个会话设置草稿
+// 以群聊消息为例
 ZIM.getInstance().setConversationDraft("draft", "Group_ID", ZIMConversationType.group).then((value){
-     // Logic after the successful operation
+    // 保存会话草稿的操作结果
 }).catchError((onError){
-     // Seek ZEGO official error code document for solution
+    // 可以打印错误码和错误信息，参考 ZIM 官网错误码文档排查错误原因
 });
 ```
+</CodeGroup>
