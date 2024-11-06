@@ -1,5 +1,5 @@
 ---
-articleID: 17748
+articleID: 20916
 ---
 
 import {getPlatformData} from "/snippets/utils-content-parser.js"
@@ -9,28 +9,36 @@ export const setConversationNotificationStatusMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/setConversationNotificationStatus.html' target='_blank'>setConversationNotificationStatus</a>,
 }
 
-# Mute a conversation
+
+
+# 设置会话免打扰
 
 - - -
 
-## Introduction
+## 功能概述
 
-Mute a conversation: A user can mute any conversation, and when the ZIM SDK receives a message for the conversation, it does not send a push notification, and **the total count of unread messages does not increase**.
+会话消息免打扰，指设置之后，SDK 在接收到当前会话的消息时，将不会进行推送通知，同时 **“消息未读总数”也不会增加**。
 
-## Procedure
 
-To mute a conversation, call the {getPlatformData(props,setConversationNotificationStatusMap)} method with the `conversationID` parameter.
+## 实现流程
+
+调用 {getPlatformData(props,setConversationNotificationStatusMap)} 接口，传入 conversationID 指定某个会话，设置消息免打扰功能。
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
-// Mute a conversation
-// Take a group conversation as example
-zim.setConversationNotificationStatus(ZIMConversationNotificationStatus.DO_NOT_DISTURB, "CONV_ID", ZIMConversationType.PEER, new ZIMConversationNotificationStatusSetCallback() {
+```java title="示例代码"
+// 将某个会话设置为消息免打扰状态
+// 以单聊会话为例
+
+// 设置会话类型为单聊
+ZIMConversationType conversationType = ZIMConversationType.PEER;
+
+// 设置会话为免打扰
+zim.setConversationNotificationStatus(ZIMConversationNotificationStatus.DO_NOT_DISTURB, "CONV_ID", conversationType, new ZIMConversationNotificationStatusSetCallback() {
     @Override
     public void onConversationNotificationStatusSet(ZIMError errorInfo) {
-        // Set the callback for the results of mute notifications.
+        // 设置消息免打扰的结果
         if(errorInfo.code == ZIMErrorCodeSuccess) {
           // ......
         } else {
@@ -39,16 +47,17 @@ zim.setConversationNotificationStatus(ZIMConversationNotificationStatus.DO_NOT_D
     }
 });
 ```
+
 </CodeGroup>
 :::
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc title="Sample code"
-// Mute a conversation
-// Take a group conversation as example
-[self.zim setConversationNotificationStatus:ZIMConversationNotificationStatusDoNotDisturb conversationID:@"CONV_ID" conversationType:ZIMConversationTypePeer callback:^(ZIMError * _Nonnull errorInfo) {
-    // Set the callback for the mute result.
+```objc title="示例代码"
+// 将某个会话设置成消息免打扰状态
+// 以群聊会话为例
+[self.zim setConversationNotificationStatus:ZIMConversationNotificationStatusDoNotDisturb conversationID:@"CONV_ID" conversationType:ZIMConversationTypeGroup callback:^(ZIMError * _Nonnull errorInfo) {
+    // 设置消息免打扰状态的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -61,12 +70,11 @@ zim.setConversationNotificationStatus(ZIMConversationNotificationStatus.DO_NOT_D
 
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
-// Mute notifications for specified conversations.
-// Mute a conversation
-// Take a group conversation as example
-zim. setConversationNotificationStatus(ZIMConversationNotificationStatusDoNotDisturb, "CONV_ID", ZIMConversationTypePeer, [=](ZIMError errorInfo) {
-    // Set the callback for the results of mute notifications.
+```cpp title="示例代码"
+// 将某个会话设置成消息免打扰状态
+// 以群聊会话为例
+zim->setConversationNotificationStatus(ZIMConversationNotificationStatusDoNotDisturb, "CONV_ID", ZIMConversationTypeGroup, [=](ZIMError errorInfo) {
+    // 设置消息免打扰的结果
     if(errorInfo.code == ZIMErrorCodeSuccess) {
       // ......
     } else {
@@ -79,33 +87,33 @@ zim. setConversationNotificationStatus(ZIMConversationNotificationStatusDoNotDis
 
 :::if{props.platform="Web"}
 <CodeGroup>
-```javascript title="Sample code"
-// Mute the notifications for a group chat.
-// Take a group chat as an example
-var status = 2;
+```javascript title="示例代码"
+// 将某个群会话设置成消息免打扰状态
+// 以群聊消息为例
+
+var status = 2;  // 将会话状态设置为免打扰 
 var conversationID = '';
-var conversationType = 2; // The conversation type is group chat
+var conversationType = 2;  // 会话类型为群聊
 zim.setConversationNotificationStatus(status, conversationID, conversationType)
     .then(function(res){
-        // Operation succeeded.
+        // 操作成功
     })
     .catch(function(err){
-        // Operation failed.
+        // 操作失败
     })
 ```
-
 </CodeGroup>
 :::
 
 :::if{props.platform="U3d"}
 <CodeGroup>
-```c# title="Sample code"
-// Set a conversation to the "Do Not Disturb" notification status
+```c# title="示例代码"
+// 将某个会话设置成消息免打扰状态
 ZIM.GetInstance().SetConversationNotificationStatus(ZIMConversationNotificationStatus.DoNotDisturb, "CONV_ID",
     ZIMConversationType.Group, (string conversationID, ZIMConversationType conversationType,
         ZIMError errorInfo) =>
     {
-        // Result of setting the "Do Not Disturb" notification status
+        // 设置消息免打扰的结果
     });
 ```
 </CodeGroup>
@@ -113,15 +121,16 @@ ZIM.GetInstance().SetConversationNotificationStatus(ZIMConversationNotificationS
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
-// Mute notifications for specified conversations.
+```dart title="示例代码"
+// 将某个会话设置成消息免打扰状态
+// 以群聊会话为例
 ZIM
     .getInstance()
-    .setConversationNotificationStatus(
+    !.setConversationNotificationStatus(
         ZIMConversationNotificationStatus.doNotDisturb,
         'conversationID',
         ZIMConversationType.group)
-    .then((value) {})
+    .then((value) => {})
     .catchError((onError) {});
 ```
 </CodeGroup>

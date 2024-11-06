@@ -23,244 +23,272 @@ export const queryConversationPinnedListMap = {
   'iOS': <a href='@queryConversationPinnedListWithConfig' target='_blank'>queryConversationPinnedListWithConfig</a>,
 }
 
-# Pin a conversation
+
+
+
+# 置顶会话
 
 - - -
 
-## Introduction
+## 功能简介
 
+会话置顶指的是将单聊或者群聊会话固定于会话列表的顶部，不会被其他非置顶会话挤到底部，方便用户查找。用户通过客户端将会话置顶后，置顶状态会存储在服务器，因此，当用户切换终端设备后，置顶状态会同步到当前设备。
 
-Pinning conversations refers to fixing one-on-one or group chat conversations at the top of the conversation list, preventing them from being pushed to the bottom by other non-pinned conversations, and making it easier for users to find them. When users pin a conversation through the client, the pinned status is stored on the server. Therefore, when users switch to another device, the pinned status will be synchronized to the current device.
-
-ZIM supports users to pin conversations and query the pinned conversation list
+ZIM 支持用户置顶会话，以及查询置顶会话列表。
 
 <Note title="Note">
 
-- Pinned conversations are only supported in ZIM SDK version 2.8.0 or above.
-- The maximum limit for pinned conversations is 100.
+- 仅支持 2.8.0 或以上版本的 ZIM SDK 实现会话置顶。
+- 置顶会话数量上限为 100。
 </Note>
 
-- Pinned conversations are always placed before unpinned conversations.
+#### 置顶顺序说明
 
+- 置顶会话始终排在未置顶会话之前。
+    
     <Note title="Note">
-
-    This rule also applies to the conversation list fetched by calling the {getPlatformData(props,queryConversationListMap)} interface. Developers can confirm whether a conversation is pinned by checking the {getPlatformData(props,isPinnedMap)} field of the ZIMConversation in the fetched results.
+    
+    对于通过调用 {getPlatformData(props,queryConversationListMap)} 接口拉取的会话列表，此规则同样适用。开发者可以通过拉取结果中 ZIMConversation 的 {getPlatformData(props,isPinnedMap)} 字段，确认会话是否被置顶。
     </Note>
 
-- After a user pins multiple conversations, the relative order between these conversations will remain unchanged.   
-    Let's assume there are 5 conversations, and the existing order in the conversation list is: a, b, c, d, e.   
-    If the user pins conversations b and d (regardless of the order in which they are pinned), the new order will be b, d, a, c, e. In other words, conversations b and d are placed at the front, and conversation b is still placed before conversation d.
+- 用户置顶多个会话后，相关会话之间的相对顺序仍然会保持。   
+    假设有 5 个会话，在会话列表中的现有排序为：a、b、c、d、e。   
+    用户将会话 b 和 d 置顶（不论先置顶哪个），顺序变更为 b、d、a、c、e，即 b 和 d 排在最前面，并且会话 b 仍然排在 d 之前。
 
     <Note title="Note">
-
-    The above example assumes that the orderKey of the related conversations remains unchanged before and after pinning. If the orderKey changes, the order in the pinned conversation list will also change.
+    
+    上述场景成立的前提为会话的 orderKey 没有被其他事件改变（如收到新消息后，会话的 order key 会变大）。当 orderKey 变化后，置顶会话列表中的顺序会改变。
     </Note>
 
-## Pin a conversation
+## 置顶会话
 
-After the login, a user can pin or unpin a conversation in their conversation list by calling the {getPlatformData(props,updateConversationPinnedStateMap)} interface.
+用户登录后，可调用 {getPlatformData(props,updateConversationPinnedStateMap)} 接口置顶或取消置顶自己会话列表中的某个会话。
+
 
 :::if{props.platform=undefined}
-```java
-// Pin a one-on-one conversation
+<CodeGroup>
+```java title="示例代码"
+// 置顶某单聊会话
 boolean isPinned = true;
 zim.updateConversationPinnedState(isPinned, conversation.conversationID, conversation.type, new ZIMConversationPinnedStateUpdatedCallback() {
         @Override
         public void onConversationPinnedStateUpdated(String conversationID, ZIMConversationType conversationType, ZIMError errorInfo) {
-             // Callback of the isPinned value change
+             // 更新会话置顶状态后的回调。
         }
     });
 ```
-
+</CodeGroup>
 :::
 :::if{props.platform="iOS"}
 
-```objc
-// Pin a one-on-one conversation
+<CodeGroup>
+```objc title="示例代码"
+// 置顶某单聊会话
 bool isPinned = YES;
-    
+
 [[ZIM getInstance] updateConversationPinnedState:isPinned conversationID:@"conversationID" conversationType:ZIMConversationTypePeer callback:^(NSString * _Nonnull conversationID, ZIMConversationType conversationType, ZIMError * _Nonnull errorInfo) {
-    // Business logic
+    //业务逻辑
 }];
 ```
+</CodeGroup>
 :::
 :::if{props.platform="window"}
-```cpp
-// Pin a one-to-one conversation
+<CodeGroup>
+```cpp title="示例代码"
+// 置顶某单聊会话
 zim_->updateConversationPinnedState(
     true, conv_id, zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER,
     [=](const std::string &conversationID, zim::ZIMConversationType conversationType,
         const zim::ZIMError &errorInfo) {
-        // Operarion result
+        // 置顶会话操作的结果回调通知
         if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
-            // Operation succeeded
+            //......
         } else {
-            // Operation failed, you can print the error code and error message and troubleshoot the error by looking for the ZIM official error code documentation. 
+            // 可以打印错误码和错误信息，参考 ZIM 官网错误码文档排查错误原因
         }
     });
 ```
+</CodeGroup>
 :::
 :::if{props.platform="U3d"}
-```c#
-// Pin a one-on-one conversation
+<CodeGroup>
+```c# title="示例代码"
+// 置顶某单聊会话
 ZIM.GetInstance().UpdateConversationPinnedState(
     true, "conv_id", ZIMConversationType.Peer,
     (string conversationID, ZIMConversationType conversationType,
         ZIMError errorInfo) {
-        // Callback notification for the result of the pinned conversation operation
+        // 置顶会话操作的结果回调通知
         if (errorInfo.code == ZIMErrorCode.Success) {
             //......
         } else {
-            // You can print the error code and error message to troubleshoot the issue, refer to the ZIM official website error code documentation for troubleshooting
+            // 可以打印错误码和错误信息，参考 ZIM 官网错误码文档排查错误原因
         }
     });
 ```
+</CodeGroup>
 :::
 :::if{props.platform="Web"}
-```javascript
-// Pin a one-on-one conversation
+<CodeGroup>
+```javascript title="示例代码"
+// 置顶某单聊会话
 var isPinned = true;
 var conversationID = "";
 var conversationType = 0;
 zim.updateConversationPinnedState(isPinned, conversationID, conversationType)
     .then(function(res){
-        // Operation succeeded
+        // 操作成功
     })
     .catch(function(err){
-        // Operation failed
+        // 操作失败
     })
 ```
+</CodeGroup>
 
 :::
 :::if{props.platform="Flutter"}
-```dart
-// Pin a one-on-one conversation
+<CodeGroup>
+```dart title="示例代码"
+// 置顶某单聊会话
 ZIM.getInstance().updateConversationPinnedState(true, "conversationID", ZIMConversationType.peer
     ).then((value){
 
 }).catchError((onError){
-    // You can print the error code and error message to troubleshoot the error, please refer to the ZIM official website error code documentation for the error reasons.
+    // 可以打印错误码和错误信息，参考 ZIM 官网错误码文档排查错误原因
 });
 ```
+</CodeGroup>
 :::
 
-## Get the pinned conversation list
+## 查询置顶会话列表
 
-After the login, a user can use the {getPlatformData(props,queryConversationPinnedListMap)} interface to get the full list of pinned conversations.
+用户登录后，可以通过 {getPlatformData(props,queryConversationPinnedListMap)} 接口，获取全量的置顶会话列表。
+
 
 :::if{props.platform=undefined}
-```java
+<CodeGroup>
+```java title="示例代码"
 ZIMConversationQueryConfig config = new ZIMConversationQueryConfig();
-config.nextConversation = null;//// No need to pass in for the first query
-config.count = 20; // // The number of pinned conversations to retrieve each time
+config.nextConversation = null;// 第一次传null，后续传列表最后一个会话作为锚点。
+config.count = count; // 每次获取置顶会话的数量
 
+// 拉取置顶会话列表
 zim.queryConversationPinnedList(config, new ZIMConversationPinnedListQueriedCallback() {
     @Override
     public void onConversationPinnedListQueried(ArrayList<ZIMConversation> conversationList, ZIMError errorInfo) {
-        // Get the data
+        // 获取到置顶列表数据。
     }
 });
 ```
-
+</CodeGroup>
 :::
 :::if{props.platform="iOS"}
-```objc
+<CodeGroup>
+```objc title="示例代码"
 ZIMConversationQueryConfig *queryConfig = [[ZIMConversationQueryConfig alloc] init];
-// The number of pinned conversations to retrieve each time
+// 每次获取置顶会话的数量
 queryConfig.count = 20;
-// No need to pass in for the first query
+// 首次查询无需传入
 queryConfig.nextConversation = nil;
 [[ZIM getInstance] queryConversationPinnedListWithConfig:queryConfig callback:^(NSArray<ZIMConversation *> * _Nonnull conversationList, ZIMError * _Nonnull errorInfo) {
     if(errorInfo.code != ZIMErrorCodeSuccess){
-        NSLog(@"Please handle according to the actual error code and error message by referring to the error code table");
+        NSLog(@"请根据实际错误码与错误信息，对照错误码表来处理");
         return;
     }
-    NSLog(@"conversationList is the query result");
-    
-    // Pass the last conversation in the previous query result to query subsequent content based on the previous query result
+    NSLog(@"conversationList 为查询结果");
+
+    // 下次查询时将末尾的 conversation 传入即可在上次查询结果的基础上继续查询后续内容
     queryConfig.nextConversation = [conversationList lastObject];
 }];
 ```
+</CodeGroup>
 
 :::
 :::if{props.platform="window"}
-
-```cpp
+<CodeGroup>
+```cpp title="示例代码"
 zim::ZIMConversationQueryConfig config;
-// anchor, no need to pass in for the first query
+// 会话锚点，传空则代表从最新开始查询
 config.nextConversation = nullptr;
-// Number of pinned conversations to retrieve each time
-config.count = 20;
+// 每次获取置顶会话的数量
+config.count = 100;
+// 拉取置顶会话列表
 zim_->queryConversationPinnedList(
     config,
     [=](const std::vector<std::shared_ptr<zim::ZIMConversation>> &conversationList,
         const zim::ZIMError &errorInfo) {
-        // Operation result
+        // 拉取置顶会话列表操作的结果回调通知
         if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
             for (const auto &conv : conversationList) {
-                // Operation succeeded
+                //......
             }
         } else {
-            // Operation failed, you can print the error code and error message and troubleshoot the error by looking for the ZIM official error code documentation. 
+            // 可以打印错误码和错误信息，参考 ZIM 官网错误码文档排查错误原因
         }
     });
 ```
+</CodeGroup>
 :::
 :::if{props.platform="U3d"}
-```c#
+<CodeGroup>
+```c# title="示例代码"
 ZIMConversationQueryConfig config = new ZIMConversationQueryConfig();
-// Conversation anchor, pass empty to query from the latest
+// 会话锚点，传空则代表从最新开始查询
 config.nextConversation = null;
-// Number of top conversations to retrieve each time
+// 每次获取置顶会话的数量
 config.count = 100;
-// Fetching the list of pinned conversations
+// 拉取置顶会话列表
 ZIM.GetInstance().QueryConversationPinnedList(
     config,
     [=](List<ZIMConversation> convList, ZIMError errorInfo) {
-        // Callback notification for fetching the results of the operation to retrieve the list of pinned conversations.
+        // 拉取置顶会话列表操作的结果回调通知
         if (errorInfo.code == ZIMErrorCode.Success) {
             foreach (var conv in convList) {
                 //......
             }
         } else {
-            // You can print the error code and error message to troubleshoot the error cause. Please refer to the ZIM official website error code documentation for further investigation.
+            // 可以打印错误码和错误信息，参考 ZIM 官网错误码文档排查错误原因
         }
     });
 ```
+</CodeGroup>
 :::
 :::if{props.platform="Web"}
-```javascript
+<CodeGroup>
+```javascript title="示例代码"
 var config = {
-    // No need to pass in for the first query
+    // 会话锚点，传空则代表从最新开始查询
     nextConversation: null,
-    // The number of pinned conversations to retrieve each time
+    // 会话一次分页查询数
     count: 20
 };
 
-// Get the pinned
- conversation list
+// 拉取会话列表
 zim.queryConversationPinnedList(config)
     .then(function({ conversationList }){
-        // Operation succeeded, you should save and manage the conversation objects in the array 
+        // 查询成功，开发者需要保存和维护数组内的会话对象
     })
     .catch(function(err){
-        // Operation failed
+        // 查询失败
     })
 ```
+</CodeGroup>
 :::
 :::if{props.platform="Flutter"}
-```dart
+<CodeGroup>
+```dart title="示例代码"
 ZIMConversationQueryConfig config;
-// pass null for the first time to start querying from the latest
+// 会话锚点，传空则代表从最新开始查询
 config.nextConversation = null;
-// Number of pinned conversations to retrieve each time
-config.count = 20;
-// Fetch the list of pinned conversations
+// 每次获取置顶会话的数量
+config.count = 100;
+// 拉取置顶会话列表
 
 ZIM.getInstance().queryConversationPinnedList(config).then((value) {
-    // Callback for the result of getting the list of pinned conversations
+    // 拉取置顶会话列表操作的结果回调通知
 }).catchError((onError){
-    // You can print the error code and error message to troubleshoot the error cause, refer to the ZIM official website error code documentation
+    // 可以打印错误码和错误信息，参考 ZIM 官网错误码文档排查错误原因
 });
 ```
+</CodeGroup>
 :::
