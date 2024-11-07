@@ -1,5 +1,5 @@
 ---
-articleID: 17409
+articleID: 19463
 ---
 
 import { getPlatformData } from "/snippets/utils-content-parser.js"
@@ -28,324 +28,296 @@ export const ZIMTipsMessageGroupMemberChangeInfoMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMTipsMessageGroupMemberChangeInfo-class.html' target='_blank'>ZIMTipsMessageGroupMemberChangeInfo</a>,
 }
 
+# 接收 Tips 消息
 
-# Receive tip messages
 - - -
+## 功能简介
 
-## Overview
-
-The ZIM SDK converts some user operations on a group (such as group creation and disbandment) into tip messages, A tip message is a special type of message, whose enumeration value is `32`. Tip messages can be generated only by the ZIM backend or ZIM SDK. Users cannot insert tip messages into local conversations, set the read receipt or response for them, or directly delete them. However, users can delete a tip message by deleting all messages in a conversation.
+ZIM SDK 支持将用户的某些群组操作（如创建群组、解散群组等），转换为一条群组会话内的特殊类型消息（Tips 消息，枚举值为 32）。该种消息仅能由 ZIM 后台或 ZIM SDK 内部产生，用户不可自行插入本地会话，不可对其设置回执状态、表态和单独删除（但可通过删除会话内所有消息删除该消息）。
 
 <Note title="Note">
 
-Only ZIM SDK 2.15.0 or later supports tip messages.
+仅限 2.15.0 及以上版本的 ZIM SDK 支持此功能。
 </Note>
 
-## Procedure
+## 实现流程
 
-### 1. Enable the feature
+### 1 开通功能
 
-To enable the tip message feature for the following events, contact ZEGOCLOUD technical support .
-- Group creation
-- Group disbandment
-- User joined
-- User joined by invitation
-- Member leave
-- Member removal
-- Group profile change, including the following sub-events:
+请联系 ZEGO 技术支持开启单个或多个 Tips 消息特性，确认所需的消息事件。可开通的事件包含：
+- 群创建。
+- 群解散。
+- 用户主动加群。
+- 群内成员邀请群外用户。
+- 群成员主动离开。
+- 群内成员被踢出。
+- 群资料变更，包含以下事件：
     <Note title="Note">
     
-    The group profile change event is a collection of the following events that need to be specified separately.
+    “群资料变更” 仅为以下事件的集合，您在开通时，仍需指定所需的事件。
     </Note>
     
-    - Group name change
-    - Group avatar change
-    - Group notice change
-    - Group muting status change
-- Group member information change, including the following sub-events:
+    - 群名变更。
+    - 群头像变更。
+    - 群公告变更。
+    - 群禁言状态变更。
+- 群成员变更：包含以下子事件：
     <Note title="Note">
     
-    The group member information change event is a collection of the following events that need to be specified separately.
+    “群成员变更” 仅为以下事件的集合，您在开通时，仍需指定所需的事件。
     </Note>
     
-    - Group ownership change
-    - Group member role change
-    - Group role muting status change
+    - 群主变更。
+    - 群成员角色变更。
+    - 群成员禁言状态变更。
 
-### 2. Receive a tip message
+### 2 接收消息
 
-Listen for the {getPlatformData(props,onReceiveGroupMessageMap)}  callback to receive the tip message when a group event occurs.
+当群组会话中出现了相关事件，通过监听 {getPlatformData(props,onReceiveGroupMessageMap)} 回调，即可接收 Tips 消息。
 
-If the group event ({getPlatformData(props,ZIMTipsMessageEventMap)}) is a group profile change (`ZIMTipsMessageEvent.GROUP_INFO_CHANGED`) or group member information change (`ZIMTipsMessageEvent.GROUP_MEMBER_INFO_CHANGED`), do the following:
-1. Change the `changeInfo` in the tip message to {getPlatformData(props,ZIMTipsMessageGroupChangeInfoMap)} or {getPlatformData(props,ZIMTipsMessageGroupMemberChangeInfoMap)}.
-2. Based on the `type` in the `changeInfo`, obtain the event type ({getPlatformData(props,ZIMTipsMessageChangeInfoTypeMap)}) and determine the field to be read from the `changeInfo`. The ZIM SDK does not assign values to irrelevant fields. For more information, see the sample code at the end of this topic.
+如果 Tips 消息的事件（ {getPlatformData(props,ZIMTipsMessageEventMap)} ）为群资料变更（`ZIMTipsMessageEvent.GROUP_INFO_CHANGED`）和群成员变更（`ZIMTipsMessageEvent.GROUP_MEMBER_INFO_CHANGED`），请遵循以下步骤：
+1. 将 Tips 消息中的 `changeInfo` 转换为 {getPlatformData(props,ZIMTipsMessageGroupChangeInfoMap)} 或 {getPlatformData(props,ZIMTipsMessageGroupMemberChangeInfoMap)} 类型。
+2. 根据 `changeInfo` 中的 `type`，了解具体事件（ {getPlatformData(props,ZIMTipsMessageChangeInfoTypeMap)} ），从而确认 `changeInfo` 中应该读取的对应字段。对于非对应事件的字段，SDK 不会赋值。如需了解处理详情，可参考下文示例代码。
 
-The following table describes the relationship between the {getPlatformData(props,ZIMTipsMessageEventMap)} and the {getPlatformData(props,ZIMTipsMessageChangeInfoTypeMap)}.
+{getPlatformData(props,ZIMTipsMessageEventMap)} 与 {getPlatformData(props,ZIMTipsMessageChangeInfoTypeMap)} 的对应关系如下表所示：
 
 <table class="collapsible-table" >
-<tbody>
-<tr data-row-level="1">
-<th>
-Event 
-
-(`ZIMTipsMessageEvent`)
-</th>
-<th>Enumeration</th>
-<th>Value</th>
-<th>
-Read from 
-
-`ZIMTipsMessageGroupChangeInfo`
-</th>
+<tbody><tr data-row-level="1">
+<th>事件
+（ZIMTipsMessageEvent）</th>
+<th>枚举</th>
+<th>枚举值</th>
+<th>读取 ZIMTipsMessageGroupChangeInfo 操作</th>
 </tr>
 <tr data-row-level="2">
-<td>Group creation</td>
+<td>创建群组</td>
 <td>GROUP_CREATED</td>
 <td>1</td>
-<td rowspan="6">Not required</td>
+<td rowspan="6">无需操作</td>
 </tr>
 <tr data-row-level="3">
-<td>Group disbandment</td>
+<td>解散群组</td>
 <td>GROUP_DISMISSED</td>
 <td>2</td>
 </tr>
 <tr data-row-level="4">
-<td>User joined</td>
+<td>用户主动入群</td>
 <td>GROUP_JOINED</td>
 <td>3</td>
 </tr>
 <tr data-row-level="5">
-<td>User joined by invitation</td>
+<td>邀请用户入群</td>
 <td>GROUP_INVITED</td>
 <td>4</td>
 </tr>
 <tr data-row-level="6">
-<td>Member leave</td>
+<td>群内成员离群</td>
 <td>GROUP_LEFT</td>
 <td>5</td>
 </tr>
 <tr data-row-level="7">
-<td>Member removal</td>
+<td>群内成员被踢</td>
 <td>GROUP_KICKED_OUT</td>
 <td>6</td>
 </tr>
 <tr data-row-level="8" data-row-child="true">
-<td>Group profile change</td>
+<td>群资料变更</td>
 <td>GROUP_INFO_CHANGED</td>
 <td>7</td>
-<td>Required</td>
+<td>需要读取</td>
 </tr>
 <tr data-row-level="8-1">
-<th>
-Extra information
-
-（ZIMTipsMessageChangeInfoType）
-</th>
-<th>Enumeration</th>
-<th>Value</th>
-<th>
-Read from 
-
-`ZIMTipsMessageGroupChangeInfo` 
-</th>
+<th>额外信息
+（ZIMTipsMessageChangeInfoType）</th>
+<th>枚举</th>
+<th>枚举值</th>
+<th>读取 ZIMTipsMessageGroupChangeInfo 操作</th>
 </tr>
 <tr data-row-level="8-2">
-<td>Change of multiple items of the group name, group avatar, and group notice</td>
+<td>└群名、群头像、群公告多个变更</td>
 <td>GROUP_DATA_CHANGED</td>
 <td>1</td>
-<td>Perform a bitwise operation based on the `groupDataFlag` to calculate multiple items of the group name, group notice, and group avatar.</td>
+<td>参考示例代码，由 groupDataFlage 进行位运算，取群名，群公告、群头像其中某几个数据</td>
 </tr>
 <tr data-row-level="8-3">
-<td>Group notice change</td>
+<td>└群公告变更</td>
 <td>GROUP_NOTICE_CHANGED</td>
 <td>2</td>
-<td>Read the `groupNotice` field from `ZIMTipsMessageGroupChangeInfo`.</td>
+<td>读取 ZIMTipsMessageGroupChangeInfo 的 groupNotice 字段</td>
 </tr>
 <tr data-row-level="8-4">
-<td>Group name change</td>
+<td>└群名变更</td>
 <td>GROUP_NAME_CHANGED</td>
 <td>3</td>
-<td>Read the `groupName` field from `ZIMTipsMessageGroupChangeInfo`.</td>
+<td>读取 ZIMTipsMessageGroupChangeInfo 的 groupName 字段</td>
 </tr>
 <tr data-row-level="8-5">
-<td>Group avatar change</td>
+<td>└群头像变更</td>
 <td>GROUP_AVATAR_URL_CHANGED</td>
 <td>4</td>
-<td>Read the `groupAvatarUrl` field from `ZIMTipsMessageGroupChangeInfo`.</td>
+<td>读取 ZIMTipsMessageGroupChangeInfo 的 groupAvatarUrl 字段</td>
 </tr>
 <tr data-row-level="8-6">
-<td>Group muting status change</td>
+<td>└群禁言状态变更</td>
 <td>GROUP_MUTE_CHANGED</td>
 <td>5</td>
-<td>Read the `groupMutedInfo` field from `ZIMTipsMessageGroupChangeInfo`.</td>
+<td>读取 ZIMTipsMessageGroupChangeInfo 的 groupMutedInfo 字段</td>
 </tr>
 <tr data-row-level="9" data-row-child="true">
-<td>Group member information change</td>
+<td>群成员变更</td>
 <td>GROUP_MEMBER_INFO_CHANGED</td>
 <td>8</td>
-<td>Depends on the extra information.</td>
+<td>根据额外信息而定</td>
 </tr>
 <tr data-row-level="9-1">
-<th>
-Extra information （ZIMTipsChangeInfoType）
-</th>
-<th>Enumeration</th>
-<th> Value </th>
-<th colSpan={5}>
-Read from 
-
-`ZIMTipsMessageGroupMemberChangeInfo` 
-</th>
+<th>额外信息
+（ZIMTipsChangeInfoType）</th>
+<th>枚举</th>
+<th>枚举值</th>
+<th>读取 ZIMTipsMessageGroupMemberChangeInfo 操作</th>
 </tr>
 <tr data-row-level="9-2">
-<td>Group ownership change</td>
+<td>└群主转移</td>
 <td>GROUP_OWNER_TRANSFERRED</td>
 <td>10</td>
-<td>Not required</td>
+<td>无需读取</td>
 </tr>
 <tr data-row-level="9-3">
-<td>Group member role change</td>
+<td>└群成员角色变更</td>
 <td>GROUP_MEMBER_ROLE_CHANGED</td>
 <td>11</td>
-<td>Read the `memberRole` field from `ZIMTipsMessageGroupMemberChangeInfo`.</td>
+<td>读取 ZIMTipsMessageGroupMemberChangeInfo 的 memberRole 字段</td>
 </tr>
 <tr data-row-level="9-4">
-<td>Group role muting status change</td>
+<td>└群成员禁言状态变更</td>
 <td>GROUP_MEMBER_MUTE_CHANGED</td>
 <td>12</td>
-<td>Read the `muteExpiredTime` field from `ZIMTipsMessageGroupMemberChangeInfo`.</td>
+<td>读取 ZIMTipsMessageGroupMemberChangeInfo 的 muteExpiredTime 字段</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
 
 :::if{props.platform=undefined}
 ```java
-// Receive a group message.
+// 接收群组消息
 zim.setEventHandler(new ZIMEventHandler(){
 @Override
 public void onReceiveGroupMessage(ZIM zim, List<ZIMMessage> messageList, String fromGroupID) {
         for (ZIMMessage message : messageList) {
-            // It is a tip message.
+            // 消息为 Tips
             if (message.getType() == ZIMMessageType.TIPS) {
                 ZIMTipsMessage tipsMessage = (ZIMTipsMessage) message;
-                // It is a group profile change event.
+                // 如果 Tips 消息类型为群资料变更
                 if (tipsMessage.event == ZIMTipsMessageEvent.GROUP_INFO_CHANGED) {
                     ZIMTipsMessageGroupChangeInfo info = (ZIMTipsMessageGroupChangeInfo)tipsMessage.changeInfo;
                     if (info.type == ZIMTipsMessageChangeInfoType.GROUP_DATA_CHANGED) {
                         if ((info.groupDataFlag & ZIMGroupDataFlag.NAME) == ZIMGroupDataFlag.NAME) {
-                            // Group name change.
+                            // 群名变更
                             String newGroupName = info.groupName;
                         }
 
                         if ((info.groupDataFlag & ZIMGroupDataFlag.NOTICE) == ZIMGroupDataFlag.NOTICE) {
-                            // Group notice change.
+                            // 群公告变更
                             String newGroupNotice = info.groupNotice;
                         }
 
                         if ((info.groupDataFlag &  ZIMGroupDataFlag.AVATAR_URL) == ZIMGroupDataFlag.AVATAR_URL) {
-                            // Group avatar change.
+                            // 群头像变更
                             String newGroupAvatarUrl = info.groupAvatarUrl;
                         }
                     }
 
-                    // ...  The business logic.
+                    // ... 业务逻辑
                 } else if (tipsMessage.event == ZIMTipsMessageEvent.GROUP_MEMBER_INFO_CHANGED) {
                     ZIMTipsMessageGroupMemberChangeInfo memberInfo = (ZIMTipsMessageGroupMemberChangeInfo) tipsMessage.changeInfo;
-                    // ...  The business logic.
+                    // ... 业务逻辑
                 }
-                // ... Other business logic.
+                // ... 其他逻辑
             }
         }
     }
 });
 ```
-
 :::
 :::if{props.platform="window"}
 ```cpp
-// Receive a group message.
+// 接收群组消息
 void zim_event_handler::onReceiveGroupMessage(
     zim::ZIM *, const std::vector<std::shared_ptr<zim::ZIMMessage>> &messageList,
     const std::string &fromGroupID) {
 
     for (const auto &message: messageList) {
-        // It is a tip message.
-
+        // 消息为 Tips
         if (message->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_TIPS) {
             auto tips_message = std::static_pointer_cast<zim::ZIMTipsMessage>(message);
-            // It is a group profile change event.
+            // 如果 Tips 消息类型为群资料变更
             if (tips_message->getEvent() == zim::ZIMTipsMessageEvent::ZIM_TIPS_MESSAGE_EVENT_GROUP_INFO_CHANGED) {
                 auto info = std::static_pointer_cast<zim::ZIMTipsMessageGroupChangeInfo>(tips_message->getChangeInfo());
 
                 if (info->getType() == zim::ZIMTipsMessageChangeInfoType::ZIM_TIPS_MESSAGE_CHANGE_INFO_TYPE_GROUP_DATA_CHANGED) {
                     if (info->getGroupDataFlag() & ZIM_GROUP_DATA_FLAG_NAME) {
-                        // Group name change.
+                        // 群名变更
                         auto new_group_name = info->getGroupName();
                     }
 
                     if (info->getGroupDataFlag() & ZIM_GROUP_DATA_FLAG_NOTICE) {
-                        // Group notice change.
+                        // 群公告变更
                         auto new_group_notice = info->getGroupNotice();
                     }
 
                     if (info->getGroupDataFlag() & ZIM_GROUP_DATA_FLAG_AVATAR_URL) {
-                        // Group avatar change.
+                        // 群头像变更
                         auto new_group_avatar_url = info->getGroupAvatarUrl();
                     }
                 }
-            
-                ......//  The business logic.
+
+                ......// 业务逻辑
             } else if (tips_message->getEvent() == zim::ZIMTipsMessageEvent::ZIM_TIPS_MESSAGE_EVENT_GROUP_MEMBER_INFO_CHANGED) {
-                // It is a group member information change event.
+                // 如果 Tips 消息类型为群成员变更。
                 auto info = std::static_pointer_cast<zim::ZIMTipsMessageGroupMemberChangeInfo>(tips_message->getChangeInfo());
-                ......// The business logic.
+                ......// 业务逻辑
             }
             ......
         }
     }
 
 }
+
 ```
-
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
 
 :::if{props.platform="Flutter"}
 ```dart
-// Receive group messages
-ZIMEventHandler.onReceiveGroupMessage = (ZIM zim, List<ZIMMessage> messageList, String fromGroupID) {
-    for (ZIMMessage message in messageList) {
-        // Message is a tip
-        if (message.type == ZIMMessageType.tips) {
-            ZIMTipsMessage tipsMessage = message as ZIMTipsMessage;
-            // If the tip message type is group info changed
-            if (tipsMessage.event == ZIMTipsMessageEvent.groupInfoChanged) {
-                ZIMTipsMessageGroupChangeInfo info = tipsMessage.changeInfo as ZIMTipsMessageGroupChangeInfo;
-                if (info.type == ZIMTipsMessageChangeInfoType.groupDataChanged) {
-                    if ((info.groupDataFlag & ZIMGroupDataFlag.groupName) != 0) {
-                        // Group name changed
-                        String newGroupName = info.groupName;
-                    }
-                    if ((info.groupDataFlag & ZIMGroupDataFlag.groupNotice) != 0) {
-                        // Group notice changed
-                        String groupNotice = info.groupNotice;
-                    }
-
-                    if ((info.groupDataFlag & ZIMGroupDataFlag.avatarUrl) != 0) {
-                        // Group avatar changed
-                        String newGroupAvatarUrl = info.groupAvatarUrl;
-                    }
-                }
-            } else if (tipsMessage.event == ZIMTipsMessageEvent.groupMemberInfoChanged) {
-                ZIMTipsMessageGroupMemberChangeInfo memberInfo = tipsMessage.changeInfo as ZIMTipsMessageGroupMemberChangeInfo;
-                // ... Business logic
+// 接收群组消息
+ZIMEventHandler.onReceiveGroupMessage = (ZIM zim, List<ZIMMessage> messageList, String fromGroupID){
+    for (ZIMMessage message in messageList){
+      // 消息为 Tips
+      if(message.type == ZIMMessageType.tips){
+        ZIMTipsMessage tipsMessage = message as ZIMTipsMessage;
+        // 如果 Tips 消息类型为群资料变更
+        if(tipsMessage.event == ZIMTipsMessageEvent.groupInfoChanged){
+          ZIMTipsMessageGroupChangeInfo info = tipsMessage.changeInfo as ZIMTipsMessageGroupChangeInfo;
+          if(info.type == ZIMTipsMessageChangeInfoType.groupDataChanged){
+            if((info.groupDataFlag & ZIMGroupDataFlag.groupName) != 0){
+              // 群名变更
+              String newGroupName = info.groupName;
             }
-            // ... Other logic
+            if((info.groupDataFlag & ZIMGroupDataFlag.groupNotice) != 0){
+              // 群公告变更
+              String groupNotice = info.groupNotice;
+            }
+
+            if((info.groupDataFlag & ZIMGroupDataFlag.avatarUrl) != 0){
+              // 群头像变更
+              String newGroupAvatarUrl = info.groupAvatarUrl;
+            }
+          }
+        } else if (tipsMessage.event == ZIMTipsMessageEvent.groupMemberInfoChanged){
+          ZIMTipsMessageGroupMemberChangeInfo memberInfo =  tipsMessage.changeInfo as ZIMTipsMessageGroupMemberChangeInfo;
+          // ... 业务逻辑
         }
+        // ... 其他逻辑
+      }
     }
 };
 ```
@@ -353,147 +325,90 @@ ZIMEventHandler.onReceiveGroupMessage = (ZIM zim, List<ZIMMessage> messageList, 
 
 :::if{props.platform="Web"}
 ```JavaScript
-// Receive a group message.
+// 接收群组消息
 zim.on('receiveGroupMessage', (zim, { messageList, fromConversationID }) => {
     messageList.forEach((message) => {
-        // It is a tip message.
+        // 消息为 Tips
         if (message.type == 32) {
-            // It is a group profile change event.
+            // 如果 Tips 消息类型为群资料变更
             if (message.event == 7) {
                 const info = message.changeInfo;
-                // Server API modifies multiple attributes of group data.
+                // 服务端API修改群资料的多个属性
                 if (info.type == 1 && info.groupDataFlag) {
                     if (info.groupDataFlag & 1 == 1) {
-                        // Group name change.
+                        // 群名变更
                         const groupName = info.groupName;
                     }
 
                     if (info.groupDataFlag & 2 == 2) {
-                        // Group notice change.
+                        // 群公告变更
                         const groupNotice = info.groupNotice;
                     }
 
                     if (info.groupDataFlag & 4 == 4) {
-                        // Group avatar change.
+                        // 群头像变更
                         const groupAvatarUrl = info.groupAvatarUrl;
                     }
                 }
-                // The business logic.
+                // 业务逻辑
             } else if (message.event == 8) {
-                // It is a group member information change event.
+                // 如果 Tips 消息类型为群成员变更。
                 const info = message.changeInfo;
-                // The business logic.
+                // 业务逻辑
             }
         }
     });
 });
 ```
-
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Receive a group message.
+// 接收群组消息
 - (void)receiveGroupMessage:(ZIM *)zim 
                  messageList:(NSArray<ZIMMessage *> *)messageList 
                   fromGroupID:(NSString *)fromGroupID {
-    
+
     for (ZIMMessage *message in messageList) {
-        // It is a tip message.
+        // 消息为 Tips
         if (message.type == ZIMMessageTypeTips) {
             ZIMTipsMessage *tipsMessage = (ZIMTipsMessage *)message;
-            // It is a group profile change event.
+            // 如果 Tips 消息类型为群资料变更
             if (tipsMessage.event == ZIMTipsMessageEventGroupInfoChanged) {
                 ZIMTipsMessageGroupChangeInfo *info = (ZIMTipsMessageGroupChangeInfo *)tipsMessage.changeInfo;
-                
+
                 if (info.type == ZIMTipsMessageChangeInfoTypeGroupDataChanged) {
                     if (info.groupDataFlag & ZIMGroupDataFlagName) {
-                        // Group name change.
+                        // 群名变更
                         NSString *newGroupName = info.groupName;
                     }
-                    
+
                     if (info.groupDataFlag & ZIMGroupDataFlagNotice) {
-                        // Group notice change.
+                        // 群公告变更
                         NSString *newGroupNotice = info.groupNotice;
                     }
-                    
+
                     if (info.groupDataFlag & ZIMGroupDataFlagAvatarUrl) {
-                        // Group avatar change.
+                        // 群头像变更
                         NSString *newGroupAvatarUrl = info.groupAvatarUrl;
                     }
                 }
-                
-                // The business logic.
+
+                // 业务逻辑
             } else if (tipsMessage.event == ZIMTipsMessageEventGroupMemberInfoChanged) {
-                // It is a group member information change event.
+                // 如果 Tips 消息类型为群成员变更。
                 ZIMTipsMessageGroupMemberChangeInfo *info = (ZIMTipsMessageGroupMemberChangeInfo *)tipsMessage.changeInfo;
-                
-                // The business logic.
+
+                // 业务逻辑
             }
-            
-            // Other business logic.
+
+            // 其他业务逻辑
         }
     }
 }
 ```
-
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
-:::
-:::if{props.platform="mac"}
-```objc
-// Receive a group message.
-- (void)receiveGroupMessage:(ZIM *)zim 
-                 messageList:(NSArray<ZIMMessage *> *)messageList 
-                  fromGroupID:(NSString *)fromGroupID {
-    
-    for (ZIMMessage *message in messageList) {
-        // It is a tip message.
-        if (message.type == ZIMMessageTypeTips) {
-            ZIMTipsMessage *tipsMessage = (ZIMTipsMessage *)message;
-            // It is a group profile change event.
-            if (tipsMessage.event == ZIMTipsMessageEventGroupInfoChanged) {
-                ZIMTipsMessageGroupChangeInfo *info = (ZIMTipsMessageGroupChangeInfo *)tipsMessage.changeInfo;
-                
-                if (info.type == ZIMTipsMessageChangeInfoTypeGroupDataChanged) {
-                    if (info.groupDataFlag & ZIMGroupDataFlagName) {
-                        // Group name change.
-                        NSString *newGroupName = info.groupName;
-                    }
-                    
-                    if (info.groupDataFlag & ZIMGroupDataFlagNotice) {
-                        // Group notice change.
-                        NSString *newGroupNotice = info.groupNotice;
-                    }
-                    
-                    if (info.groupDataFlag & ZIMGroupDataFlagAvatarUrl) {
-                        // Group avatar change.
-                        NSString *newGroupAvatarUrl = info.groupAvatarUrl;
-                    }
-                }
-                
-                // The business logic.
-            } else if (tipsMessage.event == ZIMTipsMessageEventGroupMemberInfoChanged) {
-                // It is a group member information change event.
-                ZIMTipsMessageGroupMemberChangeInfo *info = (ZIMTipsMessageGroupMemberChangeInfo *)tipsMessage.changeInfo;
-                
-                // The business logic.
-            }
-            
-            // Other business logic.
-        }
-    }
-}
-```
-
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
 
+:::if{props.platform="iOS|mac|window|Web"}
+### 3 展示消息
+根据以上获取到的 Tips 消息，根据以上获取的信息，开发者需要自行生成对应事件的字符串并在 App UI 上展示该文本。
+:::
