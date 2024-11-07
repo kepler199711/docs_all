@@ -1,5 +1,5 @@
 ---
-articleID: 15091
+articleID: 16243
 ---
 
 import {getPlatformData} from "/snippets/utils-content-parser.js"
@@ -13,56 +13,70 @@ export const ZIMMessageMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage-class.html' target='_blank'>ZIMMessage</a>,
 }
 
-# Insert local messages
-- - -
-## Overview
-The ZIM SDK supports inserting local messages into one-on-one and group conversations, and starting from version 2.13, it also supports inserting local messages into room conversations. The inserted messages will only exist locally on the device and will not be sent to other users or synchronized to other devices. Additionally, these messages will not be retained after uninstalling the client application.
 
-You can use this feature to insert a message into the local database for displaying system notifications. For example, it can be used for local notifications such as joining or leaving a group, which do not need to be sent to other users across devices.
+
+# 插入本地消息
+
+- - -
 
 :::if{props.platform="U3d"}
-<Warning title="Warning">
 
-- The ZIM SDK currently supports inserting local messages for "peer/group" conversations but does not support inserting local messages for "room" conversations.
-- The ZIM SDK does not support inserting signaling messages.
-</Warning>
+<Note title="Note">
+
+本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
+</Note>
 :::
 
-## Implementation process
-To insert a message into the local database, you need to call the {getPlatformData(props,insertMessageToLocalDBMap)} API and introduce the created {getPlatformData(props,ZIMMessageMap)} message, `conversationID`, `conversationType`, `senderUserID`, and other parameters.
+## 功能简介
+
+ZIM SDK 支持向单聊、群组和房间会话插入本地消息，插入的消息只会存在于设备本地，不会发送给其他用户、不会同步到其它设备；并且在卸载客户端应用后，该消息不会留存。
+
+开发者可使用此功能，向本地数据库插入一条消息，用于展示系统提示。例如：加入群组提示、离开群组等无需跨终端发送给其他用户的本地提示。
+
+<Note title="Note">
+
+- 如需向房间会话插入本地消息，请使用 2.13.0 及以上版本 ZIM SDK。
+- ZIM SDK 不支持插入信令消息。
+</Note>
+
+## 使用步骤
+
+开发者需要调用 {getPlatformData(props,insertMessageToLocalDBMap)} 接口，传入构造好的 {getPlatformData(props,ZIMMessageMap)} 消息、会话 conversationID、会话类型 conversationType、消息插入者 senderUserID 等参数，即可向本地数据库里插入一条消息。
+
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
-// 1. Create an In-app Chat object and introduce the appID, appSign, and Application in Android.
+
+```java title="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign 与 Android 中的 Application
 ZIMAppConfig appConfig = new ZIMAppConfig();
-appConfig.appID = 12345;  // Enter the appID you applied for.
-appConfig.appSign = "appSign";   // Enter the appSign you applied for.
+appConfig.appID = 12345;  //替换为您申请到的 AppID
+appConfig.appSign = "appSign";   //替换为您申请到的 AppSign
 zim = ZIM.create(appConfig, application);
 
-// 2. Log in to the In-app Chat service.
+// 2、登录
 ZIMUserInfo zimUserInfo = new ZIMUserInfo();
 zimUserInfo.userID = "xxxx";
 zimUserInfo.userName = "xxxx";
 zim.login(zimUserInfo, new ZIMLoggedInCallback() {
     @Override
     public void onLoggedIn(ZIMError error) {
-          // You can determine whether the login is successful based on ZIMError.          
+          // 开发者可根据 ZIMError 来判断是否登录成功。          
     }
  });
 
-// 3. Insert a message into the local database.
-// Inserting a custom message is used as an example here. You can also insert other types of messages. However, signaling messages are not supported.
- String message = "custom";
- int subType = 1; // The custom system message type defined by the business, with values ranging from [0,200].
- ZIMCustomMessage customMessage = new ZIMCustomMessage(message,subType);
+// 3、向本地数据库插入一条消息
+//    这里演示的是插入一条自定义消息，开发者可以自行修改为插入其他类型的消息，信令消息不支持。
+String message = "custom";
+int subType = 1;// 业务自己定义的消息类型，取值为 [0,200]
+ZIMCustomMessage customMessage = new ZIMCustomMessage(message,subType);
 String conversationID ="conversationID";
 String senderUserID = "senderUserID";
 ZIMConversationType type = ZIMConversationType.PEER;
 zim.insertMessageToLocalDB(customMessage, conversationID, type, senderUserID, new ZIMMessageInsertedCallback() {
     @Override
     public void onMessageInserted(ZIMMessage message, ZIMError errorInfo) {
-        // You can listen for whether the insertion is successful through this callback.
+        // 开发者可以通过这个回调监听是否插入消息成功
     }
 });
 ```
@@ -72,32 +86,32 @@ zim.insertMessageToLocalDB(customMessage, conversationID, type, senderUserID, ne
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc title="Sample code"
-// 1. Create an In-app Chat object and introduce the appID and appSign.
+```objc title="示例代码"
+// 1. 创建 ZIM 对象，传入 appID、appSign
 ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
-appConfig.appID = (unsigned int)appID;     // Enter the appID you applied for.
-appConfig.appSign = @"appSign";     // Enter the appSign you applied for.
+appConfig.appID = (unsigned int)appID;     //替换为您申请到的 AppID
+appConfig.appSign = @"appSign";     //替换为您申请到的 AppSign
 self.zim = [ZIM createWithAppConfig: appConfig];
 
-// 2. Log in to the In-app Chat service.
+// 2. 登录
 ZIMUserInfo *userInfo = [[ZIMUserInfo alloc]init];
-userInfo.userID = @"zegoUser1"; // Enter a value of the NSString type.
-userInfo.userName = @"zegotest";// Enter a value of the NSString type.
+userInfo.userID = @"zegoUser1"; //填入NSString类型的值
+userInfo.userName = @"zegotest";//填入NSString类型的值
 
 [self.zim loginWithUserInfo:userInfo callback:^(ZIMError * _Nonnull errorInfo){
-    // You can determine whether the login is successful based on ZIMError.
+    // 开发者可根据 ZIMError 来判断是否登录成功。
 }];
 
-// 3. Insert a message into the local database.
-// Inserting a custom message is used as an example here. You can also insert other types of messages. However, signaling messages are not supported.
+// 3. 向本地数据库插入一条消息
+//    这里演示的是插入一条自定义消息，开发者可以自行修改为插入其他类型的消息，信令消息不支持。
 ZIMCustomMessage *customMessage = [[ZIMCustomMessage alloc] init];
 customMessage.message = @"custom";
-customMessage.subType = 1; // The custom system message type defined by the business, with values ranging from [0,200].
+customMessage.subType = 1; // 业务自己定义的系统消息类型，取值为 [0,200]
 NSString *conversationID = @"conversationID";
 ZIMConversationType type = ZIMConversationTypePeer;
 NSString *senderUserID = @"senderUserID";
 [self.zim
-    insertMessageToLocalDB: customMessage
+    insertMessageToLocalDB:customMessage
             conversationID:conversationID
           conversationType:type
               senderUserID:senderUserID
@@ -111,45 +125,45 @@ NSString *senderUserID = @"senderUserID";
 
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
-// 1. Create an In-app Chat object and introduce the appID and appSign.
+```cpp title="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign，目前仅建议一个客户端创建一个zim实例
 zim::ZIMAppConfig app_config;
-app_config.appID = 12345;     // Enter the appID you applied for.
-app_config.appSign = "appSign";    // Enter the appSign you applied for.
+app_config.appID = 12345;     //替换为您申请到的 AppID
+app_config.appSign = "appSign";   //替换为您申请到的 AppSign
 zim_ = zim::ZIM::create(app_config);
 
-// 2. Set the setEventHandler callback
+// 2、设置 setEventHandler 回调
 im_event_handler_ = std::make_shared<CZIMEventHandler>();
 zim_->setEventHandler(im_event_handler_);
 
-// 3. Login
+// 3、登录
 zim::ZIMUserInfo user_info;
 user_info.userID = user_id;
 user_info.userName = user_name;
 
 zim_->login(user_info, [=](zim::ZIMError errorInfo){
-    // Here you can get the login result and execute user code based on the error code
+    // 这里可以获取登录结果返回值，并根据错误码执行用户代码
 });
 
-// 4. Insert a message into the local database
-// Here is an example of inserting a custom message, you can modify it to insert other types of messages, signaling messages are not supported.
+// 4、向本地数据库插入一条消息
+// 这里演示的是插入一条自定义消息，开发者可以自行修改为插入其他类型的消息，信令消息不支持。
 std::string conversationID="conversationID";
 std::string sender_user_id = "sender_user_id";
 zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER;
-int subType = 1; // The system message type defined by the business, with values ranging from [0, 200]
-auto customMessage = std::make_shared<zim::ZIMCustomMessage>("custom message", subType);
-zim_->insertMessageToLocalDB(std::static_pointer_cast<zim::ZIMMessage>(customMessage), conversationID, type, sender_user_id, [=](const std::shared_ptr<zim::ZIMMessage> &message, const zim::ZIMError &errorInfo) { 
-    // You can listen to the callback of inserting messages here
-});
+int subType = 1;// 业务自己定义的系统消息类型，取值 [0,200]
+auto customMessage = std::make_shared<zim::ZIMCustomMessage>("custom message",subType);
+zim_->insertMessageToLocalDB(std::static_pointer_cast<zim::ZIMMessage>(customMessage),conversationID, type, sender_user_id,[=](const std::shared_ptr<zim::ZIMMessage> &message,const zim::ZIMError &errorInfo) { 
+              // 开发者可以在这里监听插入消息的回调
+            });
 ```
 </CodeGroup>
 :::
 
 :::if{props.platform="Web"}
 <CodeGroup>
-```typescript title="Sample code"
-// Insert a message into the local database.
-// Inserting a text message is used as an example here. You can also insert other types of messages. However, signaling messages are not supported.
+```typescript title="示例代码"
+// 向本地数据库插入一条消息
+// 这里演示的是插入一条文本消息，开发者可以自行修改为插入其他类型的消息，信令消息不支持。
 const message = { type: 1, message: 'string' };
 const conversationType = 0;
 zim.insertMessageToLocalDB(
@@ -158,7 +172,7 @@ zim.insertMessageToLocalDB(
     conversationType,
     'senderUserID'
 ).then((res) => {
-    // You can listen for whether the insertion is successful.
+    // 开发者可以监听插入是否成功
 });
 ```
 </CodeGroup>
@@ -166,47 +180,47 @@ zim.insertMessageToLocalDB(
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
-// 1. Create an In-app Chat object and introduce the appID, appSign, and Application in Android.
+```dart title="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign .
 ZIMAppConfig appConfig = ZIMAppConfig();
-appConfig.appID = 12345;  // Enter the appID you applied for.
-appConfig.appSign = "appSign";   // Enter the appSign you applied for.
+appConfig.appID = 12345;  //替换为您申请到的 AppID
+appConfig.appSign = "appSign";   //替换为您申请到的 AppSign
 zim = ZIM.create(appConfig);
 
-// 2. Log in to the In-app Chat service.
+// 2、登录
 try{
     ZIMLoginConfig loginConfig = ZIMLoginConfig();
-    // The user's nickname, leave it blank if you don't want to modify the nickname
+    //该用户的用户昵称，不填写代表不修改用户昵称
     loginConfig.userName = 'userName';
-    // If using token as the login authentication method, please fill in this parameter, otherwise no need to fill in
+    //若使用 token 作为登录鉴权的方式，请填写该参数，否则无需填写
     loginConfig.token = '';
-    // Whether this login is an offline login, please refer to the offline login documentation for details
+    // 本次登录是否为离线登录，详情请参考离线登录相关文档
     loginConfig.isOfflineLogin = false;
     await ZIM.getInstance()?.login('zego', loginConfig);
-    // Login successful, write the business logic for successful login
+    // 登录成功，编写登录成功的业务逻辑
 } on PlatformException catch(onError){
-    // Login failed
-    // Error code for login failure, please refer to the error code table in the documentation for handling
+    // 登录失败
+    //登录失败的错误码，请参考接入文档的错误码表来处理
     onError.code;
-    // Error message for login failure
+    //登录失败的错误信息
     onError.message;
 }
 
-
-
-// 3. Insert a message into the local database
-// Here we demonstrate inserting a custom message, developers can modify it to insert other types of messages, signaling messages are not supported.
+// 3、向本地数据库插入一条消息
+// 这里演示的是插入一条自定义消息，开发者可以自行修改为插入其他类型的消息，信令消息不支持。
 String message = "custom";
-int subType = 1; // The system message type defined by the business, with values ranging from [0, 200]
- ZIMCustomMessage customMessage = new ZIMCustomMessage(message,subType);
+int subType = 1;// 业务自己定义的系统消息类型，取值为 [0,200]
+ZIMCustomMessage customMessage = new ZIMCustomMessage(message,subType);
 String conversationID ="conversationID";
 String senderUserID = "senderUserID";
 ZIMConversationType type = ZIMConversationType.PEER;
 zim
     .insertMessageToLocalDB(message, conversationID, type, senderUserID)
-    .then((value) {
+    .then((value) => {
+
 })
     .catchError((onError) {
+
 });
 ```
 
@@ -215,33 +229,33 @@ zim
 
 :::if{props.platform="U3d"}
 <CodeGroup>
-```c# title="Sample code"
-// 1. Create a ZIM object and pass in the appID and appSign
+```c# title="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign
 ZIMAppConfig appConfig = new ZIMAppConfig();
-appConfig.appID = 12345;  // Replace with your assigned AppID
-appConfig.appSign = "appSign";   // Replace with your assigned AppSign
+appConfig.appID = 12345;  //替换为您申请到的 AppID
+appConfig.appSign = "appSign";   //替换为您申请到的 AppSign
 ZIM.Create(appConfig);
 
-// 2. Log in
+// 2、登录
 ZIMUserInfo zimUserInfo = new ZIMUserInfo();
 zimUserInfo.userID = "xxxx";
 zimUserInfo.userName = "xxxx";
 ZIM.GetInstance().Login(zimUserInfo, (ZIMError errorInfo) =>
-{
-    // Developers can use ZIMError to determine if the login is successful.
-}
+    {
+        // 开发者可根据 ZIMError 来判断是否登录成功。          
+    }
 );
 
-// 3. Insert a message into the local database
-// Here is an example of inserting a custom message, you can modify it to insert other types of messages (signaling messages are not supported).
-int subType = 0; // Custom message type defined by the business, with a value between 0 and 200
+// 3、向本地数据库插入一条消息
+// 这里演示的是插入一条自定义消息，开发者可以自行修改为插入其他类型的消息，信令消息不支持。
+int subType = 0; //业务自己定义的消息类型，取值为[0, 200]
 ZIMCustomMessage customMessage = new ZIMCustomMessage("message", subType);
 string conversationID = "conversationID";
 string senderUserID = "senderUserID";
 ZIMConversationType type = ZIMConversationType.Peer;
 ZIM.GetInstance().InsertMessageToLocalDB(customMessage, conversationID, type, senderUserID, (ZIMMessage message, ZIMError errorInfo) => 
 {
-    // You can listen to this callback to check if the message is inserted successfully
+    // 开发者可以通过这个回调监听是否插入消息成功
 });
 ```
 
