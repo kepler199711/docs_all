@@ -15,7 +15,164 @@ export const platformMap = {
 }
 
 
-This article provides some instructions and considerations for upgrading the ZIM {getPlatformData(props,platformMap)} platform SDK version.
+This article provides some instructions and considerations for upgrading the ZIM SDK for {getPlatformData(props,platformMap)} version.
+
+## 2.18.0 upgrade guide
+
+<Warning title="Warning">
+
+Starting from version 2.18.0, the following interfaces have undergone significant changes. Therefore, when upgrading from an older version to version 2.16.0, please read the following guidelines.
+</Warning>
+
+### Callback on receiving one-to-one messages
+
+:::if{props.platform="undefined|window"}
+The deprecated callback `onReceivePeerMessage` for receiving one-to-one messages has been replaced by [onPeerMessageReceived](@onPeerMessageReceived).
+:::
+:::if{props.platform="Web|RN"}
+The deprecated callback `receivePeerMessage` for receiving one-to-one messages has been replaced by [peerMessageReceived](@peerMessageReceived).
+:::
+
+The new callback supports the following features:
+- When a user is online, they can receive one-to-one messages through this callback.
+- When a user logs back into the ZIM SDK, they can receive all one-to-one messages received during their offline period (up to 7 days).
+
+:::if{props.platform=undefined}
+```java
+// New callback
+public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    ZIMMessageReceivedInfo info, String fromUserID) {}
+
+// Old callback
+public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    String fromUserID) {}
+```
+:::
+:::if{props.platform="window"}
+```cpp
+// New callback
+virtual void 
+onPeerMessageReceived(ZIM * /*zim*/, 
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const ZIMMessageReceivedInfo & /*info*/, 
+                        const std::string & /*fromUserID*/) {}
+
+// Old callback
+virtual void
+onReceivePeerMessage(ZIM * /*zim*/,
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const std::string & /*fromUserID*/) {}
+```
+:::
+:::if{props.platform="Web|RN"}
+```javascript
+// New callback
+peerMessageReceived: (zim: ZIM, data: ZIMEventOfConversationMessageReceivedResult) => void;
+
+// Old callback
+receivePeerMessage: (zim: ZIM, data: ZIMEventOfReceiveConversationMessageResult) => void;
+```
+:::
+
+### Callback on receiving room messages
+
+:::if{props.platform="undefined|window"}
+The deprecated callback `onReceiveRoomMessage` for receiving room messages has been replaced by [onRoomMessageReceived](@onRoomMessageReceived).
+:::
+:::if{props.platform="Web|RN"}
+The deprecated callback `receiveRoomMessage` for receiving room messages has been replaced by [roomMessageReceived](@roomMessageReceived).
+:::
+
+The new callback supports the following features:
+- When a user is online, they can receive online room messages through this callback.
+- When a user goes from offline to online and is still in the room, they can receive all room messages that were sent during their offline period through this callback.
+
+:::if{props.platform=undefined}
+```java
+// New callback
+public void onRoomMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    ZIMMessageReceivedInfo info, String fromRoomID) {}
+
+// Old callback
+public void onReceiveRoomMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    String fromRoomID) {}
+```
+:::
+:::if{props.platform="window"}
+```cpp
+// New callback
+virtual void 
+onRoomMessageReceived(ZIM * /*zim*/, 
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const ZIMMessageReceivedInfo & /*info*/, 
+                        const std::string & /*fromRoomID*/) {}
+
+// Old callback
+virtual void
+onReceiveRoomMessage(ZIM * /*zim*/,
+                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                        const std::string & /*fromRoomID*/) {}
+```
+:::
+:::if{props.platform="Web|RN"}
+```javascript
+// New callback
+roomMessageReceived: (zim: ZIM, data: ZIMEventOfConversationMessageReceivedResult) => void;
+
+// Old callback
+receiveRoomMessage: (zim: ZIM, data: ZIMEventOfReceiveConversationMessageResult) => void;
+```
+:::
+
+### Callback on receiving group messages
+
+:::if{props.platform="undefined|window"}
+The deprecated callback `onReceiveGroupMessage` for receiving group messages has been replaced by [onGroupMessageReceived](@onGroupMessageReceived).
+:::
+:::if{props.platform="Web|RN"}
+The deprecated callback `receiveGroupMessage` for receiving group messages has been replaced by [groupMessageReceived](@groupMessageReceived).
+:::
+
+The new callback supports the following features:
+- When the user is online, they can receive online group messages through this callback.
+- When the user logs back into the ZIM SDK, they can receive all group chat messages received during the offline period (up to 7 days) through this callback.
+
+:::if{props.platform="Android"}
+```java
+// New callback
+public void onGroupMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    ZIMMessageReceivedInfo info, String fromGroupID) {}
+
+// Old callback
+public void onReceiveGroupMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
+                                    String fromGroupID) {}
+```
+:::
+:::if{props.platform="window"}
+```cpp
+// New callback
+virtual void onGroupMessageReceived(ZIM * /*zim*/, 
+                                        const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,
+                                        const ZIMMessageReceivedInfo & /*info*/, 
+                                        const std::string & /*fromGroupID*/) {}
+
+// New callback
+virtual void onReceiveGroupMessage(ZIM * /*zim*/, 
+                                    const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/, 
+                                    const std::string & /*fromGroupID*/) {}
+```
+:::
+:::if{props.platform="Web|RN"}
+```javascript
+// New callback
+groupMessageReceived: (zim: ZIM, data: ZIMEventOfConversationMessageReceivedResult) => void;
+
+
+// Old callback
+receiveGroupMessage: (zim: ZIM, data: ZIMEventOfReceiveConversationMessageResult) => void;
+```
+:::
+
 
 ## 2.16.0 Upgrade Guide
 
