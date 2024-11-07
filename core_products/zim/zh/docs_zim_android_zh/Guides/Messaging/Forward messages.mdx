@@ -1,96 +1,87 @@
 ---
-articleID: 17650
+articleID: 19235
 ---
 
 import { getPlatformData } from "/snippets/utils-content-parser.js"
 
 export const ZIMCombineMessageMap = {
   'Android': <a href='@-ZIMCombineMessage' target='_blank'>ZIMCombineMessage</a>,
-}
-export const ZIMMessageMap = {
-  'Android': <a href='@-ZIMMessage' target='_blank'>ZIMMessage</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCombineMessage-class.html' target='_blank'>ZIMCombineMessage</a>,
 }
 export const sendMessageMap = {
   'Android': <a href='@sendMessage' target='_blank'>sendMessage</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/sendMessage.html' target='_blank'>sendMessage</a>,
 }
 export const queryCombineMessageDetailMap = {
   'Android': <a href='@queryCombineMessageDetail' target='_blank'>queryCombineMessageDetail</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryCombineMessageDetail.html' target='_blank'>queryCombineMessageDetail</a>,
   'iOS': <a href='@queryCombineMessageDetailByMessage' target='_blank'>queryCombineMessageDetail</a>,
 }
 export const ZIMCombineMessageDetailQueriedCallbackMap = {//错误链接
   'Android': <a href='@-ZIMCombineMessageDetailQueriedCallback' target='_blank'>ZIMCombineMessageDetailQueriedCallback</a>,
+  'Web': <a href='@-ZIMCombineMessageDetailQueriedResult' target='_blank'>ZIMCombineMessageDetailQueriedResult</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCombineMessageDetailQueriedResult-class.html' target='_blank'>ZIMCombineMessageDetailQueriedResult</a>,
   'iOS': <a href='@ZIMCombineMessageDetailQueriedCallback' target='_blank'>ZIMCombineMessageDetailQueriedCallback</a>,
 }
-export const typeMap = {
-  'Android,Flutter': 'String',
-  'window': 'std::string',
-  'iOS': 'NSString *',
-}
 
-# Forward messages
+
+# 转发消息
 
 - - -
 
-        
-## Function overview
+## 功能简介
 
-ZIM SDK supports two forms of message forwarding:
-- Forwarding merged messages.
-- Forwarding messages one by one.
+ZIM SDK 支持实现以下两种形式的消息转发：
+- 合并消息后转发。
+- 逐条消息转发。
 
-## Forwarding Merged Messages
-
-<Note title="Note">
-
-- Only ZIM SDK version 2.14.0 and above supports sending and receiving merged messages.
-- If the SDK version of the receiving end is between [2.0.0, 2.14.0), the receiving end can receive merged messages, but the message type will be displayed as unknown and the message content cannot be obtained. To obtain this message, please upgrade the SDK to version 2.14.0 or above.
-- If the SDK version of the receiving end is version 1.x.x, it cannot receive merged messages.
-</Note>
-
-### Send merged messages
-
-The steps to send merged messages are as follows:
-
-1. Construct the merged message body using the {getPlatformData(props,ZIMCombineMessageMap)} object. The parameters include:
-
-| Parameter | Type | Required | Description |
-| ---- | ----| -------| -----|
-| title | {getPlatformData(props,typeMap)} | Yes | The title of the merged message, with a default maximum length of 20 bytes. If you need to configure it, please contact ZEGOCLOUD technical support.|
-| summary | {getPlatformData(props,typeMap)} | Yes | The summary of the merged message, with a default maximum length of 100 bytes. If you need to configure it, please contact ZEGOCLOUD technical support.|
-| messageList | ArrayList< {getPlatformData(props,ZIMMessageMap)} > | Yes | The original message list to be merged and forwarded. It does not support merging and forwarding messages of signaling, barrage, recall, and system types, and does not support merging and forwarding unsuccessful messages.|
+## 收发合并消息
 
 <Note title="Note">
 
-ZIM SDK supports including other merged messages in a merged message.
+- 仅 2.14.0 及以上版本的 ZIM SDK 支持发送合并类型消息，接收并查看合并类型消息的内容。
+- 如果接收端的 SDK 版本介乎 [2.0.0, 2.14.0) 区间，可以收到合并消息时，但会显示此消息类型为未知，且无法获取信息内容。如需获取此条消息，请将 SDK 升级为 2.14.0 或以上版本。
+- 如果接收端的 SDK 版本为 1.x.x 版本，则无法收到合并消息，也不会收到合并消息。
 </Note>
 
-2. Call the {getPlatformData(props,sendMessageMap)} interface to send the merged message. For more information about this operation, see [Send & Receive messages - Send messages](./Send%20and%20receive%20messages.mdx#send-rich-media-content).
+### 发送合并消息
 
-The following is an example code for a user to send a merged message in a one-on-one conversation:
+发送合并消息步骤如下：
+
+1. 通过 {getPlatformData(props,ZIMCombineMessageMap)} 对象构造合并消息体。
+    <Note title="Note">
+
+    ZIM SDK 支持在合并消息内包含其他合并消息。
+    </Note>
+
+2. 调用 {getPlatformData(props,sendMessageMap)} 接口发送合并消息。开发者可参考 [收发普通消息 - 发送消息](./Send%20and%20receive%20messages.mdx#发送消息) 了解此接口参数详情。
+
+以下为用户在单聊会话中发送合并消息的示例代码：
+
 
 :::if{props.platform=undefined}
 ```java
-// Send a merged message in a one-on-one conversation
+// 在单聊会话发送合并信息
 
-ZIMConversationType type = PEER; // Conversation type, value: one-on-one: 0, room: 1, group: 2
+ZIMConversationType type = PEER; // 会话类型，取值为 单聊：0，房间：1，群组：2
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
 
-// The original message list to be merged and forwarded, which can be obtained from the message history
+// 需要合并转发的原始消息列表，可从历史消息中获取
 ArrayList<ZIMMessage> messageList = new ArrayList<>();
 messageList.add(message1);
 messageList.add(message2);
 
-ZIMCombineMessage combineMessage = new ZIMCombineMessage("Title", "Summary", messageList);
+ZIMCombineMessage combineMessage = new ZIMCombineMessage("标题", "概要", messageList);
 
 zim.sendMessage(combineMessage,"conv_id", type, config, new ZIMMessageSentCallback() {
     @Override
     public void onMessageAttached(ZIMMessage zimMessage) {
-        // Developers can use this callback to listen for whether the message is ready to be sent. Only messages that pass the local basic parameter check will trigger this callback, otherwise errors will be thrown through the onMessageSent callback.               
+        // 开发者可以通过该回调，监听消息是否开始准备发送。只有当通过本地基础参数检验的消息才会抛出该回调，否则通过 onMessageSent 回调抛出错误。               
     }
 
     @Override
     public void onMessageSent(ZIMMessage zimMessage, ZIMError error) {
-        // Developers can use this callback to listen for whether the message is sent successfully.
+        // 开发者可以通过该回调监听消息是否发送成功。
     }
 });
 ```
@@ -98,21 +89,21 @@ zim.sendMessage(combineMessage,"conv_id", type, config, new ZIMMessageSentCallba
 :::
 
 :::if{props.platform="iOS"}
-```oc
-// Send a merged message in a one-on-one chat session
-ZIMConversationType type = ZIMConversationTypePeer; // Conversation type, values: one-on-one: 0, room: 1, group: 2
+```objc
+// 在单聊会话发送合并信息
+ZIMConversationType type = ZIMConversationTypePeer; // 会话类型，取值为 单聊：0，房间：1，群组：2
 ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
 
-// The original message list to be merged and forwarded, can be obtained from the message history
+// 需要合并转发的原始消息列表，可从历史消息中获取
 NSMutableArray<ZIMMessage *> *messageList = [NSMutableArray array];
 [messageList addObject:message1];
 [messageList addObject:message2];
 
-ZIMCombineMessage *combineMessage = [[ZIMCombineMessage alloc] initWithTitle:@"Title" summary:@"Summary" messages:messageList];
+ZIMCombineMessage *combineMessage = [[ZIMCombineMessage alloc] initWithTitle:@"标题" summary:@"概要" messages:messageList];
 
 [zim sendMessage:combineMessage conversationId:@"conv_id" type:type config:config callback:^(ZIMMessage *zimMessage, ZIMError *error) {
     if (error) {
-        // Developers can use this callback to listen for whether the message was sent successfully.
+        // 开发者可以通过该回调监听消息是否发送成功。
     }
 }];
 ```
@@ -120,53 +111,107 @@ ZIMCombineMessage *combineMessage = [[ZIMCombineMessage alloc] initWithTitle:@"T
 :::
 :::if{props.platform="window"}
 ```cpp
-// Send a merged message in a one-on-one chat session
-ZIMConversationType type = ZIM_CONVERSATION_TYPE_PEER; //  Conversation type, values: one-on-one: 0, room: 1, group: 2
+// 在单聊会话发送合并信息
+ZIMConversationType type = ZIM_CONVERSATION_TYPE_PEER; // 会话类型，取值为 单聊：0，房间：1，群组：2
 ZIMMessageSendConfig config;
 
-// The original message list to be merged and forwarded, can be obtained from the message history
+// 需要合并转发的原始消息列表，可从历史消息中获取
 std::vector<std::shared_ptr<ZIMMessage>> messageList;
 messageList.push_back(message1);
 messageList.push_back(message2);
 
+std::shared_ptr<ZIMCombineMessage> combineMessage = std::make_shared<ZIMCombineMessage>("标题", "概要", messageList);
 
-std::shared_ptr<ZIMCombineMessage> combineMessage = std::make_shared<ZIMCombineMessage>("Title", "Summary", messageList);
+zim_->sendMessage(
+    combineMessage, "conv_id", type, config,
+    std::make_shared<zim::ZIMMessageSendNotification>(
+        [=](const std::shared_ptr<zim::ZIMMessage> &message) {
+            if (message) {
+                // 开发者可以通过该回调，监听消息是否开始准备发送。只有当通过本地基础参数检验的消息才会抛出该回调，否则通过 onMessageSent 回调抛出错误。
+            }
+        }),
+    [=](std::shared_ptr<zim::ZIMMessage> message, zim::ZIMError errorInfo) {
+        // 开发者可以通过该回调监听消息是否发送成功。
+        if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
 
-if (message) {
-    // Developers can use this callback to listen for whether the message is ready to be sent. Only messages that pass the local basic parameter check will trigger this callback, otherwise errors will be thrown through the onMessageSent callback.
-}),
-[=](std::shared_ptr<zim::ZIMMessage> message, zim::ZIMError errorInfo) {
-    // Developers can use this callback to listen for whether the message is sent successfully.
-    if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
-        
+        }
+    });
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+// 在单聊会话发送合并信息
+
+try {
+    // 会话类型，取值为 单聊：peer，房间：room，群组：group
+    ZIMConversationType type = ZIMConversationType.peer;
+    ZIMMessageSendConfig config = ZIMMessageSendConfig();
+    // 需要合并转发的原始消息列表，可从历史消息中获取
+    List<ZIMMessage> messageList = [message1,message2];
+    ZIMCombineMessage combineMessage = ZIMCombineMessage(title: '标题', summary: '概要', messageList: messageList);
+    ZIMMessageSentResult result = await ZIM.getInstance()!.sendMessage(combineMessage, 'conv_id', type, config);
+    //  消息发送成功
+} on PlatformException catch (onError){
+    onError.code;//根据错误码表处理
+    onError.message;//错误信息
+}
+```
+
+:::
+:::if{props.platform="Web"}
+```javascript
+// 在单聊会话发送合并信息
+
+var toConversationID = ''; // 对方 userID
+var conversationType = 0; // 会话类型，取值为 单聊：0，房间：1，群组：2
+var config = { 
+    priority: 1, // 设置消息优先级，取值为 低：1（默认），中:2，高：3
+};
+
+var messageCombineObj = { 
+    type: 100, 
+    title: '标题', // 合并消息标题
+    summary: '概要' , // 合并消息概要
+    messageList: [message1, message2], // 需要合并转发的原始消息列表，可从历史消息中获取
+};
+
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
     }
-});
+}
+
+zim.sendMessage(messageCombineObj, toConversationID, conversationType, config, notification)
+    .then(function ({ message }) {
+        // 发送成功
+    })
+    .catch(function (err) {
+        // 发送失败
+    });
 ```
 :::
 
+### 接收合并消息
 
-
-
-### Receive merged messages
-
-The callback interface for receiving merged messages is the same as the callback interface for receiving normal messages. Please refer to [Send & Receive messages - Receive messages](./Send%20and%20receive%20messages.mdx#receive-rich-media-content) for the specific interface.
+接收合并消息的回调接口与接收普通消息的回调接口一致，请参考 [收发普通消息 - 接收消息](!IM-sendMessages#4_2) 了解具体接口。
 
 <Warning title="Warning">
 
-The receive message callback only returns the title, summary, and merge ID of the merged message. If you need to know the content of the merged message, please refer to <a href="#view-merged-message-details">View Merged Message Details.</a> 
+接收消息回调仅返回合并消息的标题、概要、合并 ID 的信息，如需了解合并消息内容，请参考 <a href="#queryCombineMessageDetail">查看合并消息详情。</a> 
 </Warning>
 
-The following is an example code for a user to receive merged messages in a one-on-one conversation:
+以下为用户在单聊会话中接收合并消息的示例代码：
+
 
 :::if{props.platform=undefined}
 ```java
-// User receives merged messages in a one-on-one conversation
+// 用户在单聊会话中接收合并消息
 @Override
     public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
                                         String fromUserID) {
         for (ZIMMessage message : messageList) {
             if (message.getType() == ZIMMessageType.COMBINE){
-                // Merged message
+                // 合并消息
             }
         }
     }
@@ -175,71 +220,70 @@ The following is an example code for a user to receive merged messages in a one-
 :::
 
 :::if{props.platform="iOS"}
-```oc
-// Send a merged message in a one-on-one chat session
-ZIMConversationType type = ZIMConversationTypePeer; // Conversation type, values: one-on-one: 0, room: 1, group: 2
-ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
-
-// The original message list to be merged and forwarded, can be obtained from the message history
-NSMutableArray<ZIMMessage *> *messageList = [NSMutableArray array];
-[messageList addObject:message1];
-[messageList addObject:message2];
-
-ZIMCombineMessage *combineMessage = [[ZIMCombineMessage alloc] initWithTitle:@"Title" summary:@"Summary" messages:messageList];
-
-[zim sendMessage:combineMessage conversationId:@"conv_id" type:type config:config callback:^(ZIMMessage *zimMessage, ZIMError *error) {
-    if (error) {
-        // Developers can use this callback to listen for whether the message was sent successfully.
+```objc
+// 用户在单聊会话中接收合并消息
+- (void)zim:(ZIM *)zim
+    receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
+            fromUserID:(NSString *)fromUserID {
+    for (ZIMMessage *message in messageList) {
+        if ([message type] == ZIMMessageTypeCombine) {
+            // 合并消息
+        }
     }
-}];
+}
 
 ```
 
 :::
 :::if{props.platform="window"}
 ```cpp
+// 用户在单聊会话中接收合并消息
 void onReceivePeerMessage(ZIM& zim, std::vector<ZIMMessage>& messageList, 
                               std::string fromUserID) {
     for (ZIMMessage& message : messageList) {
         if (message.type == ZIMMessageType::ZIM_MESSAGE_TYPE_COMBINE) {
-            // Merge messages
+            // 合并消息
         }
     }
 }
 ```
 :::
-
-
-### View merged message details
-
-Operations on a combined message, for example, listening, adding, and historical message pulling, return only the title, summary, and ID of the combined message. To view sub-messages contained in the combined message, call the {getPlatformData(props,queryCombineMessageDetailMap)} operation.
-
-
-The result is returned in the {getPlatformData(props,ZIMCombineMessageDetailQueriedCallbackMap)} callback.
-
-:::if{props.platform=undefined}
-```java
-public abstract void queryCombineMessageDetail(ZIMCombineMessage message,
-                                                ZIMCombineMessageDetailQueriedCallback callback);
+:::if{props.platform="Flutter"}
+```dart
+// 用户在单聊会话中接收合并消息
+ZIMEventHandler.onReceivePeerMessage = (ZIM zim, List<ZIMMessage> messageList, String fromUserID){
+    for(ZIMMessage message in messageList){
+    if(message.type == ZIMMessageType.combine){
+        // 合并消息
+    }
+    }
+};
 ```
+
 :::
-:::if{props.platform="iOS"}
-```oc
-- (void)queryCombineMessageDetailByMessage:(ZIMCombineMessage *)message
-                                  callback:(ZIMCombineMessageDetailQueriedCallback)callback
+:::if{props.platform="Web"}
+```javascript
+// 用户在单聊会话中接收合并消息
+zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID }) {
+    console.log(messageList, fromConversationID);
+    messageList.forEach(function (msg) {
+        // 收到 `Combine` 消息时
+        if (msg.type == 100) {
+        }
+    })
+});
 ```
-:::
-:::if{props.platform="window"}
-```cpp
-virtual void
-queryCombineMessageDetail(std::shared_ptr<ZIMCombineMessage> &message,
-                            const ZIMCombineMessageDetailQueriedCallback &callback) = 0;
-```
+
 :::
 
-| Parameter | Type | Required | Description |
-| ---- | ----| -------| -----|
-|message|{getPlatformData(props,ZIMCombineMessageMap)}| Yes|Merged message.|
+
+
+### 查看合并消息详情
+
+消息操作（监听、增加以及拉取历史消息）只会返回合并消息的标题、概要、合并 ID 的信息。因此，当需要了解合并消息包含的子消息时，可以通过调用 {getPlatformData(props,queryCombineMessageDetailMap)} 接口查询。
+
+操作的结果将通过 {getPlatformData(props,ZIMCombineMessageDetailQueriedCallbackMap)} 返回，可知合并消息下具体的子消息内容。
+
 
 :::if{props.platform=undefined}
 
@@ -247,7 +291,7 @@ queryCombineMessageDetail(std::shared_ptr<ZIMCombineMessage> &message,
 zim.queryCombineMessageDetail(combineMessage, new ZIMCombineMessageDetailQueriedCallback() {
             @Override
             public void onCombineMessageDetailQueried(ZIMCombineMessage message, ZIMError error) {
-                // View the merged message, the specific sub-messages are in the messageList of the message in the callback.
+                // 查看合并消息，具体的子消息在回调中的 message 的 messageList 里。
             }
         });
 ```
@@ -256,21 +300,48 @@ zim.queryCombineMessageDetail(combineMessage, new ZIMCombineMessageDetailQueried
 
 ```objc
 [zim queryCombineMessageDetailByMessage:combineMessage callback:^(ZIMCombineMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-        // View the merged message, the specific sub-messages are in the messageList of the message in the callback.
+        // 查看合并消息，具体的子消息在回调中的 message 的 messageList 里。
     }];
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
 zim_->queryCombineMessageDetail(combineMessage, [=](const std::shared_ptr<ZIMCombineMessage> &message, ZIMError &errorInfo) {
-        // View the merged message, the specific sub-messages are in the messageList of the message in the callback.
-    }];
+    // 查看合并消息，具体的子消息在回调 message 里的 messageList 中。
+});
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+try {
+    // 会话类型，取值为 单聊：peer，房间：room，群组：group
+    ZIMCombineMessageDetailQueriedResult result = await ZIM.getInstance()!.queryCombineMessageDetail(combineMessage);
+    // 查看合并消息，具体的子消息在回调中的 message 的 messageList 里。
+    result.message.messageList;
+    //  消息发送成功
+} on PlatformException catch (onError){
+    onError.code;//根据错误码表处理
+    onError.message;//错误信息
+}
+```
+:::
+:::if{props.platform="Web"}
+```js
+zim.queryCombineMessageDetail(message)
+    .then(function (res) {
+        // 操作成功，在 UI 上更新该消息的子消息列表
+        // 具体的子消息在回调中的 message 的 messageList 里。
+        console.log(res.message.messageList)
+    })
+    .catch(function (err) {
+        // 操作失败
+    });
 ```
 :::
 
+若子消息列表中存在合并消息，要想获取该合并消息下的具体子消息，需再次调用 {getPlatformData(props,queryCombineMessageDetailMap)} 接口，将通过接口获取到的合并消息作为参数，以此类推，对于嵌套多层的合并消息会存在多次调用的情况。
 
-If one of the sub-messages is a combined message, you need to call the {getPlatformData(props,queryCombineMessageDetailMap)} operation to obtain the sub-messages of the combined message. If there are multiple nested combined messages, you need to call this operation multiple times accordingly.
+## 逐条转发消息
 
-## Forward messages one by one
+逐条转发消息本质上就是将已发送成功的消息作为参数发送到其它会话，与发送普通消息所用接口相同，开发者可参考 [收发普通消息 - 发送消息](./Send%20and%20receive%20messages.mdx#发送消息) 了解此接口参数详情。
 
-Forwarding messages one by one is essentially sending messages that have been successfully sent as parameters to other conversations. It uses the same interface as sending normal messages. Developers can refer to [Send & Receive messages - Send messages](./Send%20and%20receive%20messages.mdx#send-rich-media-content) for details of this interface.
