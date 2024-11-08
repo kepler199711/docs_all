@@ -1,228 +1,227 @@
 ---
-articleID: 17801
+articleID: 20908
 ---
 
-# Reply to a message
+# 回复消息
 
 - - -
 
-## Introduction
+## 功能简介
 
-The ZIM SDK supports the functionality of replying to messages within a session, which means quoting a received message to provide a targeted response and forming a tree-like structure of message replies starting from that message. With this feature, users can ask questions, provide feedback, or provide additional background information in response to a specific message.
+ZIM SDK 支持会话内回复消息功能，即引用接收到的某一条消息进行针对性的回复，形成起始于该消息的消息回复树状结构。通过此功能，用户可针对某一条消息进行提问、反馈或补充相关背景信息。
 
 
-## Concepts
+## 概念解释
 
-This feature involves the following concepts:
+本功能涉及概念如下：
 
-- Root message: The starting point of a reply tree, usually the initial message of a specific discussion.
-- Child message: A direct or indirect reply to a certain message.
-- Source message: The previous level message of a reply.
-- Reply count: The number of replies received by the root message.
+- 根消息：回复树的起点，通常是某个特定讨论的起始消息。
+- 子消息：是指对某条消息的直接或间接回复。
+- 源消息：是指某条回复的上一级消息。
+- 回复数：**根消息**收到的回复数量。
 
-Using messages A, B, and C in group chat as examples:
-1. Message B replies to message A:
-   - Message A is the root message.
-   - Message A is the source message of message B.
-   - Message B is a child message of message A.
-2. Message C replies to message B:
-   - Message B is the source message of message C.
-   - Message C is a child message of message B.
-3. Both message B and message C are child messages of message A. 
-4. The reply count of message A is 2. Message B does not have a reply count.
+以群聊会话消息 A、B 和 C 为例：
+1. 消息 B 回复了消息 A，则：
+- 消息 A 是根消息。
+- 消息 A 是消息 B 的源消息。
+- 消息 B 是消息 A 的子消息。
+2. 消息 C 回复了消息 B，则：
+- 消息 B 为消息 C 的源消息，
+- 消息 C 是消息 B 的子消息。
+3. 消息 B 和消息 C 都是消息 A 的子消息。
+4. 消息 A 的回复数是 2。消息 B 没有回复数。
 
-## Reply to a message
+## 回复一条消息
 
-After logging in to ZIM, users can listen to the [onReceivePeerMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onReceivePeerMessage.html) and [onReceiveGroupMessage](https://pub.dev/documentation/zego_zim/latest/search.html?q=onReceiveGroupMessage) callback to receive new messages from one-on-one and group conversations, or call the [queryHistoryMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryHistoryMessage.html) interface to fetch historical messages.
+登录 ZIM 后，用户可以监听 [onReceivePeerMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onReceivePeerMessage.html) 和 [onReceiveGroupMessage](https://pub.dev/documentation/zego_zim/latest/search.html?q=onReceiveGroupMessage) 回调接收单聊会话和群聊会话的新消息，或调用 [queryHistoryMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryHistoryMessage.html) 接口拉取历史消息。
 
-At this point, users can choose a message to reply to by using that message as the `toOriginMessage` parameter and constructing a new message as the `message` parameter. Then, call the [replyMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/replyMessage.html) interface.
-
+此时，用户可以选择其中某条消息进行回复，即将该消息作为 `toOriginMessage` 参数，并构造一个消息作为回复内容作为 `message` 参数，调用 [replyMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/replyMessage.html) 接口。
 
 <Note title="Note">
 
-Only the following types are supported for the `toOriginMessage` and `message` parameters:
-- Text message: [ZIMTextMessage(1)](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMTextMessage-class.html)
-- Image message: [ZIMImageMessage(11)](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMImageMessage-class.html)
-- File message: [ZIMFileMessage(12)](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMFileMessage-class.html)
-- Audio message: [ZIMAudioMessage(13)](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMAudioMessage-class.html)
-- Video message: [ZIMVideoMessage(14)](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMVideoMessage-class.html)
-- Combined message: [ZIMCombineMessage(100)](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCombineMessage-class.html)
-- Custom message: [ZIMCustomMessage(200)](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCustomMessage-class.html)
+上述 `toOriginMessage` 和 `message` 都仅支持以下类型：
+- 文本消息：[ZIMTextMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMTextMessage-class.html)
+- 图片消息：[ZIMImageMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMImageMessage-class.html)
+- 文件消息：[ZIMFileMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMFileMessage-class.html)
+- 音频消息：[ZIMAudioMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMAudioMessage-class.html)
+- 视频消息：[ZIMVideoMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMVideoMessage-class.html)
+- 合并消息：[ZIMCombineMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCombineMessage-class.html)
+- 自定义消息：[ZIMCustomMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCustomMessage-class.html)
 </Note>
 
-The following information is returned through [ZIMMessageSendNotification](https://pub.dev/documentation/zego_zim/latest/search.html?q=ZIMMessageSendNotification):
-- [onMessageAttached](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageSendNotification/onMessageAttached.html): Before sending a reply, you can obtain a temporary ZIMMessage to add some business  logic.
-- [onMediaUploadingProgress](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageSendNotification/onMediaUploadingProgress.html): When sending a message containing rich media, this callback provides updates on the progress of file uploading.
+通过 [ZIMMessageSendNotification](https://pub.dev/documentation/zego_zim/latest/search.html?q=ZIMMessageSendNotification) 返回以下几个信息：
+- [onMessageAttached](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageSendNotification/onMessageAttached.html)：在回复发送前，可以获得一个临时的 ZIMMessage，以便您添加一些业务处理逻辑。 
+- [onMediaUploadingProgress](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageSendNotification/onMediaUploadingProgress.html)：当发送包含富媒体的消息时，此回调将提供文件上传进度的更新。
+
+
 
 ```dart
-// Reply content
-ZIMTextMessage textMessage = ZIMTextMessage(message: 'Message Content');
+// 回复内容
+ZIMTextMessage textMessage = ZIMTextMessage(message: '消息内容');
 ZIMMessageSendConfig config = ZIMMessageSendConfig();
-// Set message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.low;
 ZIMMessageSendNotification notification = ZIMMessageSendNotification();
 notification.onMessageAttached = (ZIMMessage message){
-    // Callback before sending, where you can get a temporary object that is the same as the zimMessage object created by you. You can use this feature to add some business logic, such as displaying UI in advance.
+// 发送前的回调，客户可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
 };
 notification.onMediaUploadingProgress = (ZIMMessage message, int currentFileSize, int totalFileSize){
-    // You can use this callback to listen for whether the message was sent successfully.
+// 若发送的回复消息为媒体消息，则可以监听媒体附件的上传进度
 };
 ZIM.getInstance()?.replyMessage(textMessage, toOriginalMessage, config, notification).then((value) {
-    // Sent successfully
+  //发送成功
 }).catchError((onError){
-    // Sent failure
+  //发送失败
 });
 ```
 
-## Determine if a message is a reply to another message
+## 判断消息是否回复其他消息
 
-When receiving new messages in one-on-one and group conversations through the [onReceivePeerMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onReceivePeerMessage.html) and [onReceiveGroupMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onReceiveGroupMessage.html) callbacks, you need to determine if the message has [repliedInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/repliedInfo.html) (basic information of the source message):
-- If it exists, it means that this message is a reply to another message.
-- If it doesn't exist, it means that this message is an independent message.
+监听 [onReceivePeerMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onReceivePeerMessage.html) 和 [onReceiveGroupMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onReceiveGroupMessage.html) 回调在单聊会话和群聊会话中收到新消息后，需要通过判断消息是否存在 [repliedInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/repliedInfo.html)（源消息基本信息）：
+- 如果存在，则表示这条消息是对其他消息的回复。
+- 如果不存在，则表示这条消息是一条独立消息。
 
-When you have the [repliedInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/repliedInfo.html), you can use it to display the sender, sending time, and message content of the source message.
+当您获取到 [repliedInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/repliedInfo.html)，可用于展示源消息的发送用户、发送时间和消息内容等。
 
 ```dart
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 
 ZIMEventHandler.onReceivePeerMessage = (ZIM zim, List<ZIMMessage> messageList, String fromUserID) {
-    for (ZIMMessage message in messageList) {
-        if (message.repliedInfo != null) {
-            // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
+for (ZIMMessage message in messageList) {
+    if (message.repliedInfo != null) {
+        // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
     }
+}
 };
 
 ZIMEventHandler.onReceiveGroupMessage = (ZIM zim, List<ZIMMessage> messageList, String fromGroupID) {
-    for (ZIMMessage message in messageList) {
-        if (message.repliedInfo != null) {
-            // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
+for (ZIMMessage message in messageList) {
+    if (message.repliedInfo != null) {
+        // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
     }
+}
 };
 ```
 
+## 获取根消息回复数
 
-## Get the number of replies to a root message
+ZIM 支持主动或被动获取某条根消息的回复数。
 
-ZIM supports actively or passively obtaining the number of replies to a root message.
+### 主动获取
 
-### Active retrieval
+如需主动获取某条**根消息**的回复数，可直接通过 [ZIMMessage > rootRepliedCount](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/rootRepliedCount.html) 获取。
 
-To actively retrieve the number of replies to a **root message**, you can directly use [ZIMMessage > rootRepliedCount](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/rootRepliedCount.html) to get it.
+### 被动获取
 
-### Passive retrieval
-
-To get real-time updates on how many replies a root message has received, you can listen for the [onMessageRepliedCountChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onMessageRepliedCountChanged.html) event.
+如需实时了解根消息收到了多少条回复，您可以监听 [onMessageRepliedCountChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onMessageRepliedCountChanged.html)。
 
 ```dart
-// Listen for changes in the number of replies to a root message
-// Event trigger: When a new message replied to another message successfully, the number of replies to the root message of its reply tree will increase by 1
+// 监听根消息的回复数量变化
+// 事件触发时机：当有新的消息回复成功后，其回复树的根消息的回复数量会增加 1
 ZIMEventHandler.onMessageRepliedCountChanged = (ZIM zim, List<ZIMMessageRootRepliedCountInfo> infos) {
-    // Update the rootRepliedCount of the corresponding messageID in the conversation
+// 更新会话的对应 messageID 的消息的 rootRepliedCount
 };
 ```
 
-## Listen for the deletion or recall of the source message
+## 监听源消息被删除或撤回
 
-Listen for the [onMessageRepliedInfoChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onMessageRepliedInfoChanged.html) callback to get the list of child messages of a message when it is deleted or recalled. You can display relevant prompts on the UI of the corresponding child messages.
+监听 [onMessageRepliedInfoChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onMessageRepliedInfoChanged.html) 回调，即可在某条消息被删除或被撤回时，获取该消息的下一级子消息列表，您可以在相关子消息 UI 上展示相关提示。
 
 <Note title="Note">
 
-Even if the source message is deleted by the user on a device, causing the [repliedInfo.state](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/state.html) (the state of the source message) of its child message to be [ZIMMessageRepliedInfoState.deleted](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCallState.html#deleted), you can still get the brief content of the source message in the [repliedInfo.messageInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageInfo.html) of the child message. Therefore, you can choose whether to display the content of the source message on that device as needed.
+即使用户在某设备删除源消息，导致子消息的 [repliedInfo.state](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/state.html)（其源消息的状态）为 [ZIMMessageRepliedInfoState.deleted](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCallState.html#deleted)，依然可以在子消息的 [repliedInfo.messageInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageInfo.html) 中获取到源消息的简要内容。因此，开发者可按需选择是否在该设备展示该源消息内容。
 </Note>
 
 ```dart
-// Listen for changes in the source message of a reply message
-// Event trigger: When the source message is "deleted" or "recalled", the repliedInfo property of the reply referencing it will change
+// 监听回复消息的源消息变更事件
+// 事件触发时机：当源消息被 “删除” 和 “撤回” 后，引用其的回复消息的 repliedInfo 属性会发生改变
 ZIMEventHandler.onMessageRepliedInfoChanged = (ZIM zim, List<ZIMMessage> messageList) {
-    for(ZIMMessage message in messageList) {
-        if(message.repliedInfo == null) {
-            // The source message referenced by this reply message has been deleted, you can display "Message deleted" at this time
-        } else if (message.repliedInfo?.messageInfo.type == ZIMMessageType.revoke) {
-            // The source message referenced by this reply message has been recalled, you can display "Message recalled" at this time
-        }
+for(ZIMMessage message in messageList) {
+    if(message.repliedInfo == null) {
+        // 此回复消息引用的源消息被删除，此时可展示为“消息被删除”
+    } else if (message.repliedInfo?.messageInfo.type == ZIMMessageType.revoke) {
+        // 此回复消息引用的源消息被撤回，此时可展示为“消息已撤回”
     }
+}
 };
 ```
 
-## Query the reply list
+## 查询回复列表
 
-Call [queryMessageRepliedList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessageRepliedList.html) and pass in the root message or any reply to view the complete list of replies and get the complete message list related to the replies.
+调用 [queryMessageRepliedList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessageRepliedList.html)，传入根消息或任意回复，即可查看完整的回复列表，了解回复相关的完整消息列表。
 
-The results returned by this interface will distinguish between the root message (`rootRepliedInfo`) and the reply list (`messageList`), and the reply list will be sorted in chronological order based on the sending time of the replies.
+本接口返回的结果将区分根消息（`rootRepliedInfo`）和回复列表（`messageList`），回复列表会按照回复的发送时间从前往后排序。
 
 ```dart
 ZIMMessageRepliedListQueryConfig config = ZIMMessageRepliedListQueryConfig();
-config.count = 10; // The number of queries, please do not exceed 100
-config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
+config.count = 10; // 查询数量，上限请勿超过 100
+config.nextFlag = 0; // 分页标志，首次查询填 0，后续查询以查询结果返回的 nextFlag 为准
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage 可为根消息或任意回复，一般通过 queryHistoryMessage 接口或者 onReceivePeerMessage 和 onReceiveGroupMessage 获取
 ZIM.getInstance()?.queryMessageRepliedList(replyMessage, config).then((value) {
-    // Query successful
-    // If nextFlag is not 0, it means there is more data to be queried
-    // rootRepliedInfo is the information of the root message
-    // messageList represents the reply list to the root message
+// 查询成功
+// nextFlag 不为 0，表示还有数据，可继续分页查询
+// rootRepliedInfo 为根消息信息
+// messageList 表示对根消息的回复列表。
 }).onError((error, stackTrace) {
-    if(error is PlatformException){
-        // Query failed
-        error.code;
-        error.message;
-    }
+if(error is PlatformException){
+    // 查询失败
+    error.code;
+    error.message;
+}
 });
 ```
 
+## 查看源消息的上下文
 
-## View the context of the source message
+由于子消息（即作为回复的消息）的 [repliedInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/repliedInfo.html) 仅包含可用于 UI 展示的基本源消息数据，用户可能需要前往源消息的原文位置，阅读源消息附近的其他消息。
 
-Since the [repliedInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/repliedInfo.html) of a child message (i.e., a reply message) only contains basic source message data that can be used for UI display, users may need to go to the original location of the source message to read other messages near the source message.
-
-Therefore, to implement this scenario, you need to use the [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html) property of the child message (which is the sequence number of the source message in the conversation).
+因此，如需实现此场景，需要借助子消息的 [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html)（源消息在会话中的序号）属性。
 
 <Note title="Note">
 
-The [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html) property of a child message (which is the sequence number of the source message in the conversation) corresponds to the [messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/messageSeq.html) of the source message.
+子消息的 [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html)（源消息在会话中的序号）属性，对应源消息的 [messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/messageSeq.html)。
 </Note>
 
-Depending on whether the source message and its surrounding messages are cached in the application's memory, ZIM provides two options.
+根据源消息及其附近消息是否缓存于应用内存，ZIM 提供了两种实现方案。
 
-### Both the source message and its surrounding messages are cached in the application's memory
+### 源消息及其附近均缓存于应用内存
 
-When a source message and its surrounding messages are saved in your application's memory (for example, by calling [queryHistoryMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryHistoryMessage.html) to retrieve and cache the conversation's message history), you can search the [messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/messageSeq.html) of the source message in the memory and implement the business logic to go to the original location of the source message to view the context.
+当某条源消息及其上下文消息都保存于您应用的内存中时（比如，此前以调用 [queryHistoryMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryHistoryMessage.html) 获取并缓存了会话历史消息），您可在内存检索该源消息的 [messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/messageSeq.html)，自行实现前往源消息原文位置查看上下文的业务逻辑。
 
-### The source message or its surrounding messages are not cached in the application's memory
+### 源消息或其附近的消息没有缓存于应用内存
 
-When the source message or its surrounding messages are not cached in the application's memory, if another user replies to the source message in the conversation, you can:
-1. From the [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html) of the reply, get the [messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/messageSeq.html) of the source message. Pass it as a parameter to call the  [queryMessages](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessages.html) interface to get the complete [ZIMMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage-class.html) object of the source message.
- 
-    ```dart
-    // messageSeq is the sequence number of the source message in the conversation
-    List<int> messageSeqs = [123456];
-    ZIM.getInstance()?.queryMessages(messageSeqs, 'conversationID', ZIMConversationType.peer).then((value) {
-        // Query successful
-    }).catchError((onError){
-        if(onError is PlatformException){
-            // Query failed
-            error.code;
-            error.message;
-        }
-    }); 
-    ```
+当应用内存中没有源消息或其附近的消息时，此时，会话中若有其他用户回复了该源消息，即可：
+1. 从该消息的 [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html) 获取到源消息的 [messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/messageSeq.html) 并作为参数，传入 [queryMessages](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryMessages.html) 获取源消息的完整 [ZIMMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage-class.html) 对象。
 
-2. Pass the source message object as the [nextMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageQueryConfig/nextMessage.html) parameter to [queryHistoryMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryHistoryMessage.html), so that you can use the source message as an anchor point to retrieve messages from the messages forward or backward. 
+```dart
+// messageSeq 为源消息的在会话中的序号
+List<int> messageSeqs = [123456];
+ZIM.getInstance()?.queryMessages(messageSeqs, 'conversationID', ZIMConversationType.peer).then((value) {
+    // 查询成功
+}).catchError((onError){
+    if(onError is PlatformException){
+        // 查询失败
+        error.code;
+        error.message;
+    }
+}); 
+```
 
-    ```dart
-    // This example demonstrates querying forward from the source message
-    ZIMMessageQueryConfig config = ZIMMessageQueryConfig();
-    // originalMessage is the source message obtained through queryMessages
-    config.nextMessage = originalMessage;
-    config.count = 20;
-    config.reverse = false;
-    ZIM.getInstance()?.queryHistoryMessage("YOUR_CONVERSATION_ID", ZIMConversationType.peer, config).then((value) {
-        // Query successful
-    }).catchError((onError){
-        if(onError is PlatformException){
-            // Query failed
-        }
-    });
-    ```
+2. 将源消息对象作为 [nextMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageQueryConfig/nextMessage.html) 参数，传入 [queryHistoryMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryHistoryMessage.html)，即可以该源消息为锚点，从该源消息往前或往后获取其附近的消息列表，用于 UI 渲染。
+
+```dart
+// 本示例以源消息往后查询为例
+ZIMMessageQueryConfig config = ZIMMessageQueryConfig();
+// originalMessage 为通过 queryMessages 获取到的源消息对象
+config.nextMessage = originalMessage;
+config.count = 20;
+config.reverse = false;
+ZIM.getInstance()?.queryHistoryMessage("YOUR_CONVERSATION_ID", ZIMConversationType.peer, config).then((value) {
+    // 查询成功
+}).catchError((onError){
+    if(onError is PlatformException){
+        // 查询失败
+    }
+});
+```

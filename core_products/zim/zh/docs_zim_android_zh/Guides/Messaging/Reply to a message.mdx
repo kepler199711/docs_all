@@ -1,5 +1,5 @@
 ---
-articleID: 17797
+articleID: 20905
 ---
 
 import { getPlatformData } from "/snippets/utils-content-parser.js"
@@ -25,8 +25,8 @@ export const replyMessageMap = {
 }
 export const ZIMMessageSentFullCallbackMap = {
   'Android': <a href='@-ZIMMessageSentFullCallback' target='_blank'>ZIMMessageSentFullCallback</a>,
-  'Web': <a href='@-ZIMMessageSentFullResult' target='_blank'>ZIMMessageSentFullResult</a>,
-  'iOS,mac': <a href='@ZIMMessageSentFullCallback' target='_blank'>ZIMMessageSentFullCallback</a>,
+  'Web': <a href='@-ZIMMessageSentResult' target='_blank'>ZIMMessageSentResult</a>,
+  'iOS,mac,window': <a href='@ZIMMessageSentCallback' target='_blank'>ZIMMessageSentCallback</a>,
 }
 export const onMessageSentMap = {
   'Android': <a href='@onMessageSent' target='_blank'>onMessageSent</a>,
@@ -76,9 +76,6 @@ export const queryMessageRepliedListMap = {
 export const messageSeqZIMMessageMap = {
   'Android': <a href='@messageSeq-ZIMMessage' target='_blank'>messageSeq</a>,
 }
-export const messageSeqMap = {
-  'Android': <a href='@messageSeq' target='_blank'>messageSeq</a>,
-}
 export const queryMessagesMap = {
   'Android': <a href='@queryMessages' target='_blank'>queryMessages</a>,
   'iOS,mac': <a href='@queryMessagesByMessageSeqs' target='_blank'>queryMessagesByMessageSeqs</a>,
@@ -90,345 +87,264 @@ export const nextMessageMap = {
   'Android': <a href='@nextMessage-ZIMMessageQueryConfig' target='_blank'>nextMessage</a>,
 }
 
-# Reply to a message
+# 回复消息
 
 - - -
 
-## Introduction
+## 功能简介
 
-The ZIM SDK supports the functionality of replying to messages within a session, which means quoting a received message to provide a targeted response and forming a tree-like structure of message replies starting from that message. With this feature, users can ask questions, provide feedback, or provide additional background information in response to a specific message.
+ZIM SDK 支持会话内回复消息功能，即引用接收到的某一条消息进行针对性的回复，形成起始于该消息的消息回复树状结构。通过此功能，用户可针对某一条消息进行提问、反馈或补充相关背景信息。
 
 
-## Concepts
+## 概念解释
 
-This feature involves the following concepts:
+本功能涉及概念如下：
 
-- Root message: The starting point of a reply tree, usually the initial message of a specific discussion.
-- Child message: A direct or indirect reply to a certain message.
-- Source message: The previous level message of a reply.
-- Reply count: The number of replies received by the root message.
+- 根消息：回复树的起点，通常是某个特定讨论的起始消息。
+- 子消息：是指对某条消息的直接或间接回复。
+- 源消息：是指某条回复的上一级消息。
+- 回复数：**根消息**收到的回复数量。
 
-Using messages A, B, and C in group chat as examples:
-1. Message B replies to message A:
-   - Message A is the root message.
-   - Message A is the source message of message B.
-   - Message B is a child message of message A.
-2. Message C replies to message B:
-   - Message B is the source message of message C.
-   - Message C is a child message of message B.
-3. Both message B and message C are child messages of message A. 
-4. The reply count of message A is 2. Message B does not have a reply count.
+以群聊会话消息 A、B 和 C 为例：
+1. 消息 B 回复了消息 A，则：
+    - 消息 A 是根消息。
+    - 消息 A 是消息 B 的源消息。
+    - 消息 B 是消息 A 的子消息。
+2. 消息 C 回复了消息 B，则：
+    - 消息 B 为消息 C 的源消息，
+    - 消息 C 是消息 B 的子消息。
+3. 消息 B 和消息 C 都是消息 A 的子消息。
+4. 消息 A 的回复数是 2。消息 B 没有回复数。
 
-## Reply to a message
 
-After logging in to ZIM, users can listen to the {getPlatformData(props,onReceivePeerMessageMap)} and {getPlatformData(props,onReceiveGroupMessageMap)} callback to receive new messages from one-on-one and group conversations, or call the {getPlatformData(props,queryHistoryMessageMap)} interface to fetch historical messages.
 
-At this point, users can choose a message to reply to by using that message as the `toOriginMessage` parameter and constructing a new message as the `message` parameter. Then, call the {getPlatformData(props,replyMessageMap)} interface.
+## 回复一条消息
+
+登录 ZIM 后，用户可以监听 {getPlatformData(props,onReceivePeerMessageMap)} 和 {getPlatformData(props,onReceiveGroupMessageMap)} 回调接收单聊会话和群聊会话的新消息，或调用 {getPlatformData(props,queryHistoryMessageMap)} 接口拉取历史消息。
+
+此时，用户可以选择其中某条消息进行回复，即将该消息作为 `toOriginalMessage` 参数，并构造一个消息作为回复内容作为 `message` 参数，调用 {getPlatformData(props,replyMessageMap)} 接口。
 
 <Note title="Note">
 
-Only the following types are supported for the `toOriginMessage` and `message` parameters:
-- Text message: [ZIMTextMessage(1)](@-ZIMTextMessage)
-- Image message: [ZIMImageMessage(11)](@-ZIMImageMessage)
-- File message: [ZIMFileMessage(12)](@-ZIMFileMessage)
-- Audio message: [ZIMAudioMessage(13)](@-ZIMAudioMessage)
-- Video message: [ZIMVideoMessage(14)](@-ZIMVideoMessage)
-- Combined message: [ZIMCombineMessage(100)](@-ZIMCombineMessage)
-- Custom message: [ZIMCustomMessage(200)](@-ZIMCustomMessage)
+上述 `toOriginMessage` 和 `message` 都仅支持以下类型：
+- 文本消息：[ZIMTextMessage(1)](@-ZIMTextMessage)
+- 图片消息：[ZIMImageMessage(11)](@-ZIMImageMessage)
+- 文件消息：[ZIMFileMessage(12)](@-ZIMFileMessage)
+- 音频消息：[ZIMAudioMessage(13)](@-ZIMAudioMessage)
+- 视频消息：[ZIMVideoMessage(14)](@-ZIMVideoMessage)
+- 合并消息：[ZIMCombineMessage(100)](@-ZIMCombineMessage)
+- 自定义消息：[ZIMCustomMessage(200)](@-ZIMCustomMessage)
 </Note>
 
 :::if{props.platform=undefined}
 <div>
-The following information is returned through {getPlatformData(props,ZIMMessageSentFullCallbackMap)}:
-- {getPlatformData(props,onMessageSentMap)}: Message sending result, you can obtain details when the message sending fails through error code and error message.
-- {getPlatformData(props,onMessageAttachedMap)}: Before sending a reply, you can obtain a temporary ZIMMessage to add some logic.
-- {getPlatformData(props,onMediaUploadingProgressMap)}: When sending a message containing rich media, this callback provides updates on the progress of file uploading.
+通过 {getPlatformData(props,ZIMMessageSentFullCallbackMap)} 返回以下几个信息：
+- {getPlatformData(props,onMessageSentMap)} ：消息发送结果，当发送消息失败时可以通过错误码和错误信息获取详情。
+- {getPlatformData(props,onMessageAttachedMap)} ：在回复发送前，可以获得一个临时的 ZIMMessage，以便您添加一些业务处理逻辑。 
+- {getPlatformData(props,onMediaUploadingProgressMap)} ：当发送包含富媒体的消息时，此回调将提供文件上传进度的更新。
 </div>
-
 :::
 
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac|window|Web"}
 <div>
-In addition to the required parameters mentioned above, you can also construct a `notification` object based on your business needs and listen to the following callbacks:
+除了上述必要参数之外，您还可以根据业务需求构造 `notification` 对象，监听如下回调：
+- {getPlatformData(props,onMessageAttachedMap)} ：在回复发送前，可以获得一个临时的 ZIMMessage，以便您添加一些业务处理逻辑。 
+- {getPlatformData(props,onMediaUploadingProgressMap)} ：当发送包含富媒体的消息时，此回调将提供文件上传进度的更新。   
 
-- [onMessageAttached](@onMessageAttached): This callback is triggered before sending the reply, allowing you to obtain a temporary ZIMMessage object. You can use this object to add some logic, such as displaying UI in advance.
-- [onMediaUploadingProgress](@onMediaUploadingProgress): This callback provides updates on the progress of file uploads when sending messages with rich media.
-
-The sending result will be returned through the [ZIMMessageSentCallback](@ZIMMessageSentCallback).
+发送结果将通过 {getPlatformData(props,ZIMMessageSentFullCallbackMap)} 返回。
 </div>
 :::
-:::if{props.platform="iOS"}
-<div>
-In addition to the required parameters mentioned above, you can also construct a `notification` object based on your business needs and listen to the following callbacks:
 
-- [onMessageAttached](@onMessageAttached): This callback is triggered before sending the reply, allowing you to obtain a temporary ZIMMessage object. You can use this object to add some logic, such as displaying UI in advance.
-- [onMediaUploadingProgress](@onMediaUploadingProgress): This callback provides updates on the progress of file uploads when sending messages with rich media.
 
-The sending result will be returned through the [ZIMMessageSentCallback](@ZIMMessageSentCallback).
-</div>
-:::
-:::if{props.platform="window"}
-<div>
-In addition to the required parameters mentioned above, you can also construct a `notification` object based on your business needs and listen to the following callbacks:
 
-- [onMessageAttached](@onMessageAttached): This callback is triggered before sending the reply, allowing you to obtain a temporary ZIMMessage object. You can use this object to add some logic, such as displaying UI in advance.
-- [onMediaUploadingProgress](@onMediaUploadingProgress): This callback provides updates on the progress of file uploads when sending messages with rich media.
-
-The sending result will be returned through the [ZIMMessageSentCallback](@ZIMMessageSentCallback).
-</div>
-:::
-:::if{props.platform="Web"}
-<div>
-In addition to the required parameters mentioned above, you can also construct a `notification` object based on your business needs and listen to the following callbacks:
-
-- [onMessageAttached](@onMessageAttached): This callback is triggered before sending the reply, allowing you to obtain a temporary ZIMMessage object. You can use this object to add some logic, such as displaying UI in advance.
-- [onMediaUploadingProgress](@onMediaUploadingProgress): This callback provides updates on the progress of file uploads when sending messages with rich media.
-
-The sending result will be returned through the [ZIMMessageSentResult](@-ZIMMessageSentResult).
-</div>
-:::
 
 :::if{props.platform=undefined}
 ```java
-// Reply content
-ZIMTextMessage textMessage = new ZIMTextMessage("Message content");
+// 回复消息内容
+ZIMTextMessage textMessage = new ZIMTextMessage("消息内容");
 
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// Set message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.LOW;
 
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessage or receivePeerMessage and receiveGroupMessage.
-ZIM.getInstance().replyMessage(textMessage, toOriginMessage, config, new ZIMMessageSentFullCallback() {
+// 回复一条消息，引用的源消息对象 toOriginalMessage 可以通过 queryHistoryMessage 或者 receivePeerMessage 和 receiveGroupMessage 获取。
+ZIM.getInstance().replyMessage(textMessage, toOriginalMessage, config, new ZIMMessageSentFullCallback() {
     @Override
     public void onMessageAttached(ZIMMessage message) {
-        // Callback before sending, where you can get a temporary object that is the same as the zimMessage object created by you. You can use this feature to add some business logic, such as displaying UI in advance.
+        // 发送前的回调，客户可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
     }
 
     @Override
     public void onMessageSent(ZIMMessage message, ZIMError errorInfo) {
-        // You can use this callback to listen for whether the message was sent successfully.
+        // 开发者可以通过该回调监听消息是否发送成功。
     } 
 
     @Override
     public void onMediaUploadingProgress(ZIMMessage message, long currentFileSize, long totalFileSize) {
-        // If the reply message is a media message, you can listen to the upload progress of the media attachment.
+        // 若发送的回复消息为媒体消息，则可以监听媒体附件的上传进度
     }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Reply content
+// 回复消息内容
 ZIMTextMessage *textMessage = [[ZIMTextMessage alloc] init];
-textMessage.message = @"Message content";
+textMessage.message = @"消息内容";
 
 ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
-// Set message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriorityLow;
 
 ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
 notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
-    // Callback before sending, where you can get a temporary object that is the same as the zimMessage object created by you. You can use this feature to add some business logic, such as displaying UI in advance.
+    // 发送前的回调，客户可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
 };
 notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
-    // If the reply message is a media message, you can listen to the upload progress of the media attachment.
+    // 若发送的回复消息为媒体消息，则可以监听媒体附件的上传进度
 };
 
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessageByConversationID, receivePeerMessage, or receiveGroupMessage.
-[[ZIM getInstance] replyMessage:textMessage toOriginMessage:toOriginMessage config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-    // You can use this callback to listen for whether the message was sent successfully.
-}];
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// Reply content
-ZIMTextMessage *textMessage = [[ZIMTextMessage alloc] init];
-textMessage.message = @"Message content";
-
-ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
-// Set message priority
-config.priority = ZIMMessagePriorityLow;
-
-ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
-notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
-    // Callback before sending, where you can get a temporary object that is the same as the zimMessage object created by you. You can use this feature to add some business logic, such as displaying UI in advance.
-};
-notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
-    // If the reply message is a media message, you can listen to the upload progress of the media attachment.
-};
-
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessageByConversationID, receivePeerMessage, or receiveGroupMessage.
-[[ZIM getInstance] replyMessage:textMessage toOriginMessage:toOriginMessage config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-    // You can use this callback to listen for whether the message was sent successfully.
+// 回复一条消息，引用的源消息对象 toOriginalMessage 可以通过 queryHistoryMessageByConversationID 或者 peerMessageReceived 和 groupMessageReceived 获取。
+[[ZIM getInstance] replyMessage:textMessage toOriginalMessage:toOriginalMessage config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+    // 开发者可以通过该回调监听消息是否发送成功。
 }];
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
-// Reply content
+// 回复的内容
 auto textMessage = std::make_shared<ZIMTextMessage>();
-textMessage->message = "Message content";
+textMessage->message = "消息内容";
 
 ZIMMessageSendConfig config;
-// Set message priority
+// 设置消息优先级
 config.priority = ZIM_MESSAGE_PRIORITY_LOW;
 
 auto notification = std::make_shared<ZIMMessageSendNotification>();
 notification->onMessageAttached = [=](const std::shared_ptr<ZIMMessage> &message) {
-    // Callback before sending, where you can get a temporary object that is the same as the zimMessage object created by you. You can use this feature to add some business logic, such as displaying UI in advance.
+    // 发送前的回调，客户可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
 };
 notification->onMediaUploadingProgress = [=](std::shared_ptr<ZIMMediaMessage> &message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
-    // If the reply message is a media message, you can listen to the upload progress of the media attachment.
+    // 若发送的回复消息为媒体消息，则可以监听媒体附件的上传进度
 };
 
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessage or onReceivePeerMessage and onReceiveGroupMessage.
-ZIM::getInstance()->replyMessage(textMessage, toOriginMessage, config, notification, [=](const std::shared_ptr<ZIMMessage> &message, const ZIMError &errorInfo) {
-    // You can use this callback to listen for whether the message was sent successfully.
+// 回复一条消息，引用的源消息对象 toOriginalMessage 可以通过 queryHistoryMessage 或者 onPeerMessageReceived 和 onGroupMessageReceived 获取。
+ZIM::getInstance()->replyMessage(textMessage, toOriginalMessage, config, notification, [=](const std::shared_ptr<ZIMMessage> &message, const ZIMError &errorInfo) {
+    // 开发者可以通过该回调监听消息是否发送成功。
 });
 ```
 :::
 :::if{props.platform="Web"}
 ```javascript
-// The source message object, obtained through queryHistoryMessage or receivePeerMessage and receiveGroupMessage.
-var toOriginMessage = {};
+// 引用的源消息对象，通过 queryHistoryMessage 或者 peerMessageReceived 和 groupMessageReceived 获取。
+var toOriginalMessage = {};
 
 var config = { 
-    priority: 1, // Set message priority, values are low: 1 (default), medium: 2, high: 3
+    priority: 1, // 设置消息优先级，取值为 低：1（默认），中:2，高：3
 };
 
-var messageTextObj = { type: 1, message: 'Reply message content' };
+var messageTextObj = { type: 1, message: '回复消息内容' };
 var notification = {
     onMessageAttached: function(message) {
         // todo: Loading
     },
     onMediaUploadingProgress: (message, currentFileSize, totalFileSize) => {
-        // If the reply is a media message, you can use this to display the file upload progress.
+        // 当发送的回复消息为富媒体消息时，可用于展示文件上传进度
     },
 }
 
 zim.replyMessage(messageTextObj, toOriginMessage, config, notification)
     .then(function ({ message }) {
-        // Sent successfully
+        // 发送成功
     })
     .catch(function (err) {
-        // Failed to send
+        // 发送失败
     });
 ```
 
 :::
 
-## Determine if a message is a reply to another message
+## 判断消息是否回复其他消息
 
-When receiving new messages in one-on-one and group conversations through the {getPlatformData(props,onReceivePeerMessageMap)} and {getPlatformData(props,onReceiveGroupMessageMap)} callbacks, you need to determine if the message has {getPlatformData(props,repliedInfoMap)} (basic information of the source message):
-- If it exists, it means that this message is a reply to another message.
-- If it doesn't exist, it means that this message is an independent message.
+监听 {getPlatformData(props,onReceivePeerMessageMap)} 和 {getPlatformData(props,onReceiveGroupMessageMap)} 回调在单聊会话和群聊会话中收到新消息后，需要通过判断消息是否存在 {getPlatformData(props,repliedInfoMap)} （源消息基本信息）：
+- 如果存在，则表示这条消息是对其他消息的回复。
+- 如果不存在，则表示这条消息是一条独立消息。
 
-When you have the {getPlatformData(props,repliedInfoMap)}, you can use it to display the sender, sending time, and message content of the source message.
+当您获取到 {getPlatformData(props,repliedInfoMap)} ，可用于展示源消息的发送用户、发送时间和消息内容等。
+
 
 :::if{props.platform=undefined}
 ```java
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 ZIM.getInstance().setEventHandler(new ZIMEventHandler() {
     @Override
-    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
-                                             String fromUserID) {
+    public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID) {
         for(ZIMMessage message : messageList) {
             if(message.repliedInfo) {
-                // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
+                // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
             }
         }
     }
 
     @Override
-    public void onReceiveGroupMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
-                                              String fromGroupID) {
+    public void onGroupMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromGroupID) {
         for(ZIMMessage message : messageList) {
             if(message.repliedInfo) {
-                // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
+                // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
             }
         }
     }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 [zim setEventHandler:self];
 
-// Callback for receiving one-on-one messages
+// 收到单聊消息的回调
 - (void)zim:(ZIM *)zim
-    receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
-            fromUserID:(NSString *)fromUserID{
-    for(ZIMMessage *message in messageList) {
-        if(message.repliedInfo) {
-           // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
-    }   
+    peerMessageReceived:(NSArray<ZIMMessage *> *)messageList
+                   info:(ZIMMessageReceivedInfo *)info
+             fromUserID:(NSString *)fromUserID {
+     for(ZIMMessage *message in messageList) {
+         if(message.repliedInfo) {
+           // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
+         }
+     }   
 }
 
-// Callback for receiving group messages
+// 收到群组消息的回调
 - (void)zim:(ZIM *)zim
-    receiveGroupMessage:(NSArray<ZIMMessage *> *)messageList
-            fromGroupID:(NSString *)fromGroupID{
+    groupMessageReceived:(NSArray<ZIMMessage *> *)messageList
+                    info:(ZIMMessageReceivedInfo *)info
+             fromGroupID:(NSString *)fromGroupID {
     for(ZIMMessage *message in messageList) {
          if(message.repliedInfo) {
-           // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
-    }  
-}
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// Register ZIMEventHander callback
-[zim setEventHandler:self];
-
-// Callback for receiving one-on-one messages
-- (void)zim:(ZIM *)zim
-    receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
-            fromUserID:(NSString *)fromUserID{
-    for(ZIMMessage *message in messageList) {
-        if(message.repliedInfo) {
-           // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
-    }   
-}
-
-// Callback for receiving group messages
-- (void)zim:(ZIM *)zim
-    receiveGroupMessage:(NSArray<ZIMMessage *> *)messageList
-            fromGroupID:(NSString *)fromGroupID{
-    for(ZIMMessage *message in messageList) {
-         if(message.repliedInfo) {
-           // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
-    }  
+           // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
+         }
+     }  
 }
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 ZIM::getInstance()->setEventHandler(shared_from_this());
 
-// Callback for receiving peer messages
-void MyClass::onReceivePeerMessage(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const std::string & fromUserID) {
+// 收到单聊消息的回调
+void MyClass::onPeerMessageReceived(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const ZIMMessageReceivedInfo &info, const std::string & fromUserID) {
     for(const auto &message : messageList) {
         if(message->repliedInfo) {
-            // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
+            // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
         }
     }
 }
 
-// Callback for receiving group messages
-void MyClass::onReceiveGroupMessage(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const std::string & fromGroupID) {
+void MyClass::onGroupMessageReceived(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const ZIMMessageReceivedInfo &info, const std::string & fromGroupID) {
     for(const auto &message : messageList) {
         if(message->repliedInfo) {
-            // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
+            // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
         }
     }
 }
@@ -437,164 +353,133 @@ void MyClass::onReceiveGroupMessage(ZIM * zim, const std::vector<std::shared_ptr
 :::
 :::if{props.platform="Web"}
 ```javascript
-// Receive a message in a one-to-one conversation
-zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID }) {
+// 在单聊会话接收消息
+zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
     messageList.forEach((msg) => {
         if (msg.repliedInfo) {
-            // Basic information of the source message referenced by this reply, used to display the sender, sending time, and message content of the source message.
+            // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
         }
     });
 });
 
-// Receive a message in a group conversation
-zim.on('receiveGroupMessage', function (zim, { messageList, fromConversationID }) {
+// 在群聊会话接收消息
+zim.on('groupMessageReceived', function (zim, { messageList, info, fromConversationID }) {
     messageList.forEach((msg) => {
         if (msg.repliedInfo) {
-            // Basic information of the source message referenced by this reply, used to display the sender, sending time, and message content of the source message.
+            // 此回复消息引用的源消息的基本信息，用于展示源消息的发送者、发送时间、消息内容等
         }
     });
 });
 ```
 :::
 
-## Get the number of replies to a root message
+## 获取根消息回复数
 
-ZIM supports actively or passively obtaining the number of replies to a root message.
+ZIM 支持主动或被动获取某条根消息的回复数。
 
-### Active retrieval
+### 主动获取
 
-To actively retrieve the number of replies to a **root message**, you can directly use {getPlatformData(props,rootRepliedCountMap)} to get it.
+如需主动获取某条**根消息**的回复数，可直接通过 {getPlatformData(props,rootRepliedCountMap)} 获取。
 
-### Passive retrieval
+### 被动获取
 
-To get real-time updates on how many replies a root message has received, you can listen for the {getPlatformData(props,onMessageRepliedCountChangedMap)} event.
+如需实时了解根消息收到了多少条回复，您可以监听 {getPlatformData(props,onMessageRepliedCountChangedMap)}。
+
 
 :::if{props.platform=undefined}
 ```java
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 ZIM.getInstance().setEventHandler(new ZIMEventHandler() {
     
-    // Listen for changes in the number of replies to a root message
-    // Event trigger: When a new message replied to another message successfully, the number of replies to the root message of its reply tree will increase by 1
+    // 监听根消息的回复数量变化
+    // 事件触发时机：当有新的消息回复成功后，其回复树的根消息的回复数量会增加 1
     @Override
     public void onMessageRepliedCountChanged(
         ZIM zim, ArrayList<ZIMMessageRootRepliedCountInfo> infos) {
-            // Update the rootRepliedCount of the corresponding messageID in the conversation
+            // 更新会话的对应 messageID 的消息的 rootRepliedCount
         }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 [zim setEventHandler:self];
 
-// Listen for changes in the number of replies to a root message
-// Event trigger: When a new message replied to another message successfully, the number of replies to the root message of its reply tree will increase by 1
+// 监听根消息的回复数量变化
+// 事件触发时机：当有新的消息回复成功后，其回复树的根消息的回复数量会增加 1
 - (void)zim:(ZIM *)zim messageRepliedCountChanged:(NSArray<ZIMMessageRootRepliedCountInfo *> *)infos {
-    // Update the rootRepliedCount of the corresponding messageID in the conversation
-}
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// Register ZIMEventHander callback
-[zim setEventHandler:self];
-
-// Listen for changes in the number of replies to a root message
-// Event trigger: When a new message replied to another message successfully, the number of replies to the root message of its reply tree will increase by 1
-- (void)zim:(ZIM *)zim messageRepliedCountChanged:(NSArray<ZIMMessageRootRepliedCountInfo *> *)infos {
-    // Update the rootRepliedCount of the corresponding messageID in the conversation
+    // 更新会话的对应 messageID 的消息的 rootRepliedCount
 }
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 ZIM::getInstance()->setEventHandler(shared_from_this());
 
-// Listen for changes in the number of replies to a root message
-// Event trigger: When a new message replied to another message successfully, the number of replies to the root message of its reply tree will increase by 1
+// 监听根消息的回复数量变化
+// 事件触发时机：当有新的消息回复成功后，其回复树的根消息的回复数量会增加 1
 void MyClass::onMessageRepliedCountChanged(ZIM * zim, const std::vector<ZIMMessageRootRepliedCountInfo> & infos) {
-    // Update the rootRepliedCount of the corresponding messageID in the conversation
+    // 更新会话的对应 messageID 的消息的 rootRepliedCount
 }
 ```
 :::
 :::if{props.platform="Web"}
 ```javascript
-// Listen for changes in the number of replies to a root message
-// Event trigger: When a new message replied to another message successfully, the number of replies to the root message of its reply tree will increase by 1
+// 监听根消息的回复数量变化
+// 事件触发时机：当有新的回复消息发送成功后，其回复树的根消息的回复数量会增加 1
 zim.on('messageRepliedCountChanged', function (zim, { infos }) {
     infos.forEach(({ count, messageID, conversationID, conversationType }) => {
-        // Update the rootRepliedCount of the corresponding messageID in the conversation
+        // 更新会话的对应 messageID 的消息的 rootRepliedCount
     });
 });
 ```
 :::
-p
 
-## Listen for the deletion or recall of the source message
+## 监听源消息被删除或撤回
 
-Listen for the {getPlatformData(props,onMessageRepliedInfoChangedMap)} callback to get the list of child messages of a message when it is deleted or recalled. You can display relevant prompts on the UI of the corresponding child messages.
+监听 {getPlatformData(props,onMessageRepliedInfoChangedMap)} 回调，即可在某条消息被删除或被撤回时，获取该消息的下一级子消息列表，您可以在相关子消息 UI 上展示相关提示。
 
 <Note title="Note">
 
-Even if the source message is deleted by the user on a device, causing the {getPlatformData(props,repliedInfoStateMap)} (the state of the source message) of its child message to be {getPlatformData(props,ZIMMessageRepliedInfoStateMap)}, you can still get the brief content of the source message in the {getPlatformData(props,repliedInfoMessageInfoMap)} of the child message. Therefore, you can choose whether to display the content of the source message on that device as needed.
+即使用户在某设备删除源消息，导致子消息的 {getPlatformData(props,repliedInfoStateMap)} （其源消息的状态）为 {getPlatformData(props,ZIMMessageRepliedInfoStateMap)} ，依然可以在子消息的 {getPlatformData(props,repliedInfoMessageInfoMap)} 中获取到源消息的简要内容。因此，开发者可按需选择是否在该设备展示该源消息内容。
 </Note>
+
 
 :::if{props.platform=undefined}
 ```java
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 ZIM.getInstance().setEventHandler(new ZIMEventHandler() {
     
-    // Listen for changes in the source message of a reply message
-    // Event trigger: When the source message is "deleted" or "recalled", the repliedInfo property of the reply referencing it will change
+    // 监听回复消息的源消息变更事件
+    // 事件触发时机：当源消息被 “删除” 和 “撤回” 后，引用其的回复消息的 repliedInfo 属性会发生改变
     @Override
     public void onMessageRepliedInfoChanged(ZIM zim, ArrayList<ZIMMessage> messageList) {
         for(ZIMMessage message : messageList) {
             if(message.repliedInfo.state == ZIMMessageRepliedInfoState.DELETED) {
-                // The source message referenced by this reply message has been deleted, you can display "Message deleted" at this time
+                // 此回复消息引用的源消息被删除，此时可展示为“消息被删除”
             } else if (message.repliedInfo.messageInfo.type == ZIMMessageType.REVOKE) {
-                // The source message referenced by this reply message has been recalled, you can display "Message recalled" at this time
+                // 此回复消息引用的源消息被撤回，此时可展示为“消息已撤回”
             }
         }
     }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 [zim setEventHandler:self];
 
-// Listen for changes in the source message of a reply message
-// Event trigger: When the source message is "deleted" or "recalled", the repliedInfo property of the reply referencing it will change
+// 监听回复消息的源消息变更事件
+// 事件触发时机：当源消息被 “删除” 和 “撤回” 后，引用其的回复消息的 repliedInfo 属性会发生改变
 - (void)zim:(ZIM *)zim messageRepliedInfoChanged:(NSArray<ZIMMessage *> *)messageList {
     for(ZIMMessage *message in messageList) {
         if(message.repliedInfo.state == ZIMMessageRepliedInfoStateDeleted) {
-            // The source message referenced by this reply message has been deleted, you can display "Message deleted" at this time
+            // 此回复消息引用的源消息被删除，此时可展示为“消息被删除”
         } else if (message.repliedInfo.messageInfo.type == ZIMMessageTypeRevoke) {
-            // The source message referenced by this reply message has been recalled, you can display "Message recalled" at this time
-        }
-    }
-}
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// Register ZIMEventHander callback
-[zim setEventHandler:self];
-
-// Listen for changes in the source message of a reply message
-// Event trigger: When the source message is "deleted" or "recalled", the repliedInfo property of the reply referencing it will change
-- (void)zim:(ZIM *)zim messageRepliedInfoChanged:(NSArray<ZIMMessage *> *)messageList {
-    for(ZIMMessage *message in messageList) {
-        if(message.repliedInfo.state == ZIMMessageRepliedInfoStateDeleted) {
-            // The source message referenced by this reply message has been deleted, you can display "Message deleted" at this time
-        } else if (message.repliedInfo.messageInfo.type == ZIMMessageTypeRevoke) {
-            // The source message referenced by this reply message has been recalled, you can display "Message recalled" at this time
+            // 此回复消息引用的源消息被撤回，此时可展示为“消息已撤回”
         }
     }
 }
@@ -602,33 +487,34 @@ ZIM.getInstance().setEventHandler(new ZIMEventHandler() {
 :::
 :::if{props.platform="window"}
 ```cpp
-// Register ZIMEventHander callback
+//注册 ZIMEventHander 回调
 ZIM::getInstance()->setEventHandler(shared_from_this());
 
-// Listen for changes in the source message of a reply message
-// Event trigger: When the source message is "deleted" or "recalled", the repliedInfo property of the reply referencing it will change
+// 监听回复消息的源消息变更事件
+// 事件触发时机：当源消息被 “删除” 和 “撤回” 后，引用其的回复消息的 repliedInfo 属性会发生改变
 void MyClass::onMessageRepliedInfoChanged(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList) {
     for(const auto &message : messageList) {
         if(message->repliedInfo->state == ZIM_MESSAGE_REPLIED_INFO_STATE_DELETED) {
-            // The source message referenced by this reply message has been deleted, you can display "Message deleted" at this time
+            // 此回复消息引用的源消息被删除，此时可展示为“消息被删除”
         } else if (message->repliedInfo->messageInfo->type == ZIM_MESSAGE_TYPE_REVOKE) {
-            // The source message referenced by this reply message has been recalled, you can display "Message recalled" at this time
+            // 此回复消息引用的源消息被撤回，此时可展示为“消息已撤回”
         }
     }
 }
+
 ```
 :::
 :::if{props.platform="Web"}
 ```js
-// Listen for changes in the source message of a reply message
-// Event trigger: When the source message is "deleted" or "recalled", the repliedInfo property of the reply referencing it will change
+// 监听回复消息的源消息变更事件
+// 事件触发时机：当源消息被 “删除” 和 “撤回” 后，引用其的回复消息的 repliedInfo 属性会发生改变
 zim.on('messageRepliedInfoChanged', function (zim, { messageList }) {
     messageList.forEach((msg) => {
         if (msg.repliedInfo) {
             if (msg.repliedInfo.state != 0) {
-                // The source message referenced by this reply message has been deleted, you can display "Message deleted" at this time
+                // 此回复消息引用的源消息被删除，此时可展示为“消息被删除”
             } else if (msg.repliedInfo.messageInfo.type == 31) {
-                // The source message referenced by this reply message has been recalled, you can display "Message recalled" at this time
+                // 此回复消息引用的源消息被撤回，此时可展示为“消息已撤回”
             }
         }
     });
@@ -636,69 +522,51 @@ zim.on('messageRepliedInfoChanged', function (zim, { messageList }) {
 ```
 :::
 
-## Query the reply list
 
-Call {getPlatformData(props,queryMessageRepliedListMap)} and pass in the root message or any reply to view the complete list of replies and get the complete message list related to the replies.
+## 查询回复列表
 
-The results returned by this interface will distinguish between the root message (`rootRepliedInfo`) and the reply list (`messageList`), and the reply list will be sorted in chronological order based on the sending time of the replies.
+调用 {getPlatformData(props,queryMessageRepliedListMap)} ，传入根消息或任意回复，即可查看完整的回复列表，了解回复相关的完整消息列表。
+
+本接口返回的结果将区分根消息（`rootRepliedInfo`）和回复列表（`messageList`），回复列表会按照回复的发送时间从前往后排序。
+
 
 :::if{props.platform=undefined}
 ```java
 ZIMMessageRepliedListQueryConfig config = new ZIMMessageRepliedListQueryConfig();
-config.count = 10; // The number of queries, please do not exceed 100
-config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
+config.count = 10; // 查询数量，上限请勿超过 100
+config.nextFlag = 0; // 分页标志，首次查询填 0，后续查询以查询结果返回的 nextFlag 为准
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage 可为根消息或任意回复，一般通过 queryHistoryMessage 接口或者 onReceivePeerMessage 和 onReceiveGroupMessage 获取
 ZIM.getInstance().queryMessageRepliedList(replyMessage, config, new new ZIMMessageRepliedListQueriedCallback() {
     @Override
     public void onMessageRepliedListQueried(ArrayList<ZIMMessage> messageList, long nextFlag, ZIMMessageRootRepliedInfo rootRepliedInfo, ZIMError errorInfo) {
         if(errorInfo.code == ZIMErrorCode.SUCCESS) {
-            // Query successful
-            // If nextFlag is not 0, it means there is more data to be queried
-            // rootRepliedInfo is the information of the root message
-            // messageList represents the reply list to the root message
+            // 查询成功
+            // nextFlag 不为 0，表示还有数据，可继续分页查询
+            // rootRepliedInfo 为根消息信息
+            // messageList 表示对根消息的回复列表。
         } else {
-            // Query failed
+            // 查询失败
         }
     }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
 ZIMMessageRepliedListQueryConfig *config = [[ZIMMessageRepliedListQueryConfig alloc] init];
-config.count = 10; // The number of queries, please do not exceed 100
-config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
+config.count = 10; // 查询数量，上限请勿超过 100
+config.nextFlag = 0; // 分页标志，首次查询填 0，后续查询以查询结果返回的 nextFlag 为准
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage 可为根消息或任意一条回复链上的消息，一般通过 queryHistoryMessageByConversationID 接口或者 peerMessageReceived 和 groupMessageReceived 获取
 [[ZIM getInstance] queryMessageRepliedListByMessage:replyMessage config:config callback:^(NSArray<ZIMMessage *> * _Nonnull messageList, long long nextFlag, ZIMMessageRootRepliedInfo * _Nonnull rootRepliedInfo, ZIMError * _Nonnull errorInfo){
         if(errorInfo.code == ZIMErrorCodeSuccess) {
-            // Query successful
-            // If nextFlag is not 0, it means there is more data to be queried
-            // rootRepliedInfo is the information of the root message
-            // messageList represents the reply list to the root message
+            // 查询成功
+            // nextFlag 不为 0，表示还有数据，可继续分页查询
+            // rootRepliedInfo 为根消息信息
+            // messageList 表示对根消息的回复列表。
         } else {
-            // Query failed
-        }
-}];
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-ZIMMessageRepliedListQueryConfig *config = [[ZIMMessageRepliedListQueryConfig alloc] init];
-config.count = 10; // The number of queries, please do not exceed 100
-config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
-
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
-[[ZIM getInstance] queryMessageRepliedListByMessage:replyMessage config:config callback:^(NSArray<ZIMMessage *> * _Nonnull messageList, long long nextFlag, ZIMMessageRootRepliedInfo * _Nonnull rootRepliedInfo, ZIMError * _Nonnull errorInfo){
-        if(errorInfo.code == ZIMErrorCodeSuccess) {
-            // Query successful
-            // If nextFlag is not 0, it means there is more data to be queried
-            // rootRepliedInfo is the information of the root message
-            // messageList represents the reply list to the root message
-        } else {
-            // Query failed
+            // 查询失败
         }
 }];
 ```
@@ -706,148 +574,145 @@ config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subs
 :::if{props.platform="window"}
 ```cpp
 ZIMMessageRepliedListQueryConfig config;
-config.count = 10; // The number of queries, please do not exceed 100
-config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
+config.count = 10; // 查询数量，上限请勿超过 100
+config.nextFlag = 0; // 分页标志，首次查询填 0，后续查询以查询结果返回的 nextFlag 为准
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage 可为根消息或任意回复，一般通过 queryHistoryMessage 接口或者 onReceivePeerMessage 和 onReceiveGroupMessage 获取
 ZIM::getInstance()->queryMessageRepliedList(replyMessage, config, [=](const std::vector<std::shared_ptr<ZIMMessage>> &messageList, long long nextFlag,
     const ZIMMessageRootRepliedInfo &rootRepliedInfo, const ZIMError &errorInfo){
     if(errorInfo.code == ZIM_ERROR_CODE_SUCCESS) {
-        // Query successful
-        // If nextFlag is not 0, it means there is more data to be queried
-        // rootRepliedInfo is the information of the root message
-        // messageList represents the reply list to the root message
+        // 查询成功
+        // nextFlag 不为 0，表示还有数据，可继续分页查询
+        // rootRepliedInfo 为根消息信息
+        // messageList 表示对根消息的回复列表。
      } else {
-        // Query failed
+        // 查询失败
      }
 });
+
 ```
 :::
 :::if{props.platform="Web"}
 ```javascript
-var replyMessage = {}; // replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+var replyMessage = {}; // 可为根消息或任意回复，一般通过 queryHistoryMessage 接口或者 peerMessageReceived 和 groupMessageReceived 获取
 
 var config = {
-    count: 10, // The number of queries, please do not exceed 100
-    nextFlag: 0, // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
+    count: 10, // 查询数量，上限请勿超过 100
+    nextFlag: 0, // 分页标志，首次查询填 0，后续查询以查询结果返回的 nextFlag 为准
 };
 
 zim.queryMessageRepliedList(replyMessage, config)
     .then(({ nextFlag, rootRepliedInfo, messageList }) => {
-        // Query successful
-        // If nextFlag is not 0, it means there is more data to be queried
-        // rootRepliedInfo is the information of the root message
-        // messageList represents the reply list to the root message
+        // 查询成功
+        // nextFlag 不为 0，表示还有数据，可继续分页查询
+        // rootRepliedInfo 为根消息信息
+        // messageList 表示对根消息的回复列表。
     })
     .catch((err) => {
-        // Query failed
+        // 查询失败
     });
 ```
 :::
 
-## View the context of the source message
+<Note title="Note">
 
-Since the {getPlatformData(props,repliedInfoMap)} of a child message (i.e., a reply message) only contains basic source message data that can be used for UI display, users may need to go to the original location of the source message to read other messages near the source message.
+- 查询消息回复列表时，只要是同一个回复树上的消息对象，无论是传其根消息对象还是任一消息对象，只要 nextFlag 填 0 就是从根消息开始按消息发送时间升序查询；
+- 由于 `rootRepliedInfo` 中的 `message` 是可空的对象，当 `state` 为 `Deleted` 时，代表根消息已被删除，此时开发者应在 UI 上提示 “根消息已被删除”；当 `state` 为 `NotFound` 时，代表无法再找到该条根消息，可能原因是消息已超出服务端存储时间，或者群组用户进群后查询回复列表但根消息是其进群前发的，因此该消息可能已不能再拉取，此时开发者应在 UI 上提示 “根消息已无法定位” 等提示性语句。
 
-Therefore, to implement this scenario, you need to use the {getPlatformData(props,repliedInfoMessageInfoMap)} property of the child message (which is the sequence number of the source message in the conversation).
+</Note>
+
+## 查看源消息的上下文
+
+由于子消息（即作为回复的消息）的 {getPlatformData(props,repliedInfoMap)} 仅包含可用于 UI 展示的基本源消息数据，用户可能需要前往源消息的原文位置，阅读源消息附近的其他消息。
+
+因此，如需实现此场景，需要借助子消息的 {getPlatformData(props,repliedInfoMessageInfoMap)} （源消息在会话中的序号）属性。
 
 <Note title="Note">
 
-The {getPlatformData(props,repliedInfoMessageInfoMap)} property of a child message (which is the sequence number of the source message in the conversation) corresponds to the {getPlatformData(props,messageSeqZIMMessageMap)} of the source message.
+子消息的 {getPlatformData(props,repliedInfoMessageInfoMap)}（源消息在会话中的序号）属性，对应源消息的 {getPlatformData(props,messageSeqZIMMessageMap)}。
 </Note>
 
-Depending on whether the source message and its surrounding messages are cached in the application's memory, ZIM provides two options.
+根据源消息及其附近消息是否缓存于应用内存，ZIM 提供了两种实现方案。
 
-### Both the source message and its surrounding messages are cached in the application's memory
+### 源消息及其附近均缓存于应用内存
 
-When a source message and its surrounding messages are saved in your application's memory (for example, by calling {getPlatformData(props,queryHistoryMessageMap)} to retrieve and cache the conversation's message history), you can search the {getPlatformData(props,messageSeqMap)} of the source message in the memory and implement the business logic to go to the original location of the source message to view the context.
+当某条源消息及其上下文消息都保存于您应用的内存中时（比如，此前以调用 {getPlatformData(props,queryHistoryMessageMap)} 获取并缓存了会话历史消息），您可在内存检索该源消息的 {getPlatformData(props,messageSeqZIMMessageMap)} ，自行实现前往源消息原文位置查看上下文的业务逻辑。
 
-### The source message or its surrounding messages are not cached in the application's memory
+### 源消息或其附近的消息没有缓存于应用内存
 
-When the source message or its surrounding messages are not cached in the application's memory, if another user replies to the source message in the conversation, you can:
-1. From the {getPlatformData(props,repliedInfoMessageInfoMap)} of the reply, get the {getPlatformData(props,messageSeqMap)} of the source message. Pass it as a parameter to call the  {getPlatformData(props,queryMessagesMap)} interface to get the complete {getPlatformData(props,ZIMMessageMap)} object of the source message.
+当应用内存中没有源消息或其附近的消息时，此时，会话中若有其他用户回复了该源消息，即可：
+1. 从该消息的 {getPlatformData(props,repliedInfoMessageInfoMap)} 获取到源消息的 {getPlatformData(props,messageSeqZIMMessageMap)} 并作为参数，传入 {getPlatformData(props,queryMessagesMap)} 获取源消息的完整 {getPlatformData(props,ZIMMessageMap)} 对象。
+
 
 :::if{props.platform=undefined}
 ```java
-// messageSeq is the sequence number of the source message in the conversation
+// messageSeq 为源消息的在会话中的序号
 ArrayList<Long> messageSeqs = new ArrayList<>();
 messageSeqs.add(messageSeq);
 ZIM.getInstance().queryMessages(messageSeqs, "YOUR_CONVERSATION_ID", conversationType, new ZIMMessageQueriedCallback() {
     @Override
     public void onMessageQueried(String conversationID, ZIMConversationType conversationType, ArrayList<ZIMMessage> messageList, ZIMError errorInfo) {
         if(errorInfo.code == ZIMErrorCode.SUCCESS) {
-            // Query successful
+            // 查询成功
         } else {
-            // Query failed
+            // 查询失败
         }
     }
 });    
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// messageSeq is the sequence number of the source message in the conversation
+// messageSeq 为源消息的在会话中的序号
 NSArray *messageSeqs = @[@(messageSeq)];
 [[ZIM getInstance] queryMessagesByMessageSeqs:messageSeqs conversationID:@"YOUR_CONVERSATION_ID" conversationType:conversationType callback:^(NSString *conversationID, ZIMConversationType conversationType, NSArray<ZIMMessage *> *messageList, ZIMError *errorInfo) {
     if(error.code == ZIMErrorCodeSuccess) {
-        // Query successful
+        // 查询成功
     } else {
-        // Query failed
-    }
-}];
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// messageSeq is the sequence number of the source message in the conversation
-NSArray *messageSeqs = @[@(messageSeq)];
-[[ZIM getInstance] queryMessagesByMessageSeqs:messageSeqs conversationID:@"YOUR_CONVERSATION_ID" conversationType:conversationType callback:^(NSString *conversationID, ZIMConversationType conversationType, NSArray<ZIMMessage *> *messageList, ZIMError *errorInfo) {
-    if(error.code == ZIMErrorCodeSuccess) {
-        // Query successful
-    } else {
-        // Query failed
+        // 查询失败
     }
 }];
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
-  // messageSeq is the sequence number of the source message in the conversation
-  std::vector<long long> messageSeqs = {messageSeqs};
-  ZIM::getInstance()->queryMessages(messageSeqs, "YOUR_CONVERSATION_ID", conversationType, [=](const std::string &conversationID, ZIMConversationType conversationType, const std::vector<std::shared_ptr<ZIMMessage>> &messageList, const ZIMError &errorInfo) {
-      if(errorInfo.code == ZIM_ERROR_CODE_SUCCESS) {
-              // Query successful
-      } else {
-              // Query failed
-      }
-  });
-  ```
+// messageSeq 为源消息的在会话中的序号
+std::vector<long long> messageSeqs = {messageSeqs};
+ZIM::getInstance()->queryMessages(messageSeqs, "YOUR_CONVERSATION_ID", conversationType, [=](const std::string &conversationID, ZIMConversationType conversationType, const std::vector<std::shared_ptr<ZIMMessage>> &messageList, const ZIMError &errorInfo) {
+    if(errorInfo.code == ZIM_ERROR_CODE_SUCCESS) {
+            // 查询成功
+     } else {
+            // 查询失败
+     }
+});
+```
 :::
 :::if{props.platform="Web"}
 ```javascript
-var messageSeqs = []; // messageSeq is the sequence number of the source message in the conversation
+var messageSeqs = []; // messageSeq 为源消息的在会话中的序号
 
 var conversationID = '';
-var conversationType = 0; // Conversation Type: ono-to-onr: 0; group: 2
+var conversationType = 0; // 会话类型，取值为 单聊：0，群组：2
 
 zim.queryMessages(messageSeqs, conversationID, conversationType)
     .then(({ messageList }) => {
-        // Query successful
+        // 查询成功
     })
     .catch((err) => {
-        // Query failed
+        // 查询失败
     });
 ```
 :::
 
-2. Pass the source message object as the {getPlatformData(props,nextMessageMap)} parameter to {getPlatformData(props,queryHistoryMessageMap)}, so that you can use the source message as an anchor point to retrieve messages from the messages forward or backward. 
+
+2. 将源消息对象作为 {getPlatformData(props,nextMessageMap)} 参数，传入 {getPlatformData(props,queryHistoryMessageMap)} ，即可以该源消息为锚点，从该源消息往前或往后获取其附近的消息列表，用于 UI 渲染。
+
 
 :::if{props.platform=undefined}
 ```java
-// This example demonstrates querying forward from the source message
+// 本示例以源消息往后查询为例
 ZIMMessageQueryConfig config = new ZIMMessageQueryConfig();
-// originalMessage is the source message obtained through queryMessages
+// originalMessage 为通过 queryMessages 获取到的源消息对象
 config.nextMessage = originalMessage;
 config.count = 20;
 config.reverse = false;
@@ -855,73 +720,55 @@ ZIM.getInstance().queryHistoryMessage("YOUR_CONVERSATION_ID", conversationType, 
     @Override
     public void onMessageQueried(String conversationID, ZIMConversationType conversationType, ArrayList<ZIMMessage> messageList, ZIMError errorInfo) {
         if(errorInfo.code == ZIMErrorCode.SUCCESS) {
-            // Query successful
+            // 查询成功
         } else {
-            // Query failed
+            // 查询失败
         }
     }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
-// This example demonstrates querying forward from the source message
+// 本示例以源消息往后查询为例
 ZIMMessageQueryConfig *config = [[ZIMMessageQueryConfig alloc] init];
-// originalMessage is the source message obtained through queryMessagesByMessageSeqs
+// originalMessage 为通过 queryMessagesByMessageSeqs 获取到的源消息对象
 config.nextMessage = originalMessage;
 config.count = 20;
 config.reverse = NO;
 [[ZIM getInstance] queryHistoryMessageByConversationID:@"YOUR_CONVERSATION_ID" conversationType:conversationType config:config callback:^(NSString *conversationID, ZIMConversationType conversationType, NSArray<ZIMMessage *> *messageList, ZIMError *errorInfo) {
     if(error.code == ZIMErrorCodeSuccess) {
-        // Query successful
+        // 查询成功
     } else {
-        // Query failed
-    }
-}];
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// This example demonstrates querying forward from the source message
-ZIMMessageQueryConfig *config = [[ZIMMessageQueryConfig alloc] init];
-// originalMessage is the source message obtained through queryMessagesByMessageSeqs
-config.nextMessage = originalMessage;
-config.count = 20;
-config.reverse = NO;
-[[ZIM getInstance] queryHistoryMessageByConversationID:@"YOUR_CONVERSATION_ID" conversationType:conversationType config:config callback:^(NSString *conversationID, ZIMConversationType conversationType, NSArray<ZIMMessage *> *messageList, ZIMError *errorInfo) {
-    if(error.code == ZIMErrorCodeSuccess) {
-        // Query successful
-    } else {
-        // Query failed
+        // 查询失败
     }
 }];
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
-// This example demonstrates querying forward from the source message
+// 本示例以源消息往后查询为例
 ZIMMessageQueryConfig config;
-// originalMessage is the source message obtained through queryMessagesByMessageSeqs
+// originalMessage 为通过 queryMessagesByMessageSeqs 获取到的源消息对象
 config.nextMessage = originalMessage;
 config.count = 20;
 config.reverse = false;
 ZIM::getInstance()->queryHistoryMessage("YOUR_CONVERSATION_ID", conversationType, config, [=](const std::string &conversationID, ZIMConversationType conversationType, const std::vector<std::shared_ptr<ZIMMessage>> &messageList, const ZIMError &errorInfo) {
     if(errorInfo.code == ZIM_ERROR_CODE_SUCCESS) {
-        // Query successful
-    } else {
-        // Query failed
-    }
+            // 查询成功
+     } else {
+            // 查询失败
+     }
 });
 ```
 
 :::
 :::if{props.platform="Web"}
 ```javascript
-// This example demonstrates querying forward from the source message
+// 本示例以源消息往后查询为例
 var originalMessage = {};
 var config = {
-    // originalMessage is the source message obtained through queryMessages
+    // originalMessage 为通过 queryMessages 获取到的源消息对象
     nextMessage: originalMessage,
     count: 20,
     reverse: false,
@@ -932,10 +779,10 @@ var conversationType = 0;
 
 zim.queryHistoryMessage(conversationID, conversationType, config)
     .then((res) => {
-        // Query successful
+        //查询成功
     })
     .catch((err) => {
-        // Query failed
+        // 查询失败
     });
 ```
 :::
