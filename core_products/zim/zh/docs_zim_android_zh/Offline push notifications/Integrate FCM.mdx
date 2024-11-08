@@ -1,80 +1,68 @@
----
-articleID: 13932
----
-
-# Integrate FCM
+# FCM 集成指南
 
 
 <Note title="Note">
-This article is applicable for integrating Google FCM on Android devices.
+本文适用于 Android 端集成 FCM。
 </Note>
 
-[Google FCM](https://firebase.google.com) (Firebase Cloud Messaging) is a cross-platform messaging solution that lets you reliably deliver messages.
-  
-**Before using ZIM SDK's offline push notification feature, please implement the Google FCM push notification first by referring to this document.**
+## 概述
+
+Google 推送 [FCM\|_blank](https://firebase.google.com)（Firebase Cloud Messaging）是一种跨平台消息传递解决方案，支持海外用户推送离线消息，可供开发者可靠地传递消息。
+
+开发者使用 ZIM 提供的“离线推送”功能之前，请参考本文，接入 Google FCM 厂商的离线推送通道。  
 
 <Warning title="Warning">
-After Google FCM push notification is enabled, the ZPNs SDK used the Google notification channel directly. The notification channels of other push service providers won't be available. 
+启用 Google 推送后，ZPNs SDK 会直接使用 Google 推送通道，其他厂商的推送通道将会失效。
 </Warning>
 
-## Prerequisites
+## 前提条件
 
-Before the push notification implementation using FCM, make sure you complete the following: 
-
-- Your mobile device supports the GMS (Google Mobile Services), and has connected to the network.
-- Integrate the latest version of ZIM SDK. For details, see [Getting Started - Integrate the SDK](./../Send%20and%20receive%20messages.mdx#integrate-the-sdk).
-- Integrate the ZPNs SDK. For more, refer to the [Implement offline push notification](./Implement%20offline%20push%20notification.mdx).
-
-- Complete the Firebase-related steps below: 
-
-    1. Go to [Firebase](https://console.firebase.google.com/), log in with your [Google account](https://support.google.com/accounts/answer/27441?hl=en&ref_topic=3382296&sjid=11687856945527155185-AP).
-    
-    2. Select **Add project**, and complete the project information.
-    
-        <Frame width="512" height="auto" caption="">
-            <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/add_project_EN.png" />
-        </Frame>
-    
-    3. Click on the area shown below.
-
-        <Frame width="512" height="auto" caption="">
-          <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/project_info_EN.png" />
-        </Frame>
-
-    4. Click the button shown below to create an Android application.
-
-        <Frame width="512" height="auto" caption="">
-          <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/create_app_EN.png" />
-        </Frame>
-
-    5. Enter your Application's package name, and click **Register App**.
-
-        <Frame width="512" height="auto" caption="">
-          <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/add_app_info_EN.png" />
-        </Frame>
-    6. Download a `google-services.json` file. And move the downloaded `google-services.json` file into your Android app module root directory when integrating the SDK.
-
-        <Frame width="512" height="auto" caption="">
-          <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/download_google_json_EN.png" />
-        </Frame>
-  
+使用 `FCM` 成功推送需要以下条件：
  
-## Implementation steps
+1. 移动设备（如手机）支持 “谷歌移动服务 GMS”。
+2. 移动设备（如手机）连接的网络属于海外网络。
 
-### Add the FCM push notification to the Android app
+在接入 `FCM` 的离线推送通道之前，请确保：
 
-1. In the root level `build.gradle` file, configure Google's Maven repository for adding Google dependencies.
+- 已集成最新版本的 ZIM SDK，详情请参考 [快速开始 - 实现基本收发消息](./../Send%20and%20receive%20messages.mdx)。
+- 已完成如下步骤：
 
-    ```xml title="<project>/build.gradle"
+    1. 前往 [Firebase 平台\|_blank](https://console.firebase.google.com/)，登录自己的 [Google 账号\|_blank](https://support.google.com/accounts/answer/27441?hl=zh-Hans&ref_topic=3382296)。
+    
+    2. 登录成功后，在页面中，选择 “添加项目”，输入项目名称及相关信息。
+    
+        <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/add_project.png" /></Frame>
+    
+    3. 添加项目完成后，点击，进入项目详情。
+
+        <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/project_info.png" /></Frame>
+
+    4. 在界面中点击如图的按钮，创建 Android 应用。
+
+        <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/create_app.png" /></Frame>
+
+    5. 填写 Android 应用的相关信息，然后点击 “注册应用”。
+
+        <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/add_app_info.png" /></Frame>
+
+    6. 注册完成后，点击 “下载 google-services.json” 文件。集成 SDK 时，需要将此文件配置至项目的 app 目录下。
+
+        <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/download_google_json.png" /></Frame>
+   
+## 使用步骤
+
+1. 在项目级 “build.gradle”（文件路径：项目/build.gradle）文件中，配置 Google 的 maven 仓库，拉取 Google 的依赖。
+
+    ```java
     buildscript {
         repositories {
-            // Check that you have the following line (if not, add it):
-            google()  // Google's Maven repository
+            // 请检查代码是否有以下内容（若无，请添加）：
+            google()  // Google 的 Maven 库
             mavenCentral()
         }
         dependencies {
             ...
-            // Add this line
+            // 添加此行
             classpath 'com.google.gms:google-services:4.3.5'
 
         }
@@ -83,112 +71,67 @@ Before the push notification implementation using FCM, make sure you complete th
     allprojects {
         ...
         repositories {
-            // Check that you have the following line (if not, add it):
-            google()  // Google's Maven repository
+            // 请检查代码是否有以下内容（若无，请添加）：
+            google()  // Google 的 Maven 库
             mavenCentral()
             ...
         }
     }
     ```
 
-2. In the module level `build.gradle` file, add the Firebase-related dependencies.
+2. 在应用级 “build.gradle”（文件路径：项目/应用模块/build.gradle）文件中，增加 Firebase 相关依赖。
 
-    ```xml title="<project>/<app module>/build.gradle"
+:::if{props.platform=undefined}
+    ```java
     apply plugin: 'com.android.application'
 
-    // Add this line
+    // 添加此行
     apply plugin: 'com.google.gms.google-services'
 
     dependencies {
-        // Import the Firebase BoM
+        // 引入 Firebase BoM
         implementation platform('com.google.firebase:firebase-bom:31.0.2')
 
-        // Add the dependency for the Firebase SDK for Google Analytics
-        // When using the BoM, don't specify versions in Firebase dependencies
+        // 添加 Firebase SDK 用于 Google Analytics 和 FCM 的依赖。 
+        // 使用 BoM 时，请勿在 Firebase 依赖中指明版本
         implementation 'com.google.firebase:firebase-analytics'
+        implementation 'com.google.firebase:firebase-messaging:23.2.1' 
+        implementation 'im.zego:zpns-fcm:2.7.0' // 用于 Google FCM 推送的 ZPNs 包
 
-        // Add the dependencies for any other desired Firebase products
+        // 为任何其他所需的 Firebase 产品添加依赖
         // https://firebase.google.com/docs/android/setup#available-libraries
     }
     ```
-
-3. In the module level `build.gradle` file, adding the Google notification push dependencies.
-
-:::if{props.platform=undefined}
-```xml title="<project>/<app module>/build.gradle"
-implementation 'com.google.firebase:firebase-messaging:23.2.1' 
-implementation 'im.zego:zpns-fcm:2.7.0' // ZPNs package for google FCM
-```
 :::
-:::if{props.platform="Flutter"}
- ```xml
- implementation 'com.google.firebase:firebase-messaging:21.1.0'
- ```
-:::
-:::if{props.platform="RN"}
- ```xml
- implementation 'com.google.firebase:firebase-messaging:21.1.0'
- ```
-:::
+:::if{props.platform="Flutter|RN"}
+    ```java
+    apply plugin: 'com.android.application'
 
-4. In the "proguard-rules.pro" file, add the -keep class configuration for the FCM SDK to prevent obfuscation of the public class names of the FCM SDK:
+    // 添加此行
+    apply plugin: 'com.google.gms.google-services'
 
-    ```xml title="proguard-rules.pro"
+    dependencies {
+        // 引入 Firebase BoM
+        implementation platform('com.google.firebase:firebase-bom:31.0.2')
+
+        // 添加 Firebase SDK 用于 Google Analytics 和 FCM 的依赖。 
+        // 使用 BoM 时，请勿在 Firebase 依赖中指明版本
+        implementation 'com.google.firebase:firebase-analytics'
+        implementation 'com.google.firebase:firebase-messaging:23.2.1' 
+
+        // 为任何其他所需的 Firebase 产品添加依赖
+        // https://firebase.google.com/docs/android/setup#available-libraries
+    }
+    ```
+:::
+    
+3. 以上配置完成后，请在 [ZEGO 控制台](https://console.zego.im/) 自助配置 ZIM 离线推送证书（详情请参考 [项目管理 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)），若无法配置，请联系 ZEGO 技术支持处理。
+
+4. 防止混淆代码
+
+    在“proguard-rules.pro”文件中，为 FCM SDK 添加 -keep 类的配置，这样可以防止混淆 FCM SDK 公共类名称：
+
+    ```java
     -dontwarn com.google.**
     -keep class com.google.** {*;}
     ```
-
-:::if{props.platform=undefined}
-5. After configuring the above, call the [`enableFCMPush`](@enableFCMPush) method of the ZPNs SDK to enable the Google FCM push notification feature. And then, cal the [`setPushConfig`](@setPushConfig) method to set up a Google notification channel.
-```java
-ZPNsConfig zpnsConfig = new ZPNsConfig();
-zpnsConfig.enableFCMPush(true); // Enable the Google push notification channel. After it is enabled, the notification channels of other vendors won't be available. 
-zpnsManager.setPushConfig(zpnsConfig);
-```
-:::
-:::if{props.platform="Flutter"}
-5. After configuring the above, call the [`enableFCMPush`](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsConfig/enableFCMPush.html) method of the ZPNs SDK to enable the Google FCM push notification feature. And then, cal the [`setPushConfig`](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/setPushConfig.html) method to set up a Google notification channel.
-```dart
-ZPNsConfig zpnsConfig = ZPNsConfig();
-zpnsConfig.enableFCMPush = true;
-ZPNs.setPushConfig(zpnsConfig);
-```
-:::
-:::if{props.platform="RN"}
-5. After configuring the above, call the `setPushConfig` method with `"enableFCMPush": true` to set up a Google notification channel.
-```js
-ZPNs.setPushConfig({"enableFCMPush": true, "enableVivoPush": true});
-```
-:::
-
-    In this case, you have added the FCM push notification to your Android app project. 
-
-    Now, all you have left to do is go to the [ZEGOCLOUD Admin Console](https://console.zegocloud.com/) to authorize the FCM. Check the following:
-
-
-### Add FCM credentials on Admin Console 
-
-
-1. Get a Firebase service account credential
-
-    The android project supports a Google service account, so you will need to get credential files using your Google service account, and allow ZEGOCLOUD Server to call the Firebase server API.
-
-    Suggested steps:
-Go to Firebase **Project Settings > Service accounts**.
-Click the **Generate new private key**, then confirm by clicking Generate Key.
-<Frame width="512" height="auto" caption="">
-  <img src="https://storage.zego.im/sdk-doc/Pics/FCM_Credentials.png" />
-</Frame>
-
-2. Upload FCM credentials
-
-    Log in to the [ZEGOCLOUD Admin Console](https://console.zegocloud.com/), select **Service Management > In-app Chat** tab, and add FCM credentials in the **Notification configuration** session.
-
-<Frame width="512" height="auto" caption="">
-  <img src="https://storage.zego.im/sdk-doc/Pics/Console_FCM_01.png" />
-</Frame>
-<Frame width="512" height="auto" caption="">
-  <img src="https://storage.zego.im/sdk-doc/Pics/zegocloud/console/fcm_certificate.png" />
-</Frame>
-
-    At this point, you have completed the configuration of the FCM offline push notification.
