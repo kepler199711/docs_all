@@ -8,7 +8,74 @@ articleID: 15086
 
 This article introduces some instructions and precautions when upgrading the In-app Chat Flutter SDK.
 
-<a id="2_13_0"></a>
+## 2.18.0 upgrade guide
+
+<Warning title="Warning">
+
+Starting from version 2.18.0, the following interfaces have undergone significant changes. Therefore, when upgrading from an older version to version 2.16.0, please read the following guidelines.
+</Warning>
+
+### Callback on receiving one-to-one messages
+
+The deprecated callback `onReceivePeerMessage` for receiving one-to-one messages has been replaced by [onPeerMessageReceived](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onReceivePeerMessage.html).
+
+
+The new callback supports the following features:
+- When a user is online, they can receive one-to-one messages through this callback.
+- When a user logs back into the ZIM SDK, they can receive all one-to-one messages received during their offline period (up to 7 days).
+
+```dart
+// New callback
+static void Function(
+        ZIM zim, List<ZIMMessage> messageList,
+        ZIMMessageReceivedInfo info, String fromUserID)? 
+    onPeerMessageReceived;
+
+// Old callback
+static void Function(
+        ZIM zim, List<ZIMMessage> messageList, String fromUserID)?
+    onReceivePeerMessage;
+```
+
+### Callback on receiving room messages
+
+The deprecated callback `onReceiveRoomMessage` for receiving room messages has been replaced by [onRoomMessageReceived](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMessageReceived.html).
+
+The new callback supports the following features:
+- When a user is online, they can receive online room messages through this callback.
+- When a user goes from offline to online and is still in the room, they can receive all room messages that were sent during their offline period through this callback.
+
+```dart
+// New callback
+static void Function(
+        ZIM zim, List<ZIMMessage> messageList,
+        ZIMMessageReceivedInfo info, String fromRoomID)?
+     onRoomMessageReceived;
+
+// Old callback
+static void Function(
+        ZIM zim, List<ZIMMessage> messageList, String fromRoomID)?
+    onReceiveRoomMessage;
+```
+
+### Callback on receiving group messages
+
+The deprecated callback `onReceiveGroupMessage` for receiving group messages has been replaced by [onGroupMessageReceived](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupMessageReceived.html).
+
+The new callback supports the following features:
+- When the user is online, they can receive online group messages through this callback.
+- When the user logs back into the ZIM SDK, they can receive all group chat messages received during the offline period (up to 7 days) through this callback.
+
+```dart
+// New Callback
+static void Function(ZIM zim, List<ZIMMessage> messageList,
+    ZIMMessageReceivedInfo info, String fromGroupID)? onGroupMessageReceived;
+
+// Old Callback
+static void Function(
+        ZIM zim, List<ZIMMessage> messageList, String fromGroupID)?
+    onReceiveGroupMessage;
+```
 
 ## 2.16.0 Upgrade Guide
 
@@ -135,7 +202,6 @@ The old version of the `login` method has been deprecated. The new version of [l
   });
   ```
 </CodeGroup>
-<a id="2_9_0"></a>
 
 ## 2.9.0 upgrade guide
 
@@ -162,7 +228,6 @@ The [onCallInvitationTimeout](https://pub.dev/documentation/zego_zim/latest/zego
   };
   ```
 </CodeGroup>
-
 
 ## 2.3.0 upgrade guide
 
