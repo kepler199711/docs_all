@@ -507,7 +507,7 @@ ZIM.GetInstance().UpdateGroupNotice("new_group_notice", "group_id", (string grou
 </CodeGroup>
 :::
 
-:::if{props.platform="undefined|Android|window|RN|Web"}
+:::if{props.platform="undefined|Android|window|RN|Web|Flutter"}
 ## Modify the group alias
 
 Group alias is a personalized nickname set by users for a group chat to distinguish from other group chats. For example, you can set the alias for a work group as "Work Group" and the alias for a family group as "Family Group", which makes it more convenient to identify the group chats.
@@ -592,8 +592,22 @@ try {
 }
 ```
 :::
+:::if{props.platform="Flutter"}
+```dart 
+// Update the group alias
+// groupAlias is a string with a maximum of 256 bytes, with no special character restrictions.
+String groupAlias = 'newAlias';
+String groupId = 'groupID';
+try{
+    ZIMGroupAliasUpdatedResult? result = await ZIM.getInstance()?.updateGroupAlias(groupAlias, groupId);
+} on PlatformException catch (onError){
+    onError.code; // Error code
+    onError.message; // Error message
+}
+```
+:::
 
-:::if{props.platform="iOS|undefined|mac|window|RN"}
+:::if{props.platform="iOS|undefined|mac|window|RN|Flutter"}
 After the modification is successful, all devices of the user can receive notifications through {getPlatformData(props,onGroupAliasUpdatedMap)}.
 :::
 
@@ -688,7 +702,15 @@ zim.on('groupAliasUpdated', function (zim, { groupID, groupAlias, operatedUserID
 });
 ```
 :::
+:::if{props.platform="Flutter"}
+```dart
+// Listen to group alias modification notification
+ZIMEventHandler.onGroupAliasUpdated = (ZIM zim, String groupAlias, String operatedUserID, String groupID){
+    // Your logic
+};
+```
+:::
 
-:::if{props.platform="iOS|undefined|mac|window|RN"}
+:::if{props.platform="iOS|undefined|mac|window|RN|Flutter"}
 In addition, the user will also receive the {getPlatformData(props,onConversationChangedMap)} callback to know when the `conversationAlias` is updated. For more details, please refer to [Get the conversation list - Listen for conversation changes](./../Conversation/Get%20the%20conversation%20list.mdx#listen-for-conversation-changes).
 :::

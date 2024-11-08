@@ -487,7 +487,6 @@ zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
 });
 ```
 :::
-:::if{props.platform="ios|undefined|RN|window|Web"}
 ## Switch Rooms
 
 If a user wants to switch from one room to another, the user can call the {getPlatformData(props,switchRoomMap)} method, passing in the ID of the original room (`fromRoomID`) and the information of the target room (`toRoomInfo`), which includes the room ID and room name. This will allow the user to switch rooms.
@@ -503,7 +502,6 @@ After a successful room switch, other users in the original room can be notified
     </Frame>
 
 - Sample code:
-:::
 :::if{props.platform=undefined}
 ```java
 String fromRoomID = "fromRoomID";
@@ -609,7 +607,11 @@ zim->switchRoom(
 ```javascript
 const fromRoomID = 'fromRoomID';
 const toRoomInfo = { roomID: 'toRoomID', roomName: 'toRoomName' };
+
+// Whether to create a room if it does not exist.
+// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
 const isCreateWhenRoomNotExisted = true;
+
 // Advanced configuration for creating a room
 const to_room_attr = {
     key1: 'value1', // Replace this code to the actual key-value pair
@@ -632,6 +634,30 @@ zim.switchRoom(fromRoomID, toRoomInfo, isCreateWhenRoomNotExisted, config)
     .catch(function (err) {
         // Operation failed
     });
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+String fromRoomID = 'fromRoomID';
+ZIMRoomInfo toRoomInfo = ZIMRoomInfo();
+toRoomInfo.roomID = 'toRoomID';
+toRoomInfo.roomName = 'toRoomName';
+
+// Whether to create a room if it does not exist.
+// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
+bool isCreateWhenRoomNotExisted = true;
+
+// Advanced configuration for creating a room
+ZIMRoomAdvancedConfig config = ZIMRoomAdvancedConfig();
+config.roomAttributes['key1'] = 'value1';
+config.roomDestroyDelayTime = 90;
+try{
+    ZIMRoomSwitchedResult? result = await ZIM.getInstance()?.switchRoom(fromRoomID, toRoomInfo, isCreateWhenRoomNotExisted, config);
+    // Operation successful
+} on PlatformException catch (onError){
+    onError.code; // Return code for switch failure
+    onError.message; // Error message
+}
 ```
 :::
 
