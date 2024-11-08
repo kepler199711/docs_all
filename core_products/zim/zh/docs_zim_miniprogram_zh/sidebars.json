@@ -223,11 +223,6 @@
             },
             {
               "type": "doc",
-              "label": "搜索本地消息",
-              "id": "guides/messaging/search-for-local-messages"
-            },
-            {
-              "type": "doc",
               "label": "消息表态",
               "id": "guides/messaging/respond-to-messages-with-emoticons"
             },

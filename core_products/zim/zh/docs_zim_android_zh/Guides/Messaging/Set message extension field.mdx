@@ -1,5 +1,5 @@
 ---
-articleID: 15505
+articleID: 17083
 ---
 
 import { getPlatformData } from "/snippets/utils-content-parser.js"
@@ -25,70 +25,84 @@ export const updateMessageLocalExtendedDataMap = {
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateMessageLocalExtendedData.html' target='_blank'>updateMessageLocalExtendedData</a>,
 }
 
-# Set message extension field
+
+
+# 设置消息拓展字段
+
 - - -
 
-## Introduction
+:::if{props.platform="U3d"}
 
-ZEGOCLOUD Instant Messaging (ZIM) SDK allows you to add an extension field to a message and send the extension field as additional message information. Message extension fields can be visible to the peer end or visible only to the local end based on the synchronization effects. A message extension field is used to present information such as the translation status and translation content of a message, and the business logic included in the message.
+<Note title="Note">
+本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
+</Note>
+:::
 
-## Implementation Steps
+## 功能简介
 
-1. Create a ZIM instance.
-2. Log in to the ZIM SDK.
-3. Construct the {getPlatformData(props,ZIMMessageMap)} object, and fill in the {getPlatformData(props,ZIMMessageMap)} field in the {getPlatformData(props,extendedDataMap)} object as the message extension field.
-4. Call the {getPlatformData(props,sendMessageMap)} interface, pass in the {getPlatformData(props,ZIMMessageMap)} object, send the message and expand the fields.
+ZIM SDK 支持用户在消息中添加拓展字段，作为消息的附加内容发送。根据同步效果，消息拓展字段可分为对端可见类型和仅本端可见类型。消息扩展字段可用于展示消息的翻译状态及翻译内容、展示消息携带业务逻辑等。
+
+## 实现方法
+
+### 设置对端可见的拓展字段
+
+1. 创建 ZIM 实例。
+2. 登录 ZIM SDK。
+3. 构造 {getPlatformData(props,ZIMMessageMap)} 对象，并在 {getPlatformData(props,ZIMMessageMap)} 对象里填入 {getPlatformData(props,extendedDataMap)} 字段作为对端可见的消息拓展字段。
+4. 调用 {getPlatformData(props,sendMessageMap)} 接口，传入 {getPlatformData(props,ZIMMessageMap)} 对象，发送消息和拓展字段。
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
-// 1. Create a ZIM object, pass in appID, appSign and Application in Android
+```java title="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign 与 Android 中的 Application
 ZIMAppConfig appConfig = new ZIMAppConfig();
-appConfig.appID = 12345;  // Replace it with the AppID you applied for from the ZEGO Admin Console
-appConfig.appSign = "appSign";   // Replace with the AppSign you applied for from the ZEGO Admin Console
+appConfig.appID = 12345;  // 替换为您从 ZEGO 控制台申请到的 AppID
+appConfig.appSign = "appSign";   // 替换为您从 ZEGO 控制台申请到的 AppSign
 zim = ZIM.create(appConfig, application);
 
-// 2. Set the setEventHandler callback
+// 2、设置 setEventHandler 回调
 zim.setEventHandler(new ZIMEventHandler() {
     @Override
     public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
-        // Callback for receiving a single chat message
+        // 收到单聊消息的回调
     }
 });
 
-// 3. Login
+// 3、登录
 ZIMUserInfo zimUserInfo = new ZIMUserInfo();
 zimUserInfo.userID = "xxxx";
 zimUserInfo.userName = "xxxx";
 zim.login(zimUserInfo, new ZIMLoggedInCallback() {
     @Override
     public void onLoggedIn(ZIMError error) {
-          // Developers can judge whether the login is successful according to ZIMError.
+          // 开发者可根据 ZIMError 来判断是否登录成功。          
     }
  });
 
+// 设置会话 ID
 String toConversationID = "xxxx1";
 
+// 构造 ZIMMessage 对象
 ZIMTextMessage zimMessage = new ZIMTextMessage();
-zimMessage.message = "Message content";
-// The extended fields that need to be sent
-zimMessage.extendedData = "Message Extension Field";
+zimMessage.message = "消息内容";
+// 需要发送的拓展字段
+zimMessage.extendedData = "消息拓展字段";
 
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// Set message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.LOW;
 
-// 4. Set the session type to send
-// Send one-on-one chat information
+// 4、设置发送的会话类型
+// 发送单聊信息
 ZIMConversationType type = ZIMConversationType.Peer;
 
-// Send a group chat message
+// 发送群聊信息
 ZIMConversationType type = ZIMConversationType.Gourp;
 
-// send room info
+// 发送房间信息
 ZIMConversationType type = ZIMConversationType.Room;
 
-// 5. Send message
+// 5、发送消息
 
 zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCallback() {
     @Override
@@ -98,7 +112,7 @@ zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCa
 
     @Override
     public void onMessageSent(ZIMMessage zimMessage, ZIMError error) {
-        // Developers can use this callback to monitor whether the message is sent successfully.
+        // 开发者可以通过该回调监听消息是否发送成功。
     }
 });
 ```
@@ -107,158 +121,159 @@ zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCa
 :::
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
-// 1. Create a ZIM object and pass in the AppID
+```dart title="示例代码"
+// 1、创建 ZIM 对象，传入 AppID
 ZIMAppConfig appConfig = ZIMAppConfig();
 appConfig.appID = appID;
 appConfig.appSign = appSign;
 ZIM.create(appConfig);
 
-// 2. Login
-try {
+// 2、登录
+try{
     ZIMLoginConfig loginConfig = ZIMLoginConfig();
-    // User nickname, leave it blank if you don't want to modify the nickname
+    //该用户的用户昵称，不填写代表不修改用户昵称
     loginConfig.userName = 'userName';
-    // If using token for login authentication, please fill in this parameter, otherwise leave it blank
+    //若使用 token 作为登录鉴权的方式，请填写该参数，否则无需填写
     loginConfig.token = '';
-    // Whether this login is an offline login, please refer to the offline login documentation for details
+    // 本次登录是否为离线登录，详情请参考离线登录相关文档
     loginConfig.isOfflineLogin = false;
     await ZIM.getInstance()?.login('zego', loginConfig);
-    // Login successful, write your business logic for successful login
-} on PlatformException catch (onError) {
-    // Login failed
-    // Error code for login failure, please refer to the error code table in the documentation for handling
+    // 登录成功，编写登录成功的业务逻辑
+} on PlatformException catch(onError){
+    // 登录失败
+    //登录失败的错误码，请参考接入文档的错误码表来处理
     onError.code;
-    // Error message for login failure
+    //登录失败的错误信息
     onError.message;
 }
 
-// 3. Send a message
+// 3、发送信息
 ZIMTextMessage textMessage = ZIMTextMessage(message: "message");
-textMessage.extendedData = @"Extended data to be sent";  // Extended data to be sent
+textMessage.extendedData = @"拓展字段";  // 需要发送的拓展字段 
 ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
-// Set message priority
+// 设置消息优先级
 sendConfig.priority = ZIMMessagePriority.low;
 
-ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message) {
-    // Callback before sending, developers can get a temporary object here, which is the same object as the zimMessage created by the developer. Developers can use this feature to do some business logic, such as displaying UI in advance, etc.
+ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message){
+    // 发送前的回调，客户可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
 });
 
-// 4. Set the conversation type and send the message to the corresponding conversation type
-// Send a message in a one-on-one conversation
+// 4、设置会话类型，选择其一向对应的会话类型发送消息
+// 发送单聊信息
 ZIMConversationType type = ZIMConversationType.peer;
 
-// Send a message in a group conversation
+// 发送群聊信息
 ZIMConversationType type = ZIMConversationType.room;
 
-// Send a message in a chat room
+// 发送房间信息
 ZIMConversationType type = ZIMConversationType.group;
 
 
 ZIM.getInstance()!.sendMessage(textMessage, toConversationID, type, sendConfig).then((value) => {
-    // Developers can use this callback to listen for whether the message was sent successfully.
-}).catchError((onError) {
-    // Developers can catch the exception if the message fails to send.
+    // 开发者可以通过该回调监听消息是否发送成功。
+}).catchError((onError){
+    // 开发者可以捕获发送失败的异常。
 });
+
 ```
 </CodeGroup>
 :::
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc title ="Sample code"
-// 1. Create a ZIM object and pass in appID and appSign
+```objc title ="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign
 ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
-appConfig.appID = (unsigned int)appID;    // Replace it with the AppID you applied for from the ZEGO Admin Console
-appConfig.appSign = @"appSign";     // Replace with the AppSign you applied for from the ZEGO Admin Console
+appConfig.appID = (unsigned int)appID;    // 替换为您从 ZEGO 控制台申请到的 AppID
+appConfig.appSign = @"appSign";     // 替换为您从 ZEGO 控制台申请到的 AppSign
 self.zim = [ZIM createWithAppConfig: appConfig];
 
-// 2. Set the setEventHandler callback
+// 2、设置 setEventHandler 回调
 [self.zim setEventHandler:self];
 
-// 3. Login
+// 3、登录
 ZIMUserInfo *userInfo = [[ZIMUserInfo alloc] init];
 userInfo.userID = @"xxxx";
 userInfo.userName = @"xxxx";
 [self.zim loginWithUserInfo:userInfo callback:^(ZIMError * _Nonnull errorInfo){
-    // Developers can judge whether the login is successful according to ZIMError.
+    // 开发者可根据 ZIMError 来判断是否登录成功。
 }];
 
 NSString *toConversationID = @"xxxx1";
 
 ZIMTextMessage *textMessage = [[ZIMTextMessage alloc] init];
-textMessage.message = @"Message content";
-textMessage.extendedData = @"Extended field"; // The extended field that needs to be sent
+textMessage.message = @"消息内容";
+textMessage.extendedData = @"拓展字段";    // 需要发送的拓展字段
 
 ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
 
 ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
 notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
-    // The callback before sending, where the client can obtain a temporary object, which belongs to the same object as the zimMessage object created by the developer. The developer can use this feature to do some business logic, such as displaying the UI in advance, etc.
+    // 发送前的回调，客户可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
 };
 
-// 4. Set the session type and select it to send messages to the corresponding session type
-// Send one-on-one chat information
+// 4、设置会话类型，选择其一向对应的会话类型发送消息
+// 发送单聊信息
 ZIMConvesationType type = ZIMConversationTypePeer;
 
-// Send a group chat message
+// 发送群聊信息
 ZIMConvesationType type = ZIMConversationTypeGroup;
 
-// send room info
+// 发送房间信息
 ZIMConvesationType type = ZIMConversationTypeRoom;
 
-// send messages
+// 发送消息
 [self.zim sendMessage:textMessage toConversationID:toConversationID conversationType:type config:config notification:notification callback:^((ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo)) {
-    // Developers can use this callback to monitor whether the message is sent successfully.
+    // 开发者可以通过该回调监听消息是否发送成功。
 }];
 ```
 </CodeGroup>
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
-// 1. Create a ZIM object and pass in appID and appSign. Currently, only one client is recommended to create a ZIM instance
+```cpp title="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign，目前仅建议一个客户端创建一个 ZIM 实例
 zim::ZIMAppConfig app_config;
-app_config.appID = 12345;     //Replace with the AppID you applied for
-app_config.appSign = "appSign";   //Replace with the AppSign you applied for
+app_config.appID = 12345;     //替换为您申请到的 AppID
+app_config.appSign = "appSign";   //替换为您申请到的 AppSign
 zim_ = zim::ZIM::create(app_config);
 
-// 2. Set the setEventHandler callback
+// 2、设置 setEventHandler 回调
 im_event_handler_ = std::make_shared<CZIMEventHandler>();
 zim_->setEventHandler(im_event_handler_);
 
-// 3. Login
+// 3、登录
 zim::ZIMUserInfo user_info;
 user_info.userID = user_id;
 user_info.userName = user_name;
 
 zim_->login(user_info, [=](zim::ZIMError errorInfo){
-    // Here you can get the return value of the login result and execute the user code according to the Error Codes code
+    // 这里可以获取登录结果返回值，并根据错误码执行用户代码
 });
 
 zim::ZIMMessage* message = nullptr;
 zim::ZIMTextMessage text_message;
 text_message.message = "message";
-// The extended fields that need to be sent
+// 需要发送的拓展字段
 text_message.extendedData = "extendedData";
-// Set message priority
+// 设置消息优先级
 zim::ZIMMessageSendConfig config;
 config.priority = zim::ZIM_MESSAGE_PRIORITY_LOW;
 message = &text_message;
 
-// 4. Set the session type
-// Send one-on-one chat information
+// 4.设置会话类型
+// 发送单聊信息
 zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER
 
-// Send a group chat message
+// 发送群聊信息
 zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_GROUP
 
-// send room info
+// 发送房间信息
 zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_ROOM
 
 auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
             [=](const std::shared_ptr<zim::ZIMMessage> &message) { int i = 0; });
 
-// 5. Send message
+// 5、发送消息
 zim_->sendMessage(message, "toConversationID", type, config, notification,
                     [=](const std::shared_ptr<zim::ZIMMessage> &message,
                               const zim::ZIMError &errorInfo) { int i = 0; });
@@ -267,51 +282,51 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
 :::
 :::if{props.platform="U3d"}
 <CodeGroup>
-```c# title="Sample code"
-// 1. Create a ZIM object and pass in the appID and appSign
+```c# title="示例代码"
+// 1、创建 ZIM 对象，传入 appID、appSign
 ZIMAppConfig appConfig = new ZIMAppConfig();
-appConfig.appID = 12345;  // Replace with the AppID you obtained from ZEGO Console
-appConfig.appSign = "appSign";   // Replace with the AppSign you obtained from ZEGO Console
+appConfig.appID = 12345;  // 替换为您在 [ZEGO 控制台](https://console.zego.im/account/login) 申请到的 AppID
+appConfig.appSign = "appSign";   // 替换为您在 [ZEGO 控制台](https://console.zego.im/account/login) 申请到的 AppSign
 ZIM.Create(appConfig);
 
-// 2. Log in
+// 2、登录
 ZIMUserInfo zimUserInfo = new ZIMUserInfo();
 zimUserInfo.userID = "xxxx";
 zimUserInfo.userName = "xxxx";
 ZIM.GetInstance().Login(zimUserInfo, (ZIMError errorInfo) =>
     {
-        // Developers can determine whether the login was successful based on ZIMError.
+        // 开发者可根据 ZIMError 来判断是否登录成功。          
     }
 );
 
-// 3. Configure message extension fields
+//3.设置消息拓展字段
 string toConversationID = "xxxx1";
 
 ZIMTextMessage zimMessage = new ZIMTextMessage();
-zimMessage.message = "Message content";
-// Extension fields to be sent
-zimMessage.extendedData = "Message extension fields";
+zimMessage.message = "消息内容";
+// 需要发送的拓展字段
+zimMessage.extendedData = "消息拓展字段";
 
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// Set message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.Low;
 
-// 4. Set the conversation type for sending
-// Send one-on-one chat messages
+// 4、设置发送的会话类型
+// 发送单聊信息
 ZIMConversationType type = ZIMConversationType.Peer;
 
-// Send group chat messages
+// 发送群聊信息
 ZIMConversationType groupType = ZIMConversationType.Group;
 
-// Send room chat messages
+// 发送房间信息
 ZIMConversationType roomType = ZIMConversationType.Room;
 
-// 5. Send messages
+// 5、发送消息
 ZIMMessageSendNotification notification = new ZIMMessageSendNotification();
 ZIM.GetInstance().SendMessage(zimMessage, toConversationID, type, config, notification, 
     (ZIMMessage message, ZIMError errorInfo) => 
 {
-    // Callback result of message sending
+    //消息发送的回调结果
 });
 ```
 
@@ -319,16 +334,16 @@ ZIM.GetInstance().SendMessage(zimMessage, toConversationID, type, config, notifi
 :::
 :::if{props.platform="Web"}
 <CodeGroup>
-```javascript title="Sample code"
-// Send single chat `Text` message
+```javascript title="示例代码"
+// 发送单聊 `Text` 信息
 
-var toConversationID = ''; // Other party userID
-var conversationType = 0; // Session type, the value is single chat: 0, room: 1, group: 2
+var toConversationID = ''; // 对方 userID
+var conversationType = 0; // 会话类型，取值为 单聊:0, 房间:1, 群组:2
 var config = { 
-    priority: 1, // Set the message priority, the value is low: 1 default, medium: 2, high: 3
+    priority: 1, // 设置消息优先级，取值为 低:1 默认, 中:2, 高:3
 };
 
-var messageTextObj = { type: 1, message: 'Text message content', extendedData: 'Extended information of the message (optional)' };
+var messageTextObj = { type: 1, message: '文本消息内容', extendedData: '消息的扩展信息（可选）' };
 var notification = {
     onMessageAttached: function(message) {
         // todo: Loading
@@ -337,55 +352,53 @@ var notification = {
 
 zim.sendMessage(messageTextObj, toConversationID, conversationType, config, notification)
     .then(function ({ message }) {
-        // Sent successfully
+        // 发送成功
     })
     .catch(function (err) {
-        // Failed to send
+        // 发送失败
     });
+
 ```
 </CodeGroup>
 :::
 
-### Configure an extension field visible only to the local end
+### 设置仅本端可见的拓展字段
 
-Procedure for sending a message:
+以下为发送消息时的设置流程：
 
-1. Log in to ZIM SDK, construct a {getPlatformData(props,ZIMMessageMap)}field as an extension field visible only to the local end in the {getPlatformData(props,ZIMMessageMap)} object.
-2. Call the {getPlatformData(props,sendMessageMap)} operation and pass in the {getPlatformData(props,ZIMMessageMap)} object to send the message and the extension field.
-
-
+1. 登录 ZIM SDK 后，构造 {getPlatformData(props,ZIMMessageMap)} 对象，并在 {getPlatformData(props,ZIMMessageMap)} 对象里填入 {getPlatformData(props,localExtendedDataMap)} 字段作为仅本端可见的本地拓展字段（下文称为“本地拓展字段”）。
+2. 调用 {getPlatformData(props,sendMessageMap)} 接口，传入 {getPlatformData(props,ZIMMessageMap)} 对象，发送消息和拓展字段。
 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
-  // 1. Configure the local extension field of a message.
+```java title="示例代码"
+// 1. 设置消息的本地拓展字段
 
-  // Specify the session ID.
-  String toConversationID = "xxx1";
+// 设置会话 ID
+String toConversationID = "xxxx1";
 
-  // Construct a ZIMMessage object.
+// 构造 ZIMMessage 对象
 ZIMTextMessage zimMessage = new ZIMTextMessage();
-zimMessage.message = "Message content";
+zimMessage.message = "消息内容";
+// 设置消息的本地拓展字段
+zimMessage.localExtendedData = "消息本地拓展字段";
 
-  // Configure the local extension field of a message.
-  zimTextMessage.localExtendedData = "Local extension field of the message";
-  
-  ZIMMessageSendConfig config = ZIMMessageSendConfig();
+ZIMMessageSendConfig config = new ZIMMessageSendConfig();
+// 设置消息优先级
+config.priority = ZIMMessagePriority.LOW;
 
-  // Configure the priority of the message.
-  config.priority = ZIMMessagePriority.low;
+// 设置发送的会话类型
+// 发送单聊信息
+ZIMConversationType type = ZIMConversationType.Peer;
 
-  // Send a private-chat message.
-  ZIMConversationType type = ZIMConversationType.peer;
+// 发送群聊信息
+// ZIMConversationType type = ZIMConversationType.Gourp;
 
-  // Send a group-chat message.
-  ZIMConversationType type = ZIMConversationType.group;
+// 发送房间信息
+// ZIMConversationType type = ZIMConversationType.Room;
 
-  // Send a room message.
-  ZIMConversationType type = ZIMConversationType.room;
-
-  // 2. Send the message.
+// 2. 发送消息
 zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCallback() {
     @Override
     public void onMessageAttached(ZIMMessage zimMessage) {
@@ -394,7 +407,7 @@ zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCa
 
     @Override
     public void onMessageSent(ZIMMessage zimMessage, ZIMError error) {
-        // Developers can use this callback to monitor whether the message is sent successfully.
+        // 开发者可以通过该回调监听消息是否发送成功。
     }
 });
 
@@ -403,34 +416,34 @@ zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCa
 :::
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
+```dart title="示例代码"
 
-  // 1. Configure the local extension field of a message.
+  // 1. 设置消息的本地拓展字段
 
-  // Specify the session ID.
+  // 设置会话 ID
   String toConversationID = "xxx1";
 
-  // Construct a ZIMMessage object.
+  // 构造 ZIMMessage 对象
   ZIMTextMessage zimTextMessage = ZIMTextMessage(message: 'message');
 
-  // Configure the local extension field of a message.
-  zimTextMessage.localExtendedData = "Local extension field of the message";
-  
+  // 设置消息的本地拓展字段
+  zimTextMessage.localExtendedData = "消息本地拓展字段";
+
   ZIMMessageSendConfig config = ZIMMessageSendConfig();
 
-  // Configure the priority of the message.
+  // 设置消息优先级
   config.priority = ZIMMessagePriority.low;
 
-  // Send a private-chat message.
+  // 发送单聊信息
   ZIMConversationType type = ZIMConversationType.peer;
 
-  // Send a group-chat message.
+  // 发送群聊信息
   ZIMConversationType type = ZIMConversationType.group;
 
-  // Send a room message.
+  // 发送房间信息
   ZIMConversationType type = ZIMConversationType.room;
 
-  // 2. Send the message.
+  // 2. 发送消息
   ZIM.getInstance()!.sendMessage(zimTextMessage, 'toConversationID', type, config).then((value) {
 
   }).catchError((onError){
@@ -442,113 +455,110 @@ zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCa
 :::
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc title="Sample code"
-// 1. Configure the local extension field of a message.
+```objc title="示例代码"
+// 1. 设置消息的本地拓展字段
 
-// Specify the session ID.
+// 设置会话 ID
 NSString *toConversationID = @"xxx1";
 
-// Construct a ZIMMessage object.
-ZIMTextMessage *zimTextMessage = [[ZIMTextMessage alloc] initWithMessage:@"Message content"];
-// Configure the local extension field of a message.zimTextMessage.localExtendedData = @"Local extension field of the message";
+// 构造消息对象
+ZIMTextMessage *zimTextMessage = [[ZIMTextMessage alloc] initWithMessage:@"消息内容"];
+// 设置消息的本地拓展字段
+zimTextMessage.localExtendedData = @"消息本地拓展字段";
 ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
-// Configure the priority of the message.
+// 设置消息优先级
 config.priority = ZIMMessagePriorityLow;
-    
-// Set the type of session sent.
-// Send a private-chat message.
+
+// 设置发送的会话类型
+// 发送单聊信息
 ZIMConversationType type = ZIMConversationTypePeer;
-    
+
 ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
 notification.onMessageAttached = ^(ZIMMessage *message){
-        
+
 };
-    
+
 [[ZIM getInstance] sendMessage:zimTextMessage toConversationID:toConversationID conversationType:type config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-    // Developers can use this callback to monitor whether the message is sent successfully.
+    // 开发者可以通过该回调监听消息是否发送成功。
 }];
 ```
 </CodeGroup>
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
+```cpp title="示例代码"
+// 1. 设置消息的本地拓展字段
 
-  // 1. Configure the local extension field of a message.
+// 设置会话 ID
+std::string conversationID = "conv";
 
-  // Specify the session ID.
-  std::string conversationID = "conv";
+// 构造 ZIMMessage 对象
+auto zimMessage = std::make_shared<zim::ZIMTextMessage>("消息内容");
+// 设置消息的本地拓展字段
+zimMessage->localExtendedData = "消息本地拓展字段";
 
-  // Construct a ZIMMessage object.
-  auto zimMessage = std::make_shared<zim::ZIMTextMessage>(message: 'message');
+auto sendConfig = zim::ZIMMessageSendConfig();
+// 设置消息优先级
+sendConfig.priority = zim::ZIMMessagePriority::ZIM_MESSAGE_PRIORITY_LOW;
 
-  // Configure the local extension field of a message.
-  zimMessage->localExtendedData =  "Local extension field of the message";
+// 设置发送的会话类型
+// 发送单聊信息
+auto conversationType = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER;
 
-  auto sendConfig = zim::ZIMMessageSendConfig();
-  // Configure the priority of the message.
-  sendConfig.priority = zim::ZIMMessagePriority::ZIM_MESSAGE_PRIORITY_LOW;
-  
-  //Set the session type sent
-  // Send a private-chat message.
-  auto conversationType = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER;
+// 发送群聊信息
+// auto conversationType = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_GROUP;
 
-  // Send a group-chat message.
-  // auto conversationType = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_GROUP;
+// 发送房间信息
+// auto conversationType = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_ROOM;
 
-
-  // Send a room message.
-  // auto conversationType = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_ROOM;
-
-  // 2. Send the message.
- zim_->sendMessage(zimMessage, conversationID, conversationType, sendConfig,
+// 2. 发送消息
+zim_->sendMessage(zimMessage, conversationID, conversationType, sendConfig,
                     std::make_shared<zim::ZIMMessageSendNotification>(
                         [=](const std::shared_ptr<zim::ZIMMessage> &message) {
-                              
+
                         }),
                     [=](const std::shared_ptr<zim::ZIMMessage> &message,
                         const zim::ZIMError &errorInfo) {
-                              
+
                         });
 ```
 </CodeGroup>
 :::
 :::if{props.platform="U3d"}
 <CodeGroup>
-```C# title="Sample code"
+```C# title="示例代码"
+// 1. 设置消息的本地拓展字段
 
-  // 1. Configure the local extension field of a message.
+// 设置会话 ID
+string toConversationID = "xxxx1";
 
-  // Specify the session ID.
-  String toConversationID = "xxx1";
+// 构造 ZIMMessage 对象
+ZIMTextMessage zimMessage = new ZIMTextMessage();
+zimMessage.message = "消息内容";
+// 设置消息的本地拓展字段
+zimMessage.localExtendedData = "消息本地拓展字段";
 
-  // Construct a ZIMMessage object.
-  ZIMTextMessage zimMessage = new ZIMTextMessage();
-  zimMessage.message = "message";
+ZIMMessageSendConfig config = new ZIMMessageSendConfig();
+// 设置消息优先级
+config.priority = ZIMMessagePriority.Low;
 
-  // Configure the local extension field of a message.
+// 设置发送的会话类型
+// 发送单聊信息
+ZIMConversationType peerType = ZIMConversationType.Peer;
 
-  zimMessage.localExtendedData = "Local extension field of the message";
+// 发送群聊信息
+// ZIMConversationType groupType = ZIMConversationType.Group;
 
-  ZIMMessageSendConfig config = new ZIMMessageSendConfig();
+// 发送房间信息
+// ZIMConversationType roomType = ZIMConversationType.Room;
 
-  // Configure the priority of the message.
-  config.priority = ZIMMessagePriority.Low;
 
-  // Set the session type sent
-  // Send a private-chat message.
-  ZIMConversationType peerType = ZIMConversationType.Peer;
+ZIMMessageSendNotification notification = new ZIMMessageSendNotification();
 
-  // Send a group-chat message.
-  ZIMConversationType groupType = ZIMConversationType.Group;
-
-  // Send a room message.
-  ZIMConversationType roomType = ZIMConversationType.Room;
-
-  // 2. Send the message.
-  ZIM.GetInstance().SendMessage(zimMessage, toConversationID, peerType, config, notification, (ZIMMessage message, ZIMError errorInfo) =>
+// 5、发送消息
+ZIM.GetInstance().SendMessage(zimMessage, toConversationID, peerType, config, notification, (ZIMMessage message, ZIMError errorInfo) =>
 {
-    // Developers can use this callback to monitor whether the message is sent successfully.
+    // 开发者可以通过该回调监听消息是否发送成功。
 });
 
 
@@ -557,78 +567,77 @@ notification.onMessageAttached = ^(ZIMMessage *message){
 :::
 :::if{props.platform="Web"}
 <CodeGroup>
-```JavaScript title="Sample code"
-// Send the single chat `Text` message
+```JavaScript title="示例代码"
+// 发送单聊 `Text` 信息
 
-var toConversationID = ''; // Other party userID
-var conversationType = 0; // Session type, the value is  single chat: 0, room: 1, group: 2
+var toConversationID = ''; // 对方 userID
+var conversationType = 0; // 会话类型，取值为 单聊:0, 房间:1, 群组:2
 var config = { 
-    priority: 1, // Set the message priority, the value is  low: 1 default, medium: 2, high: 3
+    priority: 1, // 设置消息优先级，取值为 低:1 默认, 中:2, 高:3
 };
 
-
-  // 1. Configure the local extension field of a message.
-
-var messageTextObj = { type: 1, message: 'Text message content', localExtendedData: 'Local extension information of the message' };
+// 1. 设置消息的本地拓展字段
+var messageTextObj = { type: 1, message: '文本消息内容', localExtendedData: '消息的本地扩展信息' };
 var notification = {
     onMessageAttached: function(message) {
         // todo: Loading
     }
 }
 
-// 2. Send a message
+// 2. 发送消息
 zim.sendMessage(messageTextObj, toConversationID, conversationType, config, notification)
     .then(function ({ message }) {
-        // Sent successfully
+        // 发送成功
     })
     .catch(function (err) {
-        // Failed to send
+        // 发送失败
     });
-
 ```
 </CodeGroup>
 :::
 
 
-### Update the local extension field of a message
 
-For a message that is already received or sent, you can call the {getPlatformData(props,updateMessageLocalExtendedDataMap)} operation to update the local extension field of the message.
+### 更新消息的本地拓展字段
 
+对于已收发消息，您都可调用 {getPlatformData(props,updateMessageLocalExtendedDataMap)} 接口，更新本地拓展字段。
 
+:::if{props.platform="Flutter"}
+用户可通过 [ZIMGroupMembersSearchedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupMembersSearchedResult-class.html) 异步返回值获取更新操作的结果。
+:::
 
-The following sample code shows how to update the local extension field of a message that is already received:
+以下示例为更新已接收消息的本地拓展字段：
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java title="Sample code"
-// After receiving a single chat message, update the local extension field of the message.
+```java title="示例代码"
+// 收到单聊消息后，更新消息的本地拓展字段
 zim.setEventHandler(new ZIMEventHandler() {
     @Override
     public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
           
       for(ZIMMessage message: messageList){
-         zim.updateMessageLocalExtendedData("Update local extension fields", message, new ZIMMessageLocalExtendedDataUpdatedCallback() {
+         zim.updateMessageLocalExtendedData("更新本地拓展字段", message, new ZIMMessageLocalExtendedDataUpdatedCallback() {
          @Override
          public void onMessageExtendedDataUpdated(ZIMMessage message, ZIMError errorInfo) {
-               // Developers can use this callback to monitor whether the local extended field is updated successfully.
+               // 开发者可根据该回调监听本地拓展字段是否更新成功       
          }
       });}
     }
 });
 ```
-
 </CodeGroup>
 :::
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart title="Sample code"
-// Update the local extension field of a private-chat message after you receive the message.
+```dart title="示例代码"
+// 收到单聊消息后，更新消息的本地拓展字段
 ZIMEventHandler.onReceivePeerMessage = (ZIM zim, List<ZIMMessage> messageList, String fromUserID){
     for(ZIMMessage message in messageList){
-        ZIM.getInstance()!.updateMessageLocalExtendedData('Update the local extension field.', message).then((value){
-            // The request was successful.
+        ZIM.getInstance()!.updateMessageLocalExtendedData('更新本地拓展字段', message).then((value){
+            // 更新成功
         }).catchError((onError){
-            // Handle the error based on the corresponding error code table.
+            // 根据错误码表处理
         });
     }
 };
@@ -637,14 +646,15 @@ ZIMEventHandler.onReceivePeerMessage = (ZIM zim, List<ZIMMessage> messageList, S
 :::
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc title="Sample code"
-// Update the local extension field of a private-chat message after you receive the message.
+```objc title="示例代码"
+// 收到单聊消息后，更新消息的本地拓展字段
 - (void)zim:(ZIM *)zim receivePeerMessage:(NSArray<ZIMMessage *> *)messageList fromUserID:(NSString *)fromUserID {
     NSArray *messageBasicList = [ZGZIMManager cnvZIMMessageListToDicList:messageList];
     GGLog(@"[GGLog][event][receivePeerMessage],fromUserID:%@,messageList:%@",fromUserID,messageBasicList);
     for (ZIMMessage *message in messageList) {
-        [[ZIM getInstance] updateMessageLocalExtendedData:@"Update local extension fields" message:message callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-            // Developers can use this callback to monitor whether the local extended field is updated successfully.        }];
+        [[ZIM getInstance] updateMessageLocalExtendedData:@"更新本地拓展字段" message:message callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+            // 开发者可根据该回调监听本地拓展字段是否更新成功
+        }];
     }
 }
 ```
@@ -652,16 +662,17 @@ ZIMEventHandler.onReceivePeerMessage = (ZIM zim, List<ZIMMessage> messageList, S
 :::
 :::if{props.platform="window"}
 <CodeGroup>
-```cpp title="Sample code"
-// Update the local extension field of a private-chat message after you receive the message.
+```cpp title="示例代码"
+// 收到单聊消息后，更新消息的本地拓展字段
 void onReceivePeerMessage(zim::ZIM *zim,
                               const std::vector<std::shared_ptr<zim::ZIMMessage>> &messageList,
                               const std::string &fromUserID) override {
     for (const auto &message : messageList) {
-        zim->updateMessageLocalExtendedData("Update the local extension field.", message,
+        zim->updateMessageLocalExtendedData("更新本地拓展字段", message,
                                             [=](const std::shared_ptr<zim::ZIMMessage> &msg,
                                                 const zim::ZIMError &errorInfo) {
-                                                    // Developers can use this callback to monitor whether the local extension field is updated successfully.                                                });
+                                                    // 开发者可根据该回调监听本地拓展字段是否更新成功
+                                                });
     }
 }
 ```
@@ -669,18 +680,18 @@ void onReceivePeerMessage(zim::ZIM *zim,
 :::
 :::if{props.platform="U3d"}
 <CodeGroup>
-```C# title="Sample code"
+```C# title="示例代码"
 ZIM.GetInstance().onReceivePeerMessage += (ZIM zim,
                                 List<ZIMMessage> messageList,
                                 string fromUserID) =>
     {
         foreach (ZIMMessage message in messageList)
         {
-            ZIM.GetInstance().UpdateMessageLocalExtendedData("Update the local extension field",
+            ZIM.GetInstance().UpdateMessageLocalExtendedData("更新本地拓展字段",
                 message,
                 (ZIMMessage message, ZIMError errorInfo) =>
                 {
-                    // Developers can use this callback to monitor whether the local extension field is updated successfully. 
+                    // 开发者可根据该回调监听本地拓展字段是否更新成功   
                 });
         };
     };
@@ -688,20 +699,18 @@ ZIM.GetInstance().onReceivePeerMessage += (ZIM zim,
 </CodeGroup>
 :::
 :::if{props.platform="Web"}
-The following sample code shows how to update the local extension field of a message that is already received:
-
 <CodeGroup>
-```JavaScript title="Sample code"
-// Update the local extension field of a private-chat message after you receive the message.
+```JavaScript title="示例代码"
+// 收到单聊消息后，更新消息的本地拓展字段
 zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID }) {
     console.log(messageList, fromConversationID);
     messageList.forEach((message) => {
-        zim.updateMessageLocalExtendedData('Update the local extension field', message)
+        zim.updateMessageLocalExtendedData('本地拓展字段', message)
             .then(function ({ message }) {
-                // Operation successful. 
+                // 操作成功
             })
             .catch(function (err) {
-                // Operation failed.
+                // 操作失败
             });
     });
 });
