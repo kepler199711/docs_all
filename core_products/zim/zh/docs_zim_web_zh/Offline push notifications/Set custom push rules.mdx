@@ -1,39 +1,39 @@
 ---
-articleID: 17424
+articleID: 19217
 ---
-# Set custom push rules
+# 自定义推送规则
 
-import Content from '/core_products/zim/en/snippets/CustomPushRulesIntro.mdx'
+import Content from '/core_products/zim/zh/snippets/CustomPushRulesIntro.mdx'
 
 <Content />
 
-## Procedure
+## 实现流程
 
-### Notification for offline push rule update
+### 用户离线推送规则变化通知
 
-To receive the notification for custom rule update, register the ([userRuleUpdated](@userRuleUpdated)) event.
+如需在用户自定义规则时收到通知，请注册 [userRuleUpdated](@userRuleUpdated) 事件实现。
 
 ```javascript
-// Listen for custom rules.
+// 监听用户自定义规则
 zim.on('userRuleUpdated', (zim, data) => {
-    // Offline push rules.
+    // 离线推送规则
     const offlinePushRule = data.userRule.offlinePushRule;
 });
 ```
 
-### Set offline push rules
+### 设置离线推送规则
 
-To support custom push rules, build the [ZIMUserOfflinePushRule](@-ZIMUserOfflinePushRule) class to specify the platforms that do not receive offline push notifications（[notToReceiveOfflinePushPlatforms](@notToReceiveOfflinePushPlatforms)）when the user is online on specified platforms（[onlinePlatforms](@onlinePlatforms)）.
+如需支持用户自定义推送规则时，开发者需要构造 [ZIMUserOfflinePushRule](@-ZIMUserOfflinePushRule) 类型参数，规定用户在哪些平台上在线（[onlinePlatforms](@onlinePlatforms)）时，哪些平台无需接收离线推送（[notToReceiveOfflinePushPlatforms](@notToReceiveOfflinePushPlatforms)）。
 
-To set the above rules, call the [updateUserOfflinePushRule](@updateUserOfflinePushRule) method.
+调用 [updateUserOfflinePushRule](@updateUserOfflinePushRule) 接口，设置上述规则。
 
 ```javascript
-// Set offline push rules.
+// 设置离线推送规则
 
 var offlinePushRule = {
-    // The user is logged in to Windows, macOS, and Linux platforms.
+    // 当用户 Win、MacOS、Linux 平台登录时
     onlinePlatforms: [1, 4, 5],
-    // The user receives no offline push on the iPhoneOS, iPadOS, and Android platforms.
+    // 用户在 iPhoneOS、iPadOS、Android 上不收到离线推送
     notToReceiveOfflinePushPlatforms: [2, 3, 9],
 };
 
@@ -46,10 +46,9 @@ zim.updateUserOfflinePushRule(offlinePushRule)
     });
 ```
 
-### Query custom push rules
+### 查询用户定义的推送规则
 
-
-Call the [querySelfUserInfo](@querySelfUserInfo) method to obtain the current custom offline push rules.
+通过调用 [querySelfUserInfo](@querySelfUserInfo) 即可获取当前用户自定义的离线推送规则。
 
 ```javascript 
 zim.querySelfUserInfo().then((res) => {

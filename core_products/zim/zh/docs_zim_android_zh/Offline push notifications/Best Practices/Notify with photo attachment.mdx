@@ -1,21 +1,23 @@
-# Notify with photo attachment
+# 通知携带图片附件
 
-## Overview
+## 概述
 
-ZPNs supports sending offline push notifications with a photo attachment.
+ZPNs 支持在发送离线推送时携带一张图片。
 
-## Prerequisites
+<Frame width="256" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/push_with_photo.jpeg" /></Frame>
 
-- Offline push notifications have been implemented. For details, please refer to [Implement offline push notification](./../Implement%20offline%20push%20notification.mdx).
-- Android device or emulator with Android 9.0 or above version (real device is recommended).
+## 前提条件
 
-## Sending through a Server API
-
-Please refer to the relevant API documentation [Push message to all users](/zim-server/push-message-to-all-users) for details.
-
-ZPNs supports carrying image attachments through the Server API. This interface is only applicable to applicable to messages pushed to all users on iOS and Google FCM devices.
+- 已实现离线推送，详情请参考 [实现离线推送\|_blank](./../Implement%20offline%20push%20notification.mdx)。 
+- Android 9.0 或以上版本 Android 设备或模拟器（推荐使用真机）。
 
 
-## Receiver
+## 通过全员推送服务端 API 发送
 
-No additional action is required on the Android side.
+ZPNs 支持通过全员推送服务端 API 携带图片附件。该接口仅适用于全员推送场景，且仅支持 iOS、 Google FCM 和华为设备。
+
+相关接口文档请参考 [全员推送\|_blank](/zim-server/push-message-to-all-users)。
+
+## 接收端处理
+
+Android 端无需额外实现。

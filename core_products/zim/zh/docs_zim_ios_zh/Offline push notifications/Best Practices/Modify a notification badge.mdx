@@ -1,54 +1,56 @@
 ---
 articleID: 17660
 ---
-# Modify a notification badge
+# 更新图标角标
 
 
-## Overview
+## 概述
 
-ZPNs supports offline push notification receiver app to update the app icon badge with the number of unread messages, reminding users of the unread message count.
+ZPNs 支持向 iOS 端设备发送离线推送后，接受端在离线状态更新 App 图标数字角标，提醒用户消息未读数。
 
-## Prerequisites
+## 前提条件
 
-- ZPNs SDK version 2.6.0 or above has been integrated and the function of offline push notification has been implemented. For details, please refer to this document [Implement offline push notification](./../Implement%20offline%20push%20notification.mdx).
-- iOS device running iOS 11.0 or above.
+- 已集成 2.6.0 或以上版本的 ZPNs SDK，并且实现离线推送，详情请参考 [实现离线推送\|_blank](./../Implement%20offline%20push%20notification.mdx)。 
+- iOS 11.0 或以上版本的 iOS 真机设备。
 
-## Report the badge number
+## 实现流程
 
-When the receiving end is online, it needs to call the [setBadge](@setBadge) method to report the current badge number to the ZPNs server. When it receives a offline push notification, ZPNs will automatically update the badge number on the receiving end based on this value.
+### 1 接受端上报角标数字
+
+当接收端为在线状态时，需要调用 [setBadge\|_blank](@setBadge) 接口向 ZPNs 服务器上报 App 当前的角标数值，后续当接收端收到离线推送后，ZPNs 将基于此数值，自动修改接收端的角标数值。
 
 <Note title="Note">
-The badge value must not be less than 0.
+badge 值不得小于 0。
 </Note>
 
 ```objc
-// Report the badge number of the app as 1 to the ZPNs server.
+// 此处向 ZPNs 服务端上报当前 app 的角标为 1.
 [[ZPNs shared] setBadge:1];
 ```
 
-## Send offline push notifications with badge information
+### 2 发送端发送携带角标的离线推送
 
-When sending messages or call invitations, the sender can modify the badge-related parameters in [ZIMPushConfig](@-ZIMPushConfig) to determine the changes in the badge on the receiving end.
+当发送消息、呼叫邀请时，发送方可以通过修改 [ZIMPushConfig\|_blank](@-ZIMPushConfig) 中有关角标的参数，来决定接受端 App 图标角标的变化情况。
 
 ```objc
 ZIMPushConfig *pushConfig = [[ZIMPushConfig alloc] init];
-// Whether the push notification carries badge information, default is NO.
+// 推送是否携带角标信息，默认为 NO
 pushConfig.enableBadge = YES;
-// The badge increment for the target of this push notification. Set it as 1 here, which will increase the badge number of the receiving end app by 1.
+// 本条推送对目标设备的角标增量，此处设置为 1，这将使接收端设备 app 的角标数值 + 1。
 pushConfig.badgeIncrement = 1;
 ```
 
-## Update the badge automatically
+### 3 接收端自动更新角标
 
-After receiving offline push notifications, the ZPNs SDK will automatically adjust the app icon badge based on the badge information in the notifications.
+接收到离线推送后，ZPNs SDK 会自动根据离线推送中的角标信息，从而调整 App 的图标角标。
 
-## More Information
+## 更多信息
+ 
+### 修改本地角标
 
-### Modify the local badge
-
-To modify the local badge when the user is online, you can call the iOS system interface `setApplicationIconBadgeNumber`. Then, you need to promptly call [setBadge](@setBadge) to report the operation, as mentioned in [the previous section](#update-the-badge-automatically).
+如需在用户在线时修改本地角标，可调用 iOS 系统接口 `setApplicationIconBadgeNumber`。随后，需要及时调用 [setBadge\|_blank](@setBadge) 进行上报，如 [上文所述\|_blank](#3-接收端自动更新角标)。
 
 ```objc
-// Modify the local badge number of the app as 1.
-[[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
+// 此处修改 app 本地 角标数为 1.
+[[UIApplication sharedApplication] setApplicationIconBadgeNumber:1]];
 ```

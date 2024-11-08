@@ -1,154 +1,132 @@
-import { getPlatformData } from '/snippets/utils-content-parser.js';
+import { getPlatformData2 } from '/snippets/utils-content-parser.js';
 
 
 export const ZIMPushConfig={
-    "Android": <a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~class~ZIMPushConfig" target="_blank">ZIMPushConfig</a>,
+    "default": <a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~class~ZIMPushConfig" target="_blank">ZIMPushConfig</a>,
     "RN": <a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMPushConfig" target="_blank">ZIMPushConfig</a>,
+    "uniapp": <a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMPushConfig" target="_blank">ZIMPushConfig</a>,
     "Flutter": <a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig-class.html" target="_blank">ZIMPushConfig</a>
 }
 
-# Notify with photo attachment
+# 通知携带图片附件
 
-## Overview
+## 概述
 
-ZPNs supports sending offline push notifications with a photo attachment.
+ZPNs 支持在发送离线推送时携带一张图片。
 
-## How it works
+<Frame width="256" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/push_with_photo.jpeg" /></Frame>
 
-ZPNs supports including the `"mutable-content":1` field when sending APNs push notifications. This allows your app to intercept the push message, modify its content, and then display it. For more details, please refer to [Description of Mutable-content](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification#2943360) in the Official Documentation of Apple Developer.
+## 实现原理
+
+ZPNs 支持通过发送 APNs 推送时携带 `"mutable-content":1` 字段，以便您的 APP 拦截该推送消息，修改其内容再展示，详情请参考 [Apple Developer 官网文档对 mutable-content 的描述](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification#2943360)。
 
 
-## Prerequisites
+## 前提条件
 
-- Offline push notifications have been implemented. For details, please refer to [Implement offline push notification](./../Implement%20offline%20push%20notification.mdx).
-- iOS devices with iOS 11.0 or later.
-:::if{props.platform="Flutter"}
-<div>
+- 已实现离线推送，详情请参考 [实现离线推送](./../Implement%20offline%20push%20notification.mdx)。 
+- iOS 11.0 或以上版本的 iOS 真机设备。
+:::if{props.platform="Flutter|RN|uniapp"}
 - Android device or emulator with Android 9.0 or above version (real device is recommended).
-</div>
-:::
-:::if{props.platform="RN"}
-<div>
-- Android device or emulator with Android 9.0 or above version (real device is recommended).
-</div>
 :::
 
-## Configure resourceID
+## 发送端处理
 
-Contact ZEGOCLOUD technical support to configure the resourceID with `"mutable-content":1`.
-
-## Sender
-
-ZPNs supports two ways to send a photo attachment, [the SDK way](#sending-through-the-sdk) and [the server API way](#sending-through-a-server-api). The difference between them is that the SDK way can be used for all interfaces that use `ZIMPushConfig` and only supports iOS devices, while the server API is only applicable to messages pushed to all users on iOS and Google FCM devices.
+ZPNs 支持两种发送图片附件的方式，<a href="#通过-sdk-发送">通过 SDK 发送</a>和 <a href="#通过服务端-api-发送">通过全员推送服务端 API</a> 发送。其区别是，SDK 发送方式可用于所有使用 ZIMPushConfig 的接口且仅支持 iOS 端设备；全员推送服务端接口仅适用于全员推送场景，且仅支持 iOS、Google FCM 和华为设备。
 
 
-### Sending through the SDK
+### 通过 SDK 发送
+1. 联系 ZEGO 技术支持配置携带 `"mutable-content":1` 的 resourceID。
 
-1. Configure resourceID
+2. 通过携带 {getPlatformData2(props, ZIMPushConfig)} 的接口发送离线推送时，请将上述 `resourceID` 填入其中。
 
-Contact ZEGOCLOUD technical support to configure the resourceID with `"mutable-content":1`.
-
-2. When sending offline push notifications with {getPlatformData(props, ZIMPushConfig)}, fill in the above `resourceID`.
-
-Take sending a text message in a one-to-one chat as an example:
+以发送单聊文本消息为例：
 
 :::if{props.platform=undefined}
 ```objc
 ZIMTextMessage *txtMsg = [[ZIMTextMessage alloc] init];
-txtMsg.message = @"Message content";
+txtMsg.message = @"消息内容";
 
 ZIMMessageSendConfig *sentConfig = [[ZIMMessageSendConfig alloc] init];
 
 ZIMPushConfig *pushConfig = [[ZIMPushConfig alloc] init];
-pushConfig.title = @"Push title, generally the user's userName, corresponding to APNs title";
-pushConfig.content = @"Push content, generally the same as the message content, corresponding to APNs body";
-pushConfig.resourcesID = @"resourceID with "mutable-content":1";
-// Pass in the required image URL
-pushConfig.payload = @"{\"image_attachment\":\"URL of the image resource\"}"; // Customize the protocol in the payload, add a field to carry the image URL, and make it consistent with the protocol used by the app receiving end. Here, a JSON string is used.
+pushConfig.title = @"推送标题，一般为本人 userName，对应 APNs title";
+pushConfig.content = @"推送内容，一般与消息内容一致，对应 APNs body";
+pushConfig.resourcesID = @"携带 "mutable-content":1 的 resourceID";
+// 传入需要的图片 url 地址
+pushConfig.payload = @"{\"image_attachment\":\"图片资源的 url\"}"; // 在 payload 中自定协议，增加携带图片 url 的字段，与 app 接收端解析时的协议一致即可。这里使用了一个 json 字符串。
 sentConfig.pushConfig = pushConfig;
 
-// Send a one-to-one text message
+// 发送单聊文本消息
 [[ZIM getInstance] sendMessage:txtMsg toConversationID:@"toUserID" conversationType:ZIMConversationTypePeer config:sentConfig notification:nil callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {}];
 ```
 :::
 :::if{props.platform="Flutter"}
 ```dart
 ZIMPushConfig pushConfig = ZIMPushConfig();
-pushConfig.title = "Push title, usually the user's userName, corresponding to APNs title";
-pushConfig.content = "Push content, usually the same as the message content, corresponding to APNs body";
-pushConfig.resourcesID = "resourceID carrying mutable-content";
-pushConfig.payload = "{\"image_attachment\":\"URL of the image resource\"}";
+pushConfig.title = "推送标题，一般为本人 userName，对应 APNs title";
+pushConfig.content = "推送内容，一般与消息内容一致，对应 APNs body";
+pushConfig.resourcesID = "携带 mutable-content";
+pushConfig.payload = "{\"image_attachment\":\"图片资源的 url\"}";
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN|uniapp"}
 ```javascript
 var pushConfig = {
-    title: "Push title, usually the user's userName, corresponding to APNs title",
-    content: 'Push content, usually consistent with the message content, corresponding to APNs body',
-    payload: '{\"image_attachment\":\"URL of the image resource\"}',
-    resourcesID: 'resourceID carrying mutable-content'
+    title: '推送标题，一般为本人 userName，对应 APNs title',
+    content: '推送内容，一般与消息内容一致，对应 APNs body',
+    payload: '{\"image_attachment\":\"图片资源的 url\"}',
+    resourcesID: '携带 mutable-content'
 };
 ```
 :::
 
-### Sending through a Server API
+### 通过服务端 API 发送
 
-Please refer to the relevant API documentation [Push message to all users](/zim-server/push-message-to-all-users) for details.
+相关接口文档请参考 [全员推送](/zim-server/push-message-to-all-users)。
 
-## Receiver
+## 接收端处理
 
-:::if{props.platform="Flutter"}
+:::if{props.platform="Flutter|RN|uniapp"}
 <div>
 <Note title="Note">
-Only iOS devices requires corresponding processing on the receiving end to achieve receiving notifications with image attachments. There is no need for processing on the Android devices.
-</Note>
-</div>
-:::
-:::if{props.platform="RN"}
-<div>
-<Note title="Note">
-Only iOS requires corresponding processing on the receiving end to achieve receiving notifications with image attachments. There is no need for processing on the Android side.
+只有iOS设备需要在接收端进行相应的处理，才能实现接收带有图像附件的通知。而在Android设备上则不需要进行处理。
 </Note>
 </div>
 :::
 
 <Steps>
-<Step title="Configure Capability">
-Open Xcode, select the target under TARGETS, and navigate to Signing & Capabilities > Capabilities. Enable Push Notification (for offline push notifications).
+<Step title="配置 Capability">
+打开 Xcode，在 TARGETS 下选择目标，根据路径 Signing & Capabilities > Capabilities，开启 **Push Notification**（用于离线推送通知）。
 </Step>
-<Step title="Set up Notification Service Extension">
+<Step title="设置 Notification Service Extension">
 <Steps>
-<Step title="Add a Notification Service Extension to the Targets">
-
-    1. Click "File > New > Target..."
-
+<Step title="添加 Notification Service Extension 到 Targets">
+    1. 点击 “File > New > Target...”
         <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/pic_5.jpeg" /></Frame>
 
-    2. In the pop-up window, select "iOS > Notification Service Extension".
-    
+    2. 在弹窗中，选择 “iOS > Notification Service Extension”。
         <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/pic_6.jpeg" /></Frame>
 
-    3. Enter the Product Name and other information for the extension.
-
+    3. 为该 Extension 输入 Product Name 等信息。
         <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/pic_7.jpeg" /></Frame>
 
-    After creating the extension, a "xxxExtension" folder (xxx is the Product Name entered when adding the extension) will be generated in the project. You will need the NotificationService class file in it.
+    创建 Extension 后，会在项目工程中生成 "xxxExtension" 文件夹（xxx 为新增 Extension 时输入的 Product Name），您需要用到其中的 NotificationService 类文件。
 </Step>
-<Step title="Configure the Capability for the newly added extension">
-    Select the extension target under TARGETS, and then select "Signing & Capabilities > Capabilities > Push Notification" to enable offline push notifications.
+<Step title="为上述新增的 Extension 配置 Capability">
+    在 TARGETS 下选择 Extension 目标，然后选择 “Signing & Capabilities > Capabilities > Push Notification”，即可开启离线推送通知。
 
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/pic_9.jpeg" /></Frame>
 </Step>
-<Step title="Adjust the minimum supported version of the newly added extension to iOS 11.0 or later">
+<Step title="调整上述新增的 Extension 支持的最低版本为 iOS 11.0 或以上">
 
-    If the iOS version of the device is lower than the requirement here, the extension will not take effect on this device.
+    如果设备的 iOS 版本低于此处要求，Extension 不会在此设备生效。
 
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/pic_10.jpeg" /></Frame>
 </Step>
 </Steps>
 </Step>
-<Step title="Write the logic to add your photo attachment">
-In the NotificationService.m file in the "xxxExtension" folder (xxx is the Product Name entered when adding the extension), write the logic to add the photo attachment. The sample code is as follows:
+<Step title="编写添加图片附件的逻辑">
+在 "xxxExtension" 文件夹（xxx 为新增 Extension 时输入的 Product Name）中的 NotificationService.m 文件中编写添加图片附件的业务逻辑，示例代码如下所示：
 
 ```objc
 //  NotificationService.m
@@ -167,18 +145,18 @@ In the NotificationService.m file in the "xxxExtension" folder (xxx is the Produ
 @implementation NotificationService
 
 
-// When push interception is enabled, this method will be triggered when a push notification with "mutable-content":1 is received.
+// 开启推送拦截后,收到携带 "mutable-content":1 的推送通知时，会触发该方法。
 - (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler {
     self.contentHandler = contentHandler;
     self.bestAttemptContent = [request.content mutableCopy];
-    // Title
+    // 标题
     NSString *title = self.bestAttemptContent.title;
-    // Subtitle
+    // 副标题
     NSString *subtitle = self.bestAttemptContent.subtitle;
-    // Body
+    // 内容
     NSString *body = self.bestAttemptContent.body;
 
-    // Extract the payload string carried by the push message
+    // 取出发送推送消息附带的 payload 字符串
     NSString *payload = [self.bestAttemptContent.userInfo objectForKey:@"payload"];
 
     if(payload == nil){
@@ -187,7 +165,7 @@ In the NotificationService.m file in the "xxxExtension" folder (xxx is the Produ
     }
     
     
-    // Parse the JSON string and convert it to an NSDictionary
+    // 解析 json 字符串,并转为 NSDictionary
     NSData *jsonData = [payload dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error = nil;
     NSDictionary *payload_json_map = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
@@ -213,7 +191,7 @@ In the NotificationService.m file in the "xxxExtension" folder (xxx is the Produ
     
 }
 
-// Method to download and save the image
+// 下载并保存图片的方法
 - (void)downloadWithURLString:(NSString *)urlStr completionHandle:(void(^)(NSData *data,NSURL *localURL))completionHandler{
     __block NSData *data = nil;
     NSURL *imageURL = [NSURL URLWithString:urlStr];

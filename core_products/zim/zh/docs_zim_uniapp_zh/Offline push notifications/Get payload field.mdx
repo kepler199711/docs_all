@@ -1,57 +1,75 @@
-# Get the payload field
+---
+articleID: 20954
+---
+# 获取 payload 字段
 
-import Content from '/core_products/zim/en/snippets/CrossPlatformSuitableNote.mdx'
+import Content1 from '/core_products/zim/zh/snippets/CrossPlatformSuitableNote.mdx'
+
+<Content1 />
+
+## 功能简介
+
+离线推送发送端通过配置 [ZIMPushConfig](@-ZIMPushConfig) 的 payload 参数（2.5.0 之前版本为 extendedData 参数）向接收端发送额外信息，接收端需使用 ZPNs SDK 时，通过厂商通道的 extras 里面的 payload 字段获取该信息。
+
+本文档介绍了如何使用 ZPNs SDK 的接口，获取 payload 透传字段。
+
+import Content from '/core_products/zim/zh/snippets/ZIMZPNsVersionMatchWarning.mdx'
 
 <Content />
 
-## Introduction
 
-The offline push sender sends additional information to the receiver by configuring the payload parameter of [ZIMPushConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig-class.html) (the version before 2.5.0 is the extendedData parameter). When the receiver needs to use the ZPNs SDK, the payload in the extras of the push channel field to get this information.
+## 前提条件
 
-This document introduces how to use the ZPNs SDK interface to obtain the payload transparent transmission field.
+- 已集成 ZPNs SDK，详情请参考[实现离线推送](./Implement%20offline%20push%20notification.mdx)。
 
-<Warning title="Warning">
-Before using the ZPNs SDK, please configure the ZIM offline push certificate in the [ZEGO Admin Console](https://console.zego.im) (for details, please refer to [Project Management- IM- Offline Push Configuration](https://docs.zegocloud.com/article/16233)), If it cannot be configured, please contact ZEGO technical support.
-</Warning>
+## 实现流程
 
-## Prerequisites
-Before getting the payload transparent field, please make sure:
+根据离线推送接收端的厂商，开发者应选择不同的 payload 透传字段获取方式，分别为监听 ZPNsEventHandler 的通知，和通过原生方式从 Activity 获取。
 
-- Integrate the ZPNs SDK. For more, refer to the [Implement offline push notification](./Implement%20offline%20push%20notification.mdx).
+###  通过 ZPNsEventHandler 回调方法中的 ZPNsMessage 对象获取（支持除 vivo 外的所有厂商）
 
+<Note title="Note">
+本方法适用于除 vivo 以外厂商的手机。如您需要了解如何在 vivo 手机上的实现方法，请参考“从 Activity 获取”。
+</Note>
 
-## Common Usage
+通过 ZPNs 的 [on](@on) 方法，监听 [ZPNsEventHandler](@-ZPNsEventHandler) 的回调通知：
 
-According to the push service provider of the offline push receiving end, developers should choose different ways to obtain the payload transparent transmission field, which are respectively listening to the notification of ZPNsEventHandler and obtaining it from the Activity in a native way.
-
-### Obtained through the ZPNsMessage object in the ZPNsEventHandler callback method
-
-
-1. Get the callback notification by implementing the method in ZPNsEventHandler:
-
-```dart
-// For the support of the following interfaces by each push service provider, refer to the offline push document.
-ZPNsEventHandler.onRegistered = (ZPNsRegisterMessage registerMessage) {};
-ZPNsEventHandler.onNotificationArrived = (ZPNsMessage message) {};
-ZPNsEventHandler.onNotificationClicked = (ZPNsMessage message) {};
-ZPNsEventHandler.onThroughMessageReceived = (ZPNsMessage message) {};
-```
-
-2. Implement the following method as needed. When the above method is triggered, pass the [ZPNsMessage](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsMessage-class.html) object to this method and take out the payload field.
-
-```dart
-String getZPNsMessagePayload(ZPNsMessage message) {
-    return message.extras['payload'];
+```javascript
+/**
+  * 接口定义
+  */
+interface ZPNsEventHandler {
+    registered: (message: ZPNsRegisterMessage) => void;
+    notificationArrived: (message: ZPNsMessage) => void;
+    notificationClicked: (message: ZPNsMessage) => void;
+    throughMessageReceived: (message: ZPNsMessage) => void;
 }
+
+/* 注册监听-示例 */
+
+ZPNs.getInstance().on('registered', function(message) {
+    console.log('[ZPNs] registered. pushID: ' + message.pushID + ", error: " + message.errorCode)
+});
+
+/* 按需实现如下方法，获取 payload 字段 */
+ZPNs.getInstance().on('throughMessageReceived', function(message) {
+    console.log('[ZPNs] throughMessageReceived', message.extras.payload)
+});
+ZPNs.getInstance().on('notificationClicked', function(message) {
+    console.log('[ZPNs] notificationClicked', message.extras.payload)
+});
+ZPNs.getInstance().on('notificationArrived', function(message) {
+    console.log('[ZPNs] notificationArrived', message.extras.payload)
+});
 ```
 
-### Obtain from Activity (only supports Google FCM)
+### 从 Activity 获取（仅支持 Android 厂商）
 
-1. In the AndroidManifest.xml file, set the exported attribute of the main Activity to true, and configure the intent-filter.
-
+1. 在 AndroidManifest.xml 文件设置主 Activity 的 exported 属性为 true，并配置 intent-filter。
+  
 ```xml
 <activity
-    android:name="The main Activity path of your project"
+    android:name="您的项目的主 Activity 路径"
     android:exported="true">
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -60,7 +78,7 @@ String getZPNsMessagePayload(ZPNsMessage message) {
 </activity>
 ```
 
-2. The developer obtains the data in the `onCreate` or `onNewIntent` of the main Activity through the following methods.
+2. 开发者在主 Activity 的 `onCreate` 或者 `onNewIntent` 中，通过如下方式获取数据。
 
 ```JAVA
 @Override

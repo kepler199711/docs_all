@@ -1,42 +1,43 @@
 ---
-articleID: 17665
+articleID: 19218
 ---
-# Set custom push rules
+# 自定义推送规则
 
-import Content from '/core_products/zim/en/snippets/CustomPushRulesIntro.mdx'
+import Content from '/core_products/zim/zh/snippets/CustomPushRulesIntro.mdx'
 
 <Content />
 
-## Procedure
+## 实现流程
 
-### Notification for offline push rule update
+### 用户离线推送规则变化通知
 
-To receive the notification for custom rule update, override the [ZIMEventHandler > onUserRuleUpdated](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onUserRuleUpdated.html) method.
+如需用户自定义规则时收到通知，请重写 [ZIMEventHnandler](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler-class.html) 对象中的 [onUserRuleUpdated](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onUserRuleUpdated.html) 方法实现。
 
 ```dart
-// Listen for the user rule change.
+// 监听用户自定义规则
 ZIMEventHandler.onUserRuleUpdated = (ZIM zim, ZIMUserRule userRule){
-    // get the offline push rule
+    // 离线推送规则
     userRule.offlinePushRule;
 };
 ```
 
-### Set offline push rules
+### 设置离线推送规则
 
-To support custom push rules, build the [ZIMUserOfflinePushRule](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserOfflinePushRule-class.html) class to specify the platforms that do not receive offline push notifications ([notToReceiveOfflinePushPlatforms](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserOfflinePushRule/notToReceiveOfflinePushPlatforms.html)) when the user is online on specified platforms ([onlinePlatforms](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserOfflinePushRule/onlinePlatforms.html)).
+如需支持用户自定义推送规则时，开发者需要构造 [ZIMUserOfflinePushRule](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserOfflinePushRule-class.html)，规定用户在哪些平台上在线（[onlinePlatforms](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserOfflinePushRule/onlinePlatforms.html)）时，哪些平台无需接收离线推送（[notToReceiveOfflinePushPlatforms](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMUserOfflinePushRule/notToReceiveOfflinePushPlatforms.html)）。
 
-To set the above rules, call the [updateUserOfflinePushRule](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateUserOfflinePushRule.html) method.
+调用 [updateUserOfflinePushRule](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateUserOfflinePushRule.html) 接口，设置上述规则。
 
 ```dart
-// Set the offline push rules.
+// 设置离线推送规则
 try{
 
     ZIMUserOfflinePushRule rule = ZIMUserOfflinePushRule();
-    // When the user logs in on Windows, macOS, and Linux.
+    // 当用户 win、MacOS、Linux 平台登录时
     rule.onlinePlatforms = [ZIMPlatformType.win,ZIMPlatformType.macOS, ZIMPlatformType.linux];
-    // The user does not receive offline push on the iPhoneOS, iPadOS, and Android.
+    // 用户在 iPhoneOS、iPadOS、Android 上不收到离线推送
     rule.notToReceiveOfflinePushPlatforms = [ZIMPlatformType.iPhoneOS, ZIMPlatformType.iPadOS, ZIMPlatformType.android];
 
+    // 调用 updateUserOfflinePushRule 方法
     ZIMUserOfflinePushRuleUpdatedResult result = await ZIM.getInstance()!.updateUserOfflinePushRule(rule);
 
 } on PlatformException catch (onError) {
@@ -45,17 +46,16 @@ try{
 }
 ```
 
-### Query custom push rules
+### 查询用户定义的推送规则
 
-Call the [querySelfUserInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/querySelfUserInfo.html) method to obtain custom offline push rules from the `selfUserInfo.userRule.offlinePushRule` field in the callback.
-
+通过调用 [querySelfUserInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/querySelfUserInfo.html)，即可在回调中的 `selfUserInfo.userRule.offlinePushRule` 获取当前用户自定义的离线推送规则。
 
 ```dart
-// Query push rules defined by the user
+// 查询用户定义的推送规则 
 try{
     ZIMSelfUserInfoQueriedResult result = await ZIM.getInstance()!.querySelfUserInfo();
-    result.selfUserInfo.userFullInfo; // User information
-    result.selfUserInfo.userRule.offlinePushRule; // Offline push rules defined by the user
+    result.selfUserInfo.userFullInfo; // 当前用户的用户信息
+    result.selfUserInfo.userRule.offlinePushRule; // 当前用户定义的离线推送规则
 
 } on PlatformException catch (onError) {
     onError.code;

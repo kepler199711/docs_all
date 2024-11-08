@@ -86,9 +86,9 @@ Call the `didUpdatePushCredentials` method to obtain the VoIP token, and then ca
 }
 ```
    
-<div class="mk-warning">
+<Warning title="Warning">
 Enter the correct value of the isProduct for the development or production environment; otherwise, the ZPNs server cannot select the proper push certificate to send offline notification requests to the APNs. During packaging, if you use the development certificate, select the value for the development environment; if you use the distribution certificate, select the value for the production environment. The APNs has a better delivery rate and lower latency in a production environment than in a development environment.
-</div>
+</Warning>
 </Step>
 <Step title="Send and receive a VoIP notification">
 
