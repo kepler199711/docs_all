@@ -4,17 +4,17 @@ articleID: 17797
 
 import { getPlatformData } from "/snippets/utils-content-parser.js"
 
-export const onReceivePeerMessageMap = {
-  'Android': <a href='@onReceivePeerMessage' target='_blank'>onReceivePeerMessage</a>,
-  'Web': <a href='@receivePeerMessage' target='_blank'>receivePeerMessage</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-receive-peer-message-from-room-id' target='_blank'>receivePeerMessage</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-peer-message-from-room-id' target='_blank'>receivePeerMessage</a>,
+export const onPeerMessageReceivedMap = {
+  'Android': <a href='@onPeerMessageReceived' target='_blank'>onPeerMessageReceived</a>,
+  'Web': <a href='@peerMessageReceived' target='_blank'>peerMessageReceived</a>,
+  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-peer-message-received-info-from-user-id' target='_blank'>peerMessageReceived</a>,
+  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-peer-message-received-info-from-user-id' target='_blank'>peerMessageReceived</a>,
 }
-export const onReceiveGroupMessageMap = {
-  'Android': <a href='@onReceiveGroupMessage' target='_blank'>onReceiveGroupMessage</a>,
-  'Web': <a href='@receiveGroupMessage' target='_blank'>receiveGroupMessage</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-receive-group-message-from-group-id' target='_blank'>onReceiveGroupMessage</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-group-message-from-group-id' target='_blank'>onReceiveGroupMessage</a>,
+export const onGroupMessageReceivedMap = {
+  'Android': <a href='@onGroupMessageReceived' target='_blank'>onGroupMessageReceived</a>,
+  'Web': <a href='@groupMessageReceived' target='_blank'>groupMessageReceived</a>,
+  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-message-received-info-from-group-id' target='_blank'>groupMessageReceived</a>,
+  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-message-received-info-from-group-id' target='_blank'>groupMessageReceived</a>,
 }
 export const queryHistoryMessageMap = {
   'Android': <a href='@queryHistoryMessage' target='_blank'>queryHistoryMessage</a>,
@@ -89,6 +89,18 @@ export const ZIMMessageMap = {
 export const nextMessageMap = {
   'Android': <a href='@nextMessage-ZIMMessageQueryConfig' target='_blank'>nextMessage</a>,
 }
+export const ZIMMessageRepliedInfoStateDeletedMap = {
+   'Android': <code>ZIMMessageRepliedInfoState.DELETED</code>,
+   'iOS,mac': <code>ZIMMessageRepliedInfoState.ZIMMessageRepliedInfoStateDeleted</code>,
+   "window": <code>ZIMMessageRepliedInfoState.ZIM_MESSAGE_REPLIED_INFO_STATE_DELETED</code>,
+   "Web": <code>ZIMMessageRepliedInfoState.Deleted</code>, 
+}
+export const ZIMMessageRepliedInfoStateNotFoundMap = {
+   'Android': <code>ZIMMessageRepliedInfoState.NOTFOUND</code>,
+   'iOS,mac': <code>ZIMMessageRepliedInfoState.ZIMMessageRepliedInfoStateNotFound</code>,
+   "window": <code>ZIMMessageRepliedInfoState.ZIM_MESSAGE_REPLIED_INFO_STATE_NOT_FOUND</code>,
+   "Web": <code>ZIMMessageRepliedInfoState.NotFound</code>, 
+}
 
 # Reply to a message
 
@@ -121,13 +133,13 @@ Using messages A, B, and C in group chat as examples:
 
 ## Reply to a message
 
-After logging in to ZIM, users can listen to the {getPlatformData(props,onReceivePeerMessageMap)} and {getPlatformData(props,onReceiveGroupMessageMap)} callback to receive new messages from one-on-one and group conversations, or call the {getPlatformData(props,queryHistoryMessageMap)} interface to fetch historical messages.
+After logging in to ZIM, users can listen to the {getPlatformData(props,onPeerMessageReceivedMap)} and {getPlatformData(props,onGroupMessageReceivedMap)} callback to receive new messages from one-on-one and group conversations, or call the {getPlatformData(props,queryHistoryMessageMap)} interface to fetch historical messages.
 
-At this point, users can choose a message to reply to by using that message as the `toOriginMessage` parameter and constructing a new message as the `message` parameter. Then, call the {getPlatformData(props,replyMessageMap)} interface.
+At this point, users can choose a message to reply to by using that message as the `toOriginalMessage` parameter and constructing a new message as the `message` parameter. Then, call the {getPlatformData(props,replyMessageMap)} interface.
 
 <Note title="Note">
 
-Only the following types are supported for the `toOriginMessage` and `message` parameters:
+Only the following types are supported for the `toOriginalMessage` and `message` parameters:
 - Text message: [ZIMTextMessage(1)](@-ZIMTextMessage)
 - Image message: [ZIMImageMessage(11)](@-ZIMImageMessage)
 - File message: [ZIMFileMessage(12)](@-ZIMFileMessage)
@@ -197,8 +209,8 @@ ZIMMessageSendConfig config = new ZIMMessageSendConfig();
 // Set message priority
 config.priority = ZIMMessagePriority.LOW;
 
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessage or receivePeerMessage and receiveGroupMessage.
-ZIM.getInstance().replyMessage(textMessage, toOriginMessage, config, new ZIMMessageSentFullCallback() {
+// Reply to a message, where the toOriginalMessage parameter refers to the source message obtained through queryHistoryMessage or peerMessageReceived and receiveGroupMessage.
+ZIM.getInstance().replyMessage(textMessage, toOriginalMessage, config, new ZIMMessageSentFullCallback() {
     @Override
     public void onMessageAttached(ZIMMessage message) {
         // Callback before sending, where you can get a temporary object that is the same as the zimMessage object created by you. You can use this feature to add some business logic, such as displaying UI in advance.
@@ -235,8 +247,8 @@ notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, un
     // If the reply message is a media message, you can listen to the upload progress of the media attachment.
 };
 
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessageByConversationID, receivePeerMessage, or receiveGroupMessage.
-[[ZIM getInstance] replyMessage:textMessage toOriginMessage:toOriginMessage config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+// Reply to a message, where the toOriginalMessage parameter refers to the source message obtained through queryHistoryMessageByConversationID, peerMessageReceived, or receiveGroupMessage.
+[[ZIM getInstance] replyMessage:textMessage toOriginalMessage:toOriginalMessage config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
     // You can use this callback to listen for whether the message was sent successfully.
 }];
 ```
@@ -259,8 +271,8 @@ notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, un
     // If the reply message is a media message, you can listen to the upload progress of the media attachment.
 };
 
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessageByConversationID, receivePeerMessage, or receiveGroupMessage.
-[[ZIM getInstance] replyMessage:textMessage toOriginMessage:toOriginMessage config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+// Reply to a message, where the toOriginalMessage parameter refers to the source message obtained through queryHistoryMessageByConversationID, peerMessageReceived, or receiveGroupMessage.
+[[ZIM getInstance] replyMessage:textMessage toOriginalMessage:toOriginalMessage config:config notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
     // You can use this callback to listen for whether the message was sent successfully.
 }];
 ```
@@ -283,16 +295,16 @@ notification->onMediaUploadingProgress = [=](std::shared_ptr<ZIMMediaMessage> &m
     // If the reply message is a media message, you can listen to the upload progress of the media attachment.
 };
 
-// Reply to a message, where the toOriginMessage parameter refers to the source message obtained through queryHistoryMessage or onReceivePeerMessage and onReceiveGroupMessage.
-ZIM::getInstance()->replyMessage(textMessage, toOriginMessage, config, notification, [=](const std::shared_ptr<ZIMMessage> &message, const ZIMError &errorInfo) {
+// Reply to a message, where the toOriginalMessage parameter refers to the source message obtained through queryHistoryMessage or onPeerMessageReceived and onReceiveGroupMessage.
+ZIM::getInstance()->replyMessage(textMessage, toOriginalMessage, config, notification, [=](const std::shared_ptr<ZIMMessage> &message, const ZIMError &errorInfo) {
     // You can use this callback to listen for whether the message was sent successfully.
 });
 ```
 :::
 :::if{props.platform="Web"}
 ```javascript
-// The source message object, obtained through queryHistoryMessage or receivePeerMessage and receiveGroupMessage.
-var toOriginMessage = {};
+// The source message object, obtained through queryHistoryMessage or peerMessageReceived and receiveGroupMessage.
+var toOriginalMessage = {};
 
 var config = { 
     priority: 1, // Set message priority, values are low: 1 (default), medium: 2, high: 3
@@ -308,7 +320,7 @@ var notification = {
     },
 }
 
-zim.replyMessage(messageTextObj, toOriginMessage, config, notification)
+zim.replyMessage(messageTextObj, toOriginalMessage, config, notification)
     .then(function ({ message }) {
         // Sent successfully
     })
@@ -321,7 +333,7 @@ zim.replyMessage(messageTextObj, toOriginMessage, config, notification)
 
 ## Determine if a message is a reply to another message
 
-When receiving new messages in one-on-one and group conversations through the {getPlatformData(props,onReceivePeerMessageMap)} and {getPlatformData(props,onReceiveGroupMessageMap)} callbacks, you need to determine if the message has {getPlatformData(props,repliedInfoMap)} (basic information of the source message):
+When receiving new messages in one-on-one and group conversations through the {getPlatformData(props,onPeerMessageReceivedMap)} and {getPlatformData(props,onGroupMessageReceivedMap)} callbacks, you need to determine if the message has {getPlatformData(props,repliedInfoMap)} (basic information of the source message):
 - If it exists, it means that this message is a reply to another message.
 - If it doesn't exist, it means that this message is an independent message.
 
@@ -332,8 +344,7 @@ When you have the {getPlatformData(props,repliedInfoMap)}, you can use it to dis
 // Register ZIMEventHander callback
 ZIM.getInstance().setEventHandler(new ZIMEventHandler() {
     @Override
-    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
-                                             String fromUserID) {
+    public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID) {
         for(ZIMMessage message : messageList) {
             if(message.repliedInfo) {
                 // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
@@ -342,8 +353,7 @@ ZIM.getInstance().setEventHandler(new ZIMEventHandler() {
     }
 
     @Override
-    public void onReceiveGroupMessage(ZIM zim, ArrayList<ZIMMessage> messageList,
-                                              String fromGroupID) {
+    public void onGroupMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromGroupID) {
         for(ZIMMessage message : messageList) {
             if(message.repliedInfo) {
                 // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
@@ -352,71 +362,43 @@ ZIM.getInstance().setEventHandler(new ZIMEventHandler() {
     }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
-```objc
+:::if{props.platform="iOS|mac"}
+```objective-c
 // Register ZIMEventHander callback
 [zim setEventHandler:self];
 
 // Callback for receiving one-on-one messages
 - (void)zim:(ZIM *)zim
-    receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
-            fromUserID:(NSString *)fromUserID{
-    for(ZIMMessage *message in messageList) {
-        if(message.repliedInfo) {
+    peerMessageReceived:(NSArray<ZIMMessage *> *)messageList
+                   info:(ZIMMessageReceivedInfo *)info
+             fromUserID:(NSString *)fromUserID {
+     for(ZIMMessage *message in messageList) {
+         if(message.repliedInfo) {
            // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
         }
-    }   
-}
+    }
+}   
 
 // Callback for receiving group messages
 - (void)zim:(ZIM *)zim
-    receiveGroupMessage:(NSArray<ZIMMessage *> *)messageList
-            fromGroupID:(NSString *)fromGroupID{
+    groupMessageReceived:(NSArray<ZIMMessage *> *)messageList
+                    info:(ZIMMessageReceivedInfo *)info
+             fromGroupID:(NSString *)fromGroupID {
     for(ZIMMessage *message in messageList) {
          if(message.repliedInfo) {
            // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
         }
-    }  
-}
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// Register ZIMEventHander callback
-[zim setEventHandler:self];
-
-// Callback for receiving one-on-one messages
-- (void)zim:(ZIM *)zim
-    receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
-            fromUserID:(NSString *)fromUserID{
-    for(ZIMMessage *message in messageList) {
-        if(message.repliedInfo) {
-           // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
-    }   
-}
-
-// Callback for receiving group messages
-- (void)zim:(ZIM *)zim
-    receiveGroupMessage:(NSArray<ZIMMessage *> *)messageList
-            fromGroupID:(NSString *)fromGroupID{
-    for(ZIMMessage *message in messageList) {
-         if(message.repliedInfo) {
-           // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
-        }
-    }  
-}
+}  
 ```
 :::
 :::if{props.platform="window"}
 ```cpp
-// Register ZIMEventHander callback
+// Register ZIMEventHandler callback
 ZIM::getInstance()->setEventHandler(shared_from_this());
 
 // Callback for receiving peer messages
-void MyClass::onReceivePeerMessage(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const std::string & fromUserID) {
+void MyClass::onPeerMessageReceived(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const ZIMMessageReceivedInfo &info, const std::string & fromUserID) {
     for(const auto &message : messageList) {
         if(message->repliedInfo) {
             // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
@@ -425,7 +407,7 @@ void MyClass::onReceivePeerMessage(ZIM * zim, const std::vector<std::shared_ptr<
 }
 
 // Callback for receiving group messages
-void MyClass::onReceiveGroupMessage(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const std::string & fromGroupID) {
+void MyClass::onGroupMessageReceived(ZIM * zim, const std::vector<std::shared_ptr<ZIMMessage>> & messageList, const ZIMMessageReceivedInfo &info, const std::string & fromGroupID) {
     for(const auto &message : messageList) {
         if(message->repliedInfo) {
             // Basic information of the source message referenced by this reply message, used to display the sender, sending time, and message content of the source message.
@@ -438,7 +420,7 @@ void MyClass::onReceiveGroupMessage(ZIM * zim, const std::vector<std::shared_ptr
 :::if{props.platform="Web"}
 ```javascript
 // Receive a message in a one-to-one conversation
-zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID }) {
+zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
     messageList.forEach((msg) => {
         if (msg.repliedInfo) {
             // Basic information of the source message referenced by this reply, used to display the sender, sending time, and message content of the source message.
@@ -447,7 +429,7 @@ zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID })
 });
 
 // Receive a message in a group conversation
-zim.on('receiveGroupMessage', function (zim, { messageList, fromConversationID }) {
+zim.on('groupMessageReceived', function (zim, { messageList, info, fromConversationID }) {
     messageList.forEach((msg) => {
         if (msg.repliedInfo) {
             // Basic information of the source message referenced by this reply, used to display the sender, sending time, and message content of the source message.
@@ -532,7 +514,7 @@ zim.on('messageRepliedCountChanged', function (zim, { infos }) {
 });
 ```
 :::
-p
+
 
 ## Listen for the deletion or recall of the source message
 
@@ -648,7 +630,7 @@ ZIMMessageRepliedListQueryConfig config = new ZIMMessageRepliedListQueryConfig()
 config.count = 10; // The number of queries, please do not exceed 100
 config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or peerMessageReceived and receiveGroupMessage
 ZIM.getInstance().queryMessageRepliedList(replyMessage, config, new new ZIMMessageRepliedListQueriedCallback() {
     @Override
     public void onMessageRepliedListQueried(ArrayList<ZIMMessage> messageList, long nextFlag, ZIMMessageRootRepliedInfo rootRepliedInfo, ZIMError errorInfo) {
@@ -671,7 +653,7 @@ ZIMMessageRepliedListQueryConfig *config = [[ZIMMessageRepliedListQueryConfig al
 config.count = 10; // The number of queries, please do not exceed 100
 config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or peerMessageReceived and receiveGroupMessage
 [[ZIM getInstance] queryMessageRepliedListByMessage:replyMessage config:config callback:^(NSArray<ZIMMessage *> * _Nonnull messageList, long long nextFlag, ZIMMessageRootRepliedInfo * _Nonnull rootRepliedInfo, ZIMError * _Nonnull errorInfo){
         if(errorInfo.code == ZIMErrorCodeSuccess) {
             // Query successful
@@ -690,7 +672,7 @@ ZIMMessageRepliedListQueryConfig *config = [[ZIMMessageRepliedListQueryConfig al
 config.count = 10; // The number of queries, please do not exceed 100
 config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or peerMessageReceived and receiveGroupMessage
 [[ZIM getInstance] queryMessageRepliedListByMessage:replyMessage config:config callback:^(NSArray<ZIMMessage *> * _Nonnull messageList, long long nextFlag, ZIMMessageRootRepliedInfo * _Nonnull rootRepliedInfo, ZIMError * _Nonnull errorInfo){
         if(errorInfo.code == ZIMErrorCodeSuccess) {
             // Query successful
@@ -709,7 +691,7 @@ ZIMMessageRepliedListQueryConfig config;
 config.count = 10; // The number of queries, please do not exceed 100
 config.nextFlag = 0; // Pagination flag, fill in 0 for the first query, and subsequent queries will be based on the nextFlag returned by the query result
 
-// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+// replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or peerMessageReceived and receiveGroupMessage
 ZIM::getInstance()->queryMessageRepliedList(replyMessage, config, [=](const std::vector<std::shared_ptr<ZIMMessage>> &messageList, long long nextFlag,
     const ZIMMessageRootRepliedInfo &rootRepliedInfo, const ZIMError &errorInfo){
     if(errorInfo.code == ZIM_ERROR_CODE_SUCCESS) {
@@ -725,7 +707,7 @@ ZIM::getInstance()->queryMessageRepliedList(replyMessage, config, [=](const std:
 :::
 :::if{props.platform="Web"}
 ```javascript
-var replyMessage = {}; // replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or receivePeerMessage and receiveGroupMessage
+var replyMessage = {}; // replyMessage can be a root message or any reply, generally obtained through the queryHistoryMessage interface or peerMessageReceived and receiveGroupMessage
 
 var config = {
     count: 10, // The number of queries, please do not exceed 100
@@ -744,6 +726,12 @@ zim.queryMessageRepliedList(replyMessage, config)
     });
 ```
 :::
+
+<Note title="Note">
+
+- When querying the reply list, no matter the message passed is the root message or not, as long as the nextFlag is set to 0, it means querying in ascending order of message sending time starting from the root message.
+- Since the `message` in `rootRepliedInfo` is a nullable object, when `state` is  {getPlatformData(props,ZIMMessageRepliedInfoStateDeletedMap)}, it means the root message has been deleted. At this time, developers should prompt "The root message has been deleted" on the UI. When `state` is {getPlatformData(props,ZIMMessageRepliedInfoStateNotFoundMap)}, it means that the root message cannot be found anymore. The possible reasons are that the message  exceeded the server storage time, or the group users query the reply list after joining the group but the root message was sent before they joined the group, so the message may not be able to be required anymore. At this time, developers should prompt "The root message cannot be located" or other informative statements on the UI.
+</Note>
 
 ## View the context of the source message
 
