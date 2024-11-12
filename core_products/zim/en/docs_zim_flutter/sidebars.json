@@ -13,8 +13,12 @@
           "type": "doc",
           "label": "Basic concepts",
           "id": "introduction/basic-concepts"
-        }
-      ]
+        },
+        {
+          "type": "doc",
+          "label": "Pricing",
+          "id": "introduction/pricing"
+        }      ]
     },
     {
       "type": "doc",
