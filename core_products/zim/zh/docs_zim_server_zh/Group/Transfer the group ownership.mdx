@@ -1,106 +1,103 @@
-# Transfer the group ownership
+# 转让群主
 
 - - -
 
+## 描述
 
+通过该接口可以将群主身份转移给群内其他成员。
 
-## Overview
-
-You can call this operation to transfer the group ownership to a group member.
-
-After the ownership is successfully transferred, group members receive the notification in the following ZIM SDK callbacks.
+转让成功后，群内成员通过以下 ZIM SDK 的回调接口，收到相关通知：
 
 <table>
-
 <tbody><tr>
 <th>iOS</th>
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
-</tr>
-<tr>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
-</tr>
-<tr>
-
 <th>Web</th>
+</tr>
+<tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+</tr>
+<tr>
+<th>小程序</th>
 <th>Flutter</th>
 <th>Unity3D</th>
+<th>uni-app</th>
 <th>React Native</th>
-<th></th>
-<th></th>
 </tr>
 <tr>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupMemberInfoUpdated.html" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">OnGroupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
-<td></td>
-<td></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">OnGroupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
 </tr>
 </tbody></table>
 
-## Operation prototype
 
-- Request method: GET
-- Request URL: https://zim-api.zego.im/?Action=TransferGroupOwner
-- Protocol: HTTPS
-- QPS limit: 1 call per second, applicable to group chats only. If you need a higher limit, contact ZEGOCLOUD technical support.
 
-## Request parameters
+## 接口原型
 
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic](../Accessing%20Server%20APIs.mdx#public-parameters).
+- 请求方法：GET
+- 请求地址： `https://zim-api.zego.im/?Action=TransferGroupOwner`
+- 传输协议：HTTPS
+- 调用频率限制：1 次/秒，群级别限制。如需调整，请联系 ZEGO 技术支持。
 
-| Parameter| Type| Required| Description|
-|----------|----------|----------|----------|
-| FromUserId| String| Yes| The ID of the operator.|
-| GroupId| String| Yes| The group chat ID.|
-| NewOwner| String| Yes| The ID of the user to whom the group ownership is to be transferred. The user must be a group member.|
+## 请求参数
+
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
+
+| 参数 | 类型 | 是否必选 | 描述 |
+| --- | --- | --- | --- |
+| FromUserId | String | 是 | 操作者用户 ID。 |
+| GroupId | String | 是 | 群 ID。 |
+| NewOwner | String | 是 | 新群主（接收转让的用户） ID，需为群内用户。 |
 
 <Note title="Note">
 
-The `FromUserId`, `GroupId`, and `NewOwner` parameters can contain only digits, letters, and the following characters:{" '!', '#', '$', '%', '\&', '(', ')', '+', '', ':', ';', '\<', '=', '.', '>', '?', '@', '\[', ']', '\^', '\_', '{', '}', '\|', '~'"}.
-
+FromUserId、GroupId、NewOwner 仅支持数字，英文字符和{" '!'，'#'，'$'，'%'，'&'，'('，')'，'+'，''，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，'{'，'}'，'|'，'~'"}。
 </Note>
 
-## Sample request
+
+## 请求示例
 
 ```json
 https://zim-api.zego.im/?Action=TransferGroupOwner
 &FromUserId=zego_user&GroupId=groupid&NewOwner=newowner
-&<Common request parameters>
+&<公共请求参数>
 ```
 
-## Response parameters
+## 响应参数
 
 <table>
-
 <tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr>
 <td>Code</td>
 <td>Number</td>
-<td>The return code.</td>
+<td>返回码。</td>
 </tr>
 <tr>
 <td>Message</td>
 <td>String</td>
-<td>The description of the operation result.</td>
+<td>操作结果描述。</td>
 </tr>
 <tr>
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -110,42 +107,39 @@ https://zim-api.zego.im/?Action=TransferGroupOwner
 }
 ```
 
-## Return codes
+## 返回码
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。   
 
 <table>
-<tbody>
-<tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<tbody><tr>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter.</td>
+<td>参数错误。</td>
+<td>请检查请求参数。</td>
 </tr>
 <tr>
 <td>660300006</td>
-<td>The QPS limit is exceeded.</td>
-<td>Please try again later. </td>
+<td>超出调用频率限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660500002</td>
-<td>The operator is not registered.</td>
-<td>Register the operator.</td>
+<td>操作者用户未注册。</td>
+<td>请先注册该用户。</td>
 </tr>
 <tr>
 <td>660600001</td>
-<td>The group chat does not exist.</td>
-<td>Check whether the value of the `GroupID` parameter is valid.</td>
+<td>群不存在。</td>
+<td>请检查 GroupID 是否正确。</td>
 </tr>
 <tr>
 <td>660600024</td>
-<td>The user to whom the group ownership is to be transferred is not in the group chat.</td>
-<td>Add the user to the group chat. For more information, see [Add group members](./Add%20group%20members.mdx).</td>
+<td>接受转让的用户不在群内。</td>
+<td>请参考 [添加群成员](./Add%20group%20members.mdx) 将该用户拉进群内。</td>
 </tr>
-</tbody>
-</table>
-
+</tbody></table>

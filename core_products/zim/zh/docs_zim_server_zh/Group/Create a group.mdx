@@ -1,15 +1,14 @@
-# Create a group
+# 创建群组
 
 - - -
 
-## Description
+## 描述
 
-To create a group through this interface.
+通过此接口创建群组。
 
-Upon successful creation of the group, the group owner will receive a notification of successful group creation through the following callback interface in the ZIM SDK, while other group members will receive a notification of joining the group:
+创建群组成功，通过以下 ZIM SDK 的回调接口，群主会收到群组创建成功的通知，其他群成员会收到加入群组的通知：
 
 <table>
-  
 <tbody><tr>
 <th>iOS</th>
 <th>Android</th>
@@ -18,246 +17,225 @@ Upon successful creation of the group, the group owner will receive a notificati
 <th>Web</th>
 </tr>
 <tr>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-state-changed-operated-info-group-id" rel="noreferrer noopenner">groupStateChanged</a></td>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-state-changed" rel="noreferrer noopenner">onGroupStateChanged</a></td>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-state-changed-operated-info-group-id" rel="noreferrer noopenner">groupStateChanged</a></td>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-state-changed" rel="noreferrer noopenner">onGroupStateChanged</a></td>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-state-changed" rel="noreferrer noopenner">groupStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-state-changed-operated-info-group-id" rel="noreferrer noopenner">groupStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-state-changed" rel="noreferrer noopenner">onGroupStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-state-changed-operated-info-group-id" rel="noreferrer noopenner">groupStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-state-changed" rel="noreferrer noopenner">onGroupStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-state-changed" rel="noreferrer noopenner">groupStateChanged</a></td>
 </tr>
 <tr>
+<th>小程序</th>
 <th>Flutter</th>
 <th>Unity3D</th>
+<th>uni-app</th>
 <th>React Native</th>
-<th></th>
-<th></th>
 </tr>
 <tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#group-state-changed" rel="noreferrer noopenner">groupStateChanged</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupStateChanged.html" rel="noreferrer noopenner">onGroupStateChanged</a></td>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-state-changed" rel="noreferrer noopenner">OnGroupStateChanged</a></td>
-<td><a href="https://doc-en.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-state-changed" rel="noreferrer noopenner">groupStateChanged</a></td>
-<td></td>
-<td></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-state-changed" rel="noreferrer noopenner">OnGroupStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#group-state-changed" rel="noreferrer noopenner">groupStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-state-changed" rel="noreferrer noopenner">groupStateChanged</a></td>
 </tr>
 </tbody></table>
 
-## Operation prototype
+## 接口原型
 
-- Request method: POST
-- Request endpoint: https://zim-api.zego.im/?Action=CreateGroup
-- Protocol: HTTPS
-- Rate limit: 20 requests/second
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=CreateGroup`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒
 
-## Request parameters
+## 请求参数
 
-Listed below are the parameters specific to this request and part of the public request parameters. For the complete list of public request parameters, see [Accessing Server APIs - Public parameters](../Accessing%20Server%20APIs.mdx#public-parameters).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table class="collapsible-table" >
 
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>GroupId</td>
 <td>String</td>
-<td>No</td>
-<td>Group ID, the unique identifier of the group, cannot start with #. The maximum length is 32 bytes. If it is empty, it will be created by the ZIM server and defined starting with #.</td>
+<td>否</td>
+<td>群 ID，群的唯一标识，不能以 # 开头。长度上限为 32 字节。为空则由 ZIM 服务端创建，并以 # 开头定义。</td>
 </tr>
 <tr data-row-level="3">
 <td>GroupName</td>
 <td>String</td>
-<td>No</td>
-<td>Group name, the maximum length is 50 bytes. If you need to adjust it, please contact ZEGOCLOUD technical support team.</td>
+<td>否</td>
+<td>群名称，长度上限为 50 字节。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="4">
 <td>GroupNotice</td>
 <td>String</td>
-<td>No</td>
-<td>Group announcement, the maximum length is 300 bytes. If you need to adjust it, please contact ZEGOCLOUD technical support team.</td>
+<td>否</td>
+<td>群公告，长度上限为 300 字节。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="5">
 <td>GroupAvatar</td>
 <td>String</td>
-<td>No</td>
-<td>Group avatar URL, the maximum length is 500 bytes. If you need to adjust it, please contact ZEGOCLOUD technical support team.</td>
+<td>否</td>
+<td>群头像 URL，长度上限为 500 字节。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="6">
 <td>GroupOwner</td>
 <td>String</td>
-<td>Yes</td>
-<td>The user ID of the group owner. The maximum length is 32 bytes. If you need to adjust it, please contact ZEGOCLOUD technical support team.</td>
+<td>是</td>
+<td>群主的用户 ID。长度上限为 32 字节。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="7">
 <td>UserId[]</td>
 <td>Array of String</td>
-<td>No</td>
-<td>
-The ID of the user who joins the group is required. The maximum length of each user ID is 32 bytes. If you need to adjust it, please contact ZEGOCLOUD technical support team.<br/>Up to 100 users can be added at one time by default. If you need to adjust it, please contact ZEGOCLOUD technical support team.
-<Note title="Note">
-<ul>
-<li>This array does not need to contain group owners. If the group owner is included, the ZIM server will automatically remove duplicates.</li>
-<li>The group joining time of this array user is equal to the group creation time, that is, CreateGroupTime.</li>
-</ul>
-</Note>
-</td>
+<td>否</td>
+<td>需要入群用户的 ID。每个用户 ID 的长度上限为 32 字节。如需调整，请联系 ZEGO 技术支持。<br/>默认支持一次性最多添加 100 名用户。如需调整，请联系 ZEGO 技术支持。<Note title="Note"><ul><li>此数组无需包含群主。如果包含了群主，ZIM 服务端会自动去重。</li><li>此数组用户的入群时间等于群组创建时间，即 CreateGroupTime。</li></ul></Note></td>
 </tr>
 <tr data-row-level="8" data-row-child="true">
 <td>Attributes</td>
 <td>Array of Object</td>
-<td>No</td>
-<td>Group attributes. The upper limit of group attributes is 10. If you need to adjust it, please contact ZEGOCLOUD technical support team.</td>
+<td>否</td>
+<td>群属性。群属性上限为 10 个。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="8-1">
-<td>└Key</td>
+<td>Key</td>
 <td>String</td>
-<td>Yes (only if group properties need to be configured)</td>
-<td>The key of the group attribute, the maximum length is 16 bytes. If you need to adjust it, please contact ZEGOCLOUD technical support team.</td>
+<td>是（仅当需要配置群属性时）</td>
+<td>群属性的键，长度上限为 16 个字节。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="8-2">
-<td>└Value</td>
+<td>Value</td>
 <td>String</td>
-<td>Yes (only if group properties need to be configured)</td>
-<td>The value of the group attribute, the maximum length is 1024 bytes. If you need to adjust it, please contact ZEGOCLOUD technical support team.</td>
+<td>是（仅当需要配置群属性时）</td>
+<td>群属性的值，长度上限为 1024 个字节。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="9">
 <td>CreateGroupTime</td>
 <td>Number</td>
-<td>No</td>
-<td>
-The timestamp of group creation (millisecond level).
-<ul>
-<li>If it is 0 or not filled in: the default group is created at the current time.</li>
-<li>For other values: cannot be greater than the current timestamp.</li>
-</ul>
-</td>
+<td>否</td>
+<td>创建群的时间戳（毫秒级别）。
+<ul><li>为 0 或者不填：默认群组为当前时间创建。</li>
+<li>为其他值：不可大于当前时间戳。</li></ul></td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-The GroupId and GroupOwner parameters can contain only digits, letters, and the following characters: '!', '#', '$', '%', '\&', '(', ')', '+', '', ':', ';', '\<', '=', '.', '>', '?', '@', '\[', ']', '\^', '\_', '{', '}', '\|', '~'.
-
+GroupId 和 GroupOwner 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，''，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，'{'，'}'，'|'，'~'"}。
 </Note>
 
 
-## Sample request
+## 请求示例
 
-- Request URL:
+- 请求地址 URL：
 
-   ```json
-   https://zim-api.zego.im/?Action=CreateGroup
-   &<Common request parameters>
-   ```
+```json
+https://zim-api.zego.im/?Action=CreateGroup
+&<公共请求参数>
+```
 
-- Request body:
+- 请求消息体：
 
-    ```json
-    {
-        "GroupId": "group",
-        "GroupName": "group_name",
-        "GroupNotice": "group_notice",
-        "GroupAvatar": "https://www.baidu.com/",
-        "GroupOwner": "owner",
-        "UserId": [
-            "user1",
-            "user2"
-        ],
-        "Attributes": [
-            {
-                "Key": "key1",
-                "Value": "value1"
-            },
-            {
-                "Key": "key2",
-                "Value": "value2"
-            }
-        ],
-        "CreateGroupTime": 0
-    }
-    ```
+```json
+{
+    "GroupId": "group",
+    "GroupName": "group_name",
+    "GroupNotice": "group_notice",
+    "GroupAvatar": "https://www.baidu.com/",
+    "GroupOwner": "owner",
+    "UserId": [
+        "user1",
+        "user2"
+    ],
+    "Attributes": [
+        {
+            "Key": "key1",
+            "Value": "value1"
+        },
+        {
+            "Key": "key2",
+            "Value": "value2"
+        }
+    ],
+    "CreateGroupTime": 0
+}
+```
 
-## Sample request
+## 响应参数
 
 <table class="collapsible-table" >
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>Return codes.</td>
+<td>返回码。</td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>Description of operation results.</td>
+<td>操作结果描述。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>Request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5">
 <td>GroupId</td>
 <td>String</td>
-<td>Group ID.</td>
+<td>群 ID。</td>
 </tr>
 <tr data-row-level="6" data-row-child="true">
 <td>Members</td>
 <td>Array of Object</td>
-<td>Information on the successful users who joined the group. </td>
+<td>入群成功用户信息。</td>
 </tr>
 <tr data-row-level="6-1">
-<td>└UserId</td>
+<td>UserId</td>
 <td>String</td>
-<td>Group user ID.</td>
+<td>群用户 ID。</td>
 </tr>
 <tr data-row-level="6-2">
-<td>└UserName</td>
+<td>UserName</td>
 <td>String</td>
-<td>Group user name.</td>
+<td>群用户名称。</td>
 </tr>
 <tr data-row-level="7" data-row-child="true">
 <td>ErrorUsers</td>
 <td>Array of Object</td>
 <td>
-Information of users who failed to join the group.
-<ul>
-<li>
-Code is 0:
-<ul>
-<li>ErrorList is empty, and all specified users have successfully joined the group.</li>
-<li>ErrorList is not empty, it means that some specified users failed to join the group. Please refer to SubCode for processing.</li>
-</ul>
+入群失败用户信息。
+<ul><li>
+Code 为 0：
+<ul><li>ErrorList 为空，全部指定用户入群成功。</li><li>ErrorList 不为空，表示部分指定用户入群失败，请参考 SubCode 处理。</li></ul>
 </li>
 <li>
-Code is not 0:
-<ul>
-<li>ErrorList is empty, indicating parameter errors, interface frequency limits, and system errors.</li>
-<li>ErrorList is not empty, indicating all specified users failed to join the group.</li>
-</ul>
+Code 不为 0：
+<ul><li>ErrorList 为空，表示参数错误、接口频率限制、系统错误。</li><li>ErrorList 不为空，表示全部指定用户入群失败。</li></ul>
 </li>
 </ul></td>
 </tr>
 <tr data-row-level="7-1">
-<td>└UserId</td>
+<td>UserId</td>
 <td>String</td>
-<td>Failed user ID.</td>
+<td>失败用户 ID。</td>
 </tr>
 <tr data-row-level="7-2">
-<td>└SubCode</td>
+<td>SubCode</td>
 <td>Number</td>
-<td>The specific return code for user failure to join the group.</td>
+<td>用户入群失败的具体返回码。</td>
 </tr>
 </tbody></table>
 
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -284,71 +262,69 @@ Code is not 0:
 }
 ```
 
-## Return codes
+## 返回码
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
-
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
-  
 <tbody><tr>
-<th>Return Code</th>
-<th> Description </th>
-<th> Solution </th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Error in parameter.</td>
-<td>Please check the request parameters.</td>
+<td>参数错误。</td>
+<td>请检查请求参数。</td>
 </tr>
 <tr>
 <td>660600010</td>
-<td>Exceeded the call frequency limit. </td>
-<td> Please try again later.</td>
+<td>超出调用频率限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660600011</td>
-<td>The group already exists.</td>
-<td>Please use other GroupId.</td>
+<td>群已经存在。</td>
+<td>请使用其他 GroupId。</td>
 </tr>
 <tr>
 <td>660600012</td>
-<td>The number of groups exceeds the limit.</td>
-<td>Please upgrade your package.</td>
+<td>群数量超过限制。</td>
+<td>请升级套餐。</td>
 </tr>
 <tr>
 <td>660600013</td>
-<td>The group owner does not exist. </td>
-<td>Please check whether the user ID of the group owner is correct.</td>
+<td>群主不存在。</td>
+<td>请检查群主的用户 ID 是否正确。</td>
 </tr>
 <tr>
 <td>660600014</td>
-<td>An error occurred when modifying the group owner's group list.</td>
-<td>Please contact ZEGOCLOUD technical support team.</td>
+<td>修改群主的群列表出错。</td>
+<td>请联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660600015</td>
-<td>An error occurred when the ZIM server performed the db operation.</td>
-<td>Please contact ZEGOCLOUD technical support team.</td>
+<td>ZIM 服务端执行 db 操作出错。</td>
+<td>请联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660600016</td>
-<td>The number of group members exceeds the limit.</td>
-<td>Please reduce the number of group members.</td>
+<td>群成员数量超过限制。</td>
+<td>请减少群成员数量。</td>
 </tr>
 <tr>
 <td>660600017</td>
-<td>The user failed to join the group when creating the group.</td>
-<td>Please contact ZEGOCLOUD technical support team.</td>
+<td>创建群时用户进群失败。</td>
+<td>请联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660600019</td>
-<td>The number of attributes exceeds the limit.</td>
-<td>Please reduce the number of group attributes to a maximum of 10 by default.</td>
+<td>属性数量超过限制。</td>
+<td>请减少群属性，默认最多 10 个。</td>
 </tr>
 <tr>
 <td>660600020</td>
-<td>The property's Key or Value length is wrong.</td>
-<td>Please check the length of relevant parameters.</td>
+<td>属性的 Key 或 Value 长度错误。</td>
+<td>请检查相关参数的长度。</td>
 </tr>
 </tbody></table>

@@ -1,18 +1,18 @@
-# Remove group members
+# 移除群成员
 
 - - -
 
+## 描述
 
-## Description
-
-Remove users in the group by specifying their user IDs.
+通过指定用户 ID 移除群内用户。
 
 <Note title="Note">
 
-User IDs in the group can be obtained by [Query group member list](./).
+- 群内用户 ID 可通过 [查询群成员列表](./Query%20group%20member%20list.mdx) 获取。
+- 如果被移除的用户为群主，则群列表第一位用户会自动成为新群主。
 </Note>
 
-After a user is successfully removed, all group members (including the group owner and the removed member) will receive a ZIM SDK callback interface:
+成功移除用户后，全体群成员（包括群主自己、被移除的成员）会通过 ZIM SDK 回调接口收到群成员状态变更通知：
 
 <table>
 
@@ -21,190 +21,209 @@ After a user is successfully removed, all group members (including the group own
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
-</tr>
-<tr>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id)</td>
-<td>[onGroupMemberStateChanged|_blank](/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-state-changed)</td>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id)</td>
-<td>[onGroupMemberStateChanged|_blank](/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-state-changed)</td>
-</tr>
-<tr>
 <th>Web</th>
-<th>Flutter</th>
-<th>Reactive Native</th>
-<th>Unity3D</th>
 </tr>
 <tr>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-state-changed)</td>
-<td>[onGroupMemberStateChanged|_blank](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupMemberStateChanged.html)</td>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-state-changed)</td>
-<td>[OnGroupMemberStateChanged|_blank](/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-state-changed)</td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-state-changed" target="_blank" rel="noreferrer noopenner">onGroupMemberStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-state-changed" target="_blank" rel="noreferrer noopenner">onGroupMemberStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-state-changed" target="_blank" rel="noreferrer noopenner">groupMemberStateChanged</a></td>
+</tr>
+<tr>
+<th>小程序</th>
+<th>Flutter</th>
+<th>Unity3D</th>
+<th>uni-app</th>
+<th>React Native</th>
+</tr>
+<tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#group-member-state-changed" target="_blank" rel="noreferrer noopenner">groupMemberStateChanged</a></td>
+<td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupMemberStateChanged.html" target="_blank" rel="noreferrer noopenner">onGroupMemberStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-state-changed" target="_blank" rel="noreferrer noopenner">OnGroupMemberStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#group-member-state-changed" target="_blank" rel="noreferrer noopenner">groupMemberStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-state-changed" target="_blank" rel="noreferrer noopenner">groupMemberStateChanged</a></td>
 </tr>
 </tbody></table>
 
-## Operation prototype
 
-- Request method: POST
-- Request endpoint: https://zim-api.zego.im/?Action=KickoutGroupUser
-- Protocol: HTTPS
-- Rate limit: 20 requests/second
+## 接口原型
 
-## Request parameters
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=KickoutGroupUser`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒
 
-Listed below are the parameters specific to this request and part of the public request parameters. For the complete list of public request parameters, see [Accessing Server APIs - Public parameters](../Accessing%20Server%20APIs.mdx#public-parameters).
+## 请求参数
 
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
 
 <tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr>
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>User ID of the operator.</td>
+<td>是</td>
+<td>操作者的用户 ID。</td>
 </tr>
 <tr>
 <td>GroupId</td>
 <td>String</td>
-<td>Yes</td>
-<td>Group ID.</td>
+<td>是</td>
+<td>群组 ID。</td>
 </tr>
 <tr>
 <td>UserId[]</td>
 <td>Array of String</td>
-<td>Yes</td>
-<td><p>A list of user IDs to be removed, supporting up to 50 user IDs.</p><p>Example: "UserId": ["usera","userb"]</p></td>
+<td>是</td>
+<td><p>需要被移除的用户 ID 列表，最大支持 50 个用户 ID。</p><p> 示例："UserId": ["usera","userb"]。</p></td>
 </tr>
 <tr>
 <td>CustomReason</td>
 <td>String</td>
-<td>No</td>
-<td>The reason for removal, with a length limit of 32 bytes.</td>
+<td>否</td>
+<td>移除原因，长度限制为 32 字节。</td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-FromUserId, GroupId, UserId[], and CustomReason only support numbers, English characters, and {"'!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', \', \',']', '^', '_', '{', '|', '}', '~', and ' '"}.
+FromUserId、GroupId、UserId[] 和 CustomReason 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，''，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，'{'，'}'，'|'，'~'"}。
 </Note>
 
-## Sample request
 
-- Sample request URL:
+## 请求示例
 
-   ```json
-   https://zim-api.zego.im/?Action=KickoutGroupUser
-   &<public request parameter>
-   ```
+- 请求地址 URL：
 
-- Request body:
+```json
+https://zim-api.zego.im/?Action=KickoutGroupUser
+&<公共请求参数>
+```
 
-   ```json
-   {
-      "FromUserId":"zego_user",
-      "GroupId":"groupA",
-      "CustomReason":"reason",
-      "UserId":["userA"]
-   }
-   ```
+- 请求消息体：
 
-## Response parameters
+```json
+{
+  "FromUserId":"zego_user",
+  "GroupId":"groupA",
+  "CustomReason":"reason",
+  "UserId":["userA"]
+}
+```
+
+## 响应参数
 
 <table class="collapsible-table" >
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>Return code.
-<div class="mk-hint">If you remove multiple users at the same time: <ul><li>If one or more users are successfully removed, Code will return 0. Please refer to the specific information in ErrorList to confirm the operation result.</li><li>If all users are not successfully removed, Code will return the relevant return code, please refer to <a href="!Server_APIs/Return_Codes" target="_blank">Return codes</a> for details.</li></ul></div></td>
+<td>返回码。
+<Note title="Note">如果您发起请求同时移除多名用户时：<ul><li>如果成功移除 1 个或以上的用户，Code 都会返回 0。此时请参考 ErrorList 中的具体信息，确认操作结果。</li><li>如果所有用户都没被成功移除，Code 会返回相关返回码，具体请参考 <a href="!Server_APIs/Return_Codes" target="_blank">全局返回码</a>。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description information of the request result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>Request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5" data-row-child="true">
 <td>ErrorList</td>
 <td>Array of String</td>
-<td>A list of failed operations.</td>
+<td>
+失败列表。
+<ul><li>
+Code 为 0：
+<ul><li>ErrorList 为空，全部指定用户移除成功。</li><li>ErrorList 不为空，表示部分指定用户移除失败，请参考 SubCode 处理。</li></ul>
+</li>
+<li>
+Code 不为 0：
+<ul><li>ErrorList 为空，表示参数错误、接口频率限制、系统错误。</li><li>ErrorList 不为空，表示全部指定用户移除失败。</li></ul>
+</li>
+</ul></td>
 </tr>
 <tr data-row-level="5-1">
-<td>└UserId</td>
+<td>UserId</td>
 <td>String</td>
-<td>User ID of the removal failure.</td>
+<td>移除失败的用户 ID。</td>
 </tr>
 <tr data-row-level="5-2">
-<td>└SubCode</td>
+<td>SubCode</td>
 <td>Number</td>
-<td>Error code of the removal failure.</td>
+<td>移除失败的错误码。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+
+## 响应示例
 
 ```json
 {
-   "Code":0,
-   "Message":"success",
-   "RequestId":"343649807833778782",
-   "ErrorList": [
-      {
-         "UserId":"u2",
-         "SubCode":660000012
-      } 
-   ]
+  "Code":0,
+  "Message":"success",
+  "RequestId":"343649807833778782",
+  "ErrorList": [
+    {
+        "UserId":"u2",
+        "SubCode":660000012
+    } 
+  ]
 }
 ```
 
-## Return codes
+## 返回码
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
-
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Processing Suggestions</th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Parameter error.</td>
-<td>Please refer to the correct parameters in <a href="#3">Request Parameters</a>.</td>
+<td>参数错误。</td>
+<td>请参考 <a href="#3">请求参数</a> 输入正确参数。</td>
 </tr>
 <tr>
 <td>660000011</td>
-<td>The number of users to be removed exceeds the limit.</td>
-<td>The number should not exceed 50.</td>
+<td>需要被移除的用户数量超过限制。</td>
+<td>数量应不超过 50。</td>
 </tr>
 <tr>
 <td>660600001</td>
-<td>The group does not exist.</td>
-<td>Please confirm the GroupId is correct.</td>
+<td>群不存在。</td>
+<td>请确认 GroupId 是否正确。</td>
 </tr>
 <tr>
 <td>660600005</td>
-<td>The call frequency of the KickoutGroupUser interface exceeds the limit.</td>
-<td>The rate limit is 20 requests/second, please do not exceed the limit.</td>
+<td>调用 KickoutGroupUser 接口的频率超出限制。</td>
+<td>调用频率为 20 次/秒，请勿超出限制。</td>
 </tr>
 <tr>
-<td>61103</td>
-<td>The user to be removed is not in the group.</td>
-<td>No need to process.</td>
+<td>660600008</td>
+<td>需要被移除的用户不在群内。</td>
+<td>用户已退出群，无需处理。</td>
+</tr>
+<tr>
+<td>660600009</td>
+<td>获取群相关信息失败，该群组可能不存在。</td>
+<td>请先确认 GroupID 是否正确。如果正确，请联系 ZEGO 技术支持。</td>
 </tr>
 </tbody></table>

@@ -1,191 +1,176 @@
-# Set nicknames of group members
+# 设置群成员昵称
 
 - - -
 
-## Overview
+## 描述
 
-You can call this operation to batch change the nicknames of up to 20 group members at a time. If you need a higher limit, contact ZEGOCLOUD technical support.
+通过该接口批量修改群内成员在该群中的昵称。默认单次最多可修改 20 名用户的昵称，如需调整，请联系 ZEGO 技术支持。
 
-After nicknames are changed, group members receive the notification in the following ZIM SDK callbacks.
+昵称设置成功后，群内成员通过以下 ZIM SDK 的回调接口，收到相关通知：
 
 <table>
-
 <tbody><tr>
 <th>iOS</th>
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
-</tr>
-<tr>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
-</tr>
-<tr>
-
 <th>Web</th>
+</tr>
+<tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-info-updated-operated-info-group-id" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+</tr>
+<tr>
+<th>小程序</th>
 <th>Flutter</th>
 <th>Unity3D</th>
+<th>uni-app</th>
 <th>React Native</th>
-<th></th>
-<th></th>
 </tr>
 <tr>
-
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupMemberInfoUpdated.html" target="_blank" rel="noreferrer noopenner">onGroupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">OnGroupMemberInfoUpdated</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
-<td></td>
-<td></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-info-updated" target="_blank" rel="noreferrer noopenner">OnGroupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-info-updated" target="_blank" rel="noreferrer noopenner">groupMemberInfoUpdated</a></td>
 </tr>
 </tbody></table>
 
-## Operation prototype
+## 接口原型
+- 请求方法：POST
+- 请求地址： `https://zim-api.zego.im/?Action=SetGroupMembersNickname`
+- 传输协议：HTTPS
+- 调用频率限制：1 次/秒，群级别限制。如需调整，请联系 ZEGO 技术支持。
 
-- Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=SetGroupMembersNickname
-- Protocol: HTTPS
-- QPS limit: 1 call per second, applicable to group chats only. If you need a higher limit, contact ZEGOCLOUD technical support.
+## 请求参数
 
-## Request parameters
-
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic](../Accessing%20Server%20APIs.mdx#public-parameters).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table class="collapsible-table" >
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the operator. The operator must be registered.</td>
+<td>是</td>
+<td>操作者用户 ID。用户需已注册 ZIM 服务。</td>
 </tr>
 <tr data-row-level="3">
 <td>GroupId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The group chat ID.</td>
+<td>是</td>
+<td>群组 ID。</td>
 </tr>
 <tr data-row-level="4" data-row-child="true">
 <td>UserIds</td>
 <td>Array of Object</td>
-<td>Yes</td>
-<td>The list of IDs of users whose nicknames are to be changed.</td>
+<td>是</td>
+<td>需要被设置昵称的用户列表。</td>
 </tr>
 <tr data-row-level="4-1">
-<td>└UserId</td>
+<td>UserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The user ID.</td>
+<td>是</td>
+<td>用户 ID。</td>
 </tr>
 <tr data-row-level="4-2">
-<td>└Nickname</td>
+<td>Nickname</td>
 <td>String</td>
-<td>Yes</td>
-<td>The nickname of the user in the group.</td>
+<td>是</td>
+<td>用户在群组的昵称。</td>
 </tr>
 </tbody></table>
+
 <Note title="Note">
 
-
-The \`FromUserId\`, \`GroupId\`, \`UserIds\`, and \`Nickname\` parameters can contain only digits, letters, and the following characters: '!', '#', '$', '%', '\&', '(', ')', '+', '', ':', ';', '\<', '=', '.', '>', '?', '@', '[', ']', '\^', '_', '{', '}', '|', '~'.
-
+FromUserId、GroupId、UserIds 和 Nickname 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，''，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，'{'，'}'，'|'，'~'"}。
 </Note>
 
-## Sample request
+## 请求示例
 
-- Request URL:
-  
-  ```json
-  https://zim-api.zego.im/?Action=SetGroupMembersNickname
-  &<Common request parameters>
-  ```
+- 请求地址 URL：
 
-- Request body
-  
-  ```json
-  {
-      "FromUserId": "zego_user",
-      "GroupId": "groupA",
-      "UserIds": [
-          {
-              "UserId": "usera",
-              "Nickname": "nicknamea"
-          },
-          {
-              "UserId": "userb",
-              "Nickname": "nicknameb"
-          }
-      ]
-  }
-  ```
+```json
+https://zim-api.zego.im/?Action=SetGroupMembersNickname
+&<公共请求参数>
+```
+- 请求消息体
 
-## Response parameters
+```json
+{
+    "FromUserId": "zego_user",
+    "GroupId": "groupA",
+    "UserIds": [
+        {
+            "UserId": "usera",
+            "Nickname": "nicknamea"
+        },
+        {
+            "UserId": "userb",
+            "Nickname": "nicknameb"
+        }
+    ]
+}
+```
+
+## 响应参数
 
 <table class="collapsible-table" >
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.</td>
+<td>返回码。</td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the operation result.</td>
+<td>操作结果描述。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="7" data-row-child="true">
 <td>ErrorUsers</td>
 <td>Array of Object</td>
 <td>
-The list of failed results.
-<ul>
-<li>
-If `Code` is `0`:
-<ul>
-<li>If `ErrorUsers` is empty, the nicknames of all specified users are successfully changed.</li>
-<li>If `ErrorUsers` is not empty, the nicknames of some specified users fail to be changed. In this case, see `SubCode`.</li>
-</ul>
+昵称设置失败用户信息。
+<ul><li>
+Code 为 0：
+<ul><li>ErrorUsers 为空，全部指定用户群昵称设置成功。</li><li>ErrorUsers 不为空，表示部分指定用户群昵称设置失败，请参考 SubCode 处理。</li></ul>
 </li>
 <li>
-If `Code` is not `0`:
-<ul>
-<li>If `ErrorUsers` is empty, one or more parameters are invalid, the QPS limit is exceeded, or a system error occurs.</li>
-<li>If `ErrorUsers` is not empty, the nicknames of all specified users fail to be changed.</li>
-</ul>
+Code 不为 0：
+<ul><li>ErrorUsers 为空，表示参数错误、接口频率限制、系统错误。</li><li>ErrorUsers 不为空，表示全部指定用户群昵称设置失败。</li></ul>
 </li>
 </ul></td>
 </tr>
 <tr data-row-level="7-1">
-<td>└UserId</td>
+<td>UserId</td>
 <td>String</td>
-<td>The ID of the user whose nickname fails to be changed.</td>
+<td>失败用户 ID。</td>
 </tr>
 <tr data-row-level="7-2">
-<td>└SubCode</td>
+<td>SubCode</td>
 <td>Number</td>
-<td>The code returned when the request fails.</td>
+<td>昵称设置失败的具体返回码。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -195,39 +180,39 @@ If `Code` is not `0`:
 }
 ```
 
-## Return codes
+## 返回码
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter.</td>
+<td>输入参数错误。</td>
+<td>请检查输入参数。</td>
 </tr>
 <tr>
 <td>660000011</td>
-<td>Too many users are included in the list.</td>
-<td>Check the number of users.</td>
+<td>用户个数超过限制。</td>
+<td>请检查输入的用户列表。</td>
 </tr>
 <tr>
 <td>660300006</td>
-<td>The QPS limit is exceeded.</td>
-<td>Please try again later, or check the QPS limit.</td>
+<td>频率限制</td>
+<td>请稍后再试，或了解相关频率限制。</td>
 </tr>
 <tr>
 <td>660500002</td>
-<td>The operator is not registered.</td>
-<td>Register the operator.</td>
+<td>操作者用户未注册。</td>
+<td>请让操作者先注册 ZIM 服务。</td>
 </tr>
 <tr>
 <td>660600001</td>
-<td>The group chat does not exist.</td>
-<td>Check whether the value of the `GroupID` parameter is valid.</td>
+<td>群组不存在。</td>
+<td>请确认输入的 GroupID 是否正确。</td>
 </tr>
 </tbody></table>
