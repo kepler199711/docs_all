@@ -1,65 +1,141 @@
-# Accessing Server APIs
+# 调用方式
+---
 
-## Request structure
+## 1 请求结构
 
 
-### Service URL format
+### 1.1 服务地址
 
-Developers need to specify the corresponding access address based on the geographical region of their server when sending requests to the ZEGOCLOUD server.
+开发者需要根据自己的服务端所在地理区域，指定相应的接入地址，向 ZEGO 服务端发送请求。
+
 <Warning title="Warning">
-To ensure the quality of your business service access, please prioritize using the domain name of the geographical region where your server is located as the access address when sending requests to the ZEGOCLOUD server.
+
+为保障您的业务服务接入质量，请优先使用您的服务端所在地理区域的域名，作为接入地址，向 ZEGO 服务端发送请求。  
 </Warning>
 
-ZEGOCLOUD supports request access from the following geographical regions:
+ZEGO 支持如下地理区域的请求接入：
 
-| Region | API base URL |
-| :-- | :-- | 
-| Mainland China (Shanghai) | \$\{PRODUCT}-api-sha.zego.im |
-| Hong Kong, Macau and Taiwan (Hong Kong) | \$\{PRODUCT}-api-hkg.zego.im |
-| Europe (Frankfurt) | \$\{PRODUCT}-api-fra.zego.im |
-| Western United States (California) | \$\{PRODUCT}-api-lax.zego.im |
-| Asia-Pacific (Mumbai) | \$\{PRODUCT}-api-bom.zego.im |
-| Southeast Asia (Singapore) | \$\{PRODUCT}-api-sgp.zego.im |
-| Unified access address (regardless of region) | \$\{PRODUCT}-api.zego.im |
+<table>
+<tbody><tr>
+<th>地理区域</th>
+<th>接⼊地址</th>
+</tr>
+<tr>
+<td>中国⼤陆（上海）</td>
+<td>\$\{PRODUCT}-api-sha.zego.im</td>
+</tr>
+<tr>
+<td>港澳台（⾹港）</td>
+<td>\$\{PRODUCT}-api-hkg.zego.im</td>
+</tr>
+<tr>
+<td>欧洲（法兰克福）</td>
+<td>\$\{PRODUCT}-api-fra.zego.im</td>
+</tr>
+<tr>
+<td>美⻄（加州）</td>
+<td>\$\{PRODUCT}-api-lax.zego.im</td>
+</tr>
+<tr>
+<td>亚太（孟买）</td>
+<td>\$\{PRODUCT}-api-bom.zego.im</td>
+</tr>
+<tr>
+<td>东南亚（新加坡）</td>
+<td>\$\{PRODUCT}-api-sgp.zego.im</td>
+</tr>
+<tr>
+<td>统一接入地址（不区分区域）</td>
+<td>\$\{PRODUCT}-api.zego.im</td>
+</tr>
+</tbody></table>
 
 
 
-In this context, `PRODUCT` refers to different services provided by ZEGOCLOUD, and in this particular product, it is `zim`, for instance, `zim-api.zego.im`. 
+
+其中，`${PRODUCT}` 为 ZEGO 提供的不同产品的不同服务，对应如下：
+
+| 产品 | \$\{PRODUCT} 值 | 接入域名 |
+|-|-|-|
+| 即时通讯 | zim | zim-api.zego.im |
+| 鉴权（用于语音组件） | auth | auth-api.zego.im |
 
 
-### Communication protocol
+### 1.2 通信协议
 
-For secure communications, all the Server APIs must be accessed via HTTPS requests.
+ZEGO 服务端 API 的所有接口均通过 HTTPS 进行通信，提供安全的通信服务。
 
-### Request method
+### 1.3 请求方法
 
-The Server APIs support the following HTTP request methods:
+ZEGO 服务端 API 支持以下 HTTP 请求方法：
 
 - GET
 - POST
 
+
 <Note title="Note">
-For a GET request, all request parameters (including public parameters and business-related parameters) should be placed in the Query. For a POST request,  special and complex parameters can be placed in the Request Body.
+
+所有请求参数（包括公共参数和业务参数）统⼀放在 Query，使⽤ GET 请求方法。特殊复杂的 API 参数放在 Body，使用 POST 请求方法。
 </Note>
 
 
-## Public parameters
-
-### Public request parameters 
-
-Public request parameters are the parameters that are required for every API request. 
+## 2 公共参数
 
 
-| Parameter | Type | Required | Description |
-| :-- | :-- | :-- | :-- | 
-| AppId | Uint32 | Yes | The unique Application ID assigned to your project by ZEGO, which can be obtained from the <a target="_blank" href="https://console.zegocloud.com">ZEGOCLOUD Admin Console</a>. |
-| Signature | String | Yes | The API request signature. Refer to <a href="#3">Signing the requests</a> for how to generate an API request signature. |
-| SignatureNonce | String | Yes | A random string. |
-| SignatureVersion | String | Yes | The version of the signature. Default value: 2.0. |
-| Timestamp | Int64 | Yes |
+本节介绍了开发者调用 ZEGO 服务端 API 时使用的公共参数，包含了公共请求参数和公共返回参数。
+
+### 2.1 公共请求参数
+
+公共请求参数是每个接口都需要使用到的请求参数。
+
+<table>
+<thead>
+  <tr>
+    <th>参数</th>
+    <th>类型</th>
+    <th>是否必选</th>
+    <th>描述</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>AppId</td>
+    <td>Uint32</td>
+    <td>是</td>
+    <td>AppId，ZEGO 分配的用户唯一凭证。</td>
+  </tr>
+  <tr>
+    <td>Signature</td>
+    <td>String</td>
+    <td>是</td>
+    <td>签名，签名的生成请参考 <a href="#3-签名机制">3 签名机制</a>。</td>
+  </tr>
+  <tr>
+    <td>SignatureNonce</td>
+    <td>String</td>
+    <td>是</td>
+    <td>随机字符串。</td>
+  </tr>
+  <tr>
+    <td>SignatureVersion</td>
+    <td>String</td>
+    <td>是</td>
+    <td>签名版本号，默认值为 2.0。</td>
+  </tr>
+  <tr>
+    <td>Timestamp</td>
+    <td>Int64</td>
+    <td>是</td>
+    <td>Unix 时间戳，单位为秒。最多允许 10 分钟的误差。</td>
+  </tr>
+</tbody>
+</table>
 
 
-```bash title="Sample request"
+
+请求示例：
+
+```
 https://zim-api.zego.im/?Action=QueryUserOnlineState
 &AppId=1234567890
 &Timestamp=1234567890
@@ -70,22 +146,43 @@ https://zim-api.zego.im/?Action=QueryUserOnlineState
 ```
 
 
-### Public response parameters
+### 2.2 公共返回参数
 
-All responses to API requests are returned in a unified format, with the returned data in JSON format.
+API 返回结果采用统一格式，返回的数据格式为 JSON。
 
-The following public response parameters will be included in the response to every request, regardless of whether the request is successful.
+每次调用接口，无论成功与否，都会返回公共参数。
 
-| Parameter | Type | Description |
-| :-- | :-- | :-- | 
-| Code | Number | Return code. |
-| Message | String | Request result description. |
-| RequestId | String | Request ID. |
+<table>
+<thead>
+  <tr>
+    <th>参数</th>
+    <th>类型</th>
+    <th>描述</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Code</td>
+    <td>Number</td>
+    <td>返回码。</td>
+  </tr>
+  <tr>
+    <td>Message</td>
+    <td>String</td>
+    <td>请求结果的说明信息。</td>
+  </tr>
+  <tr>
+    <td>RequestId</td>
+    <td>String</td>
+    <td>请求 ID。</td>
+  </tr>
+</tbody>
+</table>
 
 
+返回示例：
 
-
-```json title="Sample response"
+```json
 {
     "Code": 0,
     "Message": "",
@@ -94,51 +191,85 @@ The following public response parameters will be included in the response to eve
 }
 ```
 
-## Signing the requests
 
 
-To ensure secure API calls, the ZEGOCLOUD server authenticates every API request, which means a request signature must be included in every API request.
+## 3 签名机制
+
+
+为保证 API 的安全调用，ZEGO 服务端会对每个 API 的访问请求进行身份验证。开发者在调用 API 时，都需要在请求中包含签名 Signature 信息。
 
 <Warning title="Warning">
-A new signature needs to be generated for every API request.  
+    
+每次调用接口都需要生成新的签名。  
 </Warning>
 
-### Get the AppId and Server Secret Key
+### 3.1 密钥获取
 
-To generate a request signature, you will need to use the **AppId** and **ServerSecret** assigned to your project by ZEGOCLOUD. The **AppId** is used as the identifier of the request sender, and **ServerSecret** is the secret key to generate the signature string on the request sender side and verify the signature on the ZEGOCLOUD server. To ensure system security, please keep this information strictly confidential.
+Signature 通过使用 AppID 和 ServerSecret 进行对称加密的方法来验证请求的发送者身份。AppID 用于标识访问者的身份，ServerSecret 用于加密签名字符串和服务器验证签名字符串的密钥，必须严格保密，防止泄漏。
 
-You can find the **AppId** and **ServerSecret** of your project in the [ZEGOCLOUD Admin Console](https://console.zegocloud.com).
+请联系 ZEGO 技术支持，申请需要接入 SDK 服务所需的 AppID 和 ServerSecret。
 
-### Generate a signature
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/server_v2/appid.png" />
+</Frame>
 
-#### Parameters required to generate a signature
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/server_v2/server.png" />
+</Frame>
 
-| Parameter | Description |
-| :-- | :-- | 
-| AppId | Application ID. |
-| SignatureNonce | A random string. |
-| ServerSecret | Server secret key. |
-| Timestamp | Unix timestamp of the current time, in seconds. A maximum error of 10 minutes is allowed. |
+
+### 3.2 签名生成
+
+1. 签名参数说明
+
+<table>
+<thead>
+  <tr>
+    <th>参数</th>
+    <th>含义</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>AppId</td>
+    <td>应用 ID。公共参数里的AppId，请联系 ZEGO 技术支持获取。</td>
+  </tr>
+  <tr>
+    <td>SignatureNonce</td>
+    <td>随机字符串。公共参数里的 SignatureNonce，生成算法可参考下方签名示例。</td>
+  </tr>
+  <tr>
+    <td>ServerSecret</td>
+    <td>应⽤密钥，请联系 ZEGO 技术支持获取。</td>
+  </tr>
+  <tr>
+    <td>Timestamp</td>
+    <td>当前 Unix 时间戳，单位为秒。生成算法可参考下方签名示例，最多允许 10 分钟的误差。</td>
+  </tr>
+</tbody>
+</table>
 
 
 <Note title="Note">
-The values of the `SignatureNonce` and `Timestamp` parameters used to generate the signature must be consistent with those of the public parameters.
+
+计算签名所使用的 SignatureNonce 和 Timestamp 参数取值，需要和公共参数中的 SignatureNonce 和 Timestamp 参数取值保持一致。
 </Note>
 
-#### Signature algorithm
+2. 签名生成算法
 
 Signature = md5(AppId + SignatureNonce + ServerSecret + Timestamp)
 
-#### Format of the Signature string
+3. 签名字符串格式
 
-The Signature is a hex string of 32 characters in lower case.
+签名采⽤ hex 编码（⼩写），⻓度为 32 个字符。
 
+### 3.3 签名示例
 
-### Signature sample code
+ZEGO 提供多种编程语言的签名示例代码，开发者可根据实际情况进行参考。
 
-ZEGOCLOUD provides sample code in various programming languages for generating the signature.
+<details class="zg-primary">
+    <summary>Go 签名示例</summary>
 
-<Accordion title="Signature sample code in Go" defaultOpen="false">
 ```go
 import (
    "crypto/md5"
@@ -156,12 +287,12 @@ func GenerateSignature(appId uint32, signatureNonce string, serverSecret string,
    return hex.EncodeToString(h.Sum(nil))
 }
 func main() {
-   /*Generate hexadecimal random string (16 bits)*/
+   /*生成16进制随机字符串(16位)*/
    nonceByte := make([]byte, 8)
    rand.Read(nonceByte)
    signatureNonce := hex.EncodeToString(nonceByte)
    log.Printf(signatureNonce)
-   appId := 12345       // use your appId and serverSecret
+   appId := 12345       //使用你的appId和serverSecret
    serverSecret := "9193cc662a4c0ec135ec71fb57194b38"
    timestamp := time.Now().Unix()
    /* appId:12345
@@ -173,9 +304,12 @@ func main() {
    log.Printf("signature:%v", GenerateSignature(uint32(appId), signatureNonce, serverSecret, timestamp))
 }
 ```
-</Accordion>
 
-<Accordion title="Signature sample code in Python" defaultOpen="false">
+</details>
+
+<details class="zg-primary">
+    <summary>Python 签名示例</summary>
+
 ```python
 # -*- coding: UTF-8 -*-
 import secrets
@@ -191,34 +325,37 @@ def GenerateSignature(appId, signatureNonce, serverSecret, timestamp):
     return signature
 
 def main():
-    #Generate hexadecimal random string (16 bits)
+    #生成16进制随机字符串(16位)
     signatureNonce = secrets.token_hex(8)
 
-    #Use your appId and serverSecret
+    #使用你的appId和serverSecret
     appId = 12345
     serverSecret = "9193cc662a4c0ec135ec71fb57194b38"
-    #Get 10 digit unix timestamp
+    #获得10位unix时间戳
     timestamp = int(time.time())
     print(GenerateSignature(appId,signatureNonce,serverSecret,timestamp))
 
 if __name__ == '__main__':
     main()
 ```
-</Accordion>
 
-<Accordion title="Signature sample code in Java" defaultOpen="false">
+</details>
+
+<details class="zg-primary">
+    <summary>Java 签名示例</summary>
+
 ```java
-import java.security.NoSuchAlgorithmException;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
-public class md5{
+public class Md5{
     /**
-     * byte array to hexadecimal
-     * @param bytes The byte array that needs to be converted
-     * @return  Converted Hex string
+     * 字节数组转16进制
+     * @param bytes 需要转换的byte数组
+     * @return  转换后的Hex字符串
      */
     public static String bytesToHex(byte[] bytes) {
         StringBuffer md5str = new StringBuffer();
-        //Replace each byte of the array into hexadecimal and connect it to an md5 string
+        //把数组每一字节换成16进制连成md5字符串
         int digital;
         for (int i = 0; i < bytes.length; i++) {
             digital = bytes[i];
@@ -237,11 +374,11 @@ public class md5{
         String str = String.valueOf(appId) + signatureNonce + serverSecret + String.valueOf(timestamp);
         String signature = "";
         try{
-            //Create an object that provides the information digest algorithm, initialized to the md5 algorithm object
+            //创建一个提供信息摘要算法的对象，初始化为md5算法对象
             MessageDigest md = MessageDigest.getInstance("MD5");
-            // get byte array after calculation
+            //计算后获得字节数组
             byte[] bytes = md.digest(str.getBytes("utf-8"));
-            //Replace each byte of the array into hexadecimal and connect it to an md5 string
+            //把数组每一字节换成16进制连成md5字符串
             signature = bytesToHex(bytes);
         }catch (Exception e) {
             e.printStackTrace();
@@ -251,27 +388,27 @@ public class md5{
 
 
     public static void main(String[] args){
-        //Generate hexadecimal random string (16 bits)
+        //生成16进制随机字符串(16位)
         byte[] bytes = new byte[8];
-        SecureRandom sr = null;
-        //Use SecureRandom to obtain a high-strength secure random number generator
-        try{
-            sr = SecureRandom.getInstanceStrong();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+
+        //使用SecureRandom获取高强度安全随机数生成器
+        SecureRandom sr = new SecureRandom();
+
         sr.nextBytes(bytes);
         String signatureNonce = bytesToHex(bytes);
-        long appId = 12345L;       //Use your appId and serverSecret, add uppercase L or lowercase l after the number to indicate long type
+        long appId = 12345L;       //使用你的appId和serverSecret，数字后要添加大写L或小写l表示long类型
         String serverSecret = "9193cc662a4c0ec135ec71fb57194b38";
         long timestamp = System.currentTimeMillis() / 1000L;
         System.out.println(GenerateSignature(appId,signatureNonce,serverSecret,timestamp));
     }
 }
 ```
-</Accordion>
 
-<Accordion title="Signature sample code in PHP" defaultOpen="false">
+</details>
+
+<details class="zg-primary">
+    <summary>PHP 签名示例</summary>
+
 ```php
 <?php
 function GenerateSignature($appId, $signatureNonce, $serverSecret, $timestamp)
@@ -281,9 +418,9 @@ function GenerateSignature($appId, $signatureNonce, $serverSecret, $timestamp)
     return $signature;
 }
 
-//Generate hexadecimal random string (16 bits)
+//生成16进制随机字符串(16位)
 $signatureNonce = bin2hex(random_bytes(8));
-// use your appId and serverSecret
+//使用你的appId和serverSecret
 $appId = 12345;
 $serverSecret = "9193cc662a4c0ec135ec71fb57194b38";
 $timestamp = time();
@@ -291,35 +428,39 @@ $signature = GenerateSignature($appId, $signatureNonce, $serverSecret, $timestam
 echo $signature;
 ?>
 ```
-</Accordion>
 
-<Accordion title="Signature sample code in Node.js" defaultOpen="false">
+</details>
+
+
+<details class="zg-primary">
+    <summary>Node.js 签名示例</summary>
+
 ```javascript
 const crypto = require('crypto'); 
 //Signature=md5(AppId + SignatureNonce + ServerSecret + Timestamp)
 function GenerateUASignature(appId, signatureNonce, serverSecret, timeStamp){
-    const hash = crypto.createHash('md5'); / / Specify the use of the MD5 algorithm in the hash algorithm
+    const hash = crypto.createHash('md5'); //规定使用哈希算法中的MD5算法
     var str = appId + signatureNonce + serverSecret + timeStamp;
     hash.update(str);
-    //hash.digest('hex') indicates that the output format is hexadecimal
+    //hash.digest('hex')表示输出的格式为16进制
     return hash.digest('hex');
 }
 
 var signatureNonce = crypto.randomBytes(8).toString('hex');
-// use your appId and serverSecret
+//使用你的appId和serverSecret
 var appId = 12345;
 var serverSecret = "9193cc662a4c0ec135ec71fb57194b38";
 var timeStamp = Math.round(Date.now()/1000);
 console.log(GenerateUASignature(appId, signatureNonce, serverSecret, timeStamp));
 ```
-</Accordion>
 
+</details>
 
-### Signing failures
+### 3.4 签名失败
 
-When a signature verification fails, an error code will be returned.
+存在以下签名失败的返回码，请开发者根据实际情况处理。
 
-| return code | description |
+| 返回码 | 说明 |
 | --- | --- |
-| 100000004 | Signature expired. |
-| 100000005 | Invalid signature. |
+| 100000004 | 签名过期。 |
+| 100000005 | 签名错误。 |
