@@ -1,56 +1,62 @@
----
-articleID: 15474
----
 
-# Callback on call invitation canceled
+# 呼叫取消回调
+
 - - -
 
-## Overview
+## 描述
 
-When the following situations occur (which can be divided into two types), your server can receive a callback on the call invitation cancellation from the ZIM server, in order to determine the call status:
-- Cancelled by caller:
-    - The caller cancels the call.
-    - After the initialization of the call invitation and before its timeout, no callee accepts the invitation, and the caller logs out.
-    - After the initialization of the call invitation and before its timeout, no callee accepts the invitation, and the caller goes offline due to heartbeat timeout.
--  Cancelled by timeout:
-    - From the initialization of the call invitation to its timeout, no callee responds to the invitation, and the caller is still online.  
+当出现以下情况（可分为两类）时，业务后台可以接收 ZIM 服务端的呼叫取消回调，用于确定呼叫状态：
+- 主动取消：
+    - 呼叫发起用户主动取消呼叫。
+    - 在呼叫邀请成功创建后至其超时前，没有任何呼叫对象接受，发起用户主动登出。
+    - 在呼叫邀请成功创建后至其超时前，没有任何呼叫对象接受，发起用户因心跳超时导致掉线。
+- 超时取消：
+    - 在呼叫邀请成功创建后至其超时时，没有任何呼叫对象响应，发起用户在线。
+
+        <Note title="Note">
+
+        如果在呼叫成功创建后至呼叫超时时，没有任何呼叫对象响应，发起用户掉线，则会触发 [呼叫超时回调](./Call%20invitation%20timed%20out.mdx)。
+        </Note>
+
+
+## 回调说明
+
+- 请求方法：POST。
 
 <Note title="Note">
 
-From the initialization of the call invitation to its timeout, if no callee responds to the invitation, and the caller is still offline, it will trigger the   
-
-If after the call is successfully created and before the call times out, if no call recipient responds and the calling user goes offline, it will trigger the [callback on call invitation timed out](./Call%20invitation%20timed%20out.mdx).
+- 回调数据需要 UrlDecode 解码。
+- 使用 POST 请求方法传递参数时：
+  - Body 中的参数直接传 JsonObject 格式即可，无需序列化为 String 格式。
+  - Headers 中，设置 “Content-type” 为 “application/json”。
 </Note>
 
-## Callback description
+- 请求地址：请在 [ZEGO 控制台](https://console.zego.im/) 上配置回调地址，配置流程请参考控制台文档 [ZIM 相关回调配置](https://doc-zh.zego.im/article/17223)。
 
-- Request method: POST.
-@@@Server_API2_callback_intro_1@@@
-- Request URL: Configure the callback URL in the [ZEGOCLOUD console](https://console.zegocloud.com/account/login).
-- Protocol: HTTPS/HTTP. HTTPS is recommended.
-## Callback parameters
+- 传输协议：HTTPS/HTTP，建议使用 HTTPS。
 
-| Parameter | Type | Description |
+## 回调参数
+
+| 参数 |	类型 | 说明 |
 | -- | -- | -- |
-| appid | String | The unique ID of an app. |
-| event | String | The callback event. The return value is `call_create`. |
-| nonce | String | A random number. |
-| signature | String | The verification string. For more information, see [Authenticating server-to-server callbacks](./Authenticating%20server-to-server%20callbacks.mdx). |	
-| timestamp | Int | The Unix timestamp of the server. |
-| call_id | String | The ID of the caller. |	
-| user_ids | Array | 	The list of IDs of users to be called.<Note title="Note"><p>When a call is cancelled and the called party logs out, the `user_ids` of the cancel callback will still return the identifier of the called party.</p></Note> |
-| reason | String | Reason for cancellation:<ul><li>Active cancellation（caller_cancel）</li><li>Timeout cancellation（timeout_cancel）</li></ul> |
-| payload | String | Call to cancel a filled extension field. |	
+| appid | String | APP 的唯一标识。 |
+| event | String | 回调事件，此回调返回值为 call_cancel。 |
+| nonce | String | 随机数。 |
+| signature | String | 检验串，详情见 [检验说明](./Authenticating%20server-to-server%20callbacks.mdx)。 |	
+| timestamp | Int | 服务器当前时间，Unix 时间戳。 |
+| call_id | String | 呼叫 ID。 |	
+| user_ids | Array | 呼叫对象用户 ID 列表。<Note title="Note"><p>当呼叫取消时，若呼叫对象登出了，呼叫取消回调的 `user_ids` 仍会返回该呼叫对象。</p></Note> |
+| reason | String | 取消的原因：<ul><li>主动取消（caller_cancel）</li><li>超时取消（timeout_cancel）</li></ul> |
+| payload | String | 呼叫取消填充的扩展字段。 |	
 
 <Note title="Note">
 
-It is recommended that you convert some parameters to Int for logical processing. Related fields include `appid` and `nonce`.
+建议您将部分参数转换为 Int 进行逻辑处理，相关字段包括 `appid` 和 `nonce`。
 </Note>
 
 
 
-## Sample code
-- POST/JSON
+## 数据示例
 
 ```json
 {
@@ -66,11 +72,9 @@ It is recommended that you convert some parameters to Int for logical processing
 }
 ```
 
-## Return codes
-If an HTTP status code 2XX (for example, 200) is returned, the callback succeeded. Otherwise, the callback failed.
+## 返回响应
+返回 HTTP status code 为 2XX （例如 200）表示成功，其他响应都表示失败。
 
-## Callback retry policy
+## 回调重试策略
 
-
-If the ZEGOCLOUD server does not receive a response, or the HTTP status code received by the ZEGOCLOUD server is not 2xx (such as 200), it will retry with intervals of 2s, 4s, 8s, 16s, and 32s respectively. If the retry still fails after an interval of 32s, it will no longer retry.
-
+如果 ZEGO 服务器没有收到响应，或收到的 HTTP status code 不为 2XX（例如 200），都会尝试重试，**最多进行 5 次重试**。每次重试请求与**上一次请求**的间隔时间分别为 2s、4s、8s、16s、32s。若第 5 次重试后仍然失败，将不再重试，该回调丢失。

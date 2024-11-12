@@ -1,12 +1,12 @@
-# Reject a call invitation
+# 拒绝呼叫邀请
 
 - - -
 
-## Overview
+## 描述
 
-This interface is used to reject a call invitation for a user.
+通过该接口可以为用户拒绝呼叫邀请。
 
-After the user rejects the invitation, other users who are in the call will receive a notification of the user's state change through the following ZIM SDK callback interface:
+用户拒绝邀请后，通过以下 ZIM SDK 的回调接口，其他处于呼叫中的用户会收到呼叫用户状态变更的通知：
 
 <table>
 <tbody><tr>
@@ -14,115 +14,115 @@ After the user rejects the invitation, other users who are in the call will rece
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
-</tr>
-<tr>
-<td><a href="/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id" rel="noreferrer noopenner">callUserStateChanged</a></td>
-<td><a href="/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-call-user-state-changed" rel="noreferrer noopenner">onCallUserStateChanged</a></td>
-<td><a href="/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id" rel="noreferrer noopenner">callUserStateChanged</a></td>
-<td><a href="/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-call-user-state-changed" rel="noreferrer noopenner">onCallUserStateChanged</a></td>
-</tr>
-<tr>
 <th>Web</th>
+</tr>
+<tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id" rel="noreferrer noopenner">callUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-call-user-state-changed" rel="noreferrer noopenner">onCallUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-call-user-state-changed-call-id" rel="noreferrer noopenner">callUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-call-user-state-changed" rel="noreferrer noopenner">onCallUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#call-user-state-changed" rel="noreferrer noopenner">callUserStateChanged</a></td>
+</tr>
+<tr>
+<th>小程序</th>
 <th>Flutter</th>
 <th>Unity3D</th>
+<th>uni-app</th>
 <th>React Native</th>
 </tr>
 <tr>
-<td><a href="/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#call-user-state-changed" rel="noreferrer noopenner">callUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#call-user-state-changed" rel="noreferrer noopenner">callUserStateChanged</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onCallUserStateChanged.html" rel="noreferrer noopenner">onCallUserStateChanged</a></td>
-<td><a href="/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-call-user-state-changed" rel="noreferrer noopenner">OnCallUserStateChanged</a></td>
-<td><a href="/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#call-user-state-changed" rel="noreferrer noopenner">callUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-call-user-state-changed" rel="noreferrer noopenner">OnCallUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#call-user-state-changed" rel="noreferrer noopenner">callUserStateChanged</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#call-user-state-changed" rel="noreferrer noopenner">callUserStateChanged</a></td>
 </tr>
 </tbody></table>
 
 
 
+## 接口原型
 
+- 请求方法：GET
+- 请求地址：`https://zim-api.zego.im/?Action=CallReject`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒
 
+## 请求参数
 
-
-
-## Request method and endpoint
-
-- Request method: GET
-- Request endpoint: https://zim-api.zego.im/?Action=CallReject
-- Protocol: HTTPS
-- Rate limit: 20 times/second
-
-## Request parameters
-
-The following list only shows the request parameters for this interface and some public parameters. For a complete list of public parameters, please refer to [Accessing Server APIs - Public parameters](../Accessing%20Server%20APIs.mdx#public-parameters).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数\|_blank](https://doc-zh.zego.im/article/12250#2)。
 
 <table>
+
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The user with this ID (registered) to reject the invitation.</td>
+<td>是</td>
+<td>为此 ID（已注册）的用户拒绝邀请。</td>
 </tr>
 <tr data-row-level="3">
 <td>CallId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The call ID.</td>
+<td>是</td>
+<td>呼叫 ID。</td>
 </tr>
 <tr data-row-level="5">
 <td>ExtendedData</td>
 <td>String</td>
-<td>No</td>
-<td>Extended field with a maximum length of 2 KB.</td>
+<td>否</td>
+<td>扩展字段，长度上限为 2 KB。</td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-`FromUserId` only supports numbers, English characters, and {"'!', '#', '$', '%', '&', '(', ')', '+', '', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'"}.
+FromUserId 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，''，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，'{'，'}'，'|'，'~'"}。
 </Note>
 
 
-## Sample request
+## 请求示例
 
 ```json
 https://zim-api.zego.im/?Action=CallReject
 &FromUserId=user0
 &CallId=CallId
 &ExtendedData=ExtendedData
-&<Public parameters>
+&<公共请求参数>
 ```
 
-## Response parameters
+## 响应参数
 
 <table>
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.</td>
+<td>返回码。</td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the operation result.</td>
+<td>操作结果描述。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 </tbody></table>
 
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -132,49 +132,49 @@ https://zim-api.zego.im/?Action=CallReject
 }
 ```
 
-## Return codes
+## 返回码
 
-The following list only shows the return codes related to the business logic of the interface. For a complete list of return codes, please refer to [Return codes](../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](https://doc-zh.zego.im/article/12229)。
 
 <table>
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Please check the parameters.</td>
+<td>参数错误。</td>
+<td>请检查请求参数。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS exceeds the AppID level limit.</td>
-<td>Please try again later.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660500002</td>
-<td>The <code>FromUserId</code> is not registered.</td>
-<td>Register the user for ZIM service first.</td>
+<td>操作者用户未注册。</td>
+<td>请先让操作者用户注册 ZIM 服务。</td>
 </tr>
 <tr>
 <td>660900004</td>
-<td>Failed to obtain the call information.</td>
-<td>Please check if the call exists or try again later.</td>
+<td>获取呼叫信息异常</td>
+<td>请检查呼叫是否存在，或者稍后再试。</td>
 </tr>
 <tr>
 <td>660900005</td>
-<td>The call has ended and cannot be operated on.</td>
-<td>No action is required.</td>
+<td>呼叫已结束，无法对其进行操作。</td>
+<td>无需处理。</td>
 </tr>
 <tr>
 <td>660900006</td>
-<td>The call invitation has timed out and cannot be operated on.</td>
-<td>No action is required.</td>
+<td>呼叫邀请已超时，无法对其进行操作。</td>
+<td>无需处理。</td>
 </tr>
 <tr>
 <td>660900008</td>
-<td>The `FromUserId` is not invited to the call so that the operator cannot operate on it.</td>
-<td>No action is required.</td>
+<td>该呼叫没有邀请操作用户，无法对其进行操作。</td>
+<td>无需处理。</td>
 </tr>
 </tbody></table>

@@ -1,76 +1,173 @@
 
 
-# Callback on message sent
+# 消息发送后回调
 
 - - -
 
-## Description
+## 描述
 
-After the user sends a message to one-on-one chat, group chat, or room successfully or fails, the business server can receive the message sending callback from the In-app Chat server, and synchronize the message sent by the user to the business server in real time, and store it in the business server.
+用户发送单聊、群聊、房间消息成功或失败后，业务后台可以接收 ZIM 服务端的发送消息回调，将用户发送的消息实时同步至业务服务器，并存储于业务服务器。
 
 <Warning title="Warning">
 
-The supported message types for this callback are text messages, image messages, file messages, audio messages, video messages, and custom messages. command messages and barrage messages are not supported.
-
+此回调支持的消息类型为文本消息、图片消息、文件消息、音频消息、视频消息、自定义消息，不支持信令消息、弹幕消息。 
 </Warning>
 
-## Callback request
 
-- Request method: POST
-<Note title="Note">
+## 回调说明
 
-- The callback data needs to be decoded by UrlDecode.
-- When using the POST request method to pass parameters:
-  - The parameters in the body can be directly passed in the JsonObject format, without the need to serialize them into a string format.
-  - In the headers, set "Content-type" to "application/json".
-</Note>
-- Request endpoint: Contact ZEGOCLOUD Technical Support to configure the corresponding callback endpoint.
-
-- Transmission protocol: HTTPS/HTTP (HTTPS is recommended.)
-
-
-## Callback parameters
-
-| appid | String | A unique identifier for the App. |
-| :-- | :-- | :-- | 
-| event | String | Callback event, the return value of this callback is `send_msg`. |
-| nonce | String | Random number, used to calculate signature. |
-| signature | String | The verification string, see [Authenticating server-to-server callbacks](./Authenticating%20server-to-server%20callbacks.mdx) for details. |
-| timestamp | Int | The current server time in Unix timestamp format, in seconds. It is used to calculate the signature. |
-| from_user_id | String | Message sender ID. |
-| conv_type | Int | Target session type: <ul><li>0: One-on-one chat. </li><li>1: Room chat. </li><li>2: Group chat. </li></ul> |
-| conv_id | String | Target session ID.  <Note title="Note"> When you use the server to send a single chat message, this field is empty and "user_list" has a value. </Note> |
-| msg_type | Int | Message type: <ul><li>1: Text. </li><li>11: Images. </li><li>12: Files. </li><li>13: Audio. </li><li>14: Video. </li><li>200: Custom. </li></ul> |
-| sub_msg_type | Int | The specific custom type. The value is filled in when the user sends a custom message, and the value range is [0,200]. This parameter is meaningful only when msg_type is 200 (custom type). |
-| msg_body | String | Message content. <ul><li>When msg_type is 1 (text type) or 200 (custom type), msg_body is the message content passed in when sending a message, and you can directly read the message content. </li><li>When msg_type is 11, 12, 13, 14, that is, when the message is a media type, msg_body is a JSON string. Please use URLDecode to decode this JSON string, and parse this JSON string according to the multimedia message structure, and then obtain <a href="#msgbody-json-string-parsing-result-parameter-description">each field data</a> in the message. </li></ul> |
-| msg_id | String | Message ID, which can be used to determine the uniqueness of the message. <Warning title="Warning"><p>When sending single chat messages <strong>in batches</strong> through the server API, this field is empty. If you need to obtain the message ID at this time, please obtain it from "user_list". </p></Warning> |
-| msg_seq | Int | Message Seq, which can be used to withdraw messages. <Warning title="Warning"><p>When sending single chat messages <strong>in batches</strong> through the server API, this field is empty. If you need to obtain the message Seq at this time, please obtain it from "user_list". </p></Warning> |
-| msg_time | Int | The time when the server receives the message, Unix timestamp, in milliseconds (ms). |
-| send_result | Int | Message sending result. 0 means the sending is successful, and other integers are specific Error Codes, which means the sending failed, you can refer to <a href="../Return codes.mdx">return codes</a>for the cause and solution. |
-| user_list | Array of Object | This field will be included in the callback only when sending a single chat message through the server, which is used to return the message receiving user information in batches. <Note title="Note"><ul><li>When this field has a value, "conv_id" is empty. </li><li>If you have used this callback before January 5, 2024, you will find that this field is not included in the callback. If you need the callback to support this field, please contact ZEGOCLOUD Technical Support. </li></ul></Note> |
-| └user_id | String | Message receiving user. |
-| └msg_id | String | Message ID, which can be used to determine the uniqueness of the message. When the message fails to be sent, this field is empty. |
-| └msg_seq | Int | Message Seq, which can be used to withdraw the message. |
-
-
+- 请求方法：POST。
 
 <Note title="Note">
 
-We recommend that you convert some parameters to Int for logical processing. The relevant fields include `appid` and `nonce`.
+- 回调数据需要 UrlDecode 解码。
+- 使用 POST 请求方法传递参数时：
+  - Body 中的参数直接传 JsonObject 格式即可，无需序列化为 String 格式。
+  - Headers 中，设置 “Content-type” 为 “application/json”。
 </Note>
 
-#### msg_body JSON string parsing result parameter description
+- 请求地址：请在 [ZEGO 控制台](https://console.zego.im/) 上配置回调地址，配置流程请参考控制台文档 [ZIM 相关回调配置](https://doc-zh.zego.im/article/17223)。
 
-| Parameters | Type | Description|
+- 传输协议：HTTPS/HTTP，建议使用 HTTPS。
+
+## 回调参数
+
+<table class="collapsible-table" >
+<tbody><tr data-row-level="1">
+<th>公共参数</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+<tr data-row-level="2">
+<td>appid</td>
+<td>String</td>
+<td>App 的唯一标识。</td>
+</tr>
+<tr data-row-level="3">
+<td>event</td>
+<td>String</td>
+<td>回调事件，此回调返回值为 `send_msg`。</td>
+</tr>
+<tr data-row-level="4">
+<td>nonce</td>
+<td>String</td>
+<td>随机数，用于计算 signature。</td>
+</tr>
+<tr data-row-level="5">
+<td>signature</td>
+<td>String</td>
+<td>检验串，详情见 [检验说明](./Authenticating%20server-to-server%20callbacks.mdx)。</td>
+</tr>
+<tr data-row-level="6">
+<td>timestamp</td>
+<td>Int</td>
+<td>服务器当前时间，Unix 时间戳，单位为秒（s），用于计算 signature。</td>
+</tr>
+<tr data-row-level="7">
+<th>业务参数</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+<tr data-row-level="8">
+<td>from_user_id</td>
+<td>String</td>
+<td>消息发送者 ID。</td>
+</tr>
+<tr data-row-level="9">
+<td>conv_type</td>
+<td>Int</td>
+<td>目标会话类型：<ul><li>0：单聊。</li><li>1：房间。</li><li>2：群聊。</li></ul></td>
+</tr>
+<tr data-row-level="10">
+<td>conv_id</td>
+<td>String</td>
+<td>
+目标会话 ID。
+<Note title="Note">
+当开发者使用服务端发送单聊消息时，此字段为空，“user_list”有值。
+</Note>
+</td>
+</tr>
+<tr data-row-level="11">
+<td>msg_type</td>
+<td>Int</td>
+<td>消息类型：<ul><li>1：文本。</li><li>11：图片。</li><li>12：文档。</li><li>13：音频。</li><li>14：视频。</li><li>200：自定义。</li></ul></td>
+</tr>
+<tr data-row-level="12">
+<td>sub_msg_type</td>
+<td>Int</td>
+<td>具体的自定义类型。值由用户发送自定义消息时填写，取值范围为 [0,200]。只有当 msg_type 为 200（自定义类型）时，此参数才有意义。</td>
+</tr>
+<tr data-row-level="13">
+<td>msg_body</td>
+<td>String</td>
+<td>消息内容。<ul><li>消息由客户端发送时：<ul><li>当 msg_type 为 1（文本类型）或 200（自定义类型），msg_body 为发送消息时传入的消息内容，开发者可直接阅读消息内容。</li><li>当 msg_type 为 11、12、13、14，即消息为媒体类型时，msg_body 为 JSON 字符串。请使用 URLDecode 对此 JSON 字符串解码，并按照多媒体消息结构解析这个 JSON 字符串，进而获取消息中的 <a href="#msgbody-json-字符串解析结果参数说明">各个字段数据</a>。</li></ul></li><li>消息由服务端发送时，不论消息类型，本回调会直接透传发送消息时传入的内容。</li></ul></td>
+</tr>
+<tr data-row-level="14">
+<td>msg_id</td>
+<td>String</td>
+<td>消息 ID，可借此确定消息的唯一性。<Warning title="Warning"><p>通过服务端 API <strong>批量</strong>发送单聊消息时，此字段为空。此时如需获取消息 ID，请从“user_list”获取。</p></Warning></td>
+</tr>
+<tr data-row-level="15">
+<td>msg_seq</td>
+<td>Int</td>
+<td>消息 Seq，可用于撤回消息。<Warning title="Warning"><p>通过服务端 API <strong>批量</strong>发送单聊消息时，此字段为空。此时如需获取消息 Seq，请从“user_list”获取。</p></Warning></td>
+</tr>
+<tr data-row-level="16">
+<td>payload</td>
+<td>String</td>
+<td>消息扩展字段。</td>
+</tr>
+<tr data-row-level="17">
+<td>msg_time</td>
+<td>Int</td>
+<td>服务端收到消息的时间，Unix 时间戳，单位为毫秒（ms）。</td>
+</tr>
+<tr data-row-level="18">
+<td>send_result</td>
+<td>Int</td>
+<td>消息发送结果。0 表示发送成功，其他整数为具体错误码，表示发送失败，您可参考 <a href="https://doc-zh.zego.im/article/12229">全局返回码</a> 了解原因。</td>
+</tr>
+<tr data-row-level="19" data-row-child="true">
+<td>user_list</td>
+<td>Array of Object</td>
+<td>只有通过服务端发送单聊消息时，回调会包含此字段，用于批量返回消息接收用户信息。<Note title="Note"><p><ul><li>此字段有值时，“conv_id”为空。</li><li>如果您在 2024 年 1 月 5 日前使用过本回调，会发现回调中不包含此字段。如需回调支持此字段，请联系 ZEGO 技术支持。</li></ul></p></Note></td>
+</tr>
+<tr data-row-level="19-1">
+<td>user_id</td>
+<td>String</td>
+<td>消息接收用户。</td>
+</tr>
+<tr data-row-level="19-2">
+<td>msg_id</td>
+<td>String</td>
+<td>消息 ID，可借此确定消息的唯一性。消息发送失败时，此字段为空。</td>
+</tr>
+<tr data-row-level="19-3">
+<td>msg_seq</td>
+<td>Int</td>
+<td>消息 Seq，可用于撤回消息。</td>
+</tr>
+</tbody></table>
+
+
+<Note title="Note">
+
+建议您将部分参数转换为 Int 进行逻辑处理，相关字段包括 `appid` 和 `nonce`。
+</Note>
+
+#### msg_body JSON 字符串解析结果参数说明
+
+| 参数              | 类型     | 描述    |
 |-----------------|--------|-------|
-| md5 | String | The MD5 value of the file. |
-| file_name | String | File name. |
-| file_size | String | File size in bytes. |
-| download_url | String | Download URL. |
-| media_duration | String | Audio and Video duration, in seconds. |
+| md5             | String | 文件 MD5 值。   |
+| file_name       | String | 文件名称。  |
+| file_size       | String | 文件大小，单位为字节（B）。  |
+| download_url    | String | 下载地址。  |
+| media_duration  | String | 音视频时长，单位为秒（s）。 |
 
 
-## Callback example
+## 数据示例
 
 - POST/JSON
 
@@ -82,7 +179,7 @@ We recommend that you convert some parameters to Int for logical processing. The
     "signature": "signature",
     "timestamp": 1679553625,
     "from_user_id": "350176117361",
-    "conv_type": 2,
+    "conv_type": 0,
     "conv_id": "group1",
     "msg_type": 1,
     "msg_body": "msg_body",
@@ -90,15 +187,97 @@ We recommend that you convert some parameters to Int for logical processing. The
     "payload": "payload",
     "msg_time": 1679554146000,
     "send_result": 0,
-    "sub_msg_type": 0
+    "sub_msg_type": 0,
+    "user_list":[
+        {"user_id":"userid1","msg_id": "857639062792568822",},
+        {"user_id":"userid2","msg_id": "857639062792568833",}
+    ]
 }
 ```
 
-## Return response
+## 返回响应
 
-A status code of 2XX (such as 200) indicates success, and other responses indicate failure.
+收到回调后，如果您的服务器返回的 HTTP status code 为 2XX （例如 200），表示成功；返回其他，表示失败。
 
-## Callback retry strategy
+## 回调重试策略
 
-If the ZEGOCLOUD server does not receive a response, or the HTTP status code received by the ZEGOCLOUD server is not 2xx (such as 200), it will retry with intervals of 2s, 4s, 8s, 16s, and 32s respectively. If the retry still fails after an interval of 32s, it will no longer retry.
+如果 ZEGO 服务器没有收到响应，或收到的 HTTP status code 不为 2XX（例如 200），都会尝试重试，**最多进行 5 次重试**。每次重试请求与**上一次请求**的间隔时间分别为 2s、4s、8s、16s、32s。若第 5 次重试后仍然失败，将不再重试，该回调丢失。
 
+## send_result 说明
+
+以下仅列出了回调相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
+
+<table>
+<tbody><tr>
+<th>返回码</th>
+<th>描述</th>
+<th>可能原因</th>
+<th>处理建议</th>
+</tr>
+<tr>
+<td>660000002</td>
+<td>输入参数错误。</td>
+<td>输入的参数缺失或不合法。</td>
+<td>请检查输入的参数。</td>
+</tr>
+<tr>
+<td>660500002</td>
+<td>用户未注册。</td>
+<td>消息发送者未登录过 SDK。</td>
+<td>请用户先登录后再发送消息。</td>
+</tr>
+<tr>
+<td>660500004</td>
+<td>文本审核请求出错。</td>
+<td>文本审核请求出错。</td>
+<td>请联系 ZEGO 技术支持。</td>
+</tr>
+<tr>
+<td>660500005</td>
+<td>发送的文本消息没有通过审核。</td>
+<td>发送的文本消息没有通过审核。</td>
+<td>请勿发送该消息。</td>
+</tr>
+<tr>
+<td>660500006</td>
+<td>图片审核请求出错。</td>
+<td>图片审核请求出错。</td>
+<td>请联系 ZEGO 技术支持。</td>
+</tr>
+<tr>
+<td>660500007</td>
+<td>发送的图片消息没有通过审核。</td>
+<td>发送的图片消息没有通过审核。</td>
+<td>请勿发送该消息。</td>
+</tr>
+<tr>
+<td>660500009</td>
+<td>您的业务后台判断此消息应当“静默发送”。</td>
+<td>收到“消息发送前回调”后，您的业务后台返回了 `2`，此消息被静默发送。</td>
+<td>无需处理。</td>
+</tr>
+<tr>
+<td>660500010</td>
+<td>您的业务后台判断此消息应当“不发送”。</td>
+<td>收到“消息发送前回调”后，您的业务后台返回了 `3`，此消息被拒绝发送。</td>
+<td>无需处理。</td>
+</tr>
+<tr>
+<td>660600021</td>
+<td>发送消息参数错误。</td>
+<td>发送消息参数错误。</td>
+<td>请检查参数。</td>
+</tr>
+<tr>
+<td>660600022</td>
+<td>发送多媒体消息，获取重定向地址失败。</td>
+<td>发送多媒体消息，获取重定向地址失败。</td>
+<td>请联系 ZEGO 技术支持处理。</td>
+</tr>
+<tr>
+<td>660600023</td>
+<td>消息长度超过限制。</td>
+<td>消息长度超过限制。</td>
+<td>请缩小消息长度。</td>
+</tr>
+</tbody></table>

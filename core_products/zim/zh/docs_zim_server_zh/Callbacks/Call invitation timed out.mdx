@@ -1,55 +1,53 @@
 
-# Callback on call invitation timed out
+# 呼叫超时回调
 
 - - -
 
-## Description
+##  描述
 
-After the call is successfully created, your serve can receive a timeout callback on call invitation timeout from the ZIM server to determine the users who have timed out in the call under the following circumstances:
-- Within the timeout period configured in the ZIM server, the caller is online, and some of the callees have not responded.
-- Within the timeout period set when creating the call, the caller is online, and some of the callees have not responded.
-- When the call times out, the calling user goes offline and none of the called users respond.
-
-<Note title="Note">
-
-If none of the callees respond within the specified time and the caller is online, a [callback on call invitation canceled](./Call%20invitation%20canceled.mdx) will be triggered.
-</Note>
-
-## Callback description
-
-- Request method: POST
+在呼叫创建成功后，如果出现以下情况时，业务后台可以接收 ZIM 服务端的呼叫超时回调，用于确定呼叫超时用户：
+- 在后台配置的超时时间内，呼叫发起用户在线，**部分呼叫对象**一直未响应。
+- 在创建呼叫时设置的超时时间内，呼叫发起用户在线，**部分呼叫对象**一直未响应。
+- 在呼叫超时时，呼叫发起用户掉线，**全体呼叫对象**都未响应。
 
 <Note title="Note">
 
-- The callback data needs to be decoded by UrlDecode.
-- When using the POST request method to pass parameters:
-  - The parameters in the body can be directly passed in the JsonObject format, without the need to serialize them into a string format.
-  - In the headers, set "Content-type" to "application/json".
+如果**全体呼叫对象**都在规定时间内未响应，并且呼叫发起用户在线，会触发 [呼叫取消回调](./Call%20invitation%20canceled.mdx)。
 </Note>
 
+## 回调说明
 
-- Request endpoint: The corresponding callback endpoint in the [ZEGOCLOUD Admin Console](https://console.zegocloud.com). 
+- 请求方法：POST。
+<Note title="Note">
 
-- Protocol: HTTPS/HTTP (HTTPS is recommended.)
+- 回调数据需要 UrlDecode 解码。
+- 使用 POST 请求方法传递参数时：
+  - Body 中的参数直接传 JsonObject 格式即可，无需序列化为 String 格式。
+  - Headers 中，设置 “Content-type” 为 “application/json”。
+</Note>
 
-## Callback parameters
+- 请求地址：请在 [ZEGO 控制台](https://console.zego.im/) 上配置回调地址，配置流程请参考控制台文档 [ZIM 相关回调配置](https://doc-zh.zego.im/article/17223)。
 
-| Parameter | Type | Description |
+- 传输协议：HTTPS/HTTP，建议使用 HTTPS。
+
+## 回调参数
+
+| 参数 | 类型 | 说明 |
 | -- | -- | -- |
-| appid | String | Unique ID of App. |
-| event | String | Callback event, the return value of this callback is call_timeout. |
-| nonce | String | Random string. |
-| signature | String | The verification string, see [Authenticating server-to-server callbacks](./Authenticating%20server-to-server%20callbacks.mdx) for details. |
-| timestamp | Int | The current server time in Unix timestamp format. |
-| call_id | String | Call ID. |
-| user_ids | Array of String | List of user IDs not to answer. |
+| appid | String | APP 的唯一标识。 |
+| event | String | 回调事件，此回调返回值为 call_timeout。 |
+| nonce | String | 随机数。 |
+| signature | String | 检验串，详情见 [检验说明](./Authenticating%20server-to-server%20callbacks.mdx)。 |
+| timestamp | Int | 服务器当前时间，Unix 时间戳。 |
+| call_id | String | 呼叫 ID。 |
+| user_ids | Array of String | 不应答用户 ID 列表。 |
 
 <Note title="Note">
 
-We recommend that you convert some parameters to Int for logical processing. The relevant fields include `appid` and `nonce`.
+建议您将部分参数转换为 Int 进行逻辑处理，相关字段包括 `appid` 和 `nonce`。
 </Note>
 
-## Sample code
+## 数据示例
 
 ```json
 {
@@ -63,10 +61,9 @@ We recommend that you convert some parameters to Int for logical processing. The
 }
 ```
 
-## Return codes
+## 返回响应
+返回 HTTP status code 为 2XX （例如 200）表示成功，其他响应都表示失败。
 
-If an HTTP status code 2XX (for example, 200) is returned, the callback succeeded. Otherwise, the callback failed.
+## 回调重试策略
 
-## Callback retry policy
-
-If the ZEGOCLOUD server does not receive a response, or the HTTP status code received by the ZEGOCLOUD server is not 2xx (such as 200), it will retry with intervals of 2s, 4s, 8s, 16s, and 32s respectively. If the retry still fails after an interval of 32s, it will no longer retry.
+如果 ZEGO 服务器没有收到响应，或收到的 HTTP status code 不为 2XX（例如 200），都会尝试重试，**最多进行 5 次重试**。每次重试请求与**上一次请求**的间隔时间分别为 2s、4s、8s、16s、32s。若第 5 次重试后仍然失败，将不再重试，该回调丢失。
