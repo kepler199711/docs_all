@@ -39,7 +39,7 @@ After a message is sent, the client receives the notification in the following Z
 ## Request method and endpoint
 
 - Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=SendPeerMessage
+- Request URL: `https://zim-api.zego.im/?Action=SendPeerMessage`
 - Protocol: HTTPS
 - QPS limit: 20 calls per second
 
@@ -165,7 +165,7 @@ The following table describes only the operation-specific request parameters and
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.<div class="mk-hint">When you request to send messages to multiple users at a time, take note of the following items:<ul><li>If one or more messages are successfully sent, `0` is returned. For more information, see `ErrorList`.</li><li>If all messages fail to be sent, a corresponding code is returned. For more information, see <a href="https://docs.zegocloud.com/article/14024">Return codes</a>.</li></ul></div></td>
+<td>The return code.<div class="mk-hint">When you request to send messages to multiple users at a time, take note of the following items:<ul><li>If one or more messages are successfully sent, `0` is returned. For more information, see `ErrorList`.</li><li>If all messages fail to be sent, a corresponding code is returned. For more information, see [Return codes](./../Return%20codes.mdx).</li></ul></div></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>

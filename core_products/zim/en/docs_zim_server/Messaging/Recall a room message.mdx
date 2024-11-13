@@ -50,7 +50,7 @@ After a message is recalled, users in the room will receive the notification by 
 ## Request method and endpoint
 
 - Request method: POST
-- Request endpoint: https://zim-api.zego.im/?Action=RevokeRoomMessage
+- Request endpoint: `https://zim-api.zego.im/?Action=RevokeRoomMessage`
 - Transmission protocol: HTTPS
 - Rate limit: 20 requests/second
 
@@ -89,7 +89,7 @@ The following table describes only the operation-specific request parameters and
 <td>Number</td>
 <td>Yes</td>
 <td>The sequence of the message. Method for obtaining `MsgSeq`:&nbsp;
-<ul><li>If a group message is sent from the **client**, obtain `MsgSeq` by using the [Callback on message sent|_blank](!IM-zim_send_msg) operation.</li><li>If a group message is sent by using the server API [`SendRoomMessage`|_blank](!Server_APIs/send_Room_Message), obtain `MsgSeq` in the response data.</li></ul></td>
+<ul><li>If a group message is sent from the **client**, obtain `MsgSeq` by using the [Callback on message sent|_blank](./../Callbacks/Message%20sent.mdx) operation.</li><li>If a group message is sent by using the server API [`SendRoomMessage`|_blank](./Send%20room%20messages.mdx), obtain `MsgSeq` in the response data.</li></ul></td>
 </tr>
 <tr>
 <td>Payload</td>

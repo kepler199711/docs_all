@@ -13,6 +13,11 @@
           "type": "doc",
           "label": "Basic concepts",
           "id": "introduction/basic-concepts"
+        },
+        {
+          "type": "doc",
+          "label": "Pricing",
+          "id": "introduction/pricing"
         }
       ]
     },
@@ -89,6 +94,11 @@
               "type": "doc",
               "label": "Friend management",
               "id": "guides/users/friend-management"
+            },
+            {
+              "type": "doc",
+              "label": "Online Status Subscription",
+              "id": "guides/users/online-status-subscription"
             }
           ]
         },
