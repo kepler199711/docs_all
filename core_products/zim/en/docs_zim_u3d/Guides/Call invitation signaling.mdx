@@ -65,7 +65,10 @@ ZIM.GetInstance().onCallInvitationReceived = (ZIM zim,
 The following process shows how Client A cancels the call invitation to Client B:
 
 1. To cancel the outbound call, Client A needs to call the [CallCancel](@CallCancel) method.
-@@@call_invitation_cancelled@@@
+    <Note title="Note">
+
+    After a call invitation is successfully initiated and before it times out, if no callee accepts, and if the caller actively logs out or disconnects due to a heartbeat timeout, the call invitation will also be canceled.
+    </Note>
 2. Client B receives a notification through the callback [OnCallInvitationCancelled](@OnCallInvitationCancelled) when the call invitation is canceled.
 
 #### Parameter description
