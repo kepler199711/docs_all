@@ -95,25 +95,25 @@ The following table describes only the operation-specific request parameters and
 <td>The information included in the friend request, which cannot exceed 256 characters in length.</td>
 </tr>
 <tr data-row-level="4-5">
-<td>FriendAlias</td>
+<td>└FriendAlias</td>
 <td>String</td>
 <td>No</td>
 <td>The alias to be set for the target user, which cannot exceed 256 characters in length.</td>
 </tr>
 <tr data-row-level="4-6">
-<td>CreateTime</td>
+<td>└CreateTime</td>
 <td>Number</td>
 <td>No</td>
 <td>The time when the request was created. This parameter can be used to migrate the list of friends during data migration.<ul><li>If the value is set to `0`, the ZIM server uses the current time.</li><li>If the value is not set to `0`, this parameter needs to be a Unix timestamp in ms and cannot be later than the current time.</li></ul></td>
 </tr>
 <tr data-row-level="4-7">
-<td>UpdateTime</td>
+<td>└UpdateTime</td>
 <td>Number</td>
 <td>No</td>
 <td>The time when the request was updated. This parameter can be used to migrate the list of friends during data migration.<ul><li>If the value is set to `0`, the ZIM server uses the current time.</li><li>If the value is not set to `0`, this parameter needs to be a Unix timestamp in ms and cannot be later than the current time.</li></ul></td>
 </tr>
 <tr data-row-level="4-8" data-row-child="true">
-<td>Attributes</td>
+<td>└Attributes</td>
 <td>Array of Object</td>
 <td>No</td>
 <td>
@@ -123,13 +123,13 @@ The friend attributes. Up to five attributes are supported.
 </Note></td>
 </tr>
 <tr data-row-level="4-8-1">
-<td>└Key</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Key</td>
 <td>String</td>
 <td>Yes</td>
 <td>The key of a friend attribute. Valid values: `k0`, `k1`, `k2`, `k3`, and `k4`.</td>
 </tr>
 <tr data-row-level="4-8-2">
-<td>└Value</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Value</td>
 <td>String</td>
 <td>Yes</td>
 <td>The value of a friend attribute.</td>
