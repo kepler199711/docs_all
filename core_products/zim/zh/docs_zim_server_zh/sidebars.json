@@ -102,7 +102,7 @@
       "items": [
         {
           "type": "doc",
-          "label": "销毁放假",
+          "label": "销毁房间",
           "id": "room/destroy-the-room"
         },
         {

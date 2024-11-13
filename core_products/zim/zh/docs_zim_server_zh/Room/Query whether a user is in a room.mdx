@@ -1,133 +1,123 @@
-# Query whether a user is in a room
+# 查询用户是否在房间内
 
 - - -
 
+## 描述
 
-## Overview
+查询用户是否在指定房间内。默认支持批量查询至多 10 名用户，如需调整，请联系 ZEGO 技术支持。
 
-You can call this operation to query whether a user is in a specified room. By default, you can batch query up to 10 users. If you need a higher limit, contact ZEGOCLOUD technical support.
+## 接口原型
 
-## Operation prototype
+- 请求方法：GET
+- 请求地址： `https://zim-api.zego.im/?Action=QueryRoomMembers`
+- 传输协议：HTTPS
+- 调用频率限制：5 次/秒，房间级别限制。
 
-- Request method: GET
-- Request URL: https://zim-api.zego.im/?Action=QueryRoomMembers
-- Protocol: HTTPS
-- QPS limit: 5 calls per second, applicable to group chats only.
+## 请求参数
 
-## Request parameters
-
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic](../Accessing%20Server%20APIs.mdx#public-parameters).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
-
 <tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr>
 <td>UserId[]</td>
 <td>Array of String</td>
-<td>Yes</td>
-<td><p>The list of user IDs to be queried. By default, up to 10 user IDs can be queried at a time.</p><p>Example: UserId[]=a&amp;UserId[]=b&amp;UserId[]=c&amp;UserId[]=d</p></td>
+<td>是</td>
+<td><p>需要查询的用户 ID 列表，默认最多可查询 10 个用户 ID。</p><p>示例：UserId[]=a&UserId[]=b&UserId[]=c&UserId[]=d</p></td>
 </tr>
 <tr>
 <td>RoomId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The room ID.</td>
+<td>是</td>
+<td>房间 ID。</td>
 </tr>
 </tbody></table>
 
-<div class="mk-hint">
+<Note title="Note">
 
-The `UserId` parameter cannot exceed 32 bytes in length, and the `RoomID` parameter cannot exceed 128 bytes in length. Both parameters can contain only digits, letters, and the following characters: '!', '#', '$', '%', '\&', '(', ')', '+', '-', ':', ';', '\<', '=', '.', '>', '?', '@', '\[', ']', '\^', '\_', ' ', '{', '}', '\|', '~'.
+UserId 长度上限为 32 字节，RoomID 长度上限为 128 字节，均仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}。
+</Note>
 
-</div>
 
-## Sample request
+## 请求示例
 
 ```json
 https://zim-api.zego.im/?Action=QueryRoomMembers
 &UserId[]=a&UserId[]=b&UserId[]=c&UserId[]=d&RoomId=roomid
-&<Common request parameters>
+&<公共请求参数>
 ```
 
-## Response parameters
+## 响应参数
 
 <table class="collapsible-table" >
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.</td>
+<td>返回码。</td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the request result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5" data-row-child="true">
 <td>UserList</td>
 <td>Object</td>
-<td>The query result, that is, the list of users in the specified room.</td>
+<td>查询结果，即在指定房间的用户列表。</td>
 </tr>
 <tr data-row-level="5-1">
 <td>UserId</td>
 <td>String</td>
-<td>The IDs of users in the specified room.</td>
+<td>在指定房间的用户的 ID。</td>
 </tr>
 <tr data-row-level="5-2">
 <td>UserName</td>
 <td>String</td>
-<td>The names of users in the specified room.</td>
+<td>在指定房间的用户的名称。</td>
 </tr>
 <tr data-row-level="6" data-row-child="true">
 <td>ErrorUser</td>
 <td>Object</td>
 <td>
-The list of users not in the specified room.
-<ul>
-<li>
-If `Code` is `0`:
-<ul>
-<li>If `ErrorUser` is empty, all users are in the specified room.</li>
-<li>If `ErrorUser` is not empty, some users are not in the specified room. For more information, see `SubCode`.</li>
-</ul>
+不在指定房间的用户列表。
+<ul><li>
+Code 为 0：
+<ul><li>ErrorUser 为空，全部用户都在指定房间。</li><li>ErrorUser 不为空，表示部分用户不在指定房间，请参考 SubCode 处理。</li></ul>
 </li>
 <li>
-If `Code` is not `0`:
-<ul>
-<li>If `ErrorUser` is empty, one or more parameters are invalid, the QPS limit is exceeded, or a system error occurs.</li>
-<li>If `ErrorUser` is not empty, all users are not in the specified room.</li>
-</ul>
+Code 不为 0：
+<ul><li>ErrorUser 为空，表示参数错误、接口频率限制、系统错误。</li><li>ErrorUser 不为空，表示全部用户都不在指定房间。</li></ul>
 </li>
 </ul></td>
 </tr>
 <tr data-row-level="6-1">
 <td>UserId</td>
 <td>String</td>
-<td>The IDs of users not in the specified room.</td>
+<td>不在指定房间的用户的 ID。</td>
 </tr>
 <tr data-row-level="6-2">
 <td>SubCode</td>
 <td>Number</td>
-<td>The return code that indicates the reason for not being in the specified room.</td>
+<td>不在指定房间原因的返回码。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -157,40 +147,39 @@ If `Code` is not `0`:
 }
 ```
 
-## Return codes
+## 返回码
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
-
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter.</td>
+<td>参数错误</td>
+<td>请检查输入的参数</td>
 </tr>
 <tr>
 <td>660000011</td>
-<td>Too many users are included in the list.</td>
-<td>Check the number of users.</td>
+<td>用户个数超过限制。</td>
+<td>请检查输入的用户列表。</td>
 </tr>
 <tr>
 <td>660200001</td>
-<td>The user ID is not registered.</td>
-<td>Check whether the user ID exists or whether the user has logged out of the ZIM service.</td>
+<td>用户未注册</td>
+<td>请确认用户 ID 是否存在或用户是否已登出 ZIM 服务。</td>
 </tr>
 <tr>
 <td>660300006</td>
-<td>The QPS limit is exceeded.</td>
-<td>Try again later.</td>
+<td>调用接口频率超出限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660300012</td>
-<td>The user is not in the room.</td>
-<td>No handling is required.</td>
+<td> 用户不在房间内</td>
+<td>无需处理。</td>
 </tr>
 </tbody></table>
