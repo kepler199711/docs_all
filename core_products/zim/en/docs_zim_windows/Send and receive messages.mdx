@@ -337,10 +337,10 @@ zim_->sendMessage(std::static_pointer_cast<zim::ZIMMessage>(smessage), "conversa
 
 After client B logs in, he will receive client A's message through the callback [onReceivePeerMessage](@onReceivePeerMessage) which is already set in the [setEventHandler](@setEventHandler) method. 
 
-<div class = 'mk-warning'>
+<Warning title="Warning">
 
 When a message is received, you need to determine whether the message is a Text message or a Command message because these two message types are based on the basic message. You need to convert the basic message class to a concrete message type and then retrieve the message content from the `Message` field.
-</div>
+</Warning>
 
 ```cpp
 // The OnReceiveRoomMessage here refers to the onReceiveRoomMessage of the bounded SDK.

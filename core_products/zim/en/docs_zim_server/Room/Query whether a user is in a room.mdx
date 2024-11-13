@@ -40,11 +40,11 @@ The following table describes only the operation-specific request parameters and
 </tr>
 </tbody></table>
 
-<div class="mk-hint">
+<Note title="Note">
 
 The `UserId` parameter cannot exceed 32 bytes in length, and the `RoomID` parameter cannot exceed 128 bytes in length. Both parameters can contain only digits, letters, and the following characters: '!', '#', '$', '%', '\&', '(', ')', '+', '-', ':', ';', '\<', '=', '.', '>', '?', '@', '\[', ']', '\^', '\_', ' ', '{', '}', '\|', '~'.
 
-</div>
+</Note>
 
 ## Sample request
 
@@ -84,12 +84,12 @@ https://zim-api.zego.im/?Action=QueryRoomMembers
 <td>The query result, that is, the list of users in the specified room.</td>
 </tr>
 <tr data-row-level="5-1">
-<td>UserId</td>
+<td>└UserId</td>
 <td>String</td>
 <td>The IDs of users in the specified room.</td>
 </tr>
 <tr data-row-level="5-2">
-<td>UserName</td>
+<td>└UserName</td>
 <td>String</td>
 <td>The names of users in the specified room.</td>
 </tr>
@@ -116,12 +116,12 @@ If `Code` is not `0`:
 </ul></td>
 </tr>
 <tr data-row-level="6-1">
-<td>UserId</td>
+<td>└UserId</td>
 <td>String</td>
 <td>The IDs of users not in the specified room.</td>
 </tr>
 <tr data-row-level="6-2">
-<td>SubCode</td>
+<td>└SubCode</td>
 <td>Number</td>
 <td>The return code that indicates the reason for not being in the specified room.</td>
 </tr>

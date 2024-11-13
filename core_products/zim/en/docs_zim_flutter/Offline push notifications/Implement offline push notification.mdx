@@ -144,13 +144,13 @@ Permissions can be set as needed.
 
     Call the [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) method to register for offline push notifications. Calling this method will incur certain performance overhead.
 
-    <div class="mk-hint">
+    <Note title="Note">
 
     - When calling the [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) method on iOS , you need to fill in the `ZPNsIOSEnvironment` in advance according to the certificate selected during packaging, whether it is development or distribution. When switching certificates, please change this enumeration.
     - When the certificate is development, `ZPNsIOSEnvironment` is `Development`.
     - When the certificate is distribution, `ZPNsIOSEnvironment` is `Production`.
     - If you are not sure about the current `ZPNsIOSEnvironment`, please fill in `ZPNsIOSEnvironment.Automatic`. `Automatic` may be affected by the iOS version. If the iOS undergoes a major version update, please pay attention to the [ZPNs release notes](./../Client%20SDKs/ZPNs%20release%20notes.mdx).
-    </div>
+    </Note>
 
     ```dart
     // Register for offline push notifications.
