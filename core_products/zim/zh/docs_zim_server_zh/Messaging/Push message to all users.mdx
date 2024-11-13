@@ -1,12 +1,15 @@
-# Push message to all users
+# 全员推送
 
 - - -
 
-## Description
+## 描述
 
-It refers to sending messages with specific content, such as text, images, etc., to all **online** users, including the sender of the message. This feature is suitable for scenarios such as the global announcement of an event or the display of gifts across multiple rooms.
+全员推送，是指向所有在线用户（包括消息发送用户自己）、离线用户发送特定内容的消息，如文本、图片等。本功能适用于全员活动公告、送礼跨房间飘屏等场景。
 
-The client receives broadcast messages via the ZIM SDK callback interface and knows which user sent the message.
+- 在线用户：登录 ZIM 并且心跳未超时的用户。
+- 离线用户：登录 ZIM 并上报 ZPNsPushId 之后，心跳超时的用户。
+
+客户端将通过 ZIM SDK 的回调接口，接收全员推送的消息，得知消息由哪位用户发出。
 
 <table>
 <tbody><tr>
@@ -14,133 +17,142 @@ The client receives broadcast messages via the ZIM SDK callback interface and kn
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
+<th>Web</th>
 </tr>
 <tr>
 <td><a href="/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-broadcast-message-received" target="_blank" rel="noopener">broadcastMessageReceived</a></td>
 <td><a href="/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-broadcast-message-received" target="_blank" rel="noopener">onBroadcastMessageReceived</a></td>
 <td><a href="/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-broadcast-message-received" target="_blank" rel="noopener">broadcastMessageReceived</a></td>
 <td><a href="/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-broadcast-message-received" target="_blank" rel="noopener">onBroadcastMessageReceived</a></td>
+<td><a href="/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#broadcast-message-received" target="_blank" rel="noopener">broadcastMessageReceived</a></td>
 </tr>
 <tr>
-<th>Web</th>
+<th>小程序</th>
 <th>Flutter</th>
 <th>React Native</th>
+<th>uni-app</th>
 <th>Unity3D</th>
 </tr>
 <tr>
+<td><a href="/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#broadcast-message-received" target="_blank" rel="noopener">broadcastMessageReceived</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onBroadcastMessageReceived.html" target="_blank" rel="noopener">onBroadcastMessageReceived</a></td>
 <td><a href="/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#broadcast-message-received" target="_blank" rel="noopener">broadcastMessageReceived</a></td>
+<td><a href="/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#broadcast-message-received" target="_blank" rel="noopener">broadcastMessageReceived</a></td>
 <td><a href="/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-message-reactions-changed">OnBroadcastMessageReceived</a></td>
-<td><a href="/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#broadcast-message-received" target="_blank" rel="noopener">broadcastMessageReceived</a></td>
 </tr>
 </tbody></table>
 
 
-## Interface Prototype
+## 接口原型
 
-- Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=SendMessageToAllUsers
-- Transfer protocol: HTTPS
-- Call rate limit: 1 time/second, limited to 100 times in 24 hours. Please contact ZEGOCLOUD technical support in case of need.
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=SendMessageToAllUsers`
+- 传输协议：HTTPS
+- 调用频率限制：1 次/秒，每 24 小时内仅限 100 次，如需调整，请联系 ZEGO 技术支持。
 
-## Request Parameters
+## 请求参数
 
-The following list includes only the interface request parameters and some common parameters. For a complete list of common parameters, please see [Accessing Server APIs](../Accessing%20Server%20APIs.mdx).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
 <tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required or Not</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr>
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The sender's user must be registered.</td>
+<td>是</td>
+<td>发送方的用户 ID，需为已注册用户</td>
 </tr>
 <tr>
 <td>MessageType</td>
 <td>Number</td>
-<td>Yes</td>
-<td>Message type, please refer to [MessageBody Introduction](./MessageBody%20Introduction.mdx) for the applicable types of all user pushes. </td>
+<td>是</td>
+<td>消息类型，全员推送的适用类型请参考 [MessageBody 说明](./MessageBody%20Introduction.mdx)。</td>
 </tr>
 <tr>
 <td>MessageBody</td>
 <td>Object</td>
-<td>Yes</td>
-<td>Message content, please refer to [MessageBody Introduction](./MessageBody%20Introduction.mdx) for specific parameter format.<Warning title="Warning"><p>Setting is not supported at this time.</p></Warning></td>
+<td>是</td>
+<td>消息内容，具体参数格式请参考 [MessageBody 说明](./MessageBody%20Introduction.mdx)。</td>
 </tr>
 <tr>
 <td>SubMsgType</td>
 <td>Number</td>
-<td>No（However, it is mandatory when MessageType is set to custom message）</td>
-<td>Specific custom types. The values are defined by you and the range of values is [0,200]. </td>
+<td>当 MessageType 为自定义消息时，才需赋值此参数</td>
+<td>具体的自定义类型。值由您定义，取值范围为 [0,200]。</td>
+</tr>
+<tr>
+<td>PushType</td>
+<td>Number</td>
+<td>否</td>
+<td>推送类别：<ul><li>0：对在线用户进行在线推送。</li><li>1：对在线用户进行在线推送，对离线用户进行离线推送。</li><li>2：对所有上报了 ZPNsPushId 的用户进行离线推送。</li></ul></td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-- FromUserId only supports numbers, English characters, and
-{" '!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}.
-- If the sender's SDK version is lower than 2.0.0, ZIM server only supports Command type message with MessageType 2, and does not support other types.  
-  To provide a better developer experience, ZEGOCLOUD recommends that developers use the latest version of the SDK.
-- The SDK version of the message receiver must be 2.10.0 or higher. This is necessary to receive broadcast messages from all users.
+- FromUserId 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}。
+- 如果发送方使用的 SDK 版本（版本说明请参考 [发布日志](/zh/zim-android/client-sdks/zim-release-notes)）低于 `2.0.0`，ZIM 服务端对应的仅支持 `MessageType` 为 `2` 的 Command 类型消息，不支持其它类型。  
+    为了给开发者带来更好的体验，ZEGO 推荐开发者使用最新版本的 SDK。
+- 消息接收方的 SDK 版本必须为 2.10.0 或以上，才能接受全员推送消息。
 </Note>
 
-## Request Example
+## 请求示例
 
-- Request address URL：
+- 请求地址 URL：
 
-    ```json
-    https://zim-api.zego.im/?Action=SendMessageToAllUsers
-    &<Public request parameters>
-    ```
+```json
+https://zim-api.zego.im/?Action=SendMessageToAllUsers
+&<公共请求参数>
+```
 
-- Request message body：
+- 请求消息体：
 
-    ```json
-    {
-        "FromUserId": "u1",
-        "MessageType": 1,
-        "MessageBody": {
-            "Message":"hello world",
-            "ExtendedData":"s"
-        },
-        "SubMsgType": 0
-    }
-    ```
+```json
+{
+    "FromUserId": "u1",
+    "MessageType": 1,
+    "MessageBody": {
+        "Message":"hello world",
+        "ExtendedData":"s"
+    },
+    "SubMsgType": 0,
+    "PushType": 0
+}
+```
 
-## Response Parameters
+## 响应参数
 
 <table>
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>Return code.
-<div class="mk-hint">When you send messages to multiple users at the same time: <ul><li>If you successfully send messages to one or more users, the Code will return 0, indicating success. In this case, please refer to the specific information in ErrorList to confirm the operation results and see if the message failed to be sent to some users.
-</li><li>If the message fails to be sent to all users, the Code will return the corresponding return code. Please refer to <a href="!zim-Server_APIs/Return_Codes">Return Codes</a>. </li></ul></div></td>
+<td>返回码。
+<Note title="Note">当您发起请求同时向多个用户发送消息时：<ul><li>如果只需成功向 1 个或以上的用户发送消息，Code 都会返回 0，表示成功。此时请参考 ErrorList 中的具体信息，确认操作结果，了解是否向部分用户发送消息失败。</li><li>如果向所有用户发送消息都失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>Descriptive information about the result of the request.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The Request ID.</td>
+<td>请求 ID。</td>
 </tr>
 </tbody></table>
 
 
-## Response Example
+## 响应示例
 
 ```json
 {
@@ -151,35 +163,34 @@ The following list includes only the interface request parameters and some commo
 ```
 
 
-## Return Code
+## 返回码
 
-The following only lists the return codes related to the interface business logic. For the complete list of return codes, please refer to [Return Codes](../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
-
 <tbody><tr>
-<th>Return Code</th>
-<th>Clarification</th>
-<th>Processing Suggestions</th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid input parameters.</td>
-<td>Please check the input parameters.</td>
+<td>输入参数错误。</td>
+<td>请检查输入的参数。</td>
 </tr>
 <tr>
 <td>660400001</td>
-<td>The size of the message exceeds the limit. </td>
-<td>Please check the message size.</td>
+<td>输入的消息大小超出限制。</td>
+<td>请检查输入的消息大小。</td>
 </tr>
 <tr>
 <td>660500002</td>
-<td>The message sender is not logged in to the SDK.</td>
-<td>Please log in to the ZIM SDK before sending messages.</td>
+<td>消息发送者未登录 SDK。</td>
+<td>请登录 ZIM SDK 后再发送消息。</td>
 </tr>
 <tr>
 <td>660500003</td>
-<td>The frequency of calling the SendMessageToAllUsers interface exceeds the limit.</td>
-<td>Please try again later.</td>
+<td>调用 SendMessageToAllUsers 接口的频率超出限制。</td>
+<td>请稍后再试。</td>
 </tr>
 </tbody></table>

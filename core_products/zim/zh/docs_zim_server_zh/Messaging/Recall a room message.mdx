@@ -1,155 +1,143 @@
-# Recall a room message
+# 撤回房间消息
 
 - - -
 
-<Note title="Note">
+<div class="mk-hint">
 
-To use this feature, please subscribe to the ZIM enterprise plan and make sure your AppID is set to enable saving room messages.
-</Note>
+如需使用本功能，请开通 ZIM 旗舰版服务，以确保您的 App ID 已设置为启用保存房间消息。
+</div>
 
-## Overview
+## 描述
 
-You can call this API to recall a room message.
+调用此接口，您可以撤回房间会话消息。
 
-After a message is recalled, users in the room will receive the notification by the following ZIM SDK callbacks.
+消息撤回后，房间内的用户将通过以下 ZIM SDK 的回调接口，接收消息已被撤回的通知。
 
 <table>
-  <colgroup>
-    <col />
-    <col />
-    <col />
-    <col />
-  </colgroup>
 <tbody><tr>
 <th>iOS</th>
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
-
-</tr>
-<tr>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
-</tr>
-<tr>
-<th>Flutter</th>
-<th>Unity3D</th>
-<th>React Native</th>
 <th>Web</th>
 </tr>
 <tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+</tr>
+<tr>
+<th>小程序</th>
+<th>Flutter</th>
+<th>Unity3D</th>
+<th>uni-app</th>
+<th>React Native</th>
+</tr>
+<tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onMessageRevokeReceived.html" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">OnMessageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">OnMessageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
 </tr>
 </tbody></table>
 
-## Request method and endpoint
+## 接口原型
 
-- Request method: POST
-- Request endpoint: https://zim-api.zego.im/?Action=RevokeRoomMessage
-- Transmission protocol: HTTPS
-- Rate limit: 20 requests/second
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=RevokeRoomMessage`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒。
 
+## 请求参数
 
-## Request parameters
-
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic|_blank](./../Accessing%20Server%20APIs.mdx#public-parameters).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
-  <colgroup>
-    <col width="20%" />
-    <col width="20%" />
-    <col width="20%" />
-    <col width="40%" />
-  </colgroup>
+
 <tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr>
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the message sender.</td>
+<td>是</td>
+<td>消息发送者用户 ID。</td>
 </tr>
 <tr>
 <td>RoomId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The room ID.</td>
+<td>是</td>
+<td>房间 ID。</td>
 </tr>
 <tr>
 <td>MsgSeq</td>
 <td>Number</td>
-<td>Yes</td>
-<td>The sequence of the message. Method for obtaining `MsgSeq`:&nbsp;
-<ul><li>If a group message is sent from the **client**, obtain `MsgSeq` by using the [Callback on message sent|_blank](!IM-zim_send_msg) operation.</li><li>If a group message is sent by using the server API [`SendRoomMessage`|_blank](!Server_APIs/send_Room_Message), obtain `MsgSeq` in the response data.</li></ul></td>
+<td>是</td>
+<td>
+消息 seq。获取方式：
+- 若需要撤回由**客户端**发出的房间消息，通过 [消息发送后回调](../Callbacks/Message%20sent.mdx) 获取 MsgSeq。
+- 若需要撤回由服务端 API [SendRoomMessage](./Send%20room%20messages.mdx) 发出的房间消息，通过接口响应数据获取 MsgSeq。
+</td>
 </tr>
 <tr>
 <td>Payload</td>
 <td>String</td>
-<td>No</td>
-<td>The additional information of the recalling operation, which cannot exceed 200 bytes in length.</td>
+<td>否</td>
+<td>撤回附加信息，最大 200 字节。</td>
 </tr>
 </tbody></table>
 
-## Sample request
+## 请求示例
 
-- Request URL:
-  
-  ```json
-  https://zim-api.zego.im/?Action=RevokeRoomMessage
-  &<Common request parameters>
-  ```
+- 请求地址 URL：
 
-- Request body:
-  
-  ```json
-    {
-        "FromUserId": "u1",
-        "GroupId": "room1",
-        "MsgSeq": 10,
-        "Payload": "hello world"
-    }
-  ```
+```json
+https://zim-api.zego.im/?Action=RevokeRoomMessage
+&<公共请求参数>
+```
+- 请求消息体：
 
-## Response parameters
+```json
+{
+    "FromUserId": "u1",
+    "GroupId": "room1",
+    "MsgSeq": 10,
+    "Payload": "hello world"
+}
+```
+
+## 响应参数
 
 <table>
-  <colgroup>
-    <col width="25%" />
-    <col width="25%" />
-    <col width="50%" />
-  </colgroup>
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.</td>
+<td>返回码。</td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the request result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -159,59 +147,54 @@ The following table describes only the operation-specific request parameters and
 }
 ```
 
-## Return codes
+## 返回码
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes|_blank](./../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
-  <colgroup>
-    <col width="15%" />
-    <col width="35%" />
-    <col width="50%" />
-  </colgroup>
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000001</td>
-<td>A common service error occurred.</td>
-<td>Try again, or contact ZEGOCLOUD technical support.</td>
+<td>业务类通用错误。</td>
+<td>请重试，或联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter. For more information, see <a href="#3">Request parameters</a>.</td>
+<td>参数错误。</td>
+<td>请参考 <a href="#请求参数">请求参数</a> 输入正确参数。</td>
 </tr>
 <tr>
 <td>660000022</td>
-<td>The message is not found, which may be that the message has been deleted or does not exist.</td>
-<td>Check whether the message has been deleted and whether the value of the `MsgSeq` parameter is valid.</td>
+<td>未找到消息，可能是消息已经被删除或者消息不存在。</td>
+<td>请检查消息是否被删除，以及 MsgSeq 是否正确。</td>
 </tr>
 <tr>
 <td>660000023</td>
-<td>The message has been recalled.</td>
-<td>Check whether the message has been recalled.<ul><li>If so, no handling is required.</li><li>If not, contact ZEGOCLOUD technical support.</li></ul></td>
+<td>消息已被撤回。</td>
+<td>请确认消息是否已被撤回。<ul><li>如经确认，消息已被撤回，则无需处理。</li><li>如经确认，消息未被撤回，请联系 ZEGO 技术支持排查问题。</li></ul></td>
 </tr>
 <tr>
 <td>660000027</td>
-<td>The configuration for save room messages is not enabled, so message recalling is not possible.</td>
-<td>Please subscribe to the ZIM enterprise plan.</td>
+<td>未启用保存房间消息配置，无法撤回消息。</td>
+<td>请开通 ZIM 旗舰版服务。</td>
 </tr>
 <tr>
 <td>660300001</td>
-<td>The room does not exist.</td>
-<td>Check whether the value of the <code>RoomId</code> parameter is valid.</td>
+<td>房间不存在。</td>
+<td>请确认输入的 RoomId 是否正确或房间是否已被销毁。</td>
 </tr>
 <tr>
 <td>660300002</td>
-<td>The user is not in the room.</td>
-<td>Please check the user ID.</td>
+<td>用户不在此房间内。</td>
+<td>请确认输入的 UserId 是否正确。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS limit specified in `AppID` is exceeded.</td>
-<td>Try again later, or check the QPS limit on related documentation.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试，或参考相关文档了解调用频率。</td>
 </tr>
 </tbody></table>

@@ -1,156 +1,149 @@
----
-articleID: 16929
----
-# Recall a one-to-one message
+# 撤回单聊消息
 
 - - -
 
+## 描述
 
-## Overview
+调用此接口，您可以撤回 2 分钟内的单聊会话消息。如需撤回更早之前的消息，请联系 ZEGO 技术支持，最多可撤回 24 小时内发出的消息。
 
-You can call this operation to recall a one-to-one message sent within two minutes. To recall an earlier message, contact ZEGOCLOUD technical support. You can recall a message sent within 24 hours at maximum.
-
-After a message is recalled, the recipient receives the notification in the following ZIM SDK callbacks.
+消息撤回后，消息接收用户将通过以下 ZIM SDK 的回调接口，接收消息已被撤回的通知。
 
 <table>
-
 <tbody><tr>
 <th>iOS</th>
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
-</tr>
-<tr>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
-</tr>
-<tr>
-
 <th>Web</th>
+</tr>
+<tr>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+</tr>
+<tr>
+<th>小程序</th>
 <th>Flutter</th>
 <th>Unity3D</th>
+<th>uni-app</th>
 <th>React Native</th>
-<th></th>
-<th></th>
 </tr>
 <tr>
-
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onMessageRevokeReceived.html" target="_blank" rel="noopener">onMessageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">OnMessageRevokeReceived</a></td>
-<td><a href="https://docs.zegocloud.com/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
-<td></td>
-<td></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-message-revoke-received" target="_blank" rel="noopener">OnMessageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
+<td><a href="https://doc-zh.zego.im/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#message-revoke-received" target="_blank" rel="noopener">messageRevokeReceived</a></td>
 </tr>
 </tbody></table>
 
-## Operation prototype
+## 接口原型
 
-- Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=RevokePeerMessage
-- Protocol: HTTPS
-- QPS limit: 20 calls per second
+- 请求方法：POST
+- 请求地址： `https://zim-api.zego.im/?Action=RevokePeerMessage`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒。
 
-## Request parameters
+## 请求参数
 
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic](../Accessing%20Server%20APIs.mdx#public-parameters).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
-
 <tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr>
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the message sender.</td>
+<td>是</td>
+<td>消息发送者用户 ID。</td>
 </tr>
 <tr>
 <td>ToUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the message recipient.</td>
+<td>是</td>
+<td>消息接收方的用户 ID。</td>
 </tr>
 <tr>
 <td>MsgSeq</td>
 <td>Number</td>
-<td>Yes</td>
-<td>The sequence of the message. Method for obtaining `MsgSeq`: - If a one-to-one message is sent from the **client**, obtain `MsgSeq` by using the [Callback on message sent](../Callbacks/Message%20sent.mdx) operation. - If a one-to-one message is sent by using the server API [`SendPeerMessage`](./Send%20a%20one-to-one%20message.mdx), obtain `MsgSeq` in the response data.</td>
+<td>是</td>
+<td>
+消息 seq。获取方式：
+- 若需要撤回由**客户端**发出的单聊消息，通过 [消息发送后回调](../Callbacks/Message%20sent.mdx) 获取 MsgSeq。
+- 若需要撤回由 服务端 API [SendPeerMessage](./Send%20a%20one-to-one%20message.mdx) 发出的单聊消息，通过接口响应数据获取 MsgSeq。
+</td>
 </tr>
 <tr>
 <td>Payload</td>
 <td>String</td>
-<td>No</td>
-<td>The additional information of the recalling operation, which cannot exceed 200 bytes in length.</td>
+<td>否</td>
+<td>撤回操作附加的信息，最大 200 字节。</td>
 </tr>
 <tr>
 <td>OfflinePush</td>
 <td>Object</td>
-<td>No</td>
-<td>The offline push configuration. For more information, see [OfflinePush Description](./MessageBody%20Introduction.mdx#offlinepush-introduction-inapplicable-for-room-messages).</td>
+<td>否</td>
+<td>离线推送配置，详情请参考 [OfflinePush 说明](./MessageBody%20Introduction.mdx#offlinepush-说明房间消息不支持此字段)。</td>
 </tr>
 </tbody></table>
 
+## 请求示例
 
-## Sample request
+- 请求地址 URL：
 
-- Request URL:
-  
-  ```json
-  https://zim-api.zego.im/?Action=RevokePeerMessage
-  &<Common request parameters>
-  ```
+```json
+https://zim-api.zego.im/?Action=RevokePeerMessage
+&<公共请求参数>
+```
+- 请求消息体：
 
-- Request body:
-  
-  ```json
-  {
-      "FromUserId": "u1",
-      "ToUserId": "u2",
-      "MsgSeq": 10,
-      "Payload": "payload",
-      "OfflinePush" :{
-          "Enable":1,
-          "Title":"title",
-          "Content":"content",
-          "Payload":"payload"
-      }
+```json
+{
+  "FromUserId": "u1",
+  "ToUserId": "u2",
+  "MsgSeq": 10,
+  "Payload": "payload",
+  "OfflinePush" :{
+      "Enable":1,
+      "Title":"title",
+      "Content":"content",
+      "Payload":"payload"
   }
-  ```
+}
+```
 
-## Response parameters
+## 响应参数
 
 <table>
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.</td>
+<td>返回码。</td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the request result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -160,45 +153,45 @@ The following table describes only the operation-specific request parameters and
 }
 ```
 
-## Return codes
+## 返回码
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
 
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>说明</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter. For more information, see <a href="#3">Request parameters</a>.</td>
+<td>参数错误。</td>
+<td>请参考 <a href="#请求参数">请求参数</a> 输入正确参数。</td>
 </tr>
 <tr>
 <td>660000022</td>
-<td>The message is not found, which may be that the message has been deleted or does not exist.</td>
-<td>Check whether the message has been deleted and whether the value of the `MsgSeq` parameter is valid.</td>
+<td>未找到消息，可能是消息已经被删除或者消息不存在。</td>
+<td>请检查消息是否被删除，以及 MsgSeq 是否正确。</td>
 </tr>
 <tr>
 <td>660000023</td>
-<td>The message has been recalled.</td>
-<td>Check whether the message has been recalled.<ul><li>If so, no handling is required.</li><li>If not, contact ZEGOCLOUD technical support.</li></ul></td>
+<td>消息已被撤回。</td>
+<td>请确认消息是否已被撤回。<ul><li>如经确认，消息已被撤回，则无需处理。</li><li>如经确认，消息未被撤回，请联系 ZEGO 技术支持排查问题。</li></ul></td>
 </tr>
 <tr>
 <td>660000024</td>
-<td>The message has been sent too long.</td>
-<td>If you need to recall a message sent a long time ago, contact ZEGOCLOUD technical support.</td>
+<td>已超过撤回时间。</td>
+<td>如需撤回更长时间内的消息，请联系 ZEGO 技术支持进行配置。</td>
 </tr>
 <tr>
 <td>660000026</td>
-<td>The message to be recalled and `FromUserId` do not match.</td>
-<td>Check whether the value of the `FromUserId` parameter is valid.</td>
+<td>待撤回消息与 FromUserId 不匹配。</td>
+<td>请检查 FromUserId 字段是否正确。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS limit specified in `AppID` is exceeded.</td>
-<td>Try again later, or check the QPS limit on related documentation.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试，或参考相关文档了解调用频率。</td>
 </tr>
 </tbody></table>
