@@ -170,55 +170,55 @@ ZIM 服务端支持开发者通过服务端 API 向会话发送不同类型的�
 </td>
 </tr>
 <tr data-row-level="7-1" data-row-child="true">
-<td>Apns</td>
+<td>└Apns</td>
 <td>Object</td>
 <td>否</td>
 <td>苹果推送额外信息。</td>
 </tr>
 <tr data-row-level="7-1-1">
-<td>Image</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Image</td>
 <td>String</td>
 <td>否</td>
 <td>该字段用于标识 APNs 携带的图片地址，当客户端拿到该字段时，可以通过下载图片资源的方式将图片展示在弹窗上。</td>
 </tr>
 <tr data-row-level="7-2" data-row-child="true">
-<td>Android</td>
+<td>└Android</td>
 <td>Object</td>
 <td>否</td>
 <td>安卓推送额外信息。</td>
 </tr>
 <tr data-row-level="7-2-1" data-row-child="true">
-<td>HuaWei</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└HuaWei</td>
 <td>Object</td>
 <td>否</td>
 <td>华为推送通道相关配置。</td>
 </tr>
 <tr data-row-level="7-2-1-1">
-<td>Image</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└Image</td>
 <td>String</td>
 <td>否</td>
 <td>图片文件须小于 512 KB，规格建议为 40dp x 40dp，弧角大小为 8dp。超出建议规格的图片会存在图片压缩或图片显示不全的情况。图片格式建议使用JPG/JPEG/PNG。必须是https协议的链接。</td>
 </tr>
 <tr data-row-level="7-2-1-2">
-<td>Icon</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└Icon</td>
 <td>String</td>
 <td>否</td>
 <td>图标文件必须存放在应用的 `/res/raw` 路径下。例如，“icon” 的值为“res/raw/ic_launcher”，标识您应用本地的小图标路径为“/res/raw/ic_launcher.jpg”。</td>
 </tr>
 <tr data-row-level="7-2-3" data-row-child="true">
-<td>FCM</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└FCM</td>
 <td>Object</td>
 <td>否</td>
 <td>谷歌推送通道相关配置。</td>
 </tr>
 <tr data-row-level="7-2-3-1">
-<td>Image</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└Image</td>
 <td>String</td>
 <td>否</td>
 <td>图片地址，大小限制 1M 以内。</td>
 </tr>
 <tr data-row-level="7-2-3-2">
-<td>Icon</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└Icon</td>
 <td>String</td>
 <td>否</td>
 <td>图标地址。</td>
@@ -347,19 +347,19 @@ ZIM 服务端支持开发者通过服务端 API 向会话发送不同类型的�
 <td>原图。</td>
 </tr>
 <tr data-row-level="4-1">
-<td>Url</td>
+<td>└Url</td>
 <td>String</td>
 <td>是</td>
 <td>图片的 URL 地址，长度上限为 500 字节。</td>
 </tr>
 <tr data-row-level="4-2">
-<td>Width</td>
+<td>└Width</td>
 <td>Number</td>
 <td>是</td>
 <td>图片宽度，单位为像素（px）。</td>
 </tr>
 <tr data-row-level="4-3">
-<td>Height</td>
+<td>└Height</td>
 <td>Number</td>
 <td>是</td>
 <td>图片高度，单位为像素（px）。</td>
@@ -706,19 +706,19 @@ ZIM 服务端支持开发者通过服务端 API 向会话发送不同类型的�
 <td>视频首帧。</td>
 </tr>
 <tr data-row-level="10-1">
-<td>Url</td>
+<td>└Url</td>
 <td>String</td>
 <td>是（仅当需要视频首帧时）</td>
 <td>缩略图的 URL 地址，长度上限为 500 字节。</td>
 </tr>
 <tr data-row-level="10-2">
-<td>Width</td>
+<td>└Width</td>
 <td>Number</td>
 <td>是（仅当需要视频首帧时）</td>
 <td>图片宽度，单位为像素（px）。</td>
 </tr>
 <tr data-row-level="10-3">
-<td>Height</td>
+<td>└Height</td>
 <td>Number</td>
 <td>是（仅当需要视频首帧时）</td>
 <td>图片高度，单位为像素（px）。</td>

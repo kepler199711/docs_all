@@ -1,179 +1,162 @@
----
-articleID: 16907
----
-
-# Batch block users
+# 批量拉黑用户
 
 - - -
 
+## 描述
 
-## Overview
+调用此接口，可为用户批量拉黑至多 20 名用户，不再接收相关用户消息。如需上调，请联系 ZEGO 技术支持。
 
-You can call this operation to batch block up to 20 users for a user.
+每名用户默认最多可拉黑 1000 名用户，如需上调，请联系 ZEGO 技术支持。
 
-If you need a higher limit (1,000 at maximum), contact ZEGOCLOUD technical support. 
-
-After users are blocked, the client of the user receives the notification in the following ZIM SDK callbacks.
+为用户拉黑用户成功后，此用户客户端将通过以下 ZIM SDK 的回调接口接收黑名单列表更新的通知：
 
 <table>
-<tbody>
-
-<tr>
+<tbody><tr>
 <th>iOS</th>
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
+<th>Web</th>
 </tr>
-
 <tr>
-
 <td><a href="/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-blacklist-changed-user-list" target="_blank" rel="noreferrer noopenner">blacklistChanged</a></td>
 <td><a href="/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-blacklist-changed" target="_blank" rel="noreferrer noopenner">onBlacklistChanged</a></td>
 <td><a href="/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-blacklist-changed-user-list" target="_blank" rel="noreferrer noopenner">blacklistChanged</a></td>
 <td><a href="/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-blacklist-changed" target="_blank" rel="noreferrer noopenner">onBlacklistChanged</a></td>
-
+<td><a href="/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#blacklist-changed" target="_blank" rel="noreferrer noopenner">blacklistChanged</a></td>
 </tr>
-
 <tr>
-<th>Web</th>
+<th>小程序</th>
 <th>Flutter</th>
+<th>uni-app</th>
 <th>React Native</th>
 <th></th>
 </tr>
-
 <tr>
-<td><a href="/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#blacklist-changed" target="_blank" rel="noreferrer noopenner">blacklistChanged</a></td>
+<td><a href="/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#blacklist-changed" target="_blank" rel="noreferrer noopenner">blacklistChanged</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onBlacklistChanged.html" target="_blank" rel="noreferrer noopenner">onBlacklistChanged</a></td>
+<td><a href="/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#blacklist-changed" target="_blank" rel="noreferrer noopenner">blacklistChanged</a></td>
 <td><a href="/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#blacklist-changed" target="_blank" rel="noreferrer noopenner">blacklistChanged</a></td>
+<td></td>
 </tr>
+</tbody></table>
 
+## 接口原型
 
-</tbody>
-</table>
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=AddUsersToBlacklist`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒。
 
-## Operation prototype
+## 请求参数
 
-- Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=AddUsersToBlacklist
-- Protocol: HTTPS
-- QPS limit: 20 calls per second
-
-## Request parameters
-
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic](../Accessing%20Server%20APIs.mdx#public-parameters).
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
 
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="3">
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the registered user for whom users are to be blocked.</td>
+<td>是</td>
+<td>为此 UserId（已注册）拉黑用户。</td>
 </tr>
 <tr data-row-level="4">
 <td>UserIds</td>
 <td>Array of String</td>
-<td>Yes</td>
-<td>The list of users to be blocked. Up to 20 user IDs can be included, each of which cannot exceed 32 bytes in length.</td>
+<td>是</td>
+<td>待拉黑的用户列表。字符串默认上限为 20。每个字符串长度上限为 32 字节。</td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-The `FromUserId` and `UserId` parameters can contain only digits, letters, and the following characters: '!', '#', '$', '%', '\&', '(', ')', '+', '-', ':', ';', '\<', '=', '.', '>', '?', '@', '\[', ']', '\^', '\_', ' ', '{', '}', '\|', '~'.
-
+FromUserId 和 UserId 仅支持数字，英文字符和{" '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'"}。
 </Note>
-## Sample request
 
-- Request URL:
-  
-  ```json
-  https://zim-api.zego.im/?Action=AddUsersToBlacklist
-  &<Common request parameters>
-  ```
 
-- Request body:
-  
-  ```json
-  {
-      "FromUserId": "zego_user",
-      "UserIds": [
-          "user1",
-          "user2",
-          "user3",
-          "user4"
-      ]
-  }
-  ```
+## 请求示例
 
-## Response parameters
+- 请求地址 URL：
+
+```json
+https://zim-api.zego.im/?Action=AddUsersToBlacklist
+&<公共请求参数>
+```
+
+- 请求消息体：
+
+```json
+{
+    "FromUserId": "zego_user",
+    "UserIds": [
+        "user1",
+        "user2",
+        "user3",
+        "user4"
+    ]
+}
+```
+
+## 响应参数
 
 <table class="collapsible-table" >
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>
-The return code.
-<Note title="Note">When you request to block multiple users at a time, take note of the following items:<ul><li>If one or more users are successfully blocked, `0` is returned. For more information, see `ErrList`.</li><li>If all specified users fail to be blocked, a corresponding code is returned. For more information, see [Return codes](../Return%20codes.mdx).</li></ul></Note>
-</td>
+<td>返回码。
+<Note title="Note">当您发起请求同时拉黑多名用户时：<ul><li>如果成功拉黑 1 名或更多用户，Code 都会返回 0。此时请参考 ErrList 中的具体信息，确认操作结果。</li><li>如果全部指定用户拉黑失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the request result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5" data-row-child="true">
 <td>ErrList</td>
 <td>Array of Object</td>
 <td>
-The list of failed results.
+失败信息列表。
 <ul>
 <li>
-If `Code` is `0`:
-<ul>
-<li>If `ErrList` is empty, all specified users are successfully blocked.</li>
-<li>If `ErrList` is not empty, some specified users fail to be blocked. In this case, see `SubCode`.</li>
-</ul>
+Code 为 0：
+<ul><li>ErrList 为空，表示成功拉黑全部指定用户。</li><li>ErrList 不为空，表示部分指定用户拉黑失败，请参考 SubCode 处理。</li></ul>
 </li>
 <li>
-If `Code` is not `0`:
-<ul>
-<li>If `ErrList` is empty, one or more parameters are invalid, the QPS limit is exceeded, or a system error occurs.</li>
-<li>If `ErrList` is not empty, all specified users fail to be blocked.</li>
-</ul>
+Code 不为 0：
+<ul><li>ErrList 为空，表示参数错误、接口频率限制、系统错误。</li><li>ErrList 不为空，表示拉黑全部指定用户失败。</li></ul>
 </li>
 </ul></td>
 </tr>
 <tr data-row-level="5-3">
-<td>└UserID</td>
+<td>UserID</td>
 <td>String</td>
-<td>The ID of the user who fails to be blocked.</td>
+<td>拉黑此 UserID 失败。</td>
 </tr>
 <tr data-row-level="5-5">
-<td>└SubCode</td>
+<td>SubCode</td>
 <td>Number</td>
-<td>The code returned when the request fails.</td>
+<td>具体失败返回码。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+
+## 响应示例
 
 ```json
 {
@@ -189,65 +172,77 @@ If `Code` is not `0`:
 }
 ```
 
-## Return codes
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+## 返回码
+
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>描述</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter.</td>
+<td>输入参数错误。</td>
+<td>请检查输入的参数。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS limit specified in `AppID` is exceeded.</td>
-<td>Try again later.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660500002</td>
-<td>`FromUserId` is not registered.</td>
-<td>Check whether the user is registered. - If so, contact ZEGOCLOUD technical support. - If not, register the user.</td>
+<td>`FromUserId` 未注册。</td>
+<td>
+请确认该用户是否已注册：
+- 确认已注册，请联系 ZEGO 技术支持排查。
+- 确认未注册，请注册此用户。
+</td>
 </tr>
 <tr>
 <td>6607000015</td>
-<td>The target user is not registered.</td>
-<td>Check whether the user is registered. - If so, contact ZEGOCLOUD technical support. - If not, register the user.</td>
+<td>接口目标用户未注册。</td>
+<td>
+请确认该用户是否已注册：
+- 确认已注册，请联系 ZEGO 技术支持排查。
+- 确认未注册，请注册此用户。
+</td>
 </tr>
 <tr>
 <td>660800001</td>
-<td>`FromUserId` is not registered.</td>
-<td>Check whether the user is registered. - If so, contact ZEGOCLOUD technical support. - If not, register the user.</td>
+<td>`FromUserId` 未注册。</td>
+<td>
+请确认该用户是否已注册：
+- 确认已注册，请联系 ZEGO 技术支持排查。
+- 确认未注册，请注册此用户。
+</td>
 </tr>
 <tr>
 <td>660800037</td>
-<td>The user has been blocked.</td>
-<td>No handling is required.</td>
+<td>用户已被拉黑，无需重复操作。</td>
+<td>无需处理。</td>
 </tr>
 <tr>
 <td>660800038</td>
-<td>`FromUserId` cannot be blocked or unblocked.</td>
-<td>Modify the value of the `UserIds` parameter.</td>
+<td>不能拉黑 `FromUserId` 或将 `FromUserId` 移除黑名单。</td>
+<td>请修改 `UserIds`。</td>
 </tr>
 <tr>
 <td>660800039</td>
-<td>Too many users are included in the list.</td>
-<td>Reduce the number of users.</td>
+<td>传入的用户列表超过限制。</td>
+<td>请缩短传入的用户列表。</td>
 </tr>
 <tr>
 <td>660800040</td>
-<td>No more users can be blocked, as the number of blocked users exceeds the limit for `FromUserId`.</td>
-<td>No handling is required.</td>
+<td>`FromUserId` 的黑名单已达上限，无法拉黑更多用户。</td>
+<td>无需处理。</td>
 </tr>
 <tr>
 <td>660800041</td>
-<td>Failed to block all specified users.</td>
-<td>For more information, see `SubCode` of `ErrList`.</td>
+<td>拉黑全部指定用户失败。</td>
+<td>请参考响应参数 `ErrList` 的 `SubCode` 处理.</td>
 </tr>
 </tbody></table>
-

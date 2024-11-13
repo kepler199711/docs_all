@@ -1,187 +1,172 @@
----
-articleID: 17175
----
-
-# Batch delete friends
+# 批量删除好友
 
 - - -
 
+## 描述
 
-## Overview
+调用此接口，可为用户批量单向或双向删除至多 20 名好友。如需上调（最多可为 50），请联系 ZEGO 技术支持。
 
-You can call this operation to batch delete up to 20 friends for a user in a one-way or two-way manner. If you need a higher limit (50 at maximum), contact ZEGOCLOUD technical support.
-
-In this example, one-way deletion and two-way deletion are explained.
-- One-way deletion: If user A deletes user B in a one-way manner, user B is no longer a friend of user A, but not vice versa.
-- Two-way deletion: If user A deletes user B in a two-way manner, they are no longer friends with each other.
+以用户 A、B 举例说明单向删除和双向删除：
+- 单向删除：当用户 A 单向删除了用户 B，用户 B 不再是用户 A 的好友、用户 A 仍为用户 B 的好友。
+- 双向删除：当用户 A 双向删除了用户 B，彼此都不再是对方的好友。
 
 
-After friends are deleted, the client of the user receives the friend list update notification in the following ZIM SDK callbacks.
+为用户删除好友成功后，相关用户的客户端将通过以下 ZIM SDK 的回调接口接收好友列表更新的通知：
 
 <table>
-
-<tbody>
-<tr>
+<tbody><tr>
 <th>iOS</th>
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
+<th>Web</th>
 </tr>
 <tr>
 <td><a href="/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-friend-list-changed-friend-info-list" target="_blank" rel="noreferrer noopenner">friendListChanged</a></td>
 <td><a href="/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-friend-list-changed" target="_blank" rel="noreferrer noopenner">onFriendListChanged</a></td>
 <td><a href="/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-friend-list-changed-friend-info-list" target="_blank" rel="noreferrer noopenner">friendListChanged</a></td>
 <td><a href="/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-friend-list-changed" target="_blank" rel="noreferrer noopenner">onFriendListChanged</a></td>
-</tr>
-<tr>
-<th>Web</th>
-<th>Flutter</th>
-<th>React Native</th> 
-<th></th>
-<th></th>
-<th></th>
-</tr>
-<tr>
 <td><a href="/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#friend-list-changed" target="_blank" rel="noreferrer noopenner">friendListChanged</a></td>
+</tr>
+<tr>
+<th>小程序</th>
+<th>Flutter</th>
+<th>uni-app</th>
+<th>React Native</th>
+<th></th>
+</tr>
+<tr>
+<td><a href="/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#friend-list-changed" target="_blank" rel="noreferrer noopenner">friendListChanged</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onFriendListChanged.html" target="_blank" rel="noreferrer noopenner">onFriendListChanged</a></td>
+<td><a href="/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#friend-list-changed" target="_blank" rel="noreferrer noopenner">friendListChanged</a></td>
 <td><a href="/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#friend-list-changed" target="_blank" rel="noreferrer noopenner">friendListChanged</a></td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 </tbody></table>
 
 
-## Operation prototype
 
-- Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=DeleteFriends
-- Protocol: HTTPS
-- QPS limit: 20 calls per second
+## 接口原型
 
-## Request parameters
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=DeleteFriends`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒。
 
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic](../Accessing%20Server%20APIs.mdx#public-parameters).
+
+## 请求参数
+
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="3">
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the registered user whose friends are to be deleted.</td>
+<td>是</td>
+<td>为此 UserId（已注册）删除好友。</td>
 </tr>
 <tr data-row-level="4">
 <td>UserIds</td>
 <td>Array of String</td>
-<td>Yes</td>
-<td>The list of IDs of users to be deleted. Up to 20 user IDs can be included.</td>
+<td>是</td>
+<td>删除目标好友列表。默认数量上限为 20。</td>
 </tr>
 <tr data-row-level="5">
 <td>DeleteType</td>
 <td>Number</td>
-<td>Yes</td>
-<td>The deletion type. Valid values:<ul><li>`0`: two-way deletion;</li><li>`1`: one-way deletion.</li></ul></td>
+<td>是</td>
+<td>删除类型：
+<ul><li>0：双向删除。</li><li>1：单向删除。</li></ul></td>
 </tr>
 </tbody></table>
+
 <Note title="Note">
 
-The \`FromUserId\` and \`UserId\` parameters can contain only digits, letters, and the following characters: '!', '#', '$', '%', '\&', '(', ')', '+', '-', ':', ';', '\<', '=', '.', '>', '?', '@', '[', ']', '\^', '_', ' ', '{', '}', '|', '~'.
+FromUserId 和 UserId 仅支持数字，英文字符和{" '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'"}。
 </Note>
 
+## 请求示例
 
-## Sample request
+- 请求地址 URL：
 
-- Request URL:
-  
-  ```json
-  https://zim-api.zego.im/?Action=DeleteFriends
-  &<Common request parameters>
-  ```
+```json
+https://zim-api.zego.im/?Action=DeleteFriends
+&<公共请求参数>
+```
 
-- Request body:
-  
-  ```json
-  {
-      "FromUserId": "zego_user",
-      "UserIds": [
-          "user_id1",
-          "user_id2"
-      ],
-      "DeleteType": 1
-  }
-  ```
+- 请求消息体：
 
-## Response parameters
+```json
+{
+    "FromUserId": "zego_user",
+    "UserIds": [
+        "user_id1",
+        "user_id2"
+    ],
+    "DeleteType": 1
+}
+```
+
+## 响应参数
 
 <table class="collapsible-table" >
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>
-The return code.
-<Note title="Note">When you request to delete multiple friends at a time, take note of the following items:<ul><li>If one or more friends are successfully deleted, `0` is returned. For more information, see `ErrorList`.</li><li>If all friends fail to be deleted, a corresponding code is returned. For more information, see <a href="!Server_APIs/Return_Codes" target="_blank">Return codes</a>.</li></ul></Note>
-</td>
+<td>返回码。
+<Note title="Note">当您发起请求同时删除多名好友时：<ul><li>如果成功删除 1 名或更多好友，Code 都会返回 0。此时请参考 ErrorList 中的具体信息，确认操作结果。</li><li>如果全部目标好友删除失败，Code 会返回相关返回码，具体请参考[全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the request result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5" data-row-child="true">
 <td>ErrorList</td>
 <td>Array of Object</td>
 <td>
-The list of failed results.
+失败信息列表。
 <ul>
 <li>
-If `Code` is `0`:
-<ul>
-<li>If `ErrorList` is empty, all specified friends are successfully deleted.</li>
-<li>If `ErrorList` is not empty, some specified friends fail to be deleted. In this case, see `SubCode`.</li>
-</ul>
-
+Code 为 0：
+<ul><li>ErrorList 为空，成功删除全部目标好友。</li><li>ErrorList 不为空，表示删除部分好友失败，请参考 SubCode 处理。</li></ul>
 </li>
 <li>
-If `Code` is not `0` :
-<ul>
-<li>If `ErrorList` is empty, one or more parameters are invalid, the QPS limit is exceeded, or a system error occurs.</li>
-<li>If `ErrorList` is not empty, all specified friends fail to be deleted.</li>
-</ul>
+Code 不为 0：
+<ul><li>ErrorList 为空，表示参数错误、接口频率限制、系统错误。</li><li>ErrorList 不为空，表示全部指定好友删除失败。</li></ul>
 </li>
-</ul>
-</td>
+</ul></td>
 </tr>
 <tr data-row-level="5-3">
-<td>└UserID</td>
+<td>UserID</td>
 <td>String</td>
-<td>The ID of the user failing to be deleted.</td>
+<td>无法删除 UserID 为此的好友。</td>
 </tr>
 <tr data-row-level="5-5">
-<td>└SubCode</td>
+<td>SubCode</td>
 <td>Number</td>
-<td>The code returned when the request fails.</td>
+<td>具体失败返回码。</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
-## Sample response
+
+## 响应示例
 
 ```json
 {
@@ -197,50 +182,50 @@ If `Code` is not `0` :
 }
 ```
 
-## Return codes
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+## 返回码
+
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>描述</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter.</td>
+<td>输入参数错误。</td>
+<td>请检查输入的参数。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS limit specified in `AppID` is exceeded.</td>
-<td>Try again later.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660500002</td>
-<td>`FromUserId` is not registered.</td>
-<td>Register `FromUserId`.</td>
+<td>`FromUserId` 未注册。</td>
+<td>请先注册 `FromUserId`。</td>
 </tr>
 <tr>
 <td>660800019</td>
-<td>The number of friends to be deleted at a time exceeds the limit.</td>
-<td>Reduce the number of friends to be deleted at a time.</td>
+<td>单次批量操作超过上限。</td>
+<td>减少单次批量操作数量。</td>
 </tr>
 <tr>
 <td>660800022</td>
-<td>Repeated user IDs exist.</td>
-<td>Delete or modify repeated IDs.</td>
+<td>参数中的用户 ID 相关参数重复。</td>
+<td>请删除或修改重复参数。</td>
 </tr>
 <tr>
 <td>660800033</td>
-<td>Any string in the `UserIds` parameter cannot be the same as the value of the `FromUserId` parameter.</td>
-<td>Modify the string in the `UserId` parameter that is the same as the value of the `FromUserId` parameter.</td>
+<td>`UserIds` 中的字符串不能与 `FromUserId` 相同。</td>
+<td>请修改 `UserIds` 中与 `FromUserId` 相同的字符串。</td>
 </tr>
 <tr>
 <td>660800034</td>
-<td>The user is not a friend of `FromUserId`.</td>
-<td>No handling is required.</td>
+<td>目标用户不是 `FromUserId` 的好友。</td>
+<td>无需处理。</td>
 </tr>
 </tbody></table>
-

@@ -167,7 +167,7 @@ https://zim-api.zego.im/?Action=SendPeerMessage
 <td>Code</td>
 <td>Number</td>
 <td>返回码。
-<div class="mk-hint">当您发起请求同时向多个用户发送消息时：<ul><li>如果只需成功向 1 个或以上的用户发送消息，Code 都会返回 0，表示成功。此时请参考 ErrorList 中的具体信息，确认操作结果，了解是否向部分用户发送消息失败。</li><li>如果向所有用户发送消息都失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></div></td>
+<Note title="Note">当您发起请求同时向多个用户发送消息时：<ul><li>如果只需成功向 1 个或以上的用户发送消息，Code 都会返回 0，表示成功。此时请参考 ErrorList 中的具体信息，确认操作结果，了解是否向部分用户发送消息失败。</li><li>如果向所有用户发送消息都失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
@@ -195,12 +195,12 @@ Code 不为 0：
 </ul></td>
 </tr>
 <tr data-row-level="5-1">
-<td>UserID</td>
+<td>└UserID</td>
 <td>String</td>
 <td>发送消息失败的目标 UserID。</td>
 </tr>
 <tr data-row-level="5-2">
-<td>SubCode</td>
+<td>└SubCode</td>
 <td>Number</td>
 <td>发送消息失败的具体返回码。</td>
 </tr>
@@ -210,17 +210,17 @@ Code 不为 0：
 <td>消息接受成功的用户列表。</td>
 </tr>
 <tr data-row-level="6-1">
-<td>UserId</td>
+<td>└UserId</td>
 <td>String</td>
 <td>用户 ID。</td>
 </tr>
 <tr data-row-level="6-2">
-<td>MsgId</td>
+<td>└MsgId</td>
 <td>String</td>
 <td>消息 ID。全局唯一。</td>
 </tr>
 <tr data-row-level="6-3">
-<td>MsgSeq</td>
+<td>└MsgSeq</td>
 <td>Number</td>
 <td>消息 Seq。当消息类型为信令消息时，此字段为空。可用于 [撤回单聊消息](./Recall%20a%20one-to-one%20message.mdx)。</td>
 </tr>
