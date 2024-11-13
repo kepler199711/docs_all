@@ -875,7 +875,7 @@ zim.on('groupApplicationUpdated', (zim, { applicationList }) => {
 请确认被邀请用户（以下称为“目标用户”）已通过 {getPlatformData(props,loginMap)} 接口登录注册过，否则会操作失败。
 </Warning>
 
-- {getPlatformData(props,inviteUsersIntoGroupMap)} ：直接邀请用户入群。
+- {getPlatformData(props,inviteUsersIntoGroupMap)} ：直接邀请用户入群，无需对方同意。
 
 :::if{props.platform="Flutter"}
 开发者可以通过 [ZIMGroupUsersInvitedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupUsersInvitedResult-class.html)，判断用户是否被成功加入到群组中。
@@ -941,15 +941,6 @@ zim.inviteUsersIntoGroup(userIDs, groupID)
     //这里写调用邀请入群接口后的业务逻辑
 }];
 ```
-
-:::
-
-:::if{props.platform= "iOS"}
-<Warning title="Warning">
-群内成员调用 {getPlatformData(props,inviteUsersIntoGroupMap)} 接口，邀请其他用户加入群组时：
-- 被添加的用户将直接进入群组，无需同意。
-- 被添加的用户 userID，必须是真实存在的（即已经通过 {getPlatformData(props,loginWithUserInfoMap)} 接口登录注册过），否则会操作失败。
-</Warning>
 :::
 
 - {getPlatformData(props,sendGroupInviteApplicationsMap)} ：向用户发起入群邀请申请。
