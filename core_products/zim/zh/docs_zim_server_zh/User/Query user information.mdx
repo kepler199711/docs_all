@@ -1,140 +1,138 @@
----
-articleID: 17968
----
-# Query user information
+# 查询用户信息
 
 - - -
 
-## Description
+## 描述
 
-This API allows you to retrieve information for multiple users based on their user IDs. The response includes each user's name, avatar, and other extended fields.
+支持通过用户 ID 查询用户的信息，包含用户名称、用户头像和扩展字段。
 
-## Request method and endpoint
+## 接口原型
 
-- Request method: POST
-- Request endpoint: https://zim-api.zego.im/?Action=QueryUserInfos
-- Transmission protocol: HTTPS
-- Rate limit: 20 requests/second
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=QueryUserInfos`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒
 
-## Request parameters
 
-Listed below are the parameters specific to this request and part of the public request parameters. For the complete list of public request parameters, see [Accessing Server APIs - Public parameters](./../Accessing%20Server%20APIs.mdx#public-parameters).
+## 请求参数
+
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
-  <colgroup>
-    <col width="20%" />
-    <col width="20%" />
-    <col width="20%" />
-    <col width="40%" />
-  </colgroup>
 <tbody><tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr>
 <td>UserIds[]</td>
 <td>Array of String</td>
-<td>Yes</td>
-<td>The list of user IDs to be queried, up tp 100 user IDs can be queried. Each user ID should be less than 64 bytes.</td>
+<td>是</td>
+<td>需要查询的用户 ID 列表，最大支持查询 100 个用户 ID。单个用户 ID 不超过 64 字节。</td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-The `UserId` can only contain numbers, letters, and the following special characters: !#$%&()+-:\<=.>?@[]^_{}|~.
-
+UserIds 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}。
 </Note>
 
-## Sample request
 
-- Request URL
+## 请求示例
 
-    ```json
-    https://zim-api.zego.im/?Action=QueryUserInfos
-    &<Common request parameters>
-    ```
+- 请求地址 URL：
 
-- Request body
-  
-    ```json
-    {
-        "UserIds": ["userA","userB","userC"]
-    }
-    ```
+```json
+https://zim-api.zego.im/?Action=QueryUserInfos
+&<公共请求参数>
+```
 
-## Response parameters
+- 请求消息体：
+
+```json
+{
+    "UserIds": ["userA","userB","userC"]
+}
+```
+
+## 响应参数
 
 <table class="collapsible-table" >
-  <colgroup>
-    <col width="25%" />
-    <col width="25%" />
-    <col width="50%" />
-  </colgroup>
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>Return code.</td>
+<td>返回码。</td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>Description of the request execution result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>Request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5" data-row-child="true">
 <td>Result</td>
 <td>Object</td>
-<td>Results of the successful query.</td>
+<td>查询成功结果。</td>
 </tr>
 <tr data-row-level="5-1">
 <td>└UserId</td>
 <td>String</td>
-<td>User ID of successful query.</td>
+<td>查询成功的用户 ID。</td>
 </tr>
 <tr data-row-level="5-2">
 <td>└UserName</td>
 <td>String</td>
-<td>User name.</td>
+<td>用户名称。</td>
 </tr>
 <tr data-row-level="5-3">
 <td>└UserAvatar</td>
 <td>String</td>
-<td>User avatar address.</td>
+<td>用户头像地址。</td>
 </tr>
 <tr data-row-level="5-4">
 <td>└Extra</td>
 <td>String</td>
-<td>Extra fileld.</td>
+<td>扩展字段。</td>
 </tr>
 <tr data-row-level="6" data-row-child="true">
 <td>ErrorList</td>
 <td>Object</td>
-<td>The list of query failures.</td>
+<td>
+查询失败列表。用户 ID 不存在或者用户未注册时，通过该字段返回。
+<ul>
+<li>
+Code 为 0：
+<ul><li>ErrorList 为空，全部用户信息查询成功。</li><li>ErrorList 不为空，表示部分用户信息查询失败，请参考 SubCode 处理。</li></ul>
+</li>
+<li>
+Code 不为 0：
+<ul><li>ErrorList 为空，表示参数错误、接口频率限制、系统错误。</li></ul>
+</li>
+</ul></td>
 </tr>
-<tr data-row-level="6-1">
+<tr data-row-level="6-5">
 <td>└UserId</td>
 <td>String</td>
-<td>User ID of failed query.</td>
+<td>查询失败的用户 ID。</td>
 </tr>
-<tr data-row-level="6-2">
+<tr data-row-level="6-6">
 <td>└SubCode</td>
 <td>Number</td>
-<td>Return code indicating query failure. <p>The returned code when the query fails. </p><p>This parameter is only returned when <code>ErrorList</code> is not <code>null</code>. </p></td>
+<td>查询失败时的返回码。</td>
 </tr>
 </tbody></table>
 
-## Sample response 
+## 响应示例
 
 ```json
 {
@@ -159,37 +157,39 @@ The `UserId` can only contain numbers, letters, and the following special charac
 ```
 
 
-## Return codes
+## 返回码
 
-Listed below are the return codes related to this API. For the complete list of return codes, see [Return codes\|_balnk](./../Return%20codes.mdx).
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
-  <colgroup>
-    <col width="35%" />
-    <col width="65%" />
-  </colgroup>
 <tbody><tr>
-<th>return code</th>
-<th>Description</th>
+<th>返回码</th>
+<th>描述</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000001</td>
-<td>Business related general error.  Please try again or contact ZEGOCLOUD Technical Support.</td>
+<td>业务类通用错误。</td>
+<td>请重试，或联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter. The parameter entered is missing or invalid. Please check the parameters.</td>
+<td>不存在的用户 ID，或者用户已经登出。</td>
+<td>请检查输入的参数。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS limit specified in AppID is exceeded. Try again later.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660700008</td>
-<td>Failed to get user information. Please check the user IDs or contact ZEGOCLOUD Technical Support.&nbsp;</td>
+<td>获取用户信息出错。</td>
+<td>请检查用户 ID 是否正确，或联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660700015</td>
-<td>The user is not registered. Please register the user first.</td>
+<td>用户未注册。</td>
+<td>请先注册用户。</td>
 </tr>
 </tbody></table>

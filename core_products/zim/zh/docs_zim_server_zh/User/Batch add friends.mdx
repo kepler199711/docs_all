@@ -75,32 +75,32 @@
 <td>好友结构体对象。默认上限为 20。</td>
 </tr>
 <tr data-row-level="4-1">
-<td>UserId</td>
+<td>└UserId</td>
 <td>String</td>
 <td>是</td>
 <td>目标用户 ID（已注册）。长度上限为 32 字节。</td>
 </tr>
 <tr data-row-level="4-4">
-<td>Wording</td>
+<td>└Wording</td>
 <td>String</td>
 <td>否</td>
 <td>FromUserId 对目标用户成为好友时的附言，长度上限为 256 字符。</td>
 </tr>
 <tr data-row-level="4-5">
-<td>FriendAlias</td>
+<td>└FriendAlias</td>
 <td>String</td>
 <td>否</td>
 <td>FromUserId 对目标用户的备注，长度上限为 256 字符。</td>
 </tr>
 <tr data-row-level="4-6">
-<td>FriendTime</td>
+<td>└FriendTime</td>
 <td>Number</td>
 <td>否</td>
 <td>成为好友的时间。此参数可在数据迁移时用于导入好友列表。
 <ul><li>为 0 时，ZIM 服务端以当前时间为准。</li><li>不为 0 时，此参数需为 MS 时间戳，且不晚于当前时间。</li></ul></td>
 </tr>
 <tr data-row-level="4-7" data-row-child="true">
-<td>Attributes</td>
+<td>└Attributes</td>
 <td>Array of Object</td>
 <td>否</td>
 <td>
@@ -112,13 +112,13 @@
 </td>
 </tr>
 <tr data-row-level="4-7-1">
-<td>Key</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Key</td>
 <td>String</td>
 <td>是</td>
 <td>好友属性的键。取值仅能为 k0、k1、k2、k3、k4。</td>
 </tr>
 <tr data-row-level="4-7-2">
-<td>Value</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Value</td>
 <td>String</td>
 <td>是</td>
 <td>好友属性的值。</td>
@@ -220,12 +220,12 @@ Code 不为 0：
 </ul></td>
 </tr>
 <tr data-row-level="5-3">
-<td>UserID</td>
+<td>└UserID</td>
 <td>String</td>
 <td>添加该 UserID 为好友失败。</td>
 </tr>
 <tr data-row-level="5-5">
-<td>SubCode</td>
+<td>└SubCode</td>
 <td>Number</td>
 <td>具体失败返回码。</td>
 </tr>

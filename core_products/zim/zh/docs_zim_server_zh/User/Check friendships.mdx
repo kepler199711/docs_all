@@ -1,42 +1,40 @@
-# Check friendships
+# 检查好友关系
 
 - - -
 
-## Overview
+## 描述
 
-You can call this operation to batch check the friendships between a user and up to 20 users. If you need a higher limit (50 at maximum), please contact the ZEGOCLOUD technical support team.
+调用此接口，可为一名用户批量检查其与至多 20 名其他用户的好友关系。如需上调（最多可为 50），请联系 ZEGO 技术支持。
 
-ZEGOCLOUD allows one-way or two-way check of friendships. In this example, the friendship between users A and B is checked.
+ZEGO 支持单边或双边检查好友关系，以检查用户 A 与目标用户 B 的好友关系为例：
+- 单边检查：仅检查用户 A 的好友列表是否有用户 B。
+- 双边检查：同时检查用户 A 和用户 B 的好友列表是否有对方。
 
-- One-way check: Only checks whether user B is in the friend list of user A.
-- Two-way check: Checks whether users A and B are in the friend list of the other.
-
-
-Below are possible results.
+检查好友关系的结果可能有：
 
 <table>
 <tbody><tr>
-<th rowspan="2">Check Type</th>
-<th rowspan="2">Value</th>
-<th colspan="2">Description</th>
+<th rowspan="2">检查类型</th>
+<th rowspan="2">数值</th>
+<th colspan="2">说明</th>
 </tr>
 <tr>
-<th>B in the Friend List of A</th>
-<th>A in the Friend List of B</th>
+<th>A 的好友列表有 B</th>
+<th>B 的好友列表有 A</th>
 </tr>
 <tr>
-<td rowspan="2">One-way</td>
+<td rowspan="2">单向</td>
 <td>1</td>
 <td>✖</td>
-<td>Uncertain</td>
+<td>无法确认</td>
 </tr>
 <tr>
 <td>2</td>
 <td>✔️</td>
-<td>Uncertain</td>
+<td>无法确认</td>
 </tr>
 <tr>
-<td rowspan="4">Two-way</td>
+<td rowspan="4">双向</td>
 <td>3</td>
 <td>✖</td>
 <td>✖</td>
@@ -58,159 +56,157 @@ Below are possible results.
 </tr>
 </tbody></table>
 
-## Operation prototype
 
-- Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=CheckFriendsRelation
-- Protocol: HTTPS
-- QPS limit: 20 calls per second
+## 接口原型
 
-## Request parameters
+- 请求方法：POST
+- 请求地址：`https://zim-api.zego.im/?Action=CheckFriendsRelation`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒。
 
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic](../Accessing%20Server%20APIs.mdx#public-request-parameters).
+
+## 请求参数
+
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table>
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>是否必选</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="3">
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the registered user whose friendships are to be checked.</td>
+<td>是</td>
+<td>为此 UserId（已注册）查询好友关系。</td>
 </tr>
 <tr data-row-level="4">
 <td>UserIds</td>
 <td>Array of String</td>
-<td>Yes</td>
-<td>The list of users to be checked. Up to 20 user IDs can be included.</td>
+<td>是</td>
+<td>待检查好友关系的目标用户列表。默认数量上限为 20。</td>
 </tr>
 <tr data-row-level="5">
 <td>CheckType</td>
 <td>Number</td>
-<td>Yes</td>
-<td>The check type. Valid values:<ul><li>`0`: two-way check.</li><li>`1`: one-way check.</li></ul></td>
+<td>是</td>
+<td>检查类型：
+<ul><li>0：双向检查。</li><li>1：单向检查。</li></ul></td>
 </tr>
 </tbody></table>
 
 <Note title="Note">
 
-The `FromUserId` and `UserIds` parameters can contain only digits, letters, and the following characters: '!', '#', '$', '%', '\&', '(', ')', '+', '-', ':', ';', '\<', '=', '.', '>', '?', '@', '[', ']', '\^', '\_', ' ', '{', '}', '\|', '~'.
-
+FromUserId 和 UserIds 仅支持数字，英文字符和 {"'!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'"}。
 </Note>
-## Sample request
 
-- Request URL:
-  
-  ```json
-  https://zim-api.zego.im/?Action=CheckFriendsRelation
-  &<Common request parameters>
-  ```
+## 请求示例
 
-- Request body:
-  
-  ```json
-  {
-      "FromUserId": "zego_user",
-      "UserIds": [
-          "user_id1",
-          "user_id2",
-          "user_id3",
-          "user_id4"
-      ],
-      "CheckType": 0
-  }
-  ```
+- 请求地址 URL：
 
-## Response parameters
+```json
+https://zim-api.zego.im/?Action=CheckFriendsRelation
+&<公共请求参数>
+```
+
+- 请求消息体：
+
+```json
+{
+    "FromUserId": "zego_user",
+    "UserIds": [
+        "user_id1",
+        "user_id2",
+        "user_id3",
+        "user_id4"
+    ],
+    "CheckType": 0
+}
+```
+
+## 响应参数
 
 <table class="collapsible-table" >
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.<Note title="Note">When you request to check the friendships between `FromUserId` and multiple users, take note of the following items:<ul><li>If one or more friendships are successfully checked, `0` is returned. For more information, see `Fails`.</li><li>If all friendships fail to be checked, a corresponding code is returned. For more information, see <a href="!Server_APIs/Return_Codes" target="_blank">Return codes</a>.</li></ul></Note></td>
+<td>返回码。
+<Note title="Note">当您发起请求同时检查 `FromUserId` 与多名用户的好友关系时：<ul><li>如果成功检查 `FromUserId` 与 1 名或更多用户的好友关系，Code 都会返回 0。此时请参考 Fails 中的具体信息，确认操作结果。</li><li>如果&nbsp; `FromUserId` 与全部目标用户的好友关系都检查失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the request result.</td>
+<td>请求结果的说明信息。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5" data-row-child="true">
 <td>Successes</td>
 <td>Array of Object</td>
-<td>The list of successful results.</td>
+<td>检查成功列表。</td>
 </tr>
 <tr data-row-level="5-1">
 <td>└UserId</td>
 <td>String</td>
-<td>The ID of the user whose friendship with `FromUserId` is successfully checked.</td>
+<td>成功检查 `FromUserId` 与此用户 ID 的好友关系。</td>
 </tr>
 <tr data-row-level="5-2">
 <td>└Relation</td>
 <td>Number</td>
-<td>The relationship type. For more information, see <a href="#1">Overview</a>.</td>
+<td>关系类型，详情请参考 <a href="#1">描述</a>。</td>
 </tr>
 <tr data-row-level="6" data-row-child="true">
 <td>Fails</td>
 <td>Array of Object</td>
 <td>
-The list of failed results.
+检查失败列表。
 <ul>
 <li>
-If `Code` is `0`:
-<ul>
-<li>If `Fails` is empty, the friendships between `FromUserId` and all specified users are successfully checked.</li>
-<li>If `Fails` is not empty, the friendships between `FromUserId` and some specified users fail to be checked. In this case, see `SubCode`.</li>
-</ul>
+Code 为 0：
+<ul><li>Fails 为空，表示成功检查 `FromUserId` 与全部目标用户的好友关系。</li><li>Fails 不为空，表示 `FromUserId` 与部分目标用户的好友关系检查失败，请参考 SubCode 处理。</li></ul>
 </li>
 <li>
-If `Code` is not `0`:
-<ul>
-<li>If `Fails` is empty, one or more parameters are invalid, the QPS limit is exceeded, or a system error occurs.</li>
-<li>If `Fails` is not empty, the friendships between `FromUserId` and all specified users fail to be checked.</li>
-</ul>
+Code 不为 0：
+<ul><li>Fails 为空，表示参数错误、接口频率限制、系统错误。</li><li>Fails 不为空，表示`FromUserId` 与全部目标用户的好友关系检查失败。</li></ul>
 </li>
 </ul></td>
 </tr>
 <tr data-row-level="6-3">
 <td>└UserID</td>
 <td>String</td>
-<td>The ID of the user whose friendship with `FromUserId` fails to be checked.</td>
+<td>`FromUserId` 与此用户 ID 的好友关系检查失败。</td>
 </tr>
 <tr data-row-level="6-5">
 <td>└SubCode</td>
 <td>Number</td>
-<td>The code returned when the request fails.</td>
+<td>具体失败返回码。</td>
 </tr>
 <tr data-row-level="6-6">
-<td>Relation</td>
+<td>└Relation</td>
 <td>Number</td>
-<td>The relationship type. This parameter is valid only if `CheckType` is set to `0`. Valid values: `1` and `2`. For more information, see <a href="#1">Overview</a>.</td>
+<td>关系类型。仅当请求参数 `CheckType` 为 0 时，此字段有值，为 1 或 2，相关数值详情请参考 <a href="#1">描述</a>。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+
+## 响应示例
 
 ```json
 {
     "Code": 0,
     "Message": "success",
     "RequestId": "343649807833778782",
-    "Succ": [
+    "Successes": [
         {
             "UserId": "user_id1",
             "Relation": 4
@@ -235,29 +231,30 @@ If `Code` is not `0`:
 }
 ```
 
-## Return codes
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+## 返回码
+
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>描述</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000001</td>
-<td>A common service error occurred.</td>
-<td>Please try again, or contact ZEGOCLOUD technical support team.</td>
+<td>业务类通用错误。</td>
+<td>请重试，或联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter.</td>
+<td>输入参数错误。</td>
+<td>请检查输入的参数。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS limit specified in `AppID` is exceeded.</td>
-<td>Please try again later.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试。</td>
 </tr>
 </tbody></table>

@@ -1,17 +1,12 @@
----
-articleID: 16903
----
-
-# Change the alias of a friend
+# 更新好友备注
 
 - - -
 
+## 描述
 
-## Overview
+通过该接口，可为一名用户批量修改至多 20 名好友的备注。如需上调（最多可为 50），请联系 ZEGO 技术支持。
 
-You can call this operation to batch change the aliases of up to 20 friends for a user. If you need a higher limit (50 at maximum), contact ZEGOCLOUD technical support.
-
-After aliases are changed, the user receives the notification in the following ZIM SDK callbacks.
+修改好友备注成功后，用户通过以下 ZIM SDK 的回调接口接收相关修改通知：
 
 <table>
 <tbody><tr>
@@ -19,86 +14,86 @@ After aliases are changed, the user receives the notification in the following Z
 <th>Android</th>
 <th>macOS</th>
 <th>Windows</th>
+<th>Web</th>
 </tr>
 <tr>
 <td><a href="/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-friend-info-updated-friend-info-list" target="_blank" rel="noreferrer noopenner">friendInfoUpdated</a></td>
 <td><a href="/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-friend-info-updated" target="_blank" rel="noreferrer noopenner">onFriendInfoUpdated</a></td>
 <td><a href="/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-friend-info-updated-friend-info-list" target="_blank" rel="noreferrer noopenner">friendInfoUpdated</a></td>
 <td><a href="/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-friend-info-updated" target="_blank" rel="noreferrer noopenner">onFriendInfoUpdated</a></td>
-</tr>
-<tr>
-<th>Web</th>
-<th>Flutter</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-<tr>
 <td><a href="/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#friend-info-updated" target="_blank" rel="noreferrer noopenner">friendInfoUpdated</a></td>
+</tr>
+<tr>
+<th>小程序</th>
+<th>Flutter</th>
+<th>uni-app</th>
+<th>React Native</th>
+<th></th>
+</tr>
+<tr>
+<td><a href="/article/api?doc=zim_API~javascript_wxxcx~interface~ZIMEventHandler#friend-info-updated" target="_blank" rel="noreferrer noopenner">friendInfoUpdated</a></td>
 <td><a href="https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onFriendInfoUpdated.html" target="_blank" rel="noreferrer noopenner">onFriendInfoUpdated</a></td>
-<td></td>
-<td></td>
-<td></td>
+<td><a href="/article/api?doc=zim_API~javascript_uni-app~interface~ZIMEventHandler#friend-info-updated" target="_blank" rel="noreferrer noopenner">friendInfoUpdated</a></td>
+<td><a href="/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#friend-info-updated" target="_blank" rel="noreferrer noopenner">friendInfoUpdated</a></td>
 <td></td>
 </tr>
 </tbody></table>
 
-## Operation prototype
 
-- Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=UpdateFriendsAlias
-- Protocol: HTTPS
-- QPS limit: 20 calls per second
 
-## Request parameters
+## 接口原型
 
-The following table describes only the operation-specific request parameters and some common request parameters. For the complete list of common request parameters, see the [Public request parameters section of the Accessing Server APIs topic|_blank](#13988#2).
+- 请求方法：POST
+- 请求地址： `https://zim-api.zego.im/?Action=UpdateFriendsAlias`
+- 传输协议：HTTPS
+- 调用频率限制：20 次/秒
+
+## 请求参数
+
+以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
 <table class="collapsible-table" >
 <tbody><tr data-row-level="1">
-<td>Parameter</td>
-<td>Type</td>
-<td>Required</td>
-<td>Description</td>
+<td>参数</td>
+<td>类型</td>
+<td>是否必选</td>
+<td>描述</td>
 </tr>
 <tr data-row-level="2">
 <td>FromUserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The ID of the registered user whose friend's alias is to be changed.</td>
+<td>是</td>
+<td>更新此 UserID（已注册）对指定好友的备注。</td>
 </tr>
 <tr data-row-level="3" data-row-child="true">
 <td>UserIds</td>
 <td>Array of Object</td>
-<td>Yes</td>
-<td>The list of friends whose aliases are to be modified. Up to 20 user IDs can be included at a time.</td>
+<td>是</td>
+<td>备注待更新的用户列表。单次最多修改 20 个用户。</td>
 </tr>
 <tr data-row-level="3-1">
 <td>└UserId</td>
 <td>String</td>
-<td>Yes</td>
-<td>The user ID, which cannot exceed 32 bytes in length.</td>
+<td>是</td>
+<td>用户 ID。长度上限为 32 字节。</td>
 </tr>
 <tr data-row-level="3-2">
 <td>└FriendAlias</td>
 <td>String</td>
-<td>No</td>
-<td>The new alias, which cannot exceed 256 bytes in length.</td>
+<td>否</td>
+<td>新的好友备注，长度不超过 256 字符。</td>
 </tr>
 </tbody></table>
 
-## Sample request
+## 请求示例
 
-- Request URL
-  
+- 请求url
   ```json
   https://zim-api.zego.im/?Action=UpdateFriendsAlias
-  &<Common request parameters>
+  &<公共请求参数>
   ```
 
-- Request body
-  
+- 请求消息体
   ```json
   {
       "FromUserId": "zego_user",
@@ -115,65 +110,57 @@ The following table describes only the operation-specific request parameters and
   }
   ```
 
-## Response parameters
+## 响应参数
 
 <table class="collapsible-table" >
-
 <tbody><tr data-row-level="1">
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
+<th>参数</th>
+<th>类型</th>
+<th>描述</th>
 </tr>
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.<Note title="Note">When you request to change the aliases of multiple friends, take note of the following items:<ul><li>If the alias of one or more friends is successfully changed, `0` is returned. For more information, see `ErrorList`.</li><li>If the aliases of all friends fail to be changed, a corresponding code is returned. For more information, see <a href="!Server_APIs/Return_Codes" target="_blank">Return codes</a>.</li></ul></Note></td>
+<td>返回码。<Note title="Note">当您发起请求同时更新多个好友备注：<ul><li>如果成功更新 1 个或更多好友备注，Code 都会返回 0。此时请参考 ErrorList 中的具体信息，确认操作结果。</li><li>如果全部好友备注更新失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
 <td>String</td>
-<td>The description of the operation result.</td>
+<td>操作结果描述。</td>
 </tr>
 <tr data-row-level="4">
 <td>RequestId</td>
 <td>String</td>
-<td>The request ID.</td>
+<td>请求 ID。</td>
 </tr>
 <tr data-row-level="5" data-row-child="true">
 <td>ErrorList</td>
 <td>Array of Object</td>
 <td>
-The list of failed results.
-<ul>
-<li>
-If `Code` is `0`:
-<ul>
-<li>If `ErrorList` is empty, the aliases of all friends are successfully changed.</li>
-<li>If `ErrorList` is not empty, the aliases of some friends fail to be changed. In this case, see `SubCode`.</li>
-</ul>
+失败信息列表。
+<ul><li>
+Code 为 0：
+<ul><li>ErrorList 为空，全部好友备注修改成功。</li><li>ErrorList 不为空，表示部分好友备注修改失败，请参考 SubCode 处理。</li></ul>
 </li>
 <li>
-If `Code` is not `0`:
-<ul>
-<li>If `ErrorList` is empty, one or more parameters are invalid, the QPS limit is exceeded, or a system error occurs.</li>
-<li>If `ErrorList` is not empty, the aliases of all friends fail to be changed.</li>
-</ul>
+Code 不为 0：
+<ul><li>ErrorList 为空，表示参数错误、接口频率限制、系统错误。</li><li>ErrorList 不为空，表示全部好友备注都修改失败。</li></ul>
 </li>
 </ul></td>
 </tr>
 <tr data-row-level="5-1">
 <td>└UserId</td>
 <td>String</td>
-<td>The ID of the friend whose alias fails to be changed.</td>
+<td>好友备注修改失败的用户 ID。</td>
 </tr>
 <tr data-row-level="5-2">
 <td>└SubCode</td>
 <td>Number</td>
-<td>The code returned when the request fails.</td>
+<td>具体失败返回码。</td>
 </tr>
 </tbody></table>
 
-## Sample response
+## 响应示例
 
 ```json
 {
@@ -183,57 +170,55 @@ If `Code` is not `0`:
     "ErrorList": [
         {
             "UserId": "aaa",
-            "SubCode": 660000012,
-            "SubMessage": "user length limit"
+            "SubCode": 660000012
         },
         {
             "UserId": "bbb",
-            "SubCode": 660000013,
-            "SubMessage": "this is a demo"
+            "SubCode": 660000013
         }
     ]
 }
 ```
 
-## Return codes
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](../Return%20codes.mdx).
+## 返回码
+
+以下仅列出了接口业务逻辑相关的返回码，完整返回码请参考 [全局返回码](../Return%20codes.mdx)。
 
 <table>
 <tbody><tr>
-<th>Return Code</th>
-<th>Description</th>
-<th>Solution</th>
+<th>返回码</th>
+<th>描述</th>
+<th>处理建议</th>
 </tr>
 <tr>
 <td>660000001</td>
-<td>A common service error occurred.</td>
-<td>Try again, or contact ZEGOCLOUD technical support.</td>
+<td>业务类通用错误。</td>
+<td>请重试，或联系 ZEGO 技术支持。</td>
 </tr>
 <tr>
 <td>660000002</td>
-<td>Invalid parameter.</td>
-<td>Check the input parameter.</td>
+<td>输入参数错误。</td>
+<td>请检查输入的参数。</td>
 </tr>
 <tr>
 <td>660300005</td>
-<td>The QPS limit specified in `AppID` is exceeded.</td>
-<td>Try again later.</td>
+<td>调用接口的频率超出了 AppID 级别限制。</td>
+<td>请稍后再试。</td>
 </tr>
 <tr>
 <td>660800019</td>
-<td>The number of aliases of friends to be changed at a time exceeds the limit.</td>
-<td>Reduce the number of friends whose aliases are to be changed at a time.</td>
+<td>单次批量操作超过上限。</td>
+<td>减少单次批量操作数量。</td>
 </tr>
 <tr>
 <td>660800021</td>
-<td>The length of the `FriendAlias` parameter exceeds the limit.</td>
-<td>Reduce the parameter length.</td>
+<td>`FriendAlias` 超过长度上限。</td>
+<td>请缩减相关字段的内容长度。</td>
 </tr>
 <tr>
 <td>660800034</td>
-<td>This user is not a friend of `FromUserId`.</td>
-<td>Send a friend request to this user.</td>
+<td>此用户不是`FromUserId` 的好友。</td>
+<td>请先添加此用户为好友。</td>
 </tr>
 </tbody></table>
-
