@@ -44,7 +44,7 @@ ZIM SDK 提供了房间信息查询功能，比如获取房间成员列表、查
 
 ## 实现流程
 
-<Note title="Note">
+<Note title="说明">
 
 用户只有在所查询的房间内，才可以使用以下房间功能。  
 </Note>
@@ -71,7 +71,7 @@ ZIM SDK 提供了房间信息查询功能，比如获取房间成员列表、查
 | nextFlag |  string | 是 |<p>分页查询的标识位。首次查询时，请将此字段设为空字符串。</p><p>若回调的 "nextFlag" 字段不是空字符串，说明还未查询完所有用户，此时需要将其设置为当前位置，以继续下一页的查询。</p>|
 | count | {getPlatformData(props,typeMap)} | 是 | <p>查询一次，可获取的成员数量。</p><p>注意事项：分页获取消息以降低开销，建议单次获取 100 个成员以内。</p>|
 
-<Note title="Note">
+<Note title="说明">
 
 当房间成员超过 500 人时，查询房间成员列表的结果最多只能包含 500 名成员的信息。如需提高查询结果上限，请联系 ZEGO 技术支持进行配置。 
 </Note>
@@ -241,6 +241,6 @@ zim.queryRoomOnlineMemberCount(roomID, config)
 ```
 :::
 
-<Note title="Note">
+<Note title="说明">
 加入到房间后，如果调用了 {getPlatformData(props,logoutMap)} 接口退出登录，该客户端即处于离线状态。
 </Note>

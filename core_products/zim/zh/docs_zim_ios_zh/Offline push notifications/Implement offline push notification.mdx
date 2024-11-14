@@ -12,7 +12,7 @@ ZEGO 即时通讯（ZIM）支持离线推送消息的功能。例如在“单聊
 
 开发者可以通过集成 ZPNs SDK，与 ZIM SDK 搭配使用，实现离线推送功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 - ZPNs SDK 需要搭配 ZIM SDK 2.0.0 或以上版本使用。
 - 使用 ZPNs SDK 前，请先在 [ZEGO 控制台](https://console.zego.im) 自助配置 ZIM 离线推送证书（详情请参考 [项目管理 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)），若无法配置，请联系 ZEGO 技术支持处理。
 </Warning>
@@ -65,7 +65,7 @@ ZIM 实现离线推送的方案如下：
 
 3. 打开 Podfile 文件，在 “target” 下添加 `pod 'ZPNs'`，需要将 “MyProject” 替换为开发者的 Target 名称。  
 
-    <Warning title="Warning">
+    <Warning title="注意">
     由于 SDK 为 XCFramework，只有 1.10.0 或以上版本的 CocoaPods 才能集成该 SDK。
     </Warning>
 
@@ -80,7 +80,7 @@ ZIM 实现离线推送的方案如下：
 
 5. 执行 `pod install` 命令安装 SDK。
 
-    <Note title="Note">
+    <Note title="说明">
     - 若出现 “CDN: trunk URL couldn't be downloaded” 问题，请参考 [CocoaPods 常见问题 - 连接不上 trunk CDN 的问题](https://doc-zh.zego.im/article/13860#2)。
     - 若出现 “Unable to find a specification for 'ZPNs'” 问题，请参考 [CocoaPods 常见问题 - 无法找到项目的问题](https://doc-zh.zego.im/article/13860#3)。  
     - 若出现 “CocoaPods could not find compatible versions for pod "ZPNs"” 问题，请参考 [CocoaPods 常见问题 - 无法找到项目的问题](https://doc-zh.zego.im/article/13860#3)。
@@ -99,7 +99,7 @@ ZIM 实现离线推送的方案如下：
 
 开发者需要获取 DeviceToken，ZIM SDK 才能根据 DeviceToken 配置离线推送功能。
 
-<Note title="Note">
+<Note title="说明">
 - DeviceToken，是 Apple 设备上每个 APP 的唯一标识。
 - APNs（Apple Push Notification Service，Apple Push 服务器），是 Apple 的推送服务核心组件。
 </Note>
@@ -160,7 +160,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 }
 ```
 
-<Warning title="Warning">
+<Warning title="注意">
 请根据开发环境或生产环境准确填入 isProduct 的值（打包时用 development 证书签名为开发环境，用 distribution 证书签名为生产环境），否则 ZPNs 服务器无法选择合适的推送证书向 APNs 正确发送离线推送请求。APNs 在正式环境下的到达率与延迟均好于测试环境。
 </Warning>
 
@@ -178,7 +178,7 @@ ZPNs SDK 获取到 DeviceToken 后，会把 DeviceToken 传给 ZIM SDK，ZIM SDK
 
 ZIM 支持在发送单聊消息、群组消息和呼叫邀请时，使用离线推送消息的功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 在实现离线推送前，请确保：
 - 参考 [发送消息](./../Send%20and%20receive%20messages.mdx)，实现发送单聊/群聊消息的功能。
 - 参考 [呼叫邀请](./Call%20invitation%20signaling.mdx)，实现呼叫邀请。

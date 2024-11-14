@@ -11,7 +11,7 @@ articleID: 18904
 
 离线登录，是指应用被清理后，用户再次点击应用图标启动应用时，在无网络、未登录成功的状态下直接访问用户本地 SDK 数据，常用于自动登录 App。
 
-<Note title="Note">
+<Note title="说明">
 
 用户只能使用上一次成功登录的 UserID 进行离线登录；否则，登录不会成功。
 </Note>
@@ -26,7 +26,7 @@ articleID: 18904
 
 在无网络且应用已被清理的情况下，可以调用 [login](@login__2) 接口时，[ZIMLoginConfig](@-ZIMLoginConfig) 中的 [isOfflineLogin](@isOfflineLogin) 传入 `true`，实现使用上一次的用户信息离线登录 App。当通过 [ZIMLoggedInCallback](@-ZIMLoggedInCallback) 回调确定登录成功后，即可访问本地 SDK 数据。 
 
-<Note title="Note">
+<Note title="说明">
 
 建议您缓存每次登录使用的用户信息。当 App 打开时，读取缓存，实现以下逻辑：
 - 如果判断用户不是使用上一次在线登录的 UserID ，此时 [isOfflineLogin](@isOfflineLogin) 应为 `false`，此时离线登录会失败，不允许用户访问该 UserID 的本地 SDK 数据。

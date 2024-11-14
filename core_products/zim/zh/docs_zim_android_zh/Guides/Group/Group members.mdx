@@ -128,14 +128,14 @@ export const ZIMGroupConversationMap = {
 ## 功能简介
 
 :::if{props.platform="Flutter"}
-<Note title="Note">
+<Note title="说明">
 
 本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
 </Note>
 
 :::
 :::if{props.platform="U3d"}
-<Note title="Note">
+<Note title="说明">
 
 本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
@@ -146,7 +146,7 @@ ZIM SDK 提供了群成员管理功能，支持查询群组成员列表、查询
 
 ## 实现流程
 
-<Warning title="Warning">
+<Warning title="注意">
 
 用户使用“群成员管理”功能之前，请先加入某个群组，否则无法使用相关功能，详情请参考 [加入群组](./Manage%20groups.mdx#加入群组)。
 </Warning>
@@ -159,7 +159,7 @@ ZIM SDK 提供了群成员管理功能，支持查询群组成员列表、查询
 
 查询成功后，用户可以通过 {getPlatformData(props,ZIMGroupMemberListQueriedCallbackMap)} 收到查询结果。
 
-<Note title="Note">
+<Note title="说明">
 
 截至当前版本，首次调用此接口拉取群成员列表时，可以获取群成员头像。再次调用此接口后，可以获取新增用户的头像信息，但存量用户的头像信息不会更新。
 
@@ -371,7 +371,7 @@ ZIM.GetInstance().QueryGroupMemberInfo("user_id", "group_id", (string groupID, Z
 
 用户登录 ZIM SDK、并加入某个群组后，如果想要设置自己在群组中的昵称，可以通过调用 {getPlatformData(props,setGroupMemberNicknameMap)} 接口，设置昵称。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 在群组中，群主可以设置自己和其他群内成员在该群中的昵称；其他群内成员仅可以设置自己在该群的昵称。
 </Warning>
@@ -632,7 +632,7 @@ ZIM.GetInstance().SetGroupMemberRole(role, "user_id", "group_id", (string groupI
 
 用户登录 ZIM SDK、并加入某个群组后，如果自己是某个群组中的群主，可以通过调用 {getPlatformData(props,transferGroupOwnerMap)} 接口，传入 toUserID（被转让群主的群成员 ID），将自己的群主角色，转让给其他群内成员。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 群组中，只有群主向其他群内成员转让群主的角色。
 - 群主转让时，toUserID（被转让群主的用户 ID） 必须是本群组内的成员，否则会操作失败。
@@ -949,7 +949,7 @@ ZIM.GetInstance().SearchLocalGroupMembers(groupInfo.baseInfo.groupID, groupMembe
 
 登录 ZIM SDK 后，用户可以禁言或解禁自己管理的群组内的特定成员。调用 {getPlatformData(props,muteGroupMembersMap)} 接口，批量修改 100 名群成员的禁言状态。禁言期限可为永久（`ZIMGroupMemberMuteConfig > duration` 为 -1）或最长为 7 天（`ZIMGroupMemberMuteConfig > duration` 为 604800）。当 `ZIMGroupMemberMuteConfig > duration` 为 0 时，表示取消禁言。
 
-<Note title="Note">
+<Note title="说明">
 
 - 群主可以禁止所有群成员发言，包括自己。
 - 如需上调单次操作数量或最长禁言期限，请联系 ZEGO 技术支持。
@@ -959,7 +959,7 @@ ZIM.GetInstance().SearchLocalGroupMembers(groupInfo.baseInfo.groupID, groupMembe
 
 禁言或解禁成功后，全体群成员会收到 {getPlatformData(props,onGroupMemberInfoUpdatedMap)} ，得知哪些群成员无法在该群组发言或解除禁言状态。
 
-<Note title="Note">
+<Note title="说明">
 
 如果您希望禁止特定群成员角色发言，请参考 [群组管理 - 禁言或解禁群组](./Manage%20groups.mdx#禁言或解禁群组)。
 </Note>
@@ -1162,7 +1162,7 @@ zim_->queryGroupMemberMutedList(
 - 为 0 时，表示当前用户可以在该群组发言。
 - 为其他值时，表示当前用户于该数值时间内无法在该群组发言。
 
-<Note title="Note">
+<Note title="说明">
 
 如果当前用户既因群角色被禁言（详见 [群组管理 - 禁言或解禁群组](./Manage%20groups.mdx#禁言或解禁群组)，又被单独禁言（详见本文 <a href="#设置群成员禁言状态">设置群成员禁言状态</a>），则 {getPlatformData(props,mutedExpiredTimeMap)} 值以“群禁言时间”与“单独被禁言时间”中的最大值为准。
 </Note>

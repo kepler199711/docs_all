@@ -60,7 +60,7 @@ export const onConversationTotalUnreadMessageCountUpdatedMap = {
 
 当您遇到需要关注某会话或暂时无法处理某条会话等场景时，您可以标记会话并稍后处理，例如 "会话标星"、"会话折叠"、"会话隐藏"、“会话标记未读”等。为会话设置标记后，即可以标记为过滤项获取会话列表和未读消息总数。
 
-<Note title="Note">
+<Note title="说明">
 
 - 每名用户最多可标记 1000 个会话。
 - 当用户标记了会话，ZIM SDK 只会简单记录会话的标记值，并不会改变会话的底层逻辑。
@@ -258,7 +258,7 @@ ZIM.getInstance()?.setConversationMark(markType, enable, convList).then((value) 
 
 调用 {getPlatformData(props,queryConversationListMap)} 接口，通过 {getPlatformData(props,ZIMConversationFilterOptionMarksMap)} 传入会话标记列表，即可将标记作为过滤项查询会话列表。
 
-<Note title="Note">
+<Note title="说明">
 
 - 会话标记列表（{getPlatformData(props,ZIMConversationFilterOptionMarksMap)}）只支持 [1, 20] 的整数：
     - 若列表包含 -1，查询结果为所有已标记会话；
@@ -387,7 +387,7 @@ if(onError is PlatformException){
 
 调用 {getPlatformData(props,queryConversationTotalUnreadMessageCountMap)} 接口，通过 {getPlatformData(props,ZIMConversationTotalUnreadMessageCountQueryConfigMarksMap)} 传入会话标记列表，即可按标记查询相关会话的消息未读总数。
 
-<Note title="Note">
+<Note title="说明">
 
 - 此处计算消息未读总数的规则与 {getPlatformData(props,onConversationTotalUnreadMessageCountUpdatedMap)} 事件一致，即如果有符合要求的会话已开启免打扰，那么这个会话的未读数不会被计入这里查询出来的总未读数。
 - 会话标记列表（{getPlatformData(props,ZIMConversationTotalUnreadMessageCountQueryConfigMarksMap)}）只支持 [1, 20] 的整数：

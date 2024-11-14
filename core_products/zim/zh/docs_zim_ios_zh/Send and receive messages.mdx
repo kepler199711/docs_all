@@ -76,7 +76,7 @@ Choose either of the following methods to integrate the SDK into your project.
 
 3. Open `Podfile`, add `pod 'ZIM'`, and change `MyProject` to your target name.
 
-    <Warning title="Warning">
+    <Warning title="注意">
 
     Because the SDK is XCFramwork, therefore, you will need to use CocoaPods 1.10.0 or later to integrate the SDK.
     </Warning>
@@ -126,7 +126,7 @@ Creating a ZIM instance is the very first step, an instance corresponds to a use
 
 So, let's suppose we have two clients now, client A and client B. To send and receive messages to each other, both of them will need to call the [createWithAppID](@createWithAppID) method with the AppID and AppSign you get in the previous **Prerequisites** steps to create a ZIM SDK instance of their own:
 
-<Warning title="Warning">
+<Warning title="注意">
 
 For SDK `2.3.0` or later, the AppSign authentication mode and Token-based authentication mode are both supported.
 
@@ -240,7 +240,7 @@ To log in, Clients A and B both need to do the following:
 
 1. Call the [ZIMUserInfo](@-ZIMUserInfo)  method to create a user object.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - You can custom the **userID** and **userName**, and we recommend you set these two to a meaningful value and associate them with the account system of your application.
 </Warning>
@@ -345,7 +345,7 @@ config.priority = ZIMMessagePriorityMedium;  // Set priority for the message. 1:
 
 After client B logs in, he will receive client A's message through the callback [receivePeerMessage](/article/api?doc=zim_API~objectivec_ios~protocol~ZIMEventHandler#zim-receive-peer-message-from) which is already set in the [setEventHandler](@setEventHandler) method.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 When a message is received, you need to determine the message is a Text message or a Command message because these two message types are based on the basic message. You need to convert the basic message class to a concrete message type and then retrieve the message content from the `Message` field.
 </Warning>

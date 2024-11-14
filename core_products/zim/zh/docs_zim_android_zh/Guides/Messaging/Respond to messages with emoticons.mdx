@@ -59,7 +59,7 @@ export const ZIMMessageReactionUserListQueriedCallbackMap = {
 
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/message_reaction_demo.jpeg" /></Frame>
 
-<Note title="Note">
+<Note title="说明">
 
 以上仅为表态消息的 UI 示意图，ZIM SDK 不提供相关表态的美术资源，需要由您自行实现。
 </Note>
@@ -151,7 +151,7 @@ zim.on('messageReactionsChanged', function (zim, { reactions }) {
 在单聊或群聊会话发送消息后，您可以调用 {getPlatformData(props,addMessageReactionMap)} 对任意消息进行表态。增加表态操作的结果将通过 {getPlatformData(props,ZIMMessageReactionAddedCallbackMap)} 返回。通过此 `callback` 可获取的用户信息有限，一般为 5 名用户，如需了解表态相关的更多用户信息，请参考 <a href="#查询表态详情">查询表态详情</a>。
 
 
-<Note title="Note">
+<Note title="说明">
 
 - 重复调用本接口，对同一条消息进行相同类型的表态会报错。
 - 一条消息默认表态类型上限为 100，如需调整，请联系 ZEGO 技术支持。
@@ -260,7 +260,7 @@ zim.addMessageReaction(reactionType, message)
 对消息表态后，您可以调用 {getPlatformData(props,deleteMessageReactionMap)} 删除该表态。删除操作的结果将通过 {getPlatformData(props,ZIMMessageReactionDeletedCallbackMap)} 返回。通过此 `callback` 可获取的用户信息有限，一般为 5 名用户，如需了解表态相关的更多用户信息，请参考 <a href="#查询表态详情">查询表态详情</a>。
 
 
-<Note title="Note">
+<Note title="说明">
 
 调用本接口只能删除自己所作的表态。
 </Note>

@@ -78,7 +78,7 @@ export const ReconnectingMap = {
 
 - - -
 
-<Note title="Note">
+<Note title="说明">
 
 如需使用本功能，请开通旗舰版套餐。
 </Note>
@@ -97,7 +97,7 @@ export const ReconnectingMap = {
 
 如需持续关注某些人的在线状态时，可以调用 {getPlatformData(props,subscribeUsersStatusMap)} 接口，向参数 `userIDs` 批量传入目标用户 ID（至多 100 名已注册用户，不得包含订阅者自身），在 config 中传入 `subscriptionDuration`（订阅有效时长，在此时段内会持续关注目标用户的在线状态变更），进而添加目标用户在线状态的订阅到当前用户的在线状态订阅表中。
 
-<Note title="Note">
+<Note title="说明">
 
 - 单个用户最多可以订阅 3000 人，当订阅用户超过 3000 人时，将会覆盖订阅时间最早的用户。
 - 订阅其他用户的在线状态后，即便用户在 `subscriptionDuration` 时限内登出并重新登录 ZIM SDK，订阅仍然有效，无需再次调用订阅方法。
@@ -189,7 +189,7 @@ try {
 
 随后，在 `subscriptionDuration` 规定的时间内，目标用户的在线状态变更将会通过 {getPlatformData(props,ZIMEventHandlerMap)} 中的 {getPlatformData(props,onUserStatusUpdatedMap)} 事件回调返回。
 
-<Note title="Note">
+<Note title="说明">
 
 如果用户在订阅后重新登录，ZIM SDK 会通过此回调向用户主动通知其订阅的目标用户在其登出期间的最后一次状态变化。
 </Note>
@@ -676,7 +676,7 @@ zim.on('connectionStateChanged', function (zim, { state, event }) {
 
 在多端登录场景下，当用户登录了第二个平台后，可通过监听 {getPlatformData(props,onUserStatusUpdatedMap)} 回调，从 `userStatus.onlinePlatforms` 属性了解目前在线的平台，开发者可以借此展示用户在不同平台上的在线状态（例如：显示用户在 iOS 和 Windows 端在线）。
 
-<Note title="Note">
+<Note title="说明">
 
 当 onUserStatusUpdated 回调返回当前用户的 userStatus 信息时，其中的 `onlineStatus` 将为 `unknown`，`lastUpdateTime` 为 0，并不能真实反馈在线状态。
 </Note> 

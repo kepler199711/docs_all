@@ -1,7 +1,7 @@
 # 实现离线推送
 
 
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台的应用：iOS、Android 和 Web。
 </Note>
 
@@ -20,7 +20,7 @@ ZIM 实现离线推送的方案如下：
 1. 首先消息接收方（即接收离线消息的用户），开启各厂商的推送通道，向各厂商的推送服务器发送请求，获取 Token。
 2. 各厂商的推送服务器，将 Token 返回给接收方。
 3. 接收方生成 PushID，并向 ZIM 服务器发送请求，绑定用户与 PushID 的关系。
-    <Note title="Note">  
+    <Note title="说明">  
     开发者如果将 ZPNs SDK 与 ZIM SDK 搭配使用，SDK 内部会自动绑定用户与 PushID 的关系，无需特殊处理；如果单独使用 ZPNs SDK，则需自行对接 ZPNs 服务器、实现绑定逻辑。**请注意，同一设备切换 userID 前，请调用 zim.[logout](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/logout.html) 接口，该接口会清除 userID 绑定的 PushID。**
     </Note>
 4. 发送方开始发送消息，消息存储到 ZIM 服务器。
@@ -191,7 +191,7 @@ zego_zpns: ^2.6.0
 
     调用 [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) 接口注册离线推送。调用此接口有一定性能开销。
 
-    <Note title="Note">
+    <Note title="说明">
     - 在 iOS 端调用 [registerPush](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html) 接口时，您需要根据打包时选择的证书为 development 还是 distribution 而提前填写 `ZPNsIOSEnvironment`。切换证书时，请更改此枚举。
     - 证书为 development 时，`ZPNsIOSEnvironment` 为 `Development`。
     - 证书为 distribution 时，`ZPNsIOSEnvironment` 为 `Production`。
@@ -223,7 +223,7 @@ zego_zpns: ^2.6.0
 
 打开 “pubspec.yaml” 文件，以 “pub” 形式，添加 “zego_zpns” 依赖：
 
-<Warning title="Warning">
+<Warning title="注意">
 
 如需使用 ZPNs Flutter SDK 在 Web 端实现离线推送，SDK 版本需为 2.5.0 或以上。
 </Warning>
@@ -265,7 +265,7 @@ zego_zpns: ^2.6.0
 
 ZIM 支持在发送单聊消息、发送群组消息、发起呼叫邀请时，使用离线推送消息的功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 在实现离线推送前，请确保：
 - 参考 [发送消息](./../Send%20and%20receive%20messages.mdx)，实现发送单聊/群聊消息的功能。
 - 参考 [呼叫邀请](./Call%20invitation%20signaling.mdx)，实现呼叫邀请。

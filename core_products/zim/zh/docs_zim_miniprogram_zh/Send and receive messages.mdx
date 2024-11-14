@@ -202,7 +202,7 @@ zim_->setEventHandler(im_event_handler_);
 // You can set the event callbacks by Register##callback_name as needed.
 ```
 
-<Warning title="Warning">
+<Warning title="注意">
 
 You need to switch to your own thread for further operations When you receive callbacks.
 
@@ -228,7 +228,7 @@ To log in, Clients A and B both need to do the following:
 1. Call the [ZIMUserInfo](@-ZIMUserInfo)  method to create a user object.
 2. Then, call the [login](@login) method with their own user information and the Token they get in the previous **Prerequisites** steps.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - You can custom the **userID** and **userName**, and we recommend you set the  **userID** to a meaningful value and associate them with the account system of your application.
 - For SDK 2.3.0 or later: The SDK uses the AppSign authentication mode by default. You only need to pass the [ZIMUserInfo](@-ZIMUserInfo) when logging in. 
@@ -337,7 +337,7 @@ zim_->sendMessage(std::static_pointer_cast<zim::ZIMMessage>(smessage), "conversa
 
 After client B logs in, he will receive client A's message through the callback [onReceivePeerMessage](@onReceivePeerMessage) which is already set in the [setEventHandler](@setEventHandler) method. 
 
-<Warning title="Warning">
+<Warning title="注意">
 
 When a message is received, you need to determine whether the message is a Text message or a Command message because these two message types are based on the basic message. You need to convert the basic message class to a concrete message type and then retrieve the message content from the `Message` field.
 </Warning>

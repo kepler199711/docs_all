@@ -53,12 +53,12 @@ export const ZIMGroupAttributesQueriedCallbackMap = {
 
 ## 功能简介
 :::if{props.platform="Flutter"}
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
 </Note>
 :::
 :::if{props.platform="Flutter"}
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
 :::
@@ -68,7 +68,7 @@ ZIM SDK 提供了群属性管理功能，支持在指定群组中，设置自定
 
 ## 实现流程
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 用户使用“群属性管理”功能之前，请先加入某个群组，否则无法使用相关功能，详情请参考 [加入群组](./Manage%20groups.mdx#加入群组)。
 - 群内成员（包含群主）都可以使用“群属性管理”功能。
@@ -88,7 +88,7 @@ ZIM SDK 提供了群属性管理功能，支持在指定群组中，设置自定
 - 当调用接口但不传入任何 `Key-Value` 时，设置群属性操作没有任何作用。
 
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 每个群组中，最多允许设置 10 个属性，以 `Key-Value` 的方式进行存储。开发者如果需要提高属性上限，请联系 ZEGO 技术支持。
 - 群组解散后，设置的自定义属性也会同时销毁。

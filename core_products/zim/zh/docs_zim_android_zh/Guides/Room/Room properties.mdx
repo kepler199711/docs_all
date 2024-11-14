@@ -48,7 +48,7 @@ ZIM SDK 的房间属性功能，提供了可在指定房间中，设置自定义
 开发者需要在调用 {getPlatformData(props,createRoomMap)} 接口时，设置房间属性参数，创建并加入房间。
 
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 每个房间中，最多允许设置 20 个属性，以 `Key-Value` 的方式进行存储。`Key`的长度上限为 16 字节，`Value`的长度上限为 1024 字节，所有属性的总长度不得超过 5120 字节。开发者如果需要提高属性上限，请联系 ZEGO 技术支持。
 - 房间销毁后，设置的自定义属性也会同时销毁。
@@ -423,7 +423,7 @@ zim.on('roomAttributesUpdated', function (zim, { roomID, infos }) {
 :::
 
 :::if{props.platform="iOS|mac|undefined|window|U3d|Web"}
-<Warning title="Warning">
+<Warning title="注意">
 登录房间时，房间最新属性将通过 {getPlatformData(props,onRoomAttributesUpdatedMap)} 回调返回，无需调用 {getPlatformData(props,queryRoomAllAttributesMap)} 。
 </Warning>
 :::

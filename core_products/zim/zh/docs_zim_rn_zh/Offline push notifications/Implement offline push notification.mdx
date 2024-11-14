@@ -5,7 +5,7 @@ articleID: 16831
 # 实现离线推送
 
 
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发 iOS 和 Android 端应用。
 </Note>
 
@@ -13,7 +13,7 @@ ZEGO 即时通讯（ZIM）支持离线推送消息的功能。例如在“单聊
 
 开发者可以通过集成 ZPNs SDK，与 ZIM SDK 搭配使用，实现离线推送功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 - React Native 平台的 ZPNs SDK 需要搭配 ZIM ReactNative SDK 2.2.0 或以上版本使用。
 - 使用 ZPNs SDK 前，请先在 [ZEGO 控制台](https://console.zego.im) 自助配置 ZIM 离线推送证书（详情请参考 [项目管理 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)），若无法配置，请联系 ZEGO 技术支持处理。
 </Warning>
@@ -184,7 +184,7 @@ yarn add zego-zpns-react-native
 
 3. 调用 [enableDebug](@enableDebug) 设置当前项目的编译环境是否为 Debug，默认为 false。此操作是为了通知 ZPNs SDK 是否为 Debug 环境，PushID 的生成规则受此影响，请在调用 [registerPush](@registerPush) 接口前正确设置。
 
-    <Warning title="Warning">
+    <Warning title="注意">
     如果设置为 true，release 环境下无法收到推送。
     </Warning>
 
@@ -194,7 +194,7 @@ yarn add zego-zpns-react-native
 
 4. 调用 [registerPush](@registerPush) 接口注册离线推送。
 
-    <Note title="Note">
+    <Note title="说明">
     - 在 iOS 端调用 [registerPush](@registerPush) 接口时，您需要根据打包时选择的证书为 development 还是 description 而提前填写 `ZPNsIOSEnvironment`。切换证书时，请更改此枚举。
     - 证书为 development 时，`ZPNsIOSEnvironment` 为 `Development`。
     - 证书为 distribution 时，`ZPNsIOSEnvironment` 为 `Production`。
@@ -214,7 +214,7 @@ yarn add zego-zpns-react-native
 
 ZIM 支持在发送单聊消息、群组消息和呼叫邀请时使用离线推送功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 在实现离线推送前，请确保：
 - 参考 [发送消息](./../Send%20and%20receive%20messages.mdx)，实现发送单聊/群聊消息的功能。
 - 参考 [呼叫邀请](./Call%20invitation%20signaling.mdx)，实现呼叫邀请。

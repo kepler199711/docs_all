@@ -38,7 +38,7 @@ export const ZIMMessageRevokedCallbackMap = {
 
 - - -
 :::if{props.platform="U3d"}
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
 :::
@@ -50,7 +50,7 @@ ZIM SDK 支持在单聊或群聊会话中撤回本端发送的消息，以及支
 本文档介绍了如何使用 ZIM SDK 的接口，实现撤回某个会话中指定的消息。
 
 
-<Note title="Note">
+<Note title="说明">
 
 如果消息接收端使用的 ZIM SDK 版本低于 2.5.0，当消息被撤回，会出现以下 3 种情况：
 - 用户为在线状态时收到该消息，仍看到该消息。
@@ -81,7 +81,7 @@ ZIM SDK 支持撤回某个会话中指定的消息。开发者可以通过 {getP
 
 在默认情况下，用户可以在发布消息后的 2 分钟内调用 {getPlatformData(props,revokeMessageMap)} 撤回消息。撤回操作的结果将通过 {getPlatformData(props,ZIMMessageRevokedCallbackMap)} 通知给用户。
 
-<Note title="Note">
+<Note title="说明">
 
 * 若要实现群主撤销其他用户的消息，请集成ZIM SDK 2.9.0及以上版本。
 * ZIM SDK目前默认支持2分钟内撤销消息，如需修改配置（最长支持24小时），请联系ZEGO技术支持。

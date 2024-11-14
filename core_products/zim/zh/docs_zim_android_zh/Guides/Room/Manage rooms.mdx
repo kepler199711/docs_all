@@ -134,7 +134,7 @@ export const platformMap = {
 
 :::if{props.platform="Flutter"}
 
-<Note title="Note">
+<Note title="说明">
 
 本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
 </Note>
@@ -156,7 +156,7 @@ ZIM SDK 提供多人房间聊天功能，支持用户向房间内发送文本消
 
 房间内的用户，可以通过 {getPlatformData(props,sendRoomMessageMap)} 接口，向房间内发送消息，详情请参考 [收发房间消息](./../../Send%20and%20receive%20messages.mdx)。
 
-<Note title="Note">
+<Note title="说明">
 
 如果 roomID 已存在：
 
@@ -310,7 +310,7 @@ zim.on('roomStateChanged', (zim, data) => {
 
 创建成功后会收到 {getPlatformData(props,onRoomStateChangedMap)} 的通知回调， {getPlatformData(props,ZIMRoomStateMap)} 为 {getPlatformData(props,CONNECTEDMap)}, {getPlatformData(props,ZIMRoomEventMap)} 为 {getPlatformData(props,SUCCESSMap)} 。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - “roomID”、“roomName” 支持开发者自定义规则生成。建议开发者将 “roomID” 设置为一个有意义的值，可将其与自己的业务账号系统进行关联。
 - 调用 {getPlatformData(props,createRoomMap)} 接口创建房间后，会直接加入房间，无需再调用 {getPlatformData(props,joinRoomMap)} 接口加入房间。
@@ -857,7 +857,7 @@ zim.on('roomMemberLeft', function (zim, { roomID, memberList }) {
 ```
 :::
 
-<Note title="Note">
+<Note title="说明">
 
 当所有成员离开房间后，房间将自动销毁。ZIM SDK 支持通过 {getPlatformData(props,ZIMRoomAdvancedConfigMap)} 设置房间延迟销毁，最大延迟为 3 小时。
 </Note>

@@ -45,7 +45,7 @@ export const ZIMRoomMembersQueriedCallbackMap = {
 
 - - -
 :::if{props.platform="U3d"}
-<Note title="Note">
+<Note title="说明">
 
 本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
@@ -63,7 +63,7 @@ ZIM SDK 支持设置房间内的用户属性，即在房间内，自定义房间
 
 ## 实现流程
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 每个房间中，最多允许设置 500 个用户的用户属性，以 `Key-Value` 的方式进行存储。开发者如果需要提高属性上限，请联系 ZEGO 技术支持。
 - 房间内的每个用户，所拥有的用户属性 `Key-Value` 的总长度不超过 144 字节，且 `Key-Value` 的个数不超过 30 对。单个 `Key-Value` 的长度，Key 不超过 8 字节、Value 不超过 64 字节。开发者如果需要提高上限，请联系 ZEGO 技术支持。
@@ -73,7 +73,7 @@ ZIM SDK 支持设置房间内的用户属性，即在房间内，自定义房间
 
 ### 设置用户属性
 
-<Warning title="Warning">
+<Warning title="注意">
 
 操作者和被设置/修改属性的用户，都必须是该房间内的用户。
 </Warning>
@@ -442,7 +442,7 @@ void onRoomMemberAttributesUpdated(ZIM * /*zim*/, const std::vector<ZIMRoomMembe
 
 :::
 
-<Note title="Note">
+<Note title="说明">
 
 在房间内，如果有用户调用了 {getPlatformData(props,setRoomMembersAttributesMap)} 接口时：
 
@@ -457,7 +457,7 @@ void onRoomMemberAttributesUpdated(ZIM * /*zim*/, const std::vector<ZIMRoomMembe
 
 开发者可以通过调用 {getPlatformData(props,queryRoomMembersMap)} 接口，传入 roomID 、 userID 数组，批量查询房间中用户的信息。接口调用成功后， {getPlatformData(props,ZIMRoomMembersQueriedCallbackMap)} 会返回查询成功的 userList（可用于确认目标用户在房间中），以及查询失败的 errorUserList（可用于确认目标用户不在房间中）。
 
-<Note title="Note">
+<Note title="说明">
 
 批量查询用户数量的默认上限为 10 名。
 </Note>

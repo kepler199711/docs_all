@@ -5,7 +5,7 @@ articleID: 20953
 # 实现离线推送
 
 
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发 iOS 和 Android 端应用。
 </Note>
 
@@ -13,7 +13,7 @@ ZEGO 即时通讯（ZIM）支持离线推送消息的功能。例如在“单聊
 
 开发者可以通过集成 ZPNs SDK，与 ZIM SDK 搭配使用，实现离线推送功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 ZPNs uni-app SDK 需要搭配 ZIM uni-app SDK 2.2.0 或以上版本使用。
 </Warning>
 
@@ -79,7 +79,7 @@ ZIM 实现离线推送的方案如下：
 
 完成上述步骤，即可在集成 ZPNs uni-app SDK 时，自动集成上述厂商的推送 SDK。
 
-<Warning title="Warning">
+<Warning title="注意">
 - 为了保障 uni-app 在离线推送能力上获得最好的原生体验，建议您使用离线打包的方式进行接入第三方厂商离线推送通道。
 - 由于 uni-app 云端打包因限制而无法适用于 FCM，因此，如需使用 FCM 请使用离线方式打包工程，并通过本地包手动集成 FCM 推送 SDK，详情请参考 [FCM 推送集成指南](./Integrate%20FCM.mdx)。
 - 如需实现进阶的 iOS 推送能力，如自定义通知图标、通知携带图片附件、替换通知能功能，请通过离线方式打包项目，而非云端打包方式。
@@ -97,7 +97,7 @@ ZIM 实现离线推送的方案如下：
       <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/uniapp/img1.jpeg" />
     </Frame>
 
-    <Warning title="Warning">
+    <Warning title="注意">
     由于 uni-app 原生插件的限制，ZPNs SDK 暂不支持通过插件市场下载插件，仅支持通过 ZEGO 官网下载获取。
     </Warning>
 
@@ -113,7 +113,7 @@ ZIM 实现离线推送的方案如下：
 
 5. （仅适用于云端打包项目）针对 vivo 推送，在 “App原生插件配置” 中，传入 vivo api_key 和 app_id，如图额外信息：
 
-    <Note title="Note">
+    <Note title="说明">
     如何获取 vivo api_key 和 app_id，请参考 [vivo 推送集成指南](./Integrate%20vivo.mdx)。
     </Note>
 
@@ -131,7 +131,7 @@ ZIM 实现离线推送的方案如下：
 
 7. （仅适用于云端打包项目）在 HBuilder > App模块配置中勾选使用 “Push” 推送模块。
 
-    <Warning title="Warning">
+    <Warning title="注意">
     不要勾选 `uniPush`。
     </Warning>
 
@@ -230,7 +230,7 @@ ZIM 实现离线推送的方案如下：
 
     根据前提条件集成的第三方厂商离线推送 SDK，启用各厂商的推送功能，然后调用 [setPushConfig](@setPushConfig) 接口，配置第三方推送通道。
 
-    <Note title="Note">
+    <Note title="说明">
     由于 Google FCM 的推送通道优先度更高，开启后会导致其他安卓厂商的推送通道失效，因此，如果您的 App 在中国大陆上线，请将 [enableFCMPush](@enableFCMPush-ZPNsConfig) 设置为 `false`。反之，如果您的 App 运营于海外市场，则将其设置为 `true`。
     </Note>
 
@@ -240,7 +240,7 @@ ZIM 实现离线推送的方案如下：
 
 3. 调用 [enableDebug](@enableDebug) 设置当前项目的编译环境是否为 Debug，默认为 false。此操作是为了通知 ZPNs SDK 是否为 Debug 环境，PushID 的生成规则受此影响，请在调用 [registerPush](@registerPush) 接口前正确设置。
 
-    <Warning title="Warning">
+    <Warning title="注意">
     如果设置为 true，release 环境下无法收到推送。
     </Warning>
 
@@ -250,7 +250,7 @@ ZIM 实现离线推送的方案如下：
 
 4. 调用 [registerPush](@registerPush) 接口注册离线推送。
 
-    <Note title="Note">
+    <Note title="说明">
     - 在 iOS 端调用 [registerPush](@registerPush) 接口时，您需要根据打包时选择的证书为 development 还是 description 而提前填写 `ZPNsIOSEnvironment`。切换证书时，请更改此枚举。
     - 证书为 development 时，`ZPNsIOSEnvironment` 为 `Development`。
     - 证书为 distribution 时，`ZPNsIOSEnvironment` 为 `Production`。
@@ -269,7 +269,7 @@ ZIM 实现离线推送的方案如下：
 
 ZIM 支持在发送单聊消息、群组消息和呼叫邀请时使用离线推送功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 在实现离线推送前，请确保：
 - 参考 [发送消息](./../Send%20and%20receive%20messages.mdx)，实现发送单聊/群聊消息的功能。
 - 参考 [呼叫邀请](./Call%20invitation%20signaling.mdx)，实现呼叫邀请。

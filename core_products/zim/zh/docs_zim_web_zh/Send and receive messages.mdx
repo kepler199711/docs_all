@@ -103,7 +103,7 @@ Choose either of the following methods to integrate the SDK into your project.
 
 1. Execute the `npm i zego-zim-web` command to install the dependencies.
 
-    <Note title="Note">
+    <Note title="说明">
 
     - We recommend you use the NPM package that supports the TypeScript language.
     - If the error `permission denied` occurs when executing the npm command on macOS or Linux, add a `sudo` before the npm command and try again.
@@ -198,7 +198,7 @@ To log in, Clients A and B both need to do the following:
 1. Call the [ZIMUserInfo](@-ZIMUserInfo)  method to create a user object.
 2. Then, call the [login](@login) method with their own user information and the Token they get in the previous **Prerequisites** steps.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - You can custom the **userID** and **userName**, and we recommend you set these two to a meaningful value and associate them with the account system of your application.
 - If the token has expired, you will need to call the [renewToken](@renewToken) method in the [tokenWillExpire](@tokenWillExpire) method to renew the token before you try again.

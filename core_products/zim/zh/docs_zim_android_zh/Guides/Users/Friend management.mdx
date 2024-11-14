@@ -380,7 +380,7 @@ void onFriendApplicationUpdated(
 
 登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,addFriendMap)} 接口对其他用户设置好友备注和属性，直接添加为好友，无需对方同意。
 
-<Note title="Note">
+<Note title="说明">
 
 最多可以设置 5 个好友属性，且对应的 `key` 取值必须为 k0、k1、k2、k3、k4。建议您提前约定各属性的实际含义并保持统一。
 </Note>
@@ -591,7 +591,7 @@ zim::ZIM::getInstance()->deleteFriends(userIDs, config, [=](
 
 登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,sendFriendApplicationMap)} 接口向其他用户发送好友申请、设置好友备注和好友属性。
 
-<Note title="Note">
+<Note title="说明">
 
 最多可以设置 5 个好友属性，且对应的 `key` 取值必须为 k0、k1、k2、k3、k4。建议您提前约定各属性的实际含义并保持统一。
 </Note>
@@ -675,7 +675,7 @@ zim::ZIM::getInstance()->sendFriendApplication("userID", config, [=](const zim::
 
 目标用户会收到 {getPlatformData(props,onFriendApplicationListChangedMap)} 回调，得知有用户申请加为好友。该用户可以选择在 7 日内 <a href="#同意好友申请">同意</a> 或 <a href="#拒绝好友申请">拒绝</a> 申请。
 
-<Note title="Note">
+<Note title="说明">
 
 如需调整好友申请有效期，请联系 ZEGO 技术支持。
 </Note>
@@ -1099,7 +1099,7 @@ zim::ZIM::getInstance()->updateFriendAlias("新备注", "userID", [=](const zim:
 
 登录 ZIM SDK 后，用户可以通过 {getPlatformData(props,updateFriendAttributesMap)} 更新好友属性。
 
-<Note title="Note">
+<Note title="说明">
 
 最多可以设置 5 个好友属性，且对应的 `key` 取值必须为 k0、k1、k2、k3、k4。建议您提前约定各属性的实际含义并保持统一。
 </Note>

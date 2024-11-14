@@ -124,7 +124,7 @@ ZIM SDK 支持会话内回复消息功能，即引用接收到的某一条消息
 
 此时，用户可以选择其中某条消息进行回复，即将该消息作为 `toOriginalMessage` 参数，并构造一个消息作为回复内容作为 `message` 参数，调用 {getPlatformData(props,replyMessageMap)} 接口。
 
-<Note title="Note">
+<Note title="说明">
 
 上述 `toOriginMessage` 和 `message` 都仅支持以下类型：
 - 文本消息：[ZIMTextMessage(1)](@-ZIMTextMessage)
@@ -441,7 +441,7 @@ zim.on('messageRepliedCountChanged', function (zim, { infos }) {
 
 监听 {getPlatformData(props,onMessageRepliedInfoChangedMap)} 回调，即可在某条消息被删除或被撤回时，获取该消息的下一级子消息列表，您可以在相关子消息 UI 上展示相关提示。
 
-<Note title="Note">
+<Note title="说明">
 
 即使用户在某设备删除源消息，导致子消息的 {getPlatformData(props,repliedInfoStateMap)} （其源消息的状态）为 {getPlatformData(props,ZIMMessageRepliedInfoStateMap)} ，依然可以在子消息的 {getPlatformData(props,repliedInfoMessageInfoMap)} 中获取到源消息的简要内容。因此，开发者可按需选择是否在该设备展示该源消息内容。
 </Note>
@@ -614,7 +614,7 @@ zim.queryMessageRepliedList(replyMessage, config)
 ```
 :::
 
-<Note title="Note">
+<Note title="说明">
 
 - 查询消息回复列表时，只要是同一个回复树上的消息对象，无论是传其根消息对象还是任一消息对象，只要 nextFlag 填 0 就是从根消息开始按消息发送时间升序查询；
 - 由于 `rootRepliedInfo` 中的 `message` 是可空的对象，当 `state` 为 `Deleted` 时，代表根消息已被删除，此时开发者应在 UI 上提示 “根消息已被删除”；当 `state` 为 `NotFound` 时，代表无法再找到该条根消息，可能原因是消息已超出服务端存储时间，或者群组用户进群后查询回复列表但根消息是其进群前发的，因此该消息可能已不能再拉取，此时开发者应在 UI 上提示 “根消息已无法定位” 等提示性语句。
@@ -627,7 +627,7 @@ zim.queryMessageRepliedList(replyMessage, config)
 
 因此，如需实现此场景，需要借助子消息的 {getPlatformData(props,repliedInfoMessageInfoMap)} （源消息在会话中的序号）属性。
 
-<Note title="Note">
+<Note title="说明">
 
 子消息的 {getPlatformData(props,repliedInfoMessageInfoMap)}（源消息在会话中的序号）属性，对应源消息的 {getPlatformData(props,messageSeqZIMMessageMap)}。
 </Note>

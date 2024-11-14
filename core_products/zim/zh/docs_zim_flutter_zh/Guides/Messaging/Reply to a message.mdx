@@ -37,7 +37,7 @@ ZIM SDK 支持会话内回复消息功能，即引用接收到的某一条消息
 
 此时，用户可以选择其中某条消息进行回复，即将该消息作为 `toOriginMessage` 参数，并构造一个消息作为回复内容作为 `message` 参数，调用 [replyMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/replyMessage.html) 接口。
 
-<Note title="Note">
+<Note title="说明">
 
 上述 `toOriginMessage` 和 `message` 都仅支持以下类型：
 - 文本消息：[ZIMTextMessage](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMTextMessage-class.html)
@@ -127,7 +127,7 @@ ZIMEventHandler.onMessageRepliedCountChanged = (ZIM zim, List<ZIMMessageRootRepl
 
 监听 [onMessageRepliedInfoChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onMessageRepliedInfoChanged.html) 回调，即可在某条消息被删除或被撤回时，获取该消息的下一级子消息列表，您可以在相关子消息 UI 上展示相关提示。
 
-<Note title="Note">
+<Note title="说明">
 
 即使用户在某设备删除源消息，导致子消息的 [repliedInfo.state](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/state.html)（其源消息的状态）为 [ZIMMessageRepliedInfoState.deleted](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMCallState.html#deleted)，依然可以在子消息的 [repliedInfo.messageInfo](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageInfo.html) 中获取到源消息的简要内容。因此，开发者可按需选择是否在该设备展示该源消息内容。
 </Note>
@@ -178,7 +178,7 @@ if(error is PlatformException){
 
 因此，如需实现此场景，需要借助子消息的 [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html)（源消息在会话中的序号）属性。
 
-<Note title="Note">
+<Note title="说明">
 
 子消息的 [repliedInfo.messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessageRepliedInfo/messageSeq.html)（源消息在会话中的序号）属性，对应源消息的 [messageSeq](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMMessage/messageSeq.html)。
 </Note>

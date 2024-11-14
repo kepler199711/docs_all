@@ -191,7 +191,7 @@ export const queryGroupApplicationListMap = {
 
 ## 功能简介
 :::if{props.platform="Flutter"}
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
 </Note>
 :::
@@ -207,7 +207,7 @@ ZIM SDK 提供了群组管理功能，支持用户创建/解散群组、加入/�
 
 开发者可以通过 {getPlatformData(props,ZIMGroupCreatedCallbackMap)} ，判断群组是否创建成功。相关错误码请查看 [常见错误码](./../../SDK%20Error%20Codes/ZIM.mdx)。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - “groupID” 支持开发者自定义规则生成，仅支持数字，英文字符和 {"'!'、'#'、'$'、'%'、'&'、'('、')'、'+'、'-'、':'、';'、'<'、'='、'.'、'>'、'?'、'@'、'['、']'、'^'、'_'、'{'、'}'、'|'、'~'"}，且不能以 ’#‘ 开头；若该字段为空，ZIM 服务器会自动生成。建议开发者将 “groupID” 设置为一个有意义的值，可将其与自己的业务账号系统进行关联。
 - 调用 {getPlatformData(props,createGroupMap)} 接口创建群组后，会直接加入群组，无需再调用 {getPlatformData(props,joinGroupMap)} 接口加入群组。
@@ -412,7 +412,7 @@ advancedConfig.maxMemberCount = 300;
 
 ## 加入群组
 
-<Note title="Note">
+<Note title="说明">
 
 如需用户加入群组后自动获取群历史消息，请联系 ZEGO 技术支持进行配置。
 </Note>
@@ -870,7 +870,7 @@ zim.on('groupApplicationUpdated', (zim, { applicationList }) => {
 
 1. 群内用户可通过以下任意接口邀请用户入群：
 
-<Warning title="Warning">
+<Warning title="注意">
 
 请确认被邀请用户（以下称为“目标用户”）已通过 {getPlatformData(props,loginMap)} 接口登录注册过，否则会操作失败。
 </Warning>
@@ -1277,7 +1277,7 @@ zim.on('groupApplicationUpdated', (zim, { applicationList }) => {
 
 成员退出群组也存在两种方式（二选一），主动退出和被提出群组。
     
-<Warning title="Warning">
+<Warning title="注意">
     
 用户退出群组后，不会清除本地的会话列表，还可以看到退出之前的群内聊天记录。
 </Warning>
@@ -1286,7 +1286,7 @@ zim.on('groupApplicationUpdated', (zim, { applicationList }) => {
 
 成员登录 ZIM SDK 后，直接调用 {getPlatformData(props,leaveGroupMap)} 接口，传入 groupID（groupID 必须已经存在，否则会操作失败），主动退出群组。退出成功后，全体群成员（包括自己）都会收到 {getPlatformData(props,onGroupMemberStateChangedMap)} 的回调通知。
 
-<Note title="Note">
+<Note title="说明">
 群主退出群组时，群主身份将自动转让给加入本群组最早的那个成员；所有成员退出群组时，群组自动解散。
 </Note>
 
@@ -1359,7 +1359,7 @@ zim.leaveGroup(groupID)
 
 :::
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 只有群主和管理员可以调用 {getPlatformData(props,kickGroupMembersMap)} 接口，移除群内成员；且移除成员时，该成员无需登录在线，也无需经过该成员同意，即可直接移除。
 - 被移除的用户 userID，必须是存在于本群组的成员列表内，否则会操作失败。
@@ -1443,7 +1443,7 @@ zim.kickGroupMembers(userIDs, groupID)
 开发者可以通过 [ZIMGroupDismissedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMGroupDismissedResult-class.html)，判断解散群组是否成功。
 :::
 
-<Note title="Note">
+<Note title="说明">
 
 - 只有群主才能调用 {getPlatformData(props,dismissGroupMap)} 接口，解散群组。
 - 所有成员退出群组时，群组将自动解散。
@@ -1691,7 +1691,7 @@ ZIM 支持 3 种群组禁言模式：
 
 禁言操作结果将通过 {getPlatformData(props,ZIMGroupMutedCallbackMap)} 回调接口返回。
 
-<Note title="Note">
+<Note title="说明">
 
 如果您希望禁止特定群组成员发言，请参考 [群成员管理 - 设置群成员禁言状态](./Group%20members.mdx)。
 </Note>

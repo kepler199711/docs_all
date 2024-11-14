@@ -83,7 +83,7 @@
 <td>是</td>
 <td>
 待设置免打扰状态的会话 ID 列表，长度不超过 10。
-<Warning title="Warning">
+<Warning title="注意">
 
 <p>此列表中的会话类型需保持一致，否则会导致接口调用失败。</p>
 </Warning>
@@ -98,7 +98,7 @@
 </tr>
 </tbody></table>
 
-<Note title="Note">
+<Note title="说明">
 
 FromUserId 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}。
 </Note>
@@ -139,7 +139,7 @@ https://zim-api.zego.im/?Action=SilenceConvNotification
 <td>Code</td>
 <td>Number</td>
 <td>返回码。
-<Note title="Note">当您发起请求修改多个会话的免打扰状态时：<ul><li>只需成功修改 1 个或以上会话的状态，Code 都会返回 0，表示成功。此时请参考 ErrorList 中的具体信息，了解会话修改状态失败详情。</li><li>如果所有会话的状态都修改失败，Code 会返回相关返回码，具体请参考 <a href="https://doc-zh.zego.im/article/12229">全局返回码</a>。</li></ul></Note></td>
+<Note title="说明">当您发起请求修改多个会话的免打扰状态时：<ul><li>只需成功修改 1 个或以上会话的状态，Code 都会返回 0，表示成功。此时请参考 ErrorList 中的具体信息，了解会话修改状态失败详情。</li><li>如果所有会话的状态都修改失败，Code 会返回相关返回码，具体请参考 <a href="https://doc-zh.zego.im/article/12229">全局返回码</a>。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>

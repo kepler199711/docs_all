@@ -87,12 +87,12 @@ export const onConversationChangedMap = {
 
 ## 功能简介
 :::if{props.platform="Flutter"}
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
 </Note>
 :::
 :::if{props.platform="U3d"}
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
 :::
@@ -102,7 +102,7 @@ ZIM SDK 提供了群资料管理功能，支持用户查询/修改群资料，�
 
 ## 实现流程
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 用户使用“群资料管理”功能之前，请先加入某个群组，否则无法使用相关功能，详情请参考 [加入群组](./Manage%20groups.mdx#加入群组)。
 - 群内成员（包含群主）都可以使用“群资料管理”功能。
@@ -497,7 +497,7 @@ ZIM.GetInstance().UpdateGroupNotice("new_group_notice", "group_id", (string grou
 
 群备注，是用户为群聊设置个性化的备注名称，以便于区分不同的群聊。例如，可以将工作群备注为“工作群”，家庭群备注为“家庭群”，这样在识别群聊时会更加方便。
 
-<Note title="Note">
+<Note title="说明">
 
 群备注仅用户自己可见，不会影响其他群聊成员的群名称显示。
 </Note>

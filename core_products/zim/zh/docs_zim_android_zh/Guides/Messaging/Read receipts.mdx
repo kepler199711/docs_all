@@ -98,7 +98,7 @@ export const queryGroupMessageReceiptUnreadMemberListMap = {
 - - -
 
 :::if{props.platform="U3d"}
-<Note title="Note">
+<Note title="说明">
 
 本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
@@ -110,7 +110,7 @@ export const queryGroupMessageReceiptUnreadMemberListMap = {
 
 本文档介绍了如何使用 ZIM SDK 的接口，实现发送一条附带回执的消息，以及查看和应答回执详情等功能。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 ZIM SDK 目前支持发送“单聊”会话和“群组”会话的消息回执（仅支持普通消息和富媒体消息），暂不支持发送“房间”会话的消息回执。
 
@@ -139,7 +139,7 @@ ZIM SDK 目前支持发送“单聊”会话和“群组”会话的消息回执
 
 消息已读，是指接收端收到对方发送的附带回执的消息，可对该消息设置已读，已读成功，发送方将会收到该消息已被读的通知。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 消息可为单条消息或批量消息，但是消息发送端与接收端必须在同一会话内，不允许跨会话。
 - 如需对会话的历史消息进行相关操作，需先完成查询历史消息，对历史消息的回执状态进行判断，详情请参考 [查询历史消息](./Get%20message%20history.mdx)。
@@ -156,7 +156,7 @@ ZIM SDK 目前支持发送“单聊”会话和“群组”会话的消息回执
 
 会话已读，是指接收端将指定会话内所有**已接收**的对方消息都设置为已读。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 目前 ZIM SDK 只允许在**单聊**会话实现此功能；
 - 此功能只作用于设置已读之前获取的消息，不对设置之后的消息生效。
@@ -174,7 +174,7 @@ ZIM SDK 目前支持发送“单聊”会话和“群组”会话的消息回执
 
 当需要查询一条或一批消息的回执状态、已读用户数和未读未读用户数时，可以调用 {getPlatformData(props,queryMessageReceiptsInfoMap)} 接口查询，通过 {getPlatformData(props,ZIMMessageReceiptsInfoQueriedCallbackMap)} 获取相关信息。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 如果是查询其他用户发送的信息，得到的已读用户数和未读用户数都是 0。
 - 如需对会话的历史消息进行相关操作，需先完成查询历史消息，对历史消息的回执状态进行判断，详情请参考 [查询历史消息](./Get%20message%20history.mdx)。
@@ -188,7 +188,7 @@ ZIM SDK 支持查询群组里自己发送的消息的已读成员列表和未读
 
 当需要查询有哪些成员读了自己发送的消息，可调用 {getPlatformData(props,queryGroupMessageReceiptReadMemberListMap)} 接口查询具体成员列表。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 如需对会话的历史消息进行相关操作，需先完成查询历史消息，对历史消息的回执状态进行判断，详情请参考 [查询历史消息](./Get%20message%20history.mdx)。
 </Warning>
@@ -197,7 +197,7 @@ ZIM SDK 支持查询群组里自己发送的消息的已读成员列表和未读
 
 当需要查询还有哪些成员未读自己发送的消息，可调用 {getPlatformData(props,queryGroupMessageReceiptUnreadMemberListMap)} 接口查询具体成员列表。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 若 SDK 版本低于 2.16.0，当群成员人数大于 100 时，此接口不会返回具体未读成员列表。如需使用此功能，可联系 ZEGO 技术支持。
 - 如需对会话的历史消息进行相关操作，需先完成查询历史消息，对历史消息的回执状态进行判断，详情请参考 [查询历史消息](./Get%20message%20history.mdx)。

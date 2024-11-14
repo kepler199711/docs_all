@@ -60,7 +60,7 @@ export const ZIMBlacklistCheckedCallbackMap = {
 
 - - -
 
-<Note title="Note">
+<Note title="说明">
 
 黑名单和好友操作互不影响。   
 
@@ -172,7 +172,7 @@ zim_sdk_->queryBlacklist(
 
 拉黑用户结果通过 {getPlatformData(props,ZIMBlacklistUsersAddedCallbackMap)} 返回。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - 调用一次接口，最多拉黑 20 名用户。超过数量上限会导致接口调用失败。
 - 黑名单数量上限默认为 1000，如需上调，请联系 ZEGO 技术支持。
@@ -250,7 +250,7 @@ zim_sdk_->addUsersToBlacklist(
 
 移出操作将通过 {getPlatformData(props,ZIMBlacklistUsersRemovedCallbackMap)} 返回。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 调用一次接口，最多移出 20 名用户。超过数量上限会导致接口调用失败。
 </Warning>

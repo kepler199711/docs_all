@@ -195,7 +195,7 @@ API: {getPlatformData(props,sendMessageMap)}
 
 Regular messages refer to the messages of the following message types: ZIMTextMessage and ZIMBarrageMessage.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - To receive event callbacks (receive messages, get connection status, and receive a notification when Token is about to expire, etc.), you can set up the {getPlatformData(props,setEventHandlerMap)} method and listen for related events. 
 - When receiving messages, you need to determine the message is a Text message {getPlatformData(props,ZIMTextMessageMap)} or a Command message {getPlatformData(props,ZIMCommandMessageMap)} because these two message types are based on the basic message class {getPlatformData(props,ZIMMessageMap)}. You need to convert the basic message class to a concrete message type and then retrieve the message content from the `message` field.
@@ -214,7 +214,7 @@ The following process shows how Client A sends messages to Client B:
 3. Client A calls the {getPlatformData(props,sendMessageMap)} method, and set the `converversationType` to `ZIMConversationTypePeer` to send a one-to-one message to Client B.
 4. Client B listens for the {getPlatformData(props,receivePeerMessageMap)} callback to receive Client A's messages.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 You can't send messages to yourself by calling the `sendMessage` method (when toConversationID = your ID). If you did so, the error code 6000001 will return. 
 
@@ -413,7 +413,7 @@ ZIMConversationType type = ZIMConversationTypeRoom;
 #### Receive messages
 
 
-<Note title="Note">
+<Note title="说明">
 
 - To send messages, call the {getPlatformData(props,sendMessageMap)} method and set the `ZIMConversationType` accordingly.
 - To receive messages:
@@ -543,7 +543,7 @@ The ZIM SDK now supports sending and receiving messages of different rich media 
 
 To send rich media content after login, call the {getPlatformData(props,sendMediaMessageMap)} method, and specify the message type (image, file, audio, video), the session type (one-on-one chat, room chat, group chat), and message related configurations as needed.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - When sending rich media content, the file path to be sent must be in `UTF-8` encoding format.
 - To send rich media content to a room/group, the sender must be in the room/group.
@@ -823,7 +823,7 @@ Among which:
 
 The ZIM SDK now supports you to send and receive signaling messages. To do that, you can call the {getPlatformData(props,ZIMCommandMessageMap)} to define the message type you want to send, for example, your location information.
 
-<Note title="Note">
+<Note title="说明">
 
 This message type does not support offline push and local storage.
 </Note>
@@ -983,7 +983,7 @@ zim.setEventHandler(new ZIMEventHandler() {
 ## Send and receive custom message
 
 The ZIM SDK supports developers in implementing the sending and receiving of custom message types. Developers can define their own message types using the {getPlatformData(props,ZIMCustomMessageMap)}  object, such as voting, chain, video card, and more. Developers can follow these steps to implement the sending and receiving of custom messages.
-<Note title="Note">
+<Note title="说明">
 
 - Only ZIM SDK version 2.8.0 and above supports sending custom type messages, receiving and viewing the content of custom type messages.
 - If the SDK version of the receiving end is between [2.0.0, 2.8.0), the custom message can be received, but the message type will be displayed as unknown and the information content cannot be obtained. To get this message, please upgrade the SDK to version 2.8.0 or above.
@@ -1148,7 +1148,7 @@ zim.setEventHandler(new ZIMEventHandler() {
 
 An "@" message refers to a message that contains the content of "@ + user". When a user is mentioned with an "@" message, they receive a strong notification.
 
-<Note title="Note">
+<Note title="说明">
 
 The "@" message is not a message type itself. A message can be both a text message or another type of message, and it can also be an "@" message.
 </Note>
@@ -1159,7 +1159,7 @@ When calling {getPlatformData(props,sendMessageMap)} to send a message, you can 
 - {getPlatformData(props,setMentionedUserIDsMap)}: Notifies specific users (including users outside of the session) to view the message. The length of the userID list passed in should be up to 50. If you need to increase this limit, please contact the ZEGOCLOUD technical support team.
 - {getPlatformData(props,isMentionAllMap)}: Notifies all other users within the session to view the message.
 
-<Note title="Note">
+<Note title="说明">
 
 Only ZIM SDK version 2.14.0 and above supports sending messages with @ information.
 
@@ -1285,7 +1285,7 @@ The callback interface for receiving @ messages is the same as the callback inte
 
 After receiving a message, developers can implement corresponding functionalities based on their business logic, such as highlighting, etc.
 
-<Note title="Note">
+<Note title="说明">
 
 - Only ZIM SDK versions 2.14.0 and above support receiving and viewing the content of @ messages.
 - If the SDK version on the receiving end is between [2.0.0, 2.14.0), the received messages and conversations will not contain @ information.
@@ -1412,7 +1412,7 @@ Please refer to the server-side API documentation [Push message to all user](/zi
 
 ### Receive broadcast messages sent from the server side
 
-<Note title="Note">
+<Note title="说明">
 
 - Only ZIM SDK versions 2.10.0 and above support receiving and viewing the content of broadcast messages sent from the server side.
 - If the SDK version on the receiving end is between [2.0.0, 2.10.0), broadcast messages sent from the server side cannot be received. If you need to access this message, please upgrade the SDK to version 2.10.0 or above. 

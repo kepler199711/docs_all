@@ -6,7 +6,7 @@
 
 调用此接口，可为一名用户批量向至多 20 名其他用户发送好友申请。如需上调（最多可为 50），请联系 ZEGO 技术支持。
 
-<Note title="Note">
+<Note title="说明">
 
 当用户已为目标用户的单向好友时，如果调用此接口向目标用户发起好友申请，目标用户会直接成为用户的好友。
 
@@ -117,7 +117,7 @@
 <td>否</td>
 <td>
 好友属性，上限 5 个。
-<Note title="Note">
+<Note title="说明">
 
 <p>Key 的总长度与 Value 的总长度上限为 1024 字节。如需上调，请联系 ZEGO 技术支持。建议不要将上限设置过大。</p>
 </Note>
@@ -137,7 +137,7 @@
 </tr>
 </tbody></table>
 
-<Note title="Note">
+<Note title="说明">
 
 FromUserId 和 UserId 仅支持数字，英文字符和 {"'!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'"}。
 </Note>
@@ -203,7 +203,7 @@ https://zim-api.zego.im/?Action=SendFriendApplication
 <td>Code</td>
 <td>Number</td>
 <td>返回码。
-<Note title="Note">当您发起请求同时向多名用户发送好友申请时：<ul><li>如果成功向 1 名或更多用户发送申请，Code 都会返回 0。此时请参考 ErrorList 中的具体信息，确认操作结果。</li><li>如果全部好友申请发送失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
+<Note title="说明">当您发起请求同时向多名用户发送好友申请时：<ul><li>如果成功向 1 名或更多用户发送申请，Code 都会返回 0。此时请参考 ErrorList 中的具体信息，确认操作结果。</li><li>如果全部好友申请发送失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>

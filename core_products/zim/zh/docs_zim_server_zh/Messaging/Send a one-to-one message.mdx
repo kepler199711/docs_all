@@ -110,7 +110,7 @@
 </tr>
 </tbody></table>
 
-<Note title="Note">
+<Note title="说明">
 
 - FromUserId、ToUserId 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}。
 - 如果发送方使用的 SDK 版本（版本说明请参考 [发布日志](/zh/zim-android/client-sdks/zim-release-notes)）低于 `2.0.0`，ZIM 服务端对应的仅支持 `MessageType` 为 `2` 的 Command 类型消息，不支持其它类型。  
@@ -167,7 +167,7 @@ https://zim-api.zego.im/?Action=SendPeerMessage
 <td>Code</td>
 <td>Number</td>
 <td>返回码。
-<Note title="Note">当您发起请求同时向多个用户发送消息时：<ul><li>如果只需成功向 1 个或以上的用户发送消息，Code 都会返回 0，表示成功。此时请参考 ErrorList 中的具体信息，确认操作结果，了解是否向部分用户发送消息失败。</li><li>如果向所有用户发送消息都失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
+<Note title="说明">当您发起请求同时向多个用户发送消息时：<ul><li>如果只需成功向 1 个或以上的用户发送消息，Code 都会返回 0，表示成功。此时请参考 ErrorList 中的具体信息，确认操作结果，了解是否向部分用户发送消息失败。</li><li>如果向所有用户发送消息都失败，Code 会返回相关返回码，具体请参考 [全局返回码](../Return%20codes.mdx)。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>

@@ -3,7 +3,7 @@
 
 This topic describes how to use the ZIM SDK and ZIM Audio SDK to send and receive audio messages.
 
-<Warning title="Warning">
+<Warning title="注意">
 Before using this feature, please make sure you have [logged in to ZIM](./../Send%20and%20receive%20messages.mdx).
 </Warning>
 
@@ -85,7 +85,7 @@ ZIMAudioEventHandler.onError = (ZIMAudioError errorInfo){
 
 1. To complete the recording, call the [completeRecord](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/completeRecord.html) method.
    
-   <Note title="Note">
+   <Note title="说明">
    - Make sure that you have received the [onRecorderStarted](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudioEventHandler/onRecorderStarted.html) callback before calling the [completeRecord](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/completeRecord.html) method; otherwise, the recording is canceled, and an error is reported, indicating that the duration is too short.
    - If the recording is not completed or canceled, the ZIM Audio SDK automatically completes it when the duration reaches the maximum and triggers the [onRecorderCompleted](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudioEventHandler/onRecorderCompleted.html) callback.
     </Note>
@@ -234,7 +234,7 @@ await ZIMAudio.getInstance().startPlay(ZIMAudioPlayConfig('Fill in the local abs
 
 3. (Optional) To switch the audio output device (loudspeaker or headphone) during playback, call the [setAudioRouteType](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/setAudioRouteType.html) method.
    
-    <Warning title="Warning">
+    <Warning title="注意">
    If the headphone is connected, this method does not take effect, and the audio is still output from the headphone.
     </Warning>
    

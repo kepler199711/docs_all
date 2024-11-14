@@ -43,7 +43,7 @@ export const ZIMMessageImportingProgressMap = {
 
 凭借 ZIM SDK，您可以将当前用户客户端的本地聊天记录（单聊消息和群聊消息）导出作为备份，可用于更换设备时迁移聊天记录，或恢复被删除的消息。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 强烈建议开发者在迁移消息过程中对备份文件进行加密，以免泄露用户数据。
 </Warning>
@@ -60,7 +60,7 @@ export const ZIMMessageImportingProgressMap = {
 导出操作结果，将通过 {getPlatformData(props,ZIMMessageExportedCallbackMap)} 回调接口返回。
 :::
 
-<Note title="Note">
+<Note title="说明">
 
 本接口导出的消息文件名称为 zim_backup_msg_text。如果多次调用本接口时，传入的路径相同，ZIM SDK 会自行将旧的 zim_backup_msg_text 文件更名，以确保最新导出的文件名称为 zim_backup_msg_text。
 </Note>

@@ -6,7 +6,7 @@ articleID: 17472
 
 This topic describes how to use the ZIM SDK and ZIM Audio SDK to send and receive audio messages.
 
-<Warning title="Warning">
+<Warning title="注意">
 Before using this feature, please make sure you have [logged in to ZIM](./../Send%20and%20receive%20messages.mdx).
 </Warning>
 
@@ -112,7 +112,7 @@ To implement more features, pass in a license. For more information about how to
 
 1. To complete the recording, call the [completeRecord](@completeRecord) method.
    
-<Note title="Note">
+<Note title="说明">
 - Make sure that you have received the [onRecorderStarted](@onRecorderStarted) callback before calling the [completeRecord](@completeRecord) method; otherwise, the recording is canceled, and an error is reported, indicating that the duration is too short.
 - If the recording is not <a href="#complete">completed</a> or <a href="#cancel">canceled</a>, the ZIM Audio SDK automatically completes it when the duration reaches the maximum and triggers the [onRecorderCompleted](@onRecorderCompleted) callback.
 </Note>
@@ -265,7 +265,7 @@ For more information about the download progress, see [Callback for the download
 
 3. (Optional) To switch the audio output device (loudspeaker or headphone) during playback, call the [setAudioRouteType](@setAudioRouteType) method.
    
-    <Warning title="Warning">
+    <Warning title="注意">
    If the headphone is connected, this method does not take effect, and the audio is still output from the headphone.
     </Warning>
    

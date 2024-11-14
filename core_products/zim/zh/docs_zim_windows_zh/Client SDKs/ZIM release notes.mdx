@@ -141,14 +141,14 @@ articleID: 11629
 
 | 功能项  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-| 合并转发 | <ul><li>支持用户在收发消息后，通过构造合并消息体，传入发送消息接口即可实现转发合并消息；<Note title="Note"><p>如需实现逐条转发，只需将已有消息作为参数传入发送消息接口即可。</p></Note></li><li>支持查询合并消息包含的子消息具体内容。</li></ul> | <ul><li>[ZIMCombineMessage](@-ZIMCombineMessage)</li><li>[sendMessage](@sendMessage)</li><li>[queryCombineMessageDetail](@queryCombineMessageDetail)</li></ul> |
+| 合并转发 | <ul><li>支持用户在收发消息后，通过构造合并消息体，传入发送消息接口即可实现转发合并消息；<Note title="说明"><p>如需实现逐条转发，只需将已有消息作为参数传入发送消息接口即可。</p></Note></li><li>支持查询合并消息包含的子消息具体内容。</li></ul> | <ul><li>[ZIMCombineMessage](@-ZIMCombineMessage)</li><li>[sendMessage](@sendMessage)</li><li>[queryCombineMessageDetail](@queryCombineMessageDetail)</li></ul> |
 | 收发 @ 消息 | 支持用户在某个会话发送消息时，为消息设置提及指定用户（可以不在当前会话）或提及全部会话内成员。 | <ul><li>[ZIMMessage > mentionedUserIDs](@mentionedUserIDs-ZIMMessage)</li><li>[ZIMMessage > isMentionAll](@isMentionAll-ZIMMessage)</li></ul> |
 | 删除消息 | 支持用户一次性删除全部会话的所有消息。 | [deleteAllConversationMessages](@deleteAllConversationMessages) |
 | 保存会话草稿 | ZIM 支持用户退出单聊和群聊会话后仍在本地保存会话草稿，以便后续编辑。 | [setConversationDraft](@setConversationDraft) |
 | 单聊会话免打扰 | 在原有“群聊会话免打扰”的基础上，新增支持对单聊会话设置免打扰。单聊会话接收新消息后，不推送通知。 | [setConversationNotificationStatus](@setConversationNotificationStatus) |
 | 禁止发言 | 支持群主对群组实现群组禁言和指定群成员禁言。群组禁言支持全体禁言、普通成员禁言、指定角色成员禁言。 | <ul><li>[muteGroup](@muteGroup)</li><li>[muteGroupMembers](@muteGroupMembers)</li></ul> |
 | 好友管理 | 用户可以直接添加和删除好友、查看看好友列表、向用户发起好友申请、同意或拒绝好友申请、查看好友申请列表、检查其他用户与自己的好友关系、查询或修改好友信息，以及搜索好友。 | <ul><li>[addFriend](@addFriend)</li><li>[deleteFriends](@deleteFriends)</li><li>[sendFriendApplication](@sendFriendApplication)</li><li>[acceptFriendApplication](@acceptFriendApplication)</li><li>[rejectFriendApplication](@rejectFriendApplication)</li><li>[checkFriendsRelation](@checkFriendsRelation)</li><li>[queryFriendList](@queryFriendList)</li><li>[queryFriendApplicationList](@queryFriendApplicationList)</li><li>[updateFriendAlias](@updateFriendAlias)</li><li>[updateFriendAttributes](@updateFriendAttributes)</li><li>[queryFriendsInfo](@queryFriendsInfo)</li><li>[searchLocalFriends](@searchLocalFriends)</li></ul> |
-| 设置安全审核敏感词 | 开通安全审核后，支持开发者添加额外敏感词。当用户发送消息包含敏感词时，对该消息进行审核、替换内容或拦截。<Note title="Note"><p>如需使用此功能，请联系 ZEGO 技术支持。</p></Note> | - |
+| 设置安全审核敏感词 | 开通安全审核后，支持开发者添加额外敏感词。当用户发送消息包含敏感词时，对该消息进行审核、替换内容或拦截。<Note title="说明"><p>如需使用此功能，请联系 ZEGO 技术支持。</p></Note> | - |
 | 服务端设置会话免打扰 | 支持在服务端对群聊会话和单聊会话设置免打扰状态。 | [设置会话消息免打扰](/zh/zim-server/conversation/mute-notifications-for-conversations) |
 | 服务端置顶会话 | 支持在服务端为用户设置会话的置顶状态。 | [置顶会话](/zh/zim-server/conversation/pin-conversations-to-the-top) |
 | 服务端修改群资料 | 支持在服务端修改置顶群组的头像、名称和公告。**说明**：如需使用此功能，请联系 ZEGO 技术支持了解详情。 | - |
@@ -191,7 +191,7 @@ articleID: 11629
 | 优化项  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 优化 roomID 长度限制 | 支持最长 128 字节的 [roomID](@roomID-ZIMRoomInfo)。| [ZIMRoomInfo > roomID](@roomID-ZIMRoomInfo) |
-| 用户信息相关类新增用户头像字段 | [ZIMUserInfo](@-ZIMUserInfo) 和 [ZIMGroupMemberInfo](@-ZIMGroupMemberInfo) 新增 `userAvatarUrl` 字段，用于设置或说明用户头像地址。<Warning title="Warning"><p>暂不支持获取房间成员的用户头像字段，即通过 [queryRoomMemberList](@queryRoomMemberList) 和 [queryRoomMembers](@queryRoomMembers) 拿到的 `ZIMUserInfo` 的 `userAvatarUrl` 为空。</p></Warning> | <ul><li>[ZIMUserInfo](@-ZIMUserInfo)</li><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo)</li></ul> |
+| 用户信息相关类新增用户头像字段 | [ZIMUserInfo](@-ZIMUserInfo) 和 [ZIMGroupMemberInfo](@-ZIMGroupMemberInfo) 新增 `userAvatarUrl` 字段，用于设置或说明用户头像地址。<Warning title="注意"><p>暂不支持获取房间成员的用户头像字段，即通过 [queryRoomMemberList](@queryRoomMemberList) 和 [queryRoomMembers](@queryRoomMembers) 拿到的 `ZIMUserInfo` 的 `userAvatarUrl` 为空。</p></Warning> | <ul><li>[ZIMUserInfo](@-ZIMUserInfo)</li><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo)</li></ul> |
 | 优化 [onRoomStateChanged](@onRoomStateChanged) 回调逻辑  | 当开发者调用 ZIM 服务端接口在后台销毁房间后，[onRoomStateChanged](@onRoomStateChanged) 回调描述房间状态变化的原因修改为 `ZIM_ROOM_EVENT_ROOM_NOT_EXIST`。 | [onRoomStateChanged](@onRoomStateChanged) |
 | 发送单聊消息服务端接口新增响应参数 | 新增 `SuccessList` 参数，成员参数包含 `UserId`、`MsgId` 和 `MsgSeq`，说明消息接受成功用户的相关信息。`MsgSeq` 可用于 [撤回单聊消息](/zh/zim-server/messaging/recall-a-one-to-one-message)。 | [发送单聊消息](/zh/zim-server/messaging/send-a-one-to-one-message) |
 | 发送群聊消息服务端接口新增响应参数 | 新增 `MsgSeq`，可用于 [撤回群聊消息](/zh/zim-server/messaging/send-a-one-to-one-message)。 | [发送群聊消息](/zh/zim-server/messaging/send-group-messages) |
@@ -228,7 +228,7 @@ articleID: 11629
 | 功能项  | 功能描述 | 相关接口 |
 |-------|-------|-------|
 | 地理围栏 | 提供地理围栏服务，保证 IM 数据存储在运营本地，适用于海外高安全场景。 | [setGeofencingConfig](@setGeofencingConfig) |
-| 群消息管理 | 支持新进入群组成员自动获取群历史消息。<Note title="Note"><p>如需使用此功能，请联系 ZEGO 技术支持配置。</p></Note> | <ul><li>[joinGroup](@joinGroup)</li><li>[inviteUsersIntoGroup](@inviteUsersIntoGroup)</li></ul> |
+| 群消息管理 | 支持新进入群组成员自动获取群历史消息。<Note title="说明"><p>如需使用此功能，请联系 ZEGO 技术支持配置。</p></Note> | <ul><li>[joinGroup](@joinGroup)</li><li>[inviteUsersIntoGroup](@inviteUsersIntoGroup)</li></ul> |
 | 一键已读 | 支持清除所有会话的消息未读数和总消息未读数。 | [clearConversationTotalUnreadMessageCount](@clearConversationTotalUnreadMessageCount) |
 | 呼叫邀请 | 支持呼叫外用户主动加入进阶模式呼叫，或呼叫内用户切换设备。 | [callJoin](@callJoin) |
 | 删除所有会话列表 | 支持清空当前会话列表 | [deleteAllConversations](@deleteAllConversations) |
@@ -334,7 +334,7 @@ articleID: 11629
 | 置顶会话 | 用户可以选择想要优先查看的会话，将其固定在会话列表顶部。 | <ul><li>[updateConversationPinnedState](@updateConversationPinnedState)</li><li>[queryConversationPinnedList](@queryConversationPinnedList)</li></ul> |
 | 自定义消息类型 | 新增自定义类型消息，开发者可自定义消息的类型，如投票类型、接龙类型、视频卡片类型等，并自行完成消息的解析。ZIM SDK 不负责定义和解析自定义消息的具体内容。 | [ZIMCustomMessage](@-ZIMCustomMessage) |
 | 查询会话信息 | 通过指定会话 ID 查询会话的详细信息。 | [queryConversation](@queryConversation) |
-| 查询房间内用户状态 | 通过指定若干 userID 和 roomID，查询目标用户是否在指定房间内，从而进行业务逻辑设计，如邀请连麦。<Note title="Note"><p>最多支持一次性查询 10 名用户的信息。</p></Note> | [queryRoomMembers](@queryRoomMembers) |
+| 查询房间内用户状态 | 通过指定若干 userID 和 roomID，查询目标用户是否在指定房间内，从而进行业务逻辑设计，如邀请连麦。<Note title="说明"><p>最多支持一次性查询 10 名用户的信息。</p></Note> | [queryRoomMembers](@queryRoomMembers) |
 | 消息发送前回调 | 通过设置服务端回调，在用户发送单聊、群聊或房间聊天消息时，ZIM 向开发者服务端发送请求，开发者可实现：<ul><li>拦截违规消息。</li><li>建立用户黑白名单。</li></ul>  | [消息发送前回调](/zh/zim-server/callbacks/message-not-sent-yet) |
 | 消息发送后回调 | 通过设置服务端回调，在用户发送单聊、群聊、房间消息成功或失败后，ZIM 向开发者服务端发送请求，开发者可实现：<ul><li>实时记录用户发送的消息。</li><li>统计用户发送的消息。</li><li>直播录屏场景中，通过录制视频的时间戳，将聊天记录嵌入到录播视频中。</li></ul>  | [消息发送后回调](/zh/zim-server/callbacks/message-sent) |
 | 批量注册用户 | 支持调用服务端接口，指定用户信息（用户 ID 等），开发者可实现发起一次请求，注册多名用户。**说明**：最多支持一次性注册 100 名用户。 | [批量注册用户](/zh/zim-server/user/batch-register-users) |
@@ -402,7 +402,7 @@ articleID: 11629
 
 | 功能项  | 功能描述 | 相关接口 |
 |-------|-------|-------|
-|消息撤回|  撤回发送成功的消息，默认撤回 2 分钟内的消息。撤回操作仅支持撤回单聊和群聊的消息，不支持撤回房间内消息。<Note title="Note"><p>如需配置撤回时间，请联系 ZEGO 技术支持。</p></Note>| <ul><li>[revokeMessage](@revokeMessage)</li><li>[ZIMMessageRevokedCallback](@ZIMMessageRevokedCallback)</li></ul>|
+|消息撤回|  撤回发送成功的消息，默认撤回 2 分钟内的消息。撤回操作仅支持撤回单聊和群聊的消息，不支持撤回房间内消息。<Note title="说明"><p>如需配置撤回时间，请联系 ZEGO 技术支持。</p></Note>| <ul><li>[revokeMessage](@revokeMessage)</li><li>[ZIMMessageRevokedCallback](@ZIMMessageRevokedCallback)</li></ul>|
 |消息回执| [ZIMMessageSendConfig](@-ZIMMessageSendConfig) 新增 hasReceipt 参数，支持在单聊和群聊会话中发送附带回执的消息。<br />ZIM SDK 支持在单聊和群聊会话查看其他用户是否阅读本端发送的信息，以及支持查看群聊中已读消息和未读消息的数量，以及对应的用户信息，**但是不支持信令消息、弹幕消息、以及房间内消息使用回执。**| <ul><li>[ZIMMessageSendConfig](@-ZIMMessageSendConfig)</li><li>[sendMessageReceiptsRead](@sendMessageReceiptsRead)</li><li>[sendConversationMessageReceiptRead](@sendConversationMessageReceiptRead)</li><li>[queryGroupMessageReceiptReadMemberList](@queryGroupMessageReceiptReadMemberList)</li><li>[queryGroupMessageReceiptUnreadMemberList](@queryGroupMessageReceiptUnreadMemberList)</li><li>[queryMessageReceiptsInfo](@queryMessageReceiptsInfo)</li></ul> |
 | 呼叫邀请支持离线推送 | [ZIMCallInviteConfig](@-ZIMCallInviteConfig) 新增 pushConfig 参数，支持向离线用户推送呼叫邀请。 | [ZIMCallInviteConfig](@-ZIMCallInviteConfig) |
 
@@ -410,7 +410,7 @@ articleID: 11629
 
 | 优化项  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| 变更 [ZIMPushConfig](@-ZIMPushConfig) 的额外字段命名| 为避免开发者接入概念混淆，[ZIMPushConfig](@-ZIMPushConfig) 的 extendedData 参数修改为 payload 参数，功能不变。<Note title="Note"><p>若集成 ZIM SDK 2.5.0 版本后，开发者使用了离线推送功能后出现了接口编译失败的问题，请将 extendedData 改为 payload。</p></Note> | - |
+| 变更 [ZIMPushConfig](@-ZIMPushConfig) 的额外字段命名| 为避免开发者接入概念混淆，[ZIMPushConfig](@-ZIMPushConfig) 的 extendedData 参数修改为 payload 参数，功能不变。<Note title="说明"><p>若集成 ZIM SDK 2.5.0 版本后，开发者使用了离线推送功能后出现了接口编译失败的问题，请将 extendedData 改为 payload。</p></Note> | - |
 | 优化富媒体消息传输协议 | 减少网络传输过程中的协议包大小。 | -|
 | 优化 API 调用的线程安全 | - | -|
 
@@ -627,7 +627,7 @@ articleID: 11629
 
 <h5>改进优化</h5>
 
-<Warning title="Warning">
+<Warning title="注意">
 
 本次迭代，我们对产品的所有已有接口和新增接口，做了统一的风格优化，开发者从 `1.x.x` 升级至 `2.0.0` API 时，需要在代码里做以下适配。
 </Warning>

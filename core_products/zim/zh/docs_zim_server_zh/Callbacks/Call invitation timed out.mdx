@@ -10,7 +10,7 @@
 - 在创建呼叫时设置的超时时间内，呼叫发起用户在线，**部分呼叫对象**一直未响应。
 - 在呼叫超时时，呼叫发起用户掉线，**全体呼叫对象**都未响应。
 
-<Note title="Note">
+<Note title="说明">
 
 如果**全体呼叫对象**都在规定时间内未响应，并且呼叫发起用户在线，会触发 [呼叫取消回调](./Call%20invitation%20canceled.mdx)。
 </Note>
@@ -18,7 +18,7 @@
 ## 回调说明
 
 - 请求方法：POST。
-<Note title="Note">
+<Note title="说明">
 
 - 回调数据需要 UrlDecode 解码。
 - 使用 POST 请求方法传递参数时：
@@ -42,7 +42,7 @@
 | call_id | String | 呼叫 ID。 |
 | user_ids | Array of String | 不应答用户 ID 列表。 |
 
-<Note title="Note">
+<Note title="说明">
 
 建议您将部分参数转换为 Int 进行逻辑处理，相关字段包括 `appid` 和 `nonce`。
 </Note>

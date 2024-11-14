@@ -68,7 +68,7 @@ export const ZIMUsersInfoQueryConfig={
 ## 功能简介
 
 :::if{props.platform="Flutter"}
-<Note title="Note">
+<Note title="说明">
 本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
 </Note>
 :::
@@ -281,7 +281,7 @@ ZIM SDK 支持用户在登录后，通过 {getPlatformData(props,updateUserAvata
 
 设置用户头像后，用户可以通过 {getPlatformData(props,ZIMUserAvatarUrlUpdatedCallback)} 收到设置结果。
 
-<Warning title="Warning">
+<Warning title="注意">
 
 当一名用户修改头像后，其他用户需调用 {getPlatformData(props,queryUsersInfo)} 接口，并将 {getPlatformData(props,ZIMUsersInfoQueryConfig)} 中 {getPlatformData(props,isQueryFromServer)} 参数赋值为 `true` 重新 <a href="#查询用户信息">查询用户信息</a>，才会获取最新头像。
 </Warning>

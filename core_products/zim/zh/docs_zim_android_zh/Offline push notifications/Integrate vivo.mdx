@@ -47,7 +47,7 @@
 
 2. 下载 [vivo 推送 SDK](https://storage.zego.im/zpns/sdk/vivo/vivo_pushSDK_v4.0.4.0_504.aar)，并将其拷贝到您项目的的“app/libs”目录下。
 
-    <Warning title="Warning">
+    <Warning title="注意">
     本文提供的 vivo 推送 SDK 包建议搭配 ZPNs SDK v2.7.0。
     </Warning>
 
@@ -119,7 +119,7 @@ vivo 推送将消息分为“系统消息”和“运营消息”两大类别。
 </tr>
 </tbody></table>
 
-<Note title="Note">
+<Note title="说明">
 - 通知开启的有效用户：应用集成的 push-sdk 订阅成功，且设备近 14 天内有联网的通知权限开启用户。​
 - 通知开启有效用户数＜10000，则运营消息量级默认为 10000。
 </Note>
@@ -136,11 +136,11 @@ vivo 推送将消息分为“系统消息”和“运营消息”两大类别。
     </tr>
     <tr>
     <td>resourcesID</td>
-    <td>由您自定义，不超过 32 个字符。<Note title="Note">建议 resourcesID 能够直接反映推送目的。例如，目的是打电话，就可以命名为 `call_resource`。</Note></td>
+    <td>由您自定义，不超过 32 个字符。<Note title="说明">建议 resourcesID 能够直接反映推送目的。例如，目的是打电话，就可以命名为 `call_resource`。</Note></td>
     </tr>
     <tr>
     <td>category</td>
-    <td>推送类别。<Warning title="Warning"><ul><li>填写 category 后，可以不填写 classification。</li><li>但若填写 classification，请保证 category 与 classification 是正确对应关系，否则无法推送。</li></ul></Warning></td>
+    <td>推送类别。<Warning title="注意"><ul><li>填写 category 后，可以不填写 classification。</li><li>但若填写 classification，请保证 category 与 classification 是正确对应关系，否则无法推送。</li></ul></Warning></td>
     </tr>
     <tr>
     <td>classification</td>

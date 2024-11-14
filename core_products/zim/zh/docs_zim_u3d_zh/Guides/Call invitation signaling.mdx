@@ -5,7 +5,7 @@ articleID: 17268
 
 - - -
 
-<Note title="Note">
+<Note title="说明">
 
 本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
@@ -17,7 +17,7 @@ ZIM SDK 提供了呼叫邀请功能，支持主叫向被叫（可为离线状态
 
 普通模式的呼叫邀请支持用户发起、取消、接受、拒绝和超时未响应。在此基础上，进阶模式的呼叫邀请还允许用户中途邀请他人、退出以及结束呼叫。
 
-<Note title="Note">
+<Note title="说明">
 
 “呼叫邀请” 功能仅提供了基本的业务流程控制能力，开发者需要自行实现使用本功能的业务需求（例如，通常应用在聊天工具中，发起语音通话或视频通话邀请等场景中）。
 </Note>
@@ -294,7 +294,7 @@ string callID) =>
 1. 客户端 A 通过调用 [CallInvite](@CallInvite) 接口，发起呼叫邀请，客户端 B 在收到邀请信息后，可以选择 <a href="#4-接受呼叫邀请">接受</a> 或者 <a href="#5-拒绝呼叫邀请">拒绝</a>。
 2. 客户端 B 通过注册 [OnCallInvitationReceived](@OnCallInvitationReceived) 回调接口，接收客户端 A 的邀请通知。
 
-    <Note title="Note">
+    <Note title="说明">
 
     若客户端 B 为离线用户：
     - 在 timeout（邀请超时时间）内登录，即可通过 [OnCallInvitationReceived](@OnCallInvitationReceived) 收到呼叫邀请通知。
@@ -341,7 +341,7 @@ ZIM.GetInstance().onCallInvitationReceived = (ZIM zim,
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/cancel.png" /></Frame>
 
 1. 客户端 A 发起呼叫邀请后，如果需要取消，可以调用 [CallCancel](@CallCancel) 接口，主动选择取消当前邀请。
-    <Note title="Note">
+    <Note title="说明">
 
     在呼叫邀请成功创建后至其超时前，如果没有任何被叫用户接受，主叫用户主动登出或因心跳超时而掉线，也会导致呼叫邀请被取消。
     </Note>
@@ -494,7 +494,7 @@ ZIM.GetInstance().CallInvite(invitees, config, (string callID, ZIMCallInvitation
 });
 ```
 
-<Note title="Note">
+<Note title="说明">
 
 除了发起外，呼叫邀请的进阶模式和普通模式在取消、接受、拒绝和超时未响应上没有差别。
 </Note>

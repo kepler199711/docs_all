@@ -99,7 +99,7 @@ API:
 
 Regular messages refer to the messages of the following message types: ZIMTextMessage, ZIMCommandMessage, and ZIMBarrageMessage.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - To receive event callbacks (receive in-room messages, get the connection status, token expiration, etc.), you can set up the [on](@on) method and listen for related callbacks. 
 - When receiving messages, you need to determine the message is a Text message ([ZIMTextMessage](@-ZIMTextMessage)) or a Command message ([ZIMCommandMessage](@-ZIMCommandMessage)) because these two message types are based on the basic message class ([ZIMMessage](@-ZIMMessage)). You need to convert the basic message class to a concrete message type and then retrieve the message content from the `message` field.
@@ -118,7 +118,7 @@ Take client A sending a message to client B as an example:
 3. Client A calls the [sendMessage](@sendMessage) method and set the `converversationType` to `ZIMConversationTypePeer` to send a one-to-one message to Client B. 
 4. Client B listens for the [receivePeerMessage](@receivePeerMessage) method to receive Client A's one-to-one messages.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 You can't send messages to yourself by calling the `sendMessage` method (when toConversationID = your ID). If you did so, the error code 6000001 will return. 
 
@@ -154,7 +154,7 @@ zim.sendMessage(messageTextObj, toConversationID, conversationType, config, noti
 
 ### Receive messages
 
-<Note title="Note">
+<Note title="说明">
 
 - To send messages, call the [sendMessage](@sendMessage) method and set the `conversationType` accordingly.
 - To receive messages:
@@ -198,7 +198,7 @@ The ZIM SDK now supports sending and receiving messages of different rich media 
 
 To send rich media content after login, call the [sendMediaMessage](@sendMediaMessage) method, and specify the message type (image, file, audio, video), the session type (one-on-one chat, room chat, group chat), and message related configurations as needed.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - When sending rich media content, the file path to be sent must be in `UTF-8` encoding format.
 - To send rich media content to a room/group, the sender must be in the room/group.
@@ -406,7 +406,7 @@ To receive the rich media content messages, do the following:
 
 The ZIM SDK allows you to implement signaling message sending and receiving. You can call the [ZIMCommandMessage](@-ZIMCommandMessage) operation to define the message type, for example, location message.
 
-<Note title="Note">
+<Note title="说明">
 
 This message type does not support offline push and local storage.
 </Note>
@@ -477,7 +477,7 @@ zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID })
 	 
 The ZIM SDK allows you to implement custom message sending and receiving. You can call the [ZIMCustomMessage](@-ZIMCustomMessage) operation to define the custom message type, for example, the voting message, solitaire message, or video card message. Below is the procedure. 
 
-<Note title="Note">
+<Note title="说明">
 
 - Only the ZIM SDK 2.8.0 or later supports sending, receiving, and viewing custom messages. 
 - If the version of the receiving ZIM SDK is 2.0.0 or later but earlier than 2.8.0, the ZIM SDK can receive custom messages but will identify the message type as unknown. In addition, it cannot obtain the message content. To obtain the message content, upgrade the ZIM SDK to 2.8.0 or later. 
@@ -544,7 +544,7 @@ if (msg.type == 200) {
 
 A mentioned message contains the @ symbol and the mentioned user who will be notified of the message. 
 
-<Note title="Note">
+<Note title="说明">
 
 A mentioned message is not a message type. A text message can also be a mentioned message. 
 </Note>
@@ -555,7 +555,7 @@ When calling the [sendMessage](@sendMessage) operation to send a message, you ca
 - [mentionedUserIDs](@mentionedUserIDs-ZIMMessage): It notifies the mentioned user (who can be out of the conversation) of the message. The parameter can contain up to 50 bytes in length. If you need a longer length, contact ZEGO technical support. 
 - [isMentionAll](@isMentionAll-ZIMMessage): It notifies all other users in a conversation of the message. 
 
-<Note title="Note">
+<Note title="说明">
 
 Only the ZIM SDK 2.14.0 or later supports sending mentioned messages. 
 </Note>
@@ -599,7 +599,7 @@ Call the same operation for receiving ordinary messages to receive mentioned mes
 
 After messages are received, you can implement features, for example, highlighting, based on the business logic. 
 
-<Note title="Note">
+<Note title="说明">
 
 - Only the ZIM SDK 2.14.0 or later supports receiving and viewing mentioned messages. 
 - If the version of the receiving ZIM SDK is 2.0.0 or later but earlier than 2.14.0, the received message does not contain the mentioned content. 
@@ -664,7 +664,7 @@ For more information about how to send a message to all users from the server, s
 
 ### Receive a message that mentions all from the server 
 
-<Note title="Note">
+<Note title="说明">
 
 - Only the ZIM SDK 2.10.0 or later supports receiving and viewing a message that mentions all. 
 - If the version of the receiving ZIM SDK is 2.0.0 or later but earlier than 2.10.0, the ZIM SDK cannot receive the message that mentions all from the server. To receive the message, upgrade the ZIM SDK to 2.10.0 or later. 

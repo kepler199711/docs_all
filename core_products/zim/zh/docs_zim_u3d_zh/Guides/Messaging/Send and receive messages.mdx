@@ -8,7 +8,7 @@ articleID: 16370
 
 - - -
 
-<Note title="Note">
+<Note title="说明">
 
 This document is applicable to the following platforms of Unity framework: iOS, Android, macOS, and Windows.
 </Note>
@@ -90,7 +90,7 @@ Video message. Supports video messages in MP4 or MOV format. Size limit: 100 MB.
 
 Regular messages refer to the messages of the following message types: ZIMTextMessage and ZIMBarrageMessage.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - When receiving messages, you need to determine whether the message is a Text message ([ZIMTextMessage](@-ZIMTextMessage)) or a Command message ([ZIMCommandMessage](@-ZIMCommandMessage)) because these two message types are based on the basic message class ([ZIMMessage](@-ZIMMessage)). You need to convert the basic message class to a concrete message type and then retrieve the message content from the `message` field.
 - When a message is received, it can be sorted using the message's `orderKey`. The larger the `orderKey`, the newer the message. And the number of unread messages will be updated automatically upon receiving.
@@ -106,7 +106,7 @@ The following process shows how Client A sends messages to Client B:
 3. Client A calls the [SendMessage](@SendMessage) method, and set the `converversationType` to `ConversationType.Peer` to send a one-to-one message to Client B.
 4. Client B listens for the [OnReceivePeerMessage](@OnReceivePeerMessage) callback to receive Client A's messages.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 You can't send messages to yourself by calling the `sendMessage` method (when toConversationID = your ID). If you did so, the error code 6000001 will return. 
 
@@ -181,7 +181,7 @@ ZIM.GetInstance().onMessageSentStatusChanged = (
 
 #### Receive messages
 
-<Note title="Note">
+<Note title="说明">
 
 - To send messages, call the [SendMessage](@SendMessage) method and set the `ZIMConversationType` accordingly.
 - To receive messages:
@@ -229,7 +229,7 @@ The ZIM SDK now supports sending and receiving messages of different rich media 
 
 To send rich media content after login, call the [SendMediaMessage](@SendMediaMessage) method, and specify the message type (image, file, audio, video), the session type (one-on-one chat, room chat, group chat), and message related configurations as needed.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - When sending rich media content, the file path to be sent must be in `UTF-8` encoding format.
 - To send rich media content to a room/group, the sender must be in the room/group.
@@ -430,7 +430,7 @@ Among which:
 
 ZIM SDK supports developers to implement sending and receiving signaling messages. Developers can define their own message types, such as location messages, using the [ZIMCommandMessage](@-ZIMCommandMessage) object.
 
-<Note title="Note">
+<Note title="说明">
 
 This message type does not support offline push and local storage.
 </Note>
@@ -496,7 +496,7 @@ The ZIM SDK now supports you to send and receive custom messages. To do that, yo
 
 The following shows how to send custom messages to a specified user.
 
-<Note title="Note">
+<Note title="说明">
 
 - Only ZIM SDK version 2.8.0 and above support sending and receiving custom message types.
 - If the SDK version of the receiving end is between [2.0.0, 2.8.0), it can receive custom messages, but the message type will be displayed as unknown and the message content cannot be obtained. If you need to retrieve this message, please upgrade the SDK to version 2.8.0 or above.

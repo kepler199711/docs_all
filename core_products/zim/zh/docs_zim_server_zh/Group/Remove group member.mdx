@@ -6,7 +6,7 @@
 
 通过指定用户 ID 移除群内用户。
 
-<Note title="Note">
+<Note title="说明">
 
 - 群内用户 ID 可通过 [查询群成员列表](./Query%20group%20member%20list.mdx) 获取。
 - 如果被移除的用户为群主，则群列表第一位用户会自动成为新群主。
@@ -92,7 +92,7 @@
 </tr>
 </tbody></table>
 
-<Note title="Note">
+<Note title="说明">
 
 FromUserId、GroupId、UserId[] 和 CustomReason 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，''，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，'{'，'}'，'|'，'~'"}。
 </Note>
@@ -130,7 +130,7 @@ https://zim-api.zego.im/?Action=KickoutGroupUser
 <td>Code</td>
 <td>Number</td>
 <td>返回码。
-<Note title="Note">如果您发起请求同时移除多名用户时：<ul><li>如果成功移除 1 个或以上的用户，Code 都会返回 0。此时请参考 ErrorList 中的具体信息，确认操作结果。</li><li>如果所有用户都没被成功移除，Code 会返回相关返回码，具体请参考 <a href="!Server_APIs/Return_Codes" target="_blank">全局返回码</a>。</li></ul></Note></td>
+<Note title="说明">如果您发起请求同时移除多名用户时：<ul><li>如果成功移除 1 个或以上的用户，Code 都会返回 0。此时请参考 ErrorList 中的具体信息，确认操作结果。</li><li>如果所有用户都没被成功移除，Code 会返回相关返回码，具体请参考 <a href="!Server_APIs/Return_Codes" target="_blank">全局返回码</a>。</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>

@@ -10,7 +10,7 @@ articleID: 16293
 
 This document describes how to use the ZIM SDK (In-app Chat) to send and receive messages.
 
-<Note title="Note">
+<Note title="说明">
 
 This document is applicable to the following platforms of Unity framework: iOS, Android, macOS, and Windows.
 </Note>
@@ -34,7 +34,7 @@ Before you begin, make sure:
 
 - Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com) to create a project, get the AppID and AppSign.
 
-<Warning title="Warning">
+<Warning title="注意">
 
 The SDK also supports token authentication. If you need to upgrade the authentication method, you can refer to [Guide for upgrading the authentication mode from using the AppSign to Token](https://docs.zegocloud.com/faq/token_upgrade?product=ExpressVideo&platform=alll).
 </Warning>
@@ -69,7 +69,7 @@ Click the "New" button, select the "3D" template, fill in the "Project Name", ch
 In a Unity project, there cannot be `.dll` files with the same name, otherwise the `Multiple plugins with the same name 'zim'` error will occur during Build. You need to delete the `x64 folder` or `x86 folder` under the "Plugins/Windows" folder according to the actual business situation.
 
 
-<Note title="Note">
+<Note title="说明">
 
 If you do not plan to run the sample source code on the Windows platform, you can directly delete the "Plugins/Windows" folder.
 </Note>   
@@ -307,7 +307,7 @@ To log in, Clients A and B both need to do the following:
 The client needs to log in using their respective user information. Call the [Login](@Login) method and pass in the user information [ZIMUserInfo](@-ZIMUserInfo) object to log in.
 
 
-<Warning title="Warning">
+<Warning title="注意">
 
 - You can custom the **userID** and **userName**, and we recommend you set the  **userID** to a meaningful value and associate them with the account system of your application.
 - For SDK 2.3.0 or later: The SDK uses the AppSign authentication mode by default. You only need to pass the [ZIMUserInfo](@-ZIMUserInfo) when logging in. 

@@ -5,7 +5,7 @@
 
 Silent push notifications are a special type of remote notification, mainly used for data synchronization between the App running in the background and the server. For example: when the App is not active and the data within the App is outdated, the server will send a silent push notification, and the App will update the data without any user awareness.
 
-<Warning title="Warning">
+<Warning title="注意">
 - Silent push notifications are primarily used for updating and synchronizing data, without any user awareness. Therefore, silent push notifications generally do not have content, sounds, or badge notifications.
 - When silent push notifications awaken the background App for download tasks, there is a maximum of 30 seconds to perform.
 - Notifications callbacks can be triggered when the App is running in the foreground/background, or when the background process is suspended (retaining the App's memory resources). Callbacks cannot be triggered after the App is closed.
@@ -14,7 +14,7 @@ Silent push notifications are a special type of remote notification, mainly used
 </Warning>
 
 
-<Note title="Note">
+<Note title="说明">
 This documentation is applicable to the following platforms: iOS and Android (only smart devices that support Google services).
 </Note>
 
