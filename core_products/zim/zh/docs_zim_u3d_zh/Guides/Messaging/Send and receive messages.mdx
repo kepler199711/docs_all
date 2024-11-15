@@ -1,248 +1,234 @@
 ---
-articleID: 16370
+articleID: 17261
 ---
 
 
-
-# Send & Receive messages
+# 收发消息
 
 - - -
 
 <Note title="说明">
 
-This document is applicable to the following platforms of Unity framework: iOS, Android, macOS, and Windows.
+本文档适用于开发以下平台应用：iOS、Android、macOS、Windows。
 </Note>
 
 
+## 功能简介
 
-ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of message management, allowing you to send and receive one-to-one, group, in-room messages, query message history, delete messages, and more. With the message management feature, you can meet different requirements of various scenarios such as social entertainment, online shopping, online education, interactive live streaming, and more. 
+ZIM SDK 支持单聊消息、群组消息、房间消息等的收发，以及查询历史消息、删除消息等功能。可广泛应用于娱乐社交、电商购物、在线教育、互动直播等多种场景下。
 
-This document describes how to send and receive messages with the ZIM SDK. 
+本文档介绍了如何使用 ZIM SDK 的接口，实现各类消息的收发功能与监听消息的状态。
 
-## Message types
+## 消息类型
 
-Currently, the ZIM SDK supports the following message types:
+目前 ZIM 支持的消息类型如下：
 
 <table>
 <tbody><tr data-row-level="1">
-<th>Message type</th>
-<th>Description</th>
-<th>Details</th>
+<th>消息类型</th>
+<th>说明</th>
+<th>特性及适用场景</th>
 </tr>
 <tr data-row-level="2">
 <td>ZIMTextMessage(1)</td>
-<td>Text message. Size limit: 32 KB. Rate limit: 10 requests/second.</td>
+<td>文本消息。消息大小不超过 32 KB，单个客户端发送频率限制为 10 次/秒。</td>
 <td>
-Enable messages to be more deliverable, and can be stored as message history. Suitable for one-on-one chat and group chat.
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](../../Introduction/Pricing.mdx) 中“历史消息存储天数”。）；一般适用于“单聊”、“群聊”等即时聊天的场景。
 
-Relevant method: [SendMessage](@SendMessage)
+相关接口：[SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="3">
 <td>ZIMCommandMessage(2)</td>
-<td>Customizable signaling message. Size limit: 5 KB. Rate limit: 10 requests/second.</td>
+<td>开发者可自定义数据内容的信令消息。消息大小不超过 5 KB，单个客户端发送频率限制为 10 次/秒。</td>
 <td>
-Supports massive concurrency. Suitable for live audio room, online classroom, the messages won't be stored after the room is destroyed.
+支持更高的并发；一般适用于“语聊房”、“在线课堂”等房间内的即时聊天；房间解散后，消息不保存。
 
-Relevant method: [SendMessage](@SendMessage)
+相关接口：[SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="4">
 <td>ZIMBarrageMessage(20)</td>
-<td>In-room barrage message (bullet) screen message). Size limit: 5 KB. No specific rate limit.</td>
+<td>房间内弹幕文本消息。消息大小不超过 5 KB，单个客户端发送频率无限制。</td>
 <td>
-<p>The high-frequency messages that don't require 100% deliverability, this message type is often used to send bullet screen messages.</p><p>
-Supports massive concurrency, but the message deliverability can't be guaranteed.</p>
+<p>专门用于房间内的高频、不可靠、允许丢掉的消息，一般适用于发送“弹幕消息”的场景中。</p><p>支持高并发，但不可靠，不保证消息送达。</p>
 
-Relevant method: [SendMessage](@SendMessage)
+相关接口：[SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="5">
 <td>ZIMImageMessage(11)</td>
-<td>Image message. Supports major image formats, including JPG, PNG, BMP, TIFF, and GIF, WebP. Size limit: 10 MB. Rate limit: 10 requests/second.</td>
+<td>图片消息。支持主流图片格式，包括 JPG、PNG、BMP、TIFF、GIF、WebP，大小不超过 10 MB，单个客户端发送频率限制为 10 次/秒。</td>
 <td rowspan="4">
-Enable messages to be more deliverable, and can be stored as history messages (14 days by default). Suitable for one-on-one chat, room chat, and group chat.
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](../../Introduction/Pricing.mdx) 中“历史消息存储天数”。）；一般用于单聊、房间、群聊等即时聊天场景。
 
-Relevant method: 
+相关接口：
 [SendMediaMessage](@SendMediaMessage)
 </td>
 </tr>
 <tr data-row-level="6">
 <td>ZIMFileMessage(12)</td>
-<td>File message. Supports files in any format. Size limit: 100 MB. Rate limit: 10 requests/second.</td>
+<td>文件消息。消息内容为文件，格式不限，大小不超过 100 MB，单个客户端发送频率限制为 10 次/秒。</td>
 </tr>
 <tr data-row-level="7">
 <td>ZIMAudioMessage(13)</td>
-<td>Voice message. Supports voice messages in MP3, M4A format within 300 seconds. Size limit: 6 MB. Rate limit: 10 requests/second.</td>
+<td>语音消息。支持 MP3、M4A 格式的语音文件，时长不超过 300 秒，大小不超过 6 MB，单个客户端发送频率限制为 10 次/秒。</td>
 </tr>
 <tr data-row-level="8">
 <td>ZIMVideoMessage(14)</td>
-<td>
-Video message. Supports video messages in MP4 or MOV format. Size limit: 100 MB. Rate limit: 10 requests/second. Only video files encoded in H264 and H265 formats can obtain the width and height information of the first frame of the video after the message is sent successfully.
-</td>
+<td>视频消息。支持 MP4、MOV 格式的视频文件，大小不超过 100 MB，单个客户端发送频率限制为 10 次/秒。**仅支持视频编码格式为 H264 和 H265 的视频文件在消息发送成功后获取该视频首帧的宽、高信息。**</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
-## Message types
+## 收发普通消息
 
-## Send/Receive regular messages
-
-Regular messages refer to the messages of the following message types: ZIMTextMessage and ZIMBarrageMessage.
+普通消息，包含 ZIMTextMessage、ZIMBarrageMessage 等消息类型。
 
 <Warning title="注意">
 
-- When receiving messages, you need to determine whether the message is a Text message ([ZIMTextMessage](@-ZIMTextMessage)) or a Command message ([ZIMCommandMessage](@-ZIMCommandMessage)) because these two message types are based on the basic message class ([ZIMMessage](@-ZIMMessage)). You need to convert the basic message class to a concrete message type and then retrieve the message content from the `message` field.
-- When a message is received, it can be sorted using the message's `orderKey`. The larger the `orderKey`, the newer the message. And the number of unread messages will be updated automatically upon receiving.
+- 接收消息时，收到的消息类型是基类 [ZIMMessage](@-ZIMMessage)。开发者需要根据其中的 `type`（具体请参考 [ZIMMessageType](@-ZIMMessageType)）字段，判断消息类型是 Text 还是 Command，然后强转基类为具体的子类（[ZIMTextMessage](@-ZIMTextMessage) 或 [ZIMCommandMessage](@-ZIMCommandMessage)），然后从 “message” 字段获取消息内容。
+- 接收消息时，可以使用消息的 orderkey 来实现排序；即 orderkey 越大，消息的时间越新。接收到消息后，会自动更新消息未读数量。
 </Warning>
 
 
-### Send/Receive messages
+### 发送消息
 
-The following process shows how Client A sends messages to Client B:
+以客户端 A 向客户端 B 发送消息为例： 
 
-1. Client A and Client B create their own ZIM SDK instances, and listen for the callback on the result of message sending [OnReceivePeerMessage](@OnReceivePeerMessage).
-2. Client A and Client B log in to the ZIM SDK.
-3. Client A calls the [SendMessage](@SendMessage) method, and set the `converversationType` to `ConversationType.Peer` to send a one-to-one message to Client B.
-4. Client B listens for the [OnReceivePeerMessage](@OnReceivePeerMessage) callback to receive Client A's messages.
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/send_receive_peerMessage_U3D.png" /></Frame>
+
+1. 客户端 A、B 分别创建自己的 ZIM 实例，并注册 [OnReceivePeerMessage](@OnReceivePeerMessage) 回调接口，用于接收单聊消息通知。
+2. 客户端 A、B 分别登录 ZIM SDK。
+3. 客户端 A 调用 [SendMessage](@SendMessage) 接口，设置 `conversationType` 为 `ZIMConversationType.Peer` 发送一条单聊消息到客户端 B。
+4. 客户端 B 将通过 [OnReceivePeerMessage](@OnReceivePeerMessage) 回调接口，收到客户端 A 的消息。
 
 <Warning title="注意">
 
-You can't send messages to yourself by calling the `sendMessage` method (when toConversationID = your ID). If you did so, the error code 6000001 will return. 
+
+目前 ZIM 不支持调用 `sendMessage` 接口，向自己发送消息（即 toConversationID = 自己的 ID）。如果尝试向自己发送消息，会返回错误 6000001，并提示传入参数错误。
 
 </Warning>
-
-
-### Send messages
 
 ```c#
-// 1. Create ZIM object and pass in appID and appSign
+// 1、创建 ZIM 对象，传入 appID、appSign
 ZIMAppConfig appConfig = new ZIMAppConfig();
-appConfig.appID = 12345;  // Replace with the AppID you obtained from the ZEGO console, for more details, please refer to Console - Project Information.
-appConfig.appSign = "appSign";   // Replace with the AppSign you obtained from the ZEGO console, for more details, please refer to Console - Project Information.
+appConfig.appID = 12345;  // 替换为您从 [ZEGO 控制台](https://console.zego.im) 申请到的 AppID，详情请参考 [控制台 - 项目信息](https://doc-zh.zego.im/article/12107)。
+appConfig.appSign = "appSign";   // 替换为您从 [ZEGO 控制台](https://console.zego.im) 申请到的 AppSign，详情请参考 [控制台 - 项目信息](https://doc-zh.zego.im/article/12107)。
 ZIM.Create(appConfig);
 
-// 2. Set callback for receiving one-on-one chat messages
+// 2、设置单聊消息回调
 ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
                     List<ZIMMessage> messageList,
                     string fromUserID) =>{ };
 
-// 3. Login
+// 3、登录
 ZIMUserInfo zimUserInfo = new ZIMUserInfo();
 zimUserInfo.userID = "xxxx";
 zimUserInfo.userName = "xxxx";
 ZIM.GetInstance().Login(zimUserInfo, (ZIMError errorInfo) =>
     {
-        // Developers can determine whether the login is successful based on ZIMError.
+        // 开发者可根据 ZIMError 来判断是否登录成功。          
     }
 );
 
 string toConversationID = "xxxx1";
 
 ZIMTextMessage zimMessage = new ZIMTextMessage();
-zimMessage.message = "Message content";
+zimMessage.message = "消息内容";
 
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// Set message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.Low;
-// Set offline push configuration for the message
+// 设置消息的离线推送配置
 ZIMPushConfig pushConfig = new ZIMPushConfig();
-pushConfig.title = "Offline push title";
-pushConfig.content = "Offline push content";
-pushConfig.payload = "Offline push extra information";
+pushConfig.title = "离线推送的标题";
+pushConfig.content = "离线推送的内容";
+pushConfig.payload = "离线推送的扩展信息";
 config.pushConfig = pushConfig;
 
-// 4. Set conversation type for sending messages
-// Send one-on-one chat messages
+// 4、设置发送的会话类型
+// 发送单聊信息
 ZIMConversationType peerType = ZIMConversationType.Peer;
 
-// Send group chat messages
+// 发送群聊信息
 // ZIMConversationType groupType = ZIMConversationType.Group;
 
-// Send room chat messages
+// 发送房间信息
 // ZIMConversationType roomType = ZIMConversationType.Room;
 
 
 ZIMMessageSendNotification notification = new ZIMMessageSendNotification();
-
-// 5. Send message
+            
+// 5、发送消息
 ZIM.GetInstance().SendMessage(zimMessage, toConversationID, peerType, config, notification, (ZIMMessage message, ZIMError errorInfo) =>
 {
-    // Developers can use this callback to listen for successful message sending.
+    // 开发者可以通过该回调监听消息是否发送成功。
 });
 
 ZIM.GetInstance().onMessageSentStatusChanged = (
     ZIM zim,
     List<ZIMMessageSentStatusChangeInfo> messageSentStatusChangeInfoList) =>
 {
-    // Developers can use this notification to listen for successful message sending.
+    // 开发者可以通过该通知监听消息是否发送成功。
 };
 ```
 
-#### Receive messages
+### 接收消息
 
 <Note title="说明">
 
-- To send messages, call the [SendMessage](@SendMessage) method and set the `ZIMConversationType` accordingly.
-- To receive messages:
-    - One-on-one messages (Peer type), through the callback [OnReceivePeerMessage](@OnReceivePeerMessage).
-    - In-room messages (Room type), through the callback [OnReceiveRoomMessage](@OnReceiveRoomMessage).
-    - Group messages (Group type), through the callback [OnReceiveGroupMessage](@OnReceiveGroupMessage).
+- 发送消息时，统一使用 [SendMessage](@SendMessage) 接口，并根据消息类型传入对应的 ZIMConversationType 取值。
+- 接收消息时：
+    - 单聊消息（Peer 类型），通过 [OnReceivePeerMessage](@OnReceivePeerMessage) 回调接收。
+    - 房间消息（Room 类型），通过 [OnReceiveRoomMessage](@OnReceivePeerMessage) 回调接收。
+    - 群组消息（Group 类型），通过 [OnReceiveGroupMessage](@OnReceivePeerMessage) 回调接收。
 </Note>
-
 
 ```c#
 ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
                             List<ZIMMessage> messageList,
                             string fromUserID) =>
 {
-    // Received one-on-one chat messages
+    // 收到的单聊消息
 };
 
 ZIM.GetInstance().onReceiveRoomMessage = (ZIM zim,
                             List<ZIMMessage> messageList,
                             string fromRoomID) =>
 {
-    // Received room chat messages
+    // 收到的房间消息
 };
 
 ZIM.GetInstance().onReceiveGroupMessage = (ZIM zim,
                             List<ZIMMessage> messageList,
                             string fromGroupID) =>
 {
-    // Received group chat messages
+    // 收到的群聊消息
 };
 ```
 
+## 收发富媒体消息
 
-## Send/Receive rich media content
+ZIM SDK 支持发送多种类型的富媒体消息，包含图片、文件、音频、视频等消息类型，开发者可以通过以下步骤实现富媒体文件消息的收发。
 
+1. 用户登录成功后，指定消息类型（图片、文件、音频、视频）、会话类型（单聊、房间、群组）等，向指定会话发送富媒体消息。
+2. 接收方用户登录成功后，根据会话类型（单聊、房间、群组）的相关回调监听，接收富媒体消息的相关通知，以及下载富媒体消息文件到本地。
 
-The ZIM SDK now supports sending and receiving messages of different rich media types, such as images, audio, video, and files. To send and receive rich media content, refer to the following:
+### 发送富媒体消息
 
-1. To send rich media content after login, you will need to specify the message type (image, file, audio, video) first and then the session type (one-on-one chat, room chat, group chat).
-2. For a receiver to receive and download the rich media content, set up and listen for related event callbacks based on the session type (one-on-one chat, room chat, group chat) after logging in.
-
-
-### Send rich media content
-
-
-To send rich media content after login, call the [SendMediaMessage](@SendMediaMessage) method, and specify the message type (image, file, audio, video), the session type (one-on-one chat, room chat, group chat), and message related configurations as needed.
+用户登录成功后，调用 [SendMediaMessage](@SendMediaMessage) 接口，指定会话、消息类型（图片、文件、音频、视频）、会话类型（单聊、房间、群组）、以及相关消息配置，向指定会话发送富媒体消息。
 
 <Warning title="注意">
 
-- When sending rich media content, the file path to be sent must be in `UTF-8` encoding format.
-- To send rich media content to a room/group, the sender must be in the room/group.
+- 发送富媒体消息时，填写的待发送文件路径，必须使用 `UTF-8` 编码格式。
+- 如果需要向房间/群组内发送富媒体消息，消息发送者必须要在这个房间/群组内。
 </Warning>
 
-
-<details class="zg-primary">
-    <summary>Sample code - Sending image message</summary>
-
+<Accordion title="发送“图片”消息示例" defaultOpen="false">
 ```c#
-// Example of sending rich media message - Sending image message in one-on-one chat
+// 发送富媒体消息消息示例 - 单聊 发送图片消息
 ZIMImageMessage message = new ZIMImageMessage("/picture/xxx.jpg");
-// If a network URL is filled in here, the SDK will pass the URL directly and bypass the ZIM backend service. If both a network URL and a local path are filled in, the SDK will prioritize the network URL.
+// 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
 bool isUsingUrl = false;
 
 if(isUsingUrl == true)
@@ -252,13 +238,13 @@ if(isUsingUrl == true)
     message.thumbnailDownloadUrl = "url";
 }
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// Set message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.Low;
-// Set offline push configuration for the message
+// 设置消息的离线推送配置
 ZIMPushConfig pushConfig = new ZIMPushConfig();
-pushConfig.title = "Offline push title";
-pushConfig.content = "Offline push content";
-pushConfig.payload = "Offline push extra information";
+pushConfig.title = "离线推送的标题";
+pushConfig.content = "离线推送的内容";
+pushConfig.payload = "离线推送的扩展信息";
 config.pushConfig = pushConfig;
 ZIMMediaMessageSendNotification notification = new ZIMMediaMessageSendNotification();
 notification.onMessageAttached = (ZIMMessage message) => { };
@@ -269,15 +255,14 @@ ZIM.GetInstance().SendMediaMessage(message, "toConversationID", ZIMConversationT
 
 });
 ```
-</details>
 
-<details class="zg-primary">
-    <summary>Sample code - Sending file message</summary>
+</Accordion>
 
+<Accordion title="发送“文件”消息示例" defaultOpen="false">
 ```c#
-// Example of sending rich media message - Sending file message in one-on-one chat
+// 发送富媒体消息消息示例 - 单聊 发送文件消息
 ZIMFileMessage message = new ZIMFileMessage("/picture/xxx.zip");
-// If a network URL is filled in here, the SDK will pass the URL directly and bypass the ZIM backend service. If both a network URL and a local path are filled in, the SDK will prioritize the network URL.
+// 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
 bool isUsingUrl = false;
 if(isUsingUrl == true)
 {
@@ -292,15 +277,14 @@ notification.onMediaUploadingProgress = (ZIMMessage message,
 
 ZIM.GetInstance().SendMediaMessage(message, "conversationID", ZIMConversationType.Peer, config, notification, (ZIMMessage message, ZIMError errorInfo) => { });
 ```
-</details>
 
-<details class="zg-primary">
-    <summary>Sample code - Sending audio message</summary>
+</Accordion>
 
+<Accordion title="发送“音频”消息示例" defaultOpen="false">
 ```c#
-// Example of sending rich media message - Sending audio message in one-on-one chat
-ZIMAudioMessage message = new ZIMAudioMessage("/picture/xxx.mp3", 300); // The 300 here is just an example, the unit is in seconds.
-// If a network URL is filled in here, the SDK will pass the URL directly and bypass the ZIM backend service. If both a network URL and a local path are filled in, the SDK will prioritize the network URL.
+// 发送富媒体消息消息示例 - 单聊 发送音频消息
+ZIMAudioMessage message = new ZIMAudioMessage("/picture/xxx.mp3", 300); // 这里的300只是举例，单位是秒。
+// 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
 bool isUsingUrl = false;
 if(isUsingUrl == true)
 {
@@ -316,15 +300,14 @@ notification.onMediaUploadingProgress = (ZIMMessage message,
 ZIM.GetInstance().SendMediaMessage(message, "conversationID", 
     ZIMConversationType.Peer, config, notification, (ZIMMessage message, ZIMError errorInfo) => { });
 ```
-</details>
 
-<details class="zg-primary">
-    <summary>Sample code - Sending video message</summary>
+</Accordion>
 
+<Accordion title="发送“视频”消息示例" defaultOpen="false">
 ```c#
-// Example of sending rich media message - Sending video message in one-on-one chat
-ZIMVideoMessage message = new ZIMVideoMessage("/picture/xxx.mp4", 300); // The unit here is in seconds.
-// If a network URL is filled in here, the SDK will pass the URL directly and bypass the ZIM backend service. If both a network URL and a local path are filled in, the SDK will prioritize the network URL.
+// 发送富媒体消息消息示例 - 单聊 发送视频消息
+ZIMVideoMessage message = new ZIMVideoMessage("/picture/xxx.mp4", 300);//这里单位是秒
+// 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
 bool isUsingUrl = false;
 if(isUsingUrl == true)
 {
@@ -341,41 +324,40 @@ notification.onMediaUploadingProgress = (ZIMMessage message,
 ZIM.GetInstance().SendMediaMessage(message, "conversationID", 
     ZIMConversationType.Peer, config, notification, (ZIMMessage message, ZIMError errorInfo) => { });
 ```
-</details>
 
-
-#### Callback for the sending progress of rich media content
-
-
-You will be notified of the sending progress of rich media content through the callback [ZIMMediaUploadingProgress](@ZIMMediaUploadingProgress) .
-
-
-Among which:
-
-- message: The content of the message being sent.
-- currentFileSiz: The size of the message that has been sent.
-- totalFileSize: The overall size of the message sent.
+</Accordion>
 
 
 
-### Receive rich media content
+#### 富媒体文件消息的发送进度回调
 
-To receive the rich media content messages, do the following:
-1. Listen for the following callbacks based on the session type (one-on-one chat, room chat, group chat): [OnReceivePeerMessage](@OnReceivePeerMessage), [OnReceiveRoomMessage](@OnReceiveRoomMessage), [OnReceiveGroupMessage](@OnReceiveGroupMessage).
-2. Call the [DownloadMediaFile](@DownloadMediaFile) method to download the rich media content.
-
-When downloading rich media content, you need to specify the file type of the corresponding media messages first.
-
-- Image messages: You can choose to download the original file, large view, or thumbnail.
-- Files/Audio messages: Only original files/audio files can be downloaded.
-- Video messages: You can choose to download the original video file and the thumbnail of the first frame of the video.
+开发者可以通过 [ZIMMediaUploadingProgress](@ZIMMediaUploadingProgress) 回调，接收富媒体消息的上传发送进度的相关通知。
 
 
-#### Sample code
+``` c#
+public delegate void ZIMMediaUploadingProgress(ZIMMessage message,
+    ulong currentFileSize, ulong totalFileSize);
+```
 
+其中：
+
+- message：正在发送消息的内容。
+- currentFileSize：当前已被发送的消息大小。
+- totalFileSize：发送消息的总体大小。
+
+
+### 接收富媒体消息
+
+接收方用户登录成功后，根据会话类型（单聊、房间、群组）的相关回调监听（[OnReceivePeerMessage](@OnReceivePeerMessage)、[OnReceiveRoomMessage](@OnReceiveRoomMessage)、[OnReceiveGroupMessage](@OnReceiveGroupMessage)），接收富媒体消息的相关通知，然后可以调用 [DownloadMediaFile](@DownloadMediaFile) 接口，下载富媒体消息文件到本地。
+
+下载富媒体消息时，需要指定对应的媒体消息的文件类型。
+
+- 图片消息：可以选择下载原始文件、大图、缩略图。
+- 文件/音频消息：仅能选择下载文件/音频的原始文件。
+- 视频消息：可以选择下载视频原始文件、视频首帧的缩略图。
 
 ```c#
-// Example of receiving rich media message - Receiving rich media message in one-on-one chat
+// 接收富媒体消息示例 - 单聊 接收富媒体消息
 ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
                                  List<ZIMMessage> messageList,
                                  string fromUserID) =>
@@ -388,23 +370,23 @@ ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
                     ZIM.GetInstance().DownloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (ZIMMediaMessage message,
                            ulong currentFileSize, ulong totalFileSize) =>
                     { 
-                    // Download progress callback
+                    // 下载进度的回调
                     },
                     (ZIMMediaMessage message, ZIMError errorInfo) => {
-                    // Download completion callback
+                    // 下载完成的回调
                     });
                 }else if (message.type == ZIMMessageType.Video)
                 {
                     ZIMVideoMessage videoMessage = message as ZIMVideoMessage;
-                    // Choose the type of download through ZIMMediaFileType, such as the video source file or the first frame of the video
+                    // 通过 ZIMMediaFileType 选择下载的类型，如视频源文件、视频首帧图等
                     ZIMMediaFileType fileType = ZIMMediaFileType.VideoFirstFrame;
                     ZIM.GetInstance().DownloadMediaFile(videoMessage, fileType, (ZIMMediaMessage message,
                            ulong currentFileSize, ulong totalFileSize) =>
                     {
-                        // Download progress callback
+                        //下载进度的回调
                     },
                     (ZIMMediaMessage message, ZIMError errorInfo) => {
-                        // Download completion callback
+                        //下载完成的回调
                     });
                 }
             }
@@ -412,55 +394,54 @@ ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
 ```
 
 
-#### Callback for the downloading progress of rich media content
+#### 富媒体文件消息的下载进度回调
+
+开发者可以通过 [ZIMMediaDownloadingProgress](@ZIMMediaDownloadingProgress) 回调，接收富媒体消息的下载进度的相关通知。
+
+``` c#
+public delegate void ZIMMediaDownloadingProgress(ZIMMediaMessage message, ulong currentFileSize, ulong totalFileSize);
+```
+
+其中：
+
+- message：正在下载的消息内容。
+- currentFileSize：当前已被下载的消息大小。
+- totalFileSize：下载消息的总体大小。
 
 
-You will be notified of the downloading progress of rich media content through the callback [ZIMMediaDownloadingProgress](@ZIMMediaDownloadingProgress).
+## 收发信令消息
 
-
-Among which:
-
-- message: The message content you are downloading.
-- currentFileSize: The size of messages that have been downloaded.
-- totalFileSize: The overall size of the download message.
-
-
-
-## Send & Receive signaling messages
-
-ZIM SDK supports developers to implement sending and receiving signaling messages. Developers can define their own message types, such as location messages, using the [ZIMCommandMessage](@-ZIMCommandMessage) object.
+ZIM SDK 支持开发者实现信令类型的消息收发，开发者可以通过 [ZIMCommandMessage](@-ZIMCommandMessage) 对象定义自己的消息类型，例如位置消息等。
 
 <Note title="说明">
 
-This message type does not support offline push and local storage.
+信令消息不支持离线推送和本地存储。
 </Note>
 
-Here is an example of **sending a signaling message to a specific user**.
+以下以**向指定用户发送信令消息**为例。
 
-### Send signaling messages
-
-#### Sample code
+### 发送信令消息
 
 ```c#
-// Sending a signaling message to a specific user
-// 4. Send a signaling message
+//向指定用户发送信令消息
+// 4、发送信令信息
 string userID = "xxxx";
 
 ZIMCommandMessage customMessage = new ZIMCommandMessage();
 customMessage.message = new byte[] { 0x1, 0x2, 0x1, 0x2 };
 
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// Set the message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.Low;
-// Offline push configuration for messages is not supported in rooms. If you need to send offline messages, please contact ZEGO technical support to enable the relevant permissions.
+// 房间不支持设置消息的离线推送配置，如果需要发送离线消息，请联系 ZEGO 技术支持开通相关权限。
 
-// Send one-on-one chat messages
+// 发送单聊信息
 ZIMConversationType peerType = ZIMConversationType.Peer;
 
-// Send group chat messages
+// 发送群聊信息
 // ZIMConversationType groupType = ZIMConversationType.Group;
 
-// Send room messages
+// 发送房间信息
 // ZIMConversationType roomType = ZIMConversationType.Room;
 
 ZIMMessageSendNotification notification = new ZIMMessageSendNotification();
@@ -469,12 +450,10 @@ ZIM.GetInstance().SendMessage(customMessage,
     "toConversationID", peerType, config, notification, (ZIMMessage message, ZIMError errorInfo) => { });
 ```
 
-### Receive signaling messages
-
-#### Sample code
+### 接收信令消息
 
 ```c#
-// User receives signaling messages
+//用户接收信令消息
 ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
                         List<ZIMMessage> messageList,
                         string fromUserID) =>
@@ -489,92 +468,87 @@ ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
 };
 ```
 
-## Send/Receive custom messages
+## 收发自定义消息
 
-
-The ZIM SDK now supports you to send and receive custom messages. To do that, you can call the [ZIMCustomMessage](@-ZIMCustomMessage) to define the message type you want to send, for example, your location information.
-
-The following shows how to send custom messages to a specified user.
+ZIM SDK 支持开发者实现自定义类型的消息收发，开发者可以通过 [ZIMCustomMessage](@-ZIMCustomMessage) 对象自行定义消息类型，例如投票类型、接龙类型、视频卡片类型等。开发者可以通过以下步骤实现自定义消息的收发。
 
 <Note title="说明">
 
-- Only ZIM SDK version 2.8.0 and above support sending and receiving custom message types.
-- If the SDK version of the receiving end is between [2.0.0, 2.8.0), it can receive custom messages, but the message type will be displayed as unknown and the message content cannot be obtained. If you need to retrieve this message, please upgrade the SDK to version 2.8.0 or above.
-- If the SDK version of the receiving end is version 1.x.x, it cannot receive custom messages and will not receive unknown messages.
+- 仅 2.8.0 及以上版本的 ZIM SDK 支持发送自定义类型消息，接收并查看自定义类型消息的内容。
+- 如果接收端的 SDK 版本介乎 [2.0.0, 2.8.0) 区间，可以收到自定义消息时，但会显示此消息类型为未知，且无法获取信息内容。如需获取此条消息，请将 SDK 升级为 2.8.0 或以上版本。
+- 如果接收端的 SDK 版本为 1.x.x 版本，则无法收到自定义消息，也不会收到未知消息。
 </Note>
 
-### Send custom messages
+### 发送自定义消息
 
-#### Sample code
+发送自定义消息使用的接口为 [SendMessage](@SendMessage)，与发送普通消息所用接口相同，开发者可参考 [收发普通消息 - 发送消息](#发送消息) 了解此接口参数详情。
+
+开发者需要通过 [ZIMCustomMessage](@-ZIMCustomMessage) 对象定义自定义类型消息，包括以下参数：
 
 
-The interface used to send custom messages is [SendMessage](@SendMessage), and it uses the[ZIMCustomMessage](@-ZIMCustomMessage) object to define custom message types,
-
-Here is an example code for sending custom messages in a one-on-one chat conversation:
+以下为用户在单聊会话中发送自定义消息的示例代码：
 
 ```c#
-// Send custom message to a specific user in a one-on-one chat conversation
+// 在单聊会话中向指定用户发送自定义消息
 
-// 1. Create ZIM object, pass in appID, appSign, and Application in Android
-// Please refer to the relevant code in the previous section "Send Messages" for specific code.
+// 1、创建 ZIM 对象，传入 appID、appSign 与 Android 中的 Application
+// 具体代码请参考上文 [收发普通消息 - 发送消息] 相关代码。
 
-// 2. Log in
-// Please refer to the relevant code in the previous section "Send Messages" for specific code.
+// 2、登录
+// 具体代码请参考上文 [收发普通消息 - 发送消息] 相关代码。
 
-// 3. Send custom message
-// Specify the user ID
+// 3、发送自定义信息
+// 指定用户的 ID
 string userID = "xxxx";
 
-// The text content of the custom message
+// 自定义消息的文本内容
 string message = "";
 
-// The specific custom type
-int subType = 100;
+// 具体的自定义类型
+int subType = 100; 
 
-// The search field for the custom message
+// 自定义消息的检索字段。
 string searchedContent = "";
 
-ZIMCustomMessage zimCustomMessage = new ZIMCustomMessage(message, subType);
+ZIMCustomMessage zimCustomMessage = new ZIMCustomMessage(message,subType);
 
-// Advanced configuration for sending messages
+// 发送消息的高级属性配置
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// Set the message priority
+// 设置消息优先级
 config.priority = ZIMMessagePriority.LOW;
 
-// Send a one-on-one chat message
+// 发送单聊信息
 ZIMConversationType type = ZIMConversationType.Peer;
 
-// Send a group chat message
-// ZIMConversationType type = ZIMConversationType.Group;
+// 发送群聊信息
+// ZIMConversationType type = ZIMConversationType.Gourp;
 
-// Send a room message
+// 发送房间信息
 // ZIMConversationType type = ZIMConversationType.Room;
 
 ZIMMessageSendNotification notification = new ZIMMessageSendNotification();
-ZIM.GetInstance().SendMessage(zimCustomMessage, toConversationID, type, config, notification, (ZIMMessage message, ZIMError errorInfo) =>
+ZIM.GetInstance().SendMessage(zimCustomMessage, toConversationID, type,config, notification, (ZIMMessage message, ZIMError errorInfo) =>
 {
-    // Developers can use this callback to listen for whether the message is sent successfully.
+    // 开发者可以通过该回调监听消息是否发送成功。
 });
 
 ZIM.GetInstance().onMessageSentStatusChanged = (
     ZIM zim,
     List<ZIMMessageSentStatusChangeInfo> messageSentStatusChangeInfoList) =>
 {
-    // Developers can use this notification to listen for whether the message is sent successfully.
+    // 开发者可以通过该通知监听消息是否发送成功。
 };
+            
 ```
 
+### 接收自定义消息
 
-### Receive custom messages
+接收自定义消息的回调接口与接收普通消息的回调接口一致，请参考 [收发普通消息 - 接收消息](#接收消息) 了解具体接口。
 
-
-The callback interface for receiving custom messages is the same as the callback interface for receiving normal messages.
-
-Here is an example code for receiving custom messages in a one-on-one chat conversation:
-
+以下为用户在单聊会话中接收自定义消息的示例代码：
 
 ```c#
-// User receives custom messages
+//用户接收自定义消息
 ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
                         List<ZIMMessage> messageList,
                         string fromUserID) =>
@@ -589,21 +563,16 @@ ZIM.GetInstance().onReceivePeerMessage = (ZIM zim,
 };
 ```
 
+## 监听消息状态
 
-## Listen for the message status 
-
-On a weak network condition, this may happen: the ZIM SDK doesn't receive the response from the server for some reason (e.g., packet loss), while the message is successfully sent. In this case, the ZIM SDK considers the message sending failed due to the reply timeout, but the message is actually sent successfully, which results in message status confusion.
-To solve this and Clarify the message status, the SDK 2.6.0 or later now allows you to listen for the [OnMessageSentStatusChanged](@OnMessageSentStatusChanged)callback to receive the changes of the message status.
-And we now have three different message statuses: Sending, Success, and Failed.
-You can know whether your message is sent successfully by the status, and implement your event handling logic as needed.
-
+在一些弱网场景中，可能存在以下场景，即消息发送成功，但由于某些因素（如网络丢包），导致 ZIM SDK 未收到服务端应答。此时，ZIM SDK 会因应答超时而认为消息发送失败，但实际上消息发送成功，导致消息状态混乱。为解决该问题，明确消息最终状态， 2.6.0 或以上版本 SDK 支持开发者监听 [OnMessageSentStatusChanged](@OnMessageSentStatusChanged) 回调，接收消息的状态变化。消息的状态有三种，即 Sending、Success 和 Failed。根据消息状态的变化，开发者可判断消息发送是否成功，并在业务上做相应处理。
 
 ```c#
-//  Listen for the message status 
+// 监听消息状态
  ZIM.GetInstance().onMessageSentStatusChanged = (
             ZIM zim,
             List<ZIMMessageSentStatusChangeInfo> messageSentStatusChangeInfoList) =>
         {
-                // You can listen for the callback on the changes of message status here.
+                // 开发者可在这里监听消息状态改变时的回调。
         };
 ```
