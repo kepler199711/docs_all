@@ -238,17 +238,38 @@ func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHea
 </Accordion>
 
 <Accordion title="监听会话页面的销毁" defaultOpen="false">
-如需监听会话页面销毁，做一些操作的时候，您可以通过 `ZIMKitMessagesListVCDelegate` 进行配置
-以下是参考代码:
+如需监听会话页面销毁，实现您的业务逻辑时，请先注册代理 `ZIMKitMessagesListVCDelegate`。 
+
+```swift
+let vc = ZIMKitConversationListVC()
+vc.messageDelegate = self
+```
+
+随后，通过 `messageListViewWillDisappear` 方法监听会话页面销毁事件，同时执行您的业务逻辑。
+
 ```swift
 func messageListViewWillDisappear() {
-// do something
+    // Your logic
 }
 ```
 </Accordion>
 
 <Accordion title="自定义表情面板" defaultOpen="false">
-要修改默认的表情，您可以通过 `emojis` 进行配置
+
+In-app Chat Kit 提供一系列默认表情用于在会话中发送表情，以及对消息进行表态。如果您不满意默认提供的表情，您可以通过 `bottomConfig.emojis` 传入所有您需要的表情。
+
+<table>
+  <tr>
+    <th>发送表情</th>
+    <th>消息表态</th>
+  </tr>
+  <tr>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/06864fe88e.jpeg" alt="Emoji_1.jpeg" width="200"/></td>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/a884ba82f8.jpeg" alt="Emoji_2.jpeg" width="200" /></td>
+  </tr>
+</table>
+
+
 以下是参考代码:
 ```swift
 let config = ZIMKitConfig()

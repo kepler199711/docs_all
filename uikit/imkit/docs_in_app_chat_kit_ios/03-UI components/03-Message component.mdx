@@ -238,19 +238,39 @@ func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHea
 ```
 </Accordion>
 
-<Accordion title="Destruction of the listening session page" defaultOpen="false">
-Want to listen to answer page, do some operation, you can use ` ZIMKitMessagesListVCDelegate ` configured
+<Accordion title="Listen for the conversation page destruction" defaultOpen="false">
 
-Here is the reference code:
+To listen for the destruction of the conversation page and implement your business logic, please register the delegate `ZIMKitMessagesListVCDelegate` first.
+
+```swift
+let vc = ZIMKitConversationListVC()
+vc.messageDelegate = self
+```
+
+Then, listen for the destruction event of the conversation page through `messageListViewWillDisappear` and implement your business logic at the same time.
+
 ```swift
 func messageListViewWillDisappear() {
-// do something
+    // Your logic
 }
 ```
+
 </Accordion>
 
 <Accordion title="Customize the emoji panel" defaultOpen="false">
-To change the default emojis, you can configure them through 'emojis'
+In-app Chat Kit provides a set of default emojis for sending expressions in conversations and reacting to messages. If you are not satisfied with the default emojis provided, you can pass in all the emojis you need through `bottomConfig.emojis`.
+
+<table>
+  <tr>
+    <th>Expression Messages</th>
+    <th>Message Reactions</th>
+  </tr>
+  <tr>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/7892e547c8.jpeg" alt="Emoji_1_En.jpeg" width="200"/></td>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/3391affb0c.jpeg" alt="Emoji_2_En.jpeg" width="200"/></td>
+  </tr>
+</table>
+
 
 Here is the reference code:
 ```swift
