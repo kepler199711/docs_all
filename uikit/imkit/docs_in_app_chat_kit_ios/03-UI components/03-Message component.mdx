@@ -102,7 +102,7 @@ config.bottomConfig.expandButtons.append(.voiceCall)
 
 Upon long-pressing a message, a message action menu is displayed, offering options such as copying, replying, and forwarding the message, along with other actions. To modify this menu, you can use the `ZIMKitMessageConfig`. This configuration allows for the customization of the action menu for different message types (text, image, video, voice, and combined message):
 
-<Frame width="40%" height="auto">
+<Frame width="200" height="auto">
   <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/961b3dc8ed.jpeg" alt="MessageActionMenu_1.jpeg"/>
 </Frame>
 
@@ -189,39 +189,52 @@ config.inputPlaceholder =  NSAttributedString(string: "Enter", attributes: [NSAt
 </Accordion>
 
 <Accordion title="Customize the top navigation bar" defaultOpen="false">
-Navigation bar to customize the answer page, you can use ` ZIMKitMessagesListVCDelegate ` configured
 
-Here is the reference code:
-Registered delegate of ZIMKitMessagesListVCDelegate
+To customize the top navigation bar of the conversation page, please register the delegate `ZIMKitMessagesListVCDelegate` first.
+
 ```swift
-    let vc = ZIMKitConversationListVC()
-    vc.messageDelegate = self
+let vc = ZIMKitConversationListVC()
+vc.messageDelegate = self
 ```
+
+Later, if you want to completely change the top navigation bar, you can call the `getMessageListHeaderCustomerview` method.
+
+<Frame width="200" height="auto">
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/02556a195f.jpeg" alt="CustomizeTopNav2EN.jpeg"/>
+</Frame>
+
 ```swift    
-    func getMessageListHeaderCustomerview(_ messageListVC: ZIMKitMessagesListVC) -> UIView?
-        let view = UIView().withoutAutoresizingMaskConstraints
-        let button = UIButton(type: .contactAdd)
-        button.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
-        button.addTarget(self, action: #selector(customerButtonClick(_:)), for: .touchUpInside)
-        view.addSubview(button)
-    return view
+func getMessageListHeaderCustomerview(_ messageListVC: ZIMKitMessagesListVC) -> UIView?
+    let view = UIView().withoutAutoresizingMaskConstraints
+    let button = UIButton(type: .contactAdd)
+    button.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
+    button.addTarget(self, action: #selector(customerButtonClick(_:)), for: .touchUpInside)
+    view.addSubview(button)
+return view
 ``` 
+
+If you only need to modify the title of the top navigation bar or add buttons on the left or right side of the title, you can call the `getMessageListHeaderBar` method.
+
+<Frame width="200" height="auto">
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/a7f67047d6.jpeg" alt="CustomizeTopNav1EN.jpeg"/>
+</Frame>
+
 ```swift
-    func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
-        let header = ZIMKitHeaderBar()
-        let button1:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .detailDisclosure))
-        let button2:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .contactAdd))
-        let button3:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoDark))
-                             
-        let button4:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
-        header.rightItems = [button1,button2]
-        header.leftItems = [button3,button4]
-        let titleView = UIView()
-        titleView.backgroundColor = UIColor.red
-        titleView.frame = CGRectMake(0, 0, 100, 40)
-        header.titleView = titleView
-      return header
-    }
+func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
+    let header = ZIMKitHeaderBar()
+    let button1:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .detailDisclosure))
+    let button2:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .contactAdd))
+    let button3:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoDark))
+                            
+    let button4:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
+    header.rightItems = [button1,button2]
+    header.leftItems = [button3,button4]
+    let titleView = UIView()
+    titleView.backgroundColor = UIColor.red
+    titleView.frame = CGRectMake(0, 0, 100, 40)
+    header.titleView = titleView
+    return header
+}
 ```
 </Accordion>
 

@@ -102,7 +102,7 @@ config.bottomConfig.expandButtons.append(.voiceCall)
 
 长按一条消息后，界面会显示一个消息操作菜单，提供复制、回复、转发消息以及其他操作的选项。如需修改此菜单，可以使用`ZIMKitMessageConfig`。该配置允许自定义不同消息类型（文本、图片、视频、文件、语音和组合消息）的操作菜单。
 
-<Frame width="40%" height="auto">
+<Frame width="200" height="auto">
   <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/5abadcbf1b.jpeg" alt="MessageActionMenu.jpeg"/>
 </Frame>
 
@@ -190,43 +190,55 @@ config.inputPlaceholder =  NSAttributedString(string: "请输入", attributes: [
 
 <Accordion title="自定义会话顶部导航栏" defaultOpen="false">
 
-如需自定义会话页面的顶部导航栏，您可以通过 `ZIMKitMessagesListVCDelegate` 进行配置
-以下是参考代码:
-注册代理：ZIMKitMessagesListVCDelegate
+如需自定义会话页面的顶部导航栏，请先注册代理 `ZIMKitMessagesListVCDelegate`。 
 ```swift
-    let vc = ZIMKitConversationListVC()
-    vc.messageDelegate = self
+let vc = ZIMKitConversationListVC()
+vc.messageDelegate = self
 ```
+
+随后，如果您需要修改完整的顶部导航栏，您可以调用 `getMessageListHeaderCustomerview` 方法。
+
+<Frame width="200" height="auto">
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/01bb7b29c3.jpeg" alt="CustomizeTopNav2.jpeg"/>
+</Frame>
+
 ```swift    
-    func getMessageListHeaderCustomerview(_ messageListVC: ZIMKitMessagesListVC) -> UIView?
-        let view = UIView().withoutAutoresizingMaskConstraints
-        let button = UIButton(type: .contactAdd)
-        button.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
-        button.addTarget(self, action: #selector(customerButtonClick(_:)), for: .touchUpInside)
-        view.addSubview(button)
-    return view
-``` 
+func getMessageListHeaderCustomerview(_ messageListVC: ZIMKitMessagesListVC) -> UIView?
+    let view = UIView().withoutAutoresizingMaskConstraints
+    let button = UIButton(type: .contactAdd)
+    button.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
+    button.addTarget(self, action: #selector(customerButtonClick(_:)), for: .touchUpInside)
+    view.addSubview(button)
+return view
+```
+
+如果您仅需要修改顶部导航栏的标题，或是在标题的左侧或右侧添加按钮，您可以调用 `getMessageListHeaderBar` 方法。
+
+<Frame width="200" height="auto">
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/ceba4bad7d.jpeg" alt="CustomizeTopNav1.jpeg"/>
+</Frame>
+
 ```swift
-    func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
-       let header = ZIMKitHeaderBar()
-       let button1:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .detailDisclosure))
-       let button2:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .contactAdd))
-       let button3:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoDark))
-                             
-       let button4:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
-       header.rightItems = [button1,button2]
-       header.leftItems = [button3,button4]
-       let titleView = UIView()
-       titleView.backgroundColor = UIColor.red
-       titleView.frame = CGRectMake(0, 0, 100, 40)
-       header.titleView = titleView  
-       return header
-    }
+func getMessageListHeaderBar(_ messageListVC: ZIMKitMessagesListVC) -> ZIMKitHeaderBar? {
+    let header = ZIMKitHeaderBar()
+    let button1:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .detailDisclosure))
+    let button2:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .contactAdd))
+    let button3:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoDark))
+                            
+    let button4:UIBarButtonItem = UIBarButtonItem(customView:UIButton(type: .infoLight))
+    header.rightItems = [button1,button2]
+    header.leftItems = [button3,button4]
+    let titleView = UIView()
+    titleView.backgroundColor = UIColor.red
+    titleView.frame = CGRectMake(0, 0, 100, 40)
+    header.titleView = titleView  
+    return header
+}
 ```
 </Accordion>
 
 <Accordion title="监听会话页面的销毁" defaultOpen="false">
-要监听会话页面销毁，做一些操作的时候，您可以通过 `ZIMKitMessagesListVCDelegate` 进行配置
+如需监听会话页面销毁，做一些操作的时候，您可以通过 `ZIMKitMessagesListVCDelegate` 进行配置
 以下是参考代码:
 ```swift
 func messageListViewWillDisappear() {
