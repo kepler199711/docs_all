@@ -25,7 +25,7 @@ ZIM 实现离线推送的方案如下：
 2. 各厂商的推送服务器，将 Token 返回给接收方。
 3. 接收方生成 PushID，并向 ZIM 服务器发送请求，绑定用户与 PushID 的关系。
 
-    开发者如果将 ZPNs SDK 与 ZIM SDK 搭配使用，SDK 内部会自动绑定用户与 PushID 的关系，无需特殊处理；如果单独使用 ZPNs SDK，则需自行对接 ZPNs 服务器、实现绑定逻辑。**请注意，同一设备切换 userID 前，请调用 zim.[logout\|_blank](@logout) 接口，该接口会清除 userID 绑定的 PushID。**
+    开发者如果将 ZPNs SDK 与 ZIM SDK 搭配使用，SDK 内部会自动绑定用户与 PushID 的关系，无需特殊处理；如果单独使用 ZPNs SDK，则需自行对接 ZPNs 服务器、实现绑定逻辑。**请注意，同一设备切换 userID 前，请调用 zim.[logout](@logout) 接口，该接口会清除 userID 绑定的 PushID。**
 
 4. 发送方开始发送消息，消息存储到 ZIM 服务器。
 5. ZIM 服务器会确认接收方的客户端是否在线。
@@ -115,7 +115,7 @@ ZIM 实现离线推送的方案如下：
 
 ## 使用 ZPNs SDK 注册离线推送功能
 
-1. 开发者创建新的 Java 类 MyZIMPushReceiver 继承自 ZPNs 中的 [ZPNsMessageReceiver\|_blank](@-ZPNsMessageReceiver) 广播类，用于接收厂商推送消息。
+1. 开发者创建新的 Java 类 MyZIMPushReceiver 继承自 ZPNs 中的 [ZPNsMessageReceiver](@-ZPNsMessageReceiver) 广播类，用于接收厂商推送消息。
 
     ```xml
     <receiver
@@ -163,7 +163,7 @@ ZIM 实现离线推送的方案如下：
 
 <Accordion title="展开了解如何获取 payload 透传字段" defaultOpen="false">
     根据离线推送接收端的厂商，开发者应选择不同的 payload 透传字段获取方式，通过 ZPNsMessageReceiver 回调方法中的 ZPNsMessage 对象获取
-    在上述方法触发时将 [ZPNsMessage\|_blank](@-ZPNsMessage) 对象传给该方法，取出 payload 字段。
+    在上述方法触发时将 [ZPNsMessage](@-ZPNsMessage) 对象传给该方法，取出 payload 字段。
 
     ```java
     static public String getZPNsMessagePayload(ZPNsMessage message){
@@ -194,7 +194,7 @@ ZIM 实现离线推送的方案如下：
 
 3. 配置第三方推送通道。
 
-    根据 [前提条件](#接入第三方厂商离线推送通道) 集成的第三方厂商离线推送 SDK，调用 [enableHWPush\|_blank](@enableHWPush)/[enableMiPush\|_blank](@enableMiPush)/[enableOppoPush\|_blank](@enableOppoPush)/[enableVivoPush\|_blank](@enableVivoPush) 接口，启用各厂商的推送功能，然后调用 [setPushConfig\|_blank](@setPushConfig) 接口，配置第三方推送通道。
+    根据 [前提条件](#接入第三方厂商离线推送通道) 集成的第三方厂商离线推送 SDK，调用 [enableHWPush](@enableHWPush)/[enableMiPush](@enableMiPush)/[enableOppoPush](@enableOppoPush)/[enableVivoPush](@enableVivoPush) 接口，启用各厂商的推送功能，然后调用 [setPushConfig](@setPushConfig) 接口，配置第三方推送通道。
 
     ```java
     ZPNsConfig zpnsConfig = new ZPNsConfig();
@@ -211,9 +211,9 @@ ZIM 实现离线推送的方案如下：
     ZPNsManager.getInstance().registerPush(this.getApplication());
     ```
 
-    注册离线推送功能后，可以通过继承 [ZPNsMessageReceiver\|_blank](@-ZPNsMessageReceiver) 类中的 [onRegistered\|_blank](@onRegistered) 回调，获取到离线推送的 `pushID`，向指定设备推送离线消息。
+    注册离线推送功能后，可以通过继承 [ZPNsMessageReceiver](@-ZPNsMessageReceiver) 类中的 [onRegistered](@onRegistered) 回调，获取到离线推送的 `pushID`，向指定设备推送离线消息。
 
-5. 如果不再需要离线推送功能，开发者可以调用 [unregisterPush\|_blank](@unregisterPush) 接口，注销该功能，注销后用户将不再能收到推送消息。
+5. 如果不再需要离线推送功能，开发者可以调用 [unregisterPush](@unregisterPush) 接口，注销该功能，注销后用户将不再能收到推送消息。
 
     ```java
     ZPNsManager.getInstance().unregisterPush();
@@ -232,7 +232,7 @@ ZIM 支持在发送单聊消息、发送群组消息、发起呼叫邀请时，�
 
 #### 场景 1：发送单聊消息时使用离线推送功能
 
-1. 首先开发者需要通过 [ZIMPushConfig\|_blank](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
+1. 首先开发者需要通过 [ZIMPushConfig](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
 
     ```java
     ZIMTextMessage textMessage = new ZIMTextMessage();
@@ -243,14 +243,14 @@ ZIM 支持在发送单聊消息、发送群组消息、发起呼叫邀请时，�
     pushConfig.resourcesID = "资源 ID，非必填";
     ```
 
-2. 然后通过 [ZIMMessageSendConfig\|_blank](@-ZIMMessageSendConfig) 对象的 `pushConfig` 参数，配置离线消息的相关配置等。
+2. 然后通过 [ZIMMessageSendConfig](@-ZIMMessageSendConfig) 对象的 `pushConfig` 参数，配置离线消息的相关配置等。
 
     ```java
     ZIMMessageSendConfig sentConfig = new ZIMMessageSendConfig();
     sentConfig.pushConfig = pushConfig;
     ```
 
-3. 发送方调用 [sendMessage\|_blank](@sendMessage)，传入 “sentConfig”，向接收方发送单聊消息。
+3. 发送方调用 [sendMessage](@sendMessage)，传入 “sentConfig”，向接收方发送单聊消息。
 
     ```java
     zim.sendMessage(textMessage, "myUserID", ZIMConversationType.PEER, sentConfig, new ZIMMessageSentCallback() {
@@ -270,7 +270,7 @@ ZIM 支持在发送单聊消息、发送群组消息、发起呼叫邀请时，�
 
 #### 场景 2：发送群组消息时使用离线推送功能
 
-1. 开发者通过 [ZIMPushConfig\|_blank](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
+1. 开发者通过 [ZIMPushConfig](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
 
     ```java
     ZIMTextMessage textMessage = new ZIMTextMessage();
@@ -281,14 +281,14 @@ ZIM 支持在发送单聊消息、发送群组消息、发起呼叫邀请时，�
     pushConfig.resourcesID = "资源 ID，非必填";
     ```
 
-2. 然后通过 [ZIMMessageSendConfig\|_blank](@-ZIMMessageSendConfig) 对象的 `pushConfig` 参数，配置离线消息的相关配置等。
+2. 然后通过 [ZIMMessageSendConfig](@-ZIMMessageSendConfig) 对象的 `pushConfig` 参数，配置离线消息的相关配置等。
 
     ```java
     ZIMMessageSendConfig sentConfig = new ZIMMessageSendConfig();
     sentConfig.pushConfig = pushConfig;
     ```
 
-3. 发送方调用 [sendMessage\|_blank](@sendMessage)，传入 “sentConfig”，向群组内的所有用户发送消息。
+3. 发送方调用 [sendMessage](@sendMessage)，传入 “sentConfig”，向群组内的所有用户发送消息。
 
     ```java
     zim.sendMessage(textMessage, "myGroupID", ZIMConversationType.GROUP, sentConfig, new ZIMMessageSentCallback() {
@@ -308,7 +308,7 @@ ZIM 支持在发送单聊消息、发送群组消息、发起呼叫邀请时，�
 
 #### 场景 3：发送呼叫邀请时使用离线推送功能
 
-1. 开发者通过 [ZIMPushConfig\|_blank](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
+1. 开发者通过 [ZIMPushConfig](@-ZIMPushConfig) 对象，设置离线推送标题、内容、以及其它自定义属性。
 
     ```java
     ZIMPushConfig pushConfig = new ZIMPushConfig();
@@ -325,7 +325,7 @@ ZIM 支持在发送单聊消息、发送群组消息、发起呼叫邀请时，�
     callInviteConfig.pushConfig = pushConfig;
     ```
 
-3. 发送方调用 [callInvite\|_blank](@callInvite)，传入 “ callInviteConfig”，发起呼叫邀请。
+3. 发送方调用 [callInvite](@callInvite)，传入 “ callInviteConfig”，发起呼叫邀请。
 
     ```java
     ArrayList<String> invitees = new ArrayList<>();

@@ -84,7 +84,7 @@ ZIM SDK 支持设置房间内的用户属性，即在房间内，自定义房间
 - 当 key 已经存在时，设置用户属性表示更新已有属性的取值。
 
 :::if{props.platform="Flutter"}
-设置成功后，可以通过 [ZIMRoomMembersAttributesOperatedResult\|_blank](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomMembersAttributesOperatedResult-class.html) 的异步返回值，获取操作结果。
+设置成功后，可以通过 [ZIMRoomMembersAttributesOperatedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomMembersAttributesOperatedResult-class.html) 的异步返回值，获取操作结果。
 :::
 
 
@@ -191,7 +191,7 @@ ZIM::getInstance()->setRoomMembersAttributes(attributes, userIDs, std::string("r
 
 
 :::if{props.platform="Flutter"}
-查询成功后，可以通过 [ZIMRoomMembersAttributesQueriedResult\|_blank](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomMembersAttributesQueriedResult-class.html) 的异步返回值，获取查询结果。
+查询成功后，可以通过 [ZIMRoomMembersAttributesQueriedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomMembersAttributesQueriedResult-class.html) 的异步返回值，获取查询结果。
 :::
 
 
@@ -277,7 +277,7 @@ ZIM::getInstance()->queryRoomMembersAttributes(userIDs,  std::string("roomID"), 
 房间内的用户，可以通过 {getPlatformData(props,queryRoomMemberAttributesListMap)} 接口，查询该房间内的所有用户的用户属性。
 
 :::if{props.platform="Flutter"}
-查询成功后，会返回该房间内所有用户的用户属性。可以通过 [ZIMRoomMemberAttributesListQueriedResult\|_blank](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomMemberAttributesListQueriedResult-class.html) 的异步返回值，获取查询结果。
+查询成功后，会返回该房间内所有用户的用户属性。可以通过 [ZIMRoomMemberAttributesListQueriedResult](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomMemberAttributesListQueriedResult-class.html) 的异步返回值，获取查询结果。
 :::
 
 

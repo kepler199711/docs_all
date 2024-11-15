@@ -6,7 +6,7 @@ import Content1 from '/core_products/zim/zh/snippets/CrossPlatformSuitableNote.m
 
 ## 功能简介
 
-离线推送发送端通过配置 [ZIMPushConfig\|_blank](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig-class.html) 的 payload 参数（2.5.0 之前版本为 extendedData 参数）向接收端发送额外信息，接收端需使用 ZPNs SDK 时，通过厂商通道的 extras 里面的 payload 字段获取该信息。
+离线推送发送端通过配置 [ZIMPushConfig](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMPushConfig-class.html) 的 payload 参数（2.5.0 之前版本为 extendedData 参数）向接收端发送额外信息，接收端需使用 ZPNs SDK 时，通过厂商通道的 extras 里面的 payload 字段获取该信息。
 
 本文档介绍了如何使用 ZPNs SDK 的接口，获取 payload 透传字段。
 
@@ -39,7 +39,7 @@ ZPNsEventHandler.onNotificationClicked = (ZPNsMessage message) {};
 ZPNsEventHandler.onThroughMessageReceived = (ZPNsMessage message) {};
 ```
 
-2. 按需实现如下方法，在上述方法触发时将 [ZPNsMessage\|_blank](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsMessage-class.html) 对象传给该方法，取出 payload 字段。
+2. 按需实现如下方法，在上述方法触发时将 [ZPNsMessage](https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsMessage-class.html) 对象传给该方法，取出 payload 字段。
  
 ```dart
 String getZPNsMessagePayload(ZPNsMessage message) {

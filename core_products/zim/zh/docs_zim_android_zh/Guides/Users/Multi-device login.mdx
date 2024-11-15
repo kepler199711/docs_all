@@ -199,11 +199,11 @@ ZIM SDK 支持配置自定义多端登录，即用户同一个账号可在多个
 
 ## 实现流程
 
-联系 ZEGO 技术支持，开通多端登录服务，配置多端登录之后，即可在多端调用 [login\|_blank](@login__2) 登录 ZIM SDK，实现流程与单端登录无异。如何登录，详情请参考 [实现基本消息收发\|_blank](!IM-Quick_Starts/Implementation_of_sending_and_receiving#login) 的“登录 ZIM“。 
+联系 ZEGO 技术支持，开通多端登录服务，配置多端登录之后，即可在多端调用 {getPlatformData(props,loginMap)} 登录 ZIM SDK，实现流程与单端登录无异。如何登录，详情请参考 [实现基本消息收发](../../Send%20and%20receive%20messages.mdx) 的“登录 ZIM“。 
 
-当登录设备已达到策略规定的上限时，如果在新设备登录帐号，原设备中最早登录的帐号会被踢下线，并通过 [onConnectionStateChanged\|_blank](@onConnectionStateChanged) 回调得知 event 为 `KickedOut` 。例如：登录策略规定最多只能在 3 台设备上登录，已在设备 A、B、C（按登录时间排序）登录，如果在设备 D 上登录帐号，则设备 A 上的帐号会被踢下线。
+当登录设备已达到策略规定的上限时，如果在新设备登录帐号，原设备中最早登录的帐号会被踢下线，并通过 {getPlatformData(props,onConnectionStateChangedMap)} 回调得知 event 为 `KickedOut` 。例如：登录策略规定最多只能在 3 台设备上登录，已在设备 A、B、C（按登录时间排序）登录，如果在设备 D 上登录帐号，则设备 A 上的帐号会被踢下线。
 
-当帐号被踢下线后，建议调用 [logout\|_blank](@logout) 接口登出 ZIM 服务，用户界面切换为登录界面。
+当帐号被踢下线后，建议调用 {getPlatformData(props,logoutMap)} 接口登出 ZIM 服务，用户界面切换为登录界面。
 
 ## 多端登录对其他功能的影响
 
@@ -211,7 +211,7 @@ ZIM SDK 支持配置自定义多端登录，即用户同一个账号可在多个
 
 ### 用户信息管理
 
-ZIM SDK 为多端登录用户提供了用户信息同步的功能。当用户在一端通过 [updateUserName\|_blank](@updateUserName)、[updateUserAvatarUrl\|_blank](@updateUserAvatarUrl)、[updateUserExtendedData\|_blank](@updateUserExtendedData) 接口更新了自己的信息后，其他在线客户端可通过注册 [onUserInfoUpdated\|_blank](@onUserInfoUpdated) 事件监听用户信息被修改。
+ZIM SDK 为多端登录用户提供了用户信息同步的功能。当用户在一端通过 {getPlatformData(props,updateUserNameMap)} 、 {getPlatformData(props,updateUserAvatarUrlMap)} 、 {getPlatformData(props,updateUserExtendedDataMap)} 接口更新了自己的信息后，其他在线客户端可通过注册 {getPlatformData(props,onUserInfoUpdatedMap)} 事件监听用户信息被修改。
 
 #### onUserInfoUpdated 示例
 
@@ -284,7 +284,7 @@ zim.on('userInfoUpdated', (zim, { info }) => {
 
 #### 删除单个服务端会话
 
-当用户在一端通过 [deleteConversation\|_blank](@deleteConversation) 接口删除服务端会话后（即 [isAlsoDeleteServerConversation\|_blank](@isAlsoDeleteServerConversation) 为 true），其他在线客户端可通过注册 [onConversationChanged\|_blank](@onConversationChanged) 事件监听会话被删除。
+当用户在一端通过 {getPlatformData(props,deleteConversationMap)} 接口删除服务端会话后（即 {getPlatformData(props,isAlsoDeleteServerConversationMap)} 为 true），其他在线客户端可通过注册 {getPlatformData(props,onConversationChangedMap)} 事件监听会话被删除。
 
 #### onConversationChanged 示例
 
@@ -362,7 +362,7 @@ zim.on('conversationChanged', (zim, { infoList }) => {
 
 #### 删除全部服务端会话
 
-当用户在一端通过 [deleteAllConversations\|_blank](@deleteAllConversations) 接口删除全部服务端会话后（即 [isAlsoDeleteServerConversation\|_blank](@isAlsoDeleteServerConversation) 为 true），其他客户端可通过 [onConversationsAllDeleted\|_blank](@onConversationsAllDeleted) 事件监听全部会话被删除。
+当用户在一端通过 {getPlatformData(props,deleteAllConversationsMap)} 接口删除全部服务端会话后（即 {getPlatformData(props,isAlsoDeleteServerConversationMap)} 为 true），其他客户端可通过 {getPlatformData(props,onConversationsAllDeletedMap)} 事件监听全部会话被删除。
 
 #### onConversationsAllDeleted 处理示例
 
@@ -418,7 +418,7 @@ zim.on('conversationsAllDeleted', (zim, { count }) => {
 
 #### 清楚全部会话未读
 
-当用户在一端通过 [clearConversationTotalUnreadMessageCount\|_blank](@clearConversationTotalUnreadMessageCount) 清除全部会话未读时，其他客户端可通过 [onConversationTotalUnreadMessageCountUpdated\|_blank](@onConversationTotalUnreadMessageCountUpdated) 事件监听所有会话的未读都被清零的通知。
+当用户在一端通过 {getPlatformData(props,clearConversationTotalUnreadMessageCountMap)} 清除全部会话未读时，其他客户端可通过 {getPlatformData(props,onConversationTotalUnreadMessageCountUpdatedMap)} 事件监听所有会话的未读都被清零的通知。
 
 #### onConversationTotalUnreadMessageCountUpdated 处理示例
 
@@ -473,11 +473,11 @@ zim.on('conversationTotalUnreadMessageCountUpdated', (zim, { totalUnreadMessageC
 
 #### 消息同步
 
-当用户登录新设备后，SDK 不会自动将旧设备中的已有消息同步到新设备上，用户需要主动调用 [queryHistoryMessage\|_blank](@queryHistoryMessage) 接口，才能获取存储于 ZIM 服务端的消息，详情请参考 [获取历史消息\|_blank](!IM-query_Message_Records)。对于存储于旧设备的本地消息，则无法获取。
+当用户登录新设备后，SDK 不会自动将旧设备中的已有消息同步到新设备上，用户需要主动调用 {getPlatformData(props,queryHistoryMessageMap)} 接口，才能获取存储于 ZIM 服务端的消息，详情请参考 [获取历史消息](../Messaging/Get%20message%20history.mdx)。对于存储于旧设备的本地消息，则无法获取。
 
 #### 删除服务端消息
 
-当用户在一端通过 [deleteMessages\|_blank](@deleteMessages)、[deleteAllMessage\|_blank](@deleteAllMessage)、[deleteAllConversationMessages\|_blank](@deleteAllConversationMessages) 接口删除会话的服务端消息后（即 [isAlsoDeleteServerMessage\|_blank](@isAlsoDeleteServerMessage) 为 true），其他在线客户端可通过注册 [onMessageDeleted\|_blank](@onMessageDeleted) 事件监听消息被删除。
+当用户在一端通过 {getPlatformData(props,deleteMessagesMap)} 、 {getPlatformData(props,deleteAllMessageMap)} 、 {getPlatformData(props,deleteAllConversationMessagesMap)} 接口删除会话的服务端消息后（即 {getPlatformData(props,isAlsoDeleteServerMessageMap)} 为 true），其他在线客户端可通过注册 {getPlatformData(props,onMessageDeletedMap)} 事件监听消息被删除。
 
 #### 调用接口示例
 
@@ -594,7 +594,7 @@ zim.on('messageDeleted', (zim, { conversationID, conversationType, isDeleteConve
 
 #### 设置消息回执已读
 
-当用户在一端通过 [sendMessageReceiptsRead\|_blank](@sendMessageReceiptsRead)、[sendConversationMessageReceiptRead\|_blank](@sendConversationMessageReceiptRead) 接口设置消息回执已读后，其他在线客户端可通过注册 [onMessageReceiptChanged\|_blank](@onMessageReceiptChanged)、[onConversationMessageReceiptChanged\|_blank](@onConversationMessageReceiptChanged) 事件监听本帐号已设置消息回执为已读。
+当用户在一端通过 {getPlatformData(props,sendMessageReceiptsReadMap)} 、 {getPlatformData(props,sendConversationMessageReceiptReadMap)} 接口设置消息回执已读后，其他在线客户端可通过注册 {getPlatformData(props,onMessageReceiptChangedMap)} 、 {getPlatformData(props,onConversationMessageReceiptChangedMap)} 事件监听本帐号已设置消息回执为已读。
 
 #### 调用接口示例
 
@@ -713,7 +713,7 @@ zim.on('conversationMessageReceiptChanged', (zim, { infos }) => {
 
 ### 房间管理
 
-房间模块相关接口和事件不支持多端登录。用户在 A 设备加入房间后，然后在 B 设备再加入相同的房间后，会把 A 设备踢出房间，A 设备会通过 [onRoomStateChanged\|_blank](@onRoomStateChanged) 回调收到 `event` 为 `KickedOutByMultiDevice`。
+房间模块相关接口和事件不支持多端登录。用户在 A 设备加入房间后，然后在 B 设备再加入相同的房间后，会把 A 设备踢出房间，A 设备会通过 {getPlatformData(props,onRoomStateChangedMap)} 回调收到 `event` 为 `KickedOutByMultiDevice`。
 
 
 :::if{props.platform=undefined}
@@ -792,11 +792,11 @@ zim.on('roomStateChanged', (zim, { roomID, state, event }) => {
 
 ### 呼叫邀请管理
 
-当用户同时登录设备 A 和 B，用户收到呼叫邀请，在设备 A 上接受邀请（调用 [callAccept\|_blank](@callAccept)）或者拒绝邀请（调用 [callReject\|_blank](@callReject)) 后：
-1. 设备 A 可以通过相关操作的回调（[ZIMCallAcceptanceSentCallback\|_blank](@-ZIMCallAcceptanceSentCallback) 或 [ZIMCallRejectionSentCallback\|_blank](@-ZIMCallRejectionSentCallback)） 得知操作结果，关闭邀请弹窗，实现其他业务操作；
-2. 设备 B 应当通过 [onCallUserStateChanged\|_blank](@onCallUserStateChanged) 回调，得知本用户的呼叫用户状态（[ZIMCallUserState\|_blank](@-ZIMCallUserState)）是 `Accepted` 还是 `Rejected`，关闭邀请弹窗，实现其他业务操作
+当用户同时登录设备 A 和 B，用户收到呼叫邀请，在设备 A 上接受邀请（调用 {getPlatformData(props,callAcceptMap)} ）或者拒绝邀请（调用 {getPlatformData(props,callRejectMap)} ) 后：
+1. 设备 A 可以通过相关操作的回调（ {getPlatformData(props,ZIMCallAcceptanceSentCallbackMap)} 或  {getPlatformData(props,ZIMCallRejectionSentCallbackMap)} )得知操作结果，关闭邀请弹窗，实现其他业务操作；
+2. 设备 B 应当通过 {getPlatformData(props,onCallUserStateChangedMap)} 回调，得知本用户的呼叫用户状态（ {getPlatformData(props,ZIMCallUserStateMap)} ）是 `Accepted` 还是 `Rejected`，关闭邀请弹窗，实现其他业务操作
 
-各个设备能收到该呼叫内的用户状态变更事件 [onCallUserStateChanged\|_blank](@onCallUserStateChanged) 如下表所示：
+各个设备能收到该呼叫内的用户状态变更事件 {getPlatformData(props,onCallUserStateChangedMap)} 如下表所示：
 
 | callUserState | 设备 A | 设备 B |
 |-|-|-|
