@@ -112,7 +112,7 @@ import 'package:zego_zim/zego_zim.dart';
 
 首先我们需要在 SDK 中创建 ZIM 单实例，实例对应的是一个用户，表示一个用户以客户端的身份登录系统。
 
-例如，客户端 A、B 分别调用 [create](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/create.html) 接口，传入在 [1 前提条件](!Quick_Starts/Implementation_of_sending_and_receiving#1) 中获取到的 AppID、AppSign（开发 Web 平台应用时无需使用 “appsign”，为防止暴露，请勿传入），创建了 A、B 的实例：
+例如，客户端 A、B 分别调用 [create](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/create.html) 接口，传入在 [1 前提条件](#1-前提条件) 中获取到的 AppID、AppSign（开发 Web 平台应用时无需使用 “appsign”，为防止暴露，请勿传入），创建了 A、B 的实例：
 
 ```dart
 // 创建 
@@ -165,7 +165,7 @@ static void Function(ZIM zim, List<ZIMMessage> messageList, String fromUserID)? 
 
 - “userID”、“userName” 支持开发者自定义规则生成。建议开发者将 “userID” 设置为一个有意义的值，可将其与自己的业务账号系统进行关联。
 - `2.3.0` 或以上版本的 SDK，默认鉴权方式为 “AppSign 鉴权”，登录 ZIM 时无需传入 `Token`。
-- 如果您使用的是 “Token 鉴权”，请参考 [使用 Token 鉴权](!common_features/Authenticate_users_with_tokens) 文档，获取 Token 后，并在登录 ZIM 时传入可选参数 Token，鉴权通过后才能登录成功。
+- 如果您使用的是 “Token 鉴权”，请参考 [使用 Token 鉴权](./Guides/Users/Authentication.mdx) 文档，获取 Token 后，并在登录 ZIM 时传入可选参数 Token，鉴权通过后才能登录成功。
 </Warning>
 
 ```dart
