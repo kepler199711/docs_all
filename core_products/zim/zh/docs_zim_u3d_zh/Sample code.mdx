@@ -1,151 +1,140 @@
+
+# 示例代码运行指引
+
 ---
-articleID: 16294
----
-# Sample app
+<Card title="示例源码" href="https://storage.zego.im/zim/example/unity/Unity3dDemo.zip" target="_blank">点击获得完整代码。</Card>
+## 准备环境
 
-- - -
+请确保开发环境满足以下技术要求：
 
-<Card title="Sample Code" href="https://storage.zego.im/zim/example/unity/Unity3dDemo.zip" target="_blank">Click here to get the complete sample code.</Card>
+- 安装 Unity 2021.3.18f1c1 或以上版本。若未安装，可以在 [Unity 官网](https://unity.com/download) 下载 Unity Hub，然后安装您需要的 Unity 版本（若不清楚，建议您安装最新的 LTS 版本）。下载时，推荐根据自身需要运行到的平台，勾选对应的 Plaforms 模块一起下载，以在 Windows 上安装为例：
 
-Here we provide you with a sample application to experience ZEGOCLOUD's In-app Chat, and also describe how to run the sample code.
-
-### Prerequisites
-
-Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com/) to create a new project, and get the AppID and AppSign of your project.
-
-<Warning title="注意">
-
-The SDK now also supports using Token for authentication, if you want to change your authentication mode, refer to the [Guide for upgrading the authentication mode from using the AppSign to Token](https://docs.zegocloud.com/faq/token_upgrade). 
-</Warning>
-
-#### Environment-specific requirements:
-
-
-- Install Unity 2021.3.18f1c1 or later version. If not installed, you can download Unity Hub from [Unity official website](https://unity3d.com/get-unity/download), and then install the Unity version you need (if you are not sure, it is recommended to install the latest LTS version). When downloading, it is recommended to select the corresponding Platforms module according to your needs, for example, installing on Windows:
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/unityEnv.jpeg" /></Frame>
 
-- Select the corresponding development environment or device according to the platform that the sample code needs to run on:
+- 根据示例代码需要运行到的平台，选择对应的开发环境或设备：
 
-    - To run the Android sample source code: requires devices or emulators that support Android 4.1 or later versions and JDK 1.6 or later versions (it is recommended to use a real device). If it is a real device, please enable the "allow debugging" option.
-    - To run the iOS sample source code: requires Xcode 13.0 or later versions and devices or emulators that support iOS 9.0 or later versions (it is recommended to use a real device).
-    - To run the macOS sample source code: requires macOS 10.11 or later versions.
-    - To run the Windows sample source code: requires Windows 7 or later versions and Visual Studio 2015 or later versions installed.
-    - Ensure that the device running the program is connected to the network properly.
-    - Ensure that Unity has installed the Platforms module corresponding to the platform that needs to be run. If Unity has been installed but the corresponding Platforms module has not been installed, you need to download the corresponding module. For example, on Windows: Open Unity Hub, click the "Install" option on the left, select the Unity version to be installed, click the icon in the upper right corner, select the "Add modules" option, and select the corresponding module in the pop-up window for download.
+    - 运行 Android 示例源码要求：Android 4.1 或以上版本，支持 JDK 1.6 或以上版本的设备或模拟器（推荐使用真机），如果是真机，请开启“允许调试”选项。
+    - 运行 iOS 示例源码要求：Xcode 13.0 或以上版本，iOS 11.0 或以上版本的设备或模拟器（推荐使用真机）。
+    - 运行 macOS 示例源码要求：支持 macOS 10.13 或以上版本。
+    - 运行 Windows 示例源码要求：Windows 7 或以上版本；并安装了 Visual Studio 2015 或以上版本。
+    - 确保所运行设备网络连接正常。
+    - 确保 Unity 已经安装了需要运行到的平台所对应的 Platfroms 模块。若已经安装 Unity，但没有安装相关 Platroms 模块，需要下载对应模块，以在 Windows 上安装为例：打开 Unity Hub，单击左侧的 “Install” 选项，选择需要安装的 Unity 版本，单击右上角图标选择 “Add modules” 选项，在弹窗中勾选对应模块后进行下载。
 
 
+## 前提条件
 
-### Sample code structure 
+已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理](https://doc-zh.zego.im/article/12107) 中的“项目信息”。
 
-The following structure shows the subdirectory structure of the In-app Chat sample code:
+<Warning title="Warning">
 
+SDK 同时也支持 Token 鉴权，若您需要升级鉴权方式，可参考 [如何从 AppSign 鉴权升级为 Token 鉴权](http://doc-zh.zego.im/faq/token_upgrade?product=ExpressVideo)。
+</Warning>
+
+## 示例源码目录结构
+
+下列结构为工程目录的文件结构，下文所涉及的文件路径均为相对于此目录的路径。
 
 ```tree
 Unity3dDemo
 └─Assets
-    ├─Scenes                  // Scenes
-    │   Conv.unity             // Conversation scene
+    ├─Scenes                  // 场景
+    │   Conv.unity             // 会话场景
     │   Conv.unity.meta
-    │   Login.unity            // Login scene
+    │   Login.unity            // 登录场景
     │   Login.unity.meta
     │
-    └─Scripts                 // Demo scripts
-        CallOptionList.cs       // Call invitation options
+    └─Scripts                 // Demo 脚本
+        CallOptionList.cs       // 呼叫邀请选项 
         CallOptionList.cs.meta
-        ConvCreateOptionList.cs  // Create conversation
+        ConvCreateOptionList.cs  // 创建会话
         ConvCreateOptionList.cs.meta
-        ConvPage.cs             // Conversation page
+        ConvPage.cs             // 会话页
         ConvPage.cs.meta
-        ConvPageOptionList.cs    // Switch conversation, room, and group lists
+        ConvPageOptionList.cs    // 切换会话、房间、群组列表
         ConvPageOptionList.cs.meta
-        GroupPage.cs            // Group-related logic
+        GroupPage.cs            // 群组相关逻辑
         GroupPage.cs.meta
-        KeyCenter.cs            // Fill in AppID and AppSign
+        KeyCenter.cs            // 填写 AppID 和 AppSign
         KeyCenter.cs.meta
-        LoginClicked.cs         // Login
+        LoginClicked.cs         // 登录
         LoginClicked.cs.meta
-        MemberPage.cs           // Group and room member list-related logic
+        MemberPage.cs           // 群、房间成员列表相关逻辑
         MemberPage.cs.meta
-        MessagePage.cs          // Message-related logic
+        MessagePage.cs          // 消息相关逻辑
         MessagePage.cs.meta
-        RoomPage.cs             // Room-related logic
+        RoomPage.cs             // 房间相关逻辑
         RoomPage.cs.meta
     │
-    └─ZIM                     // ZIM Unity SDK package
-        ├─Plugins             // Import ZIM plugins for various platforms
+    └─ZIM                     // ZIM Unity SDK 包
+        ├─Plugins             // 导入 ZIM 各端插件
         │  ├─Android
         │  ├─iOS
         │  ├─macOS
         │  └─windows
-        └─Scripts              // C# encapsulation of ZIM plugin interface
+        └─Scripts              // ZIM 插件接口 C# 封装
 ```
 
-### Run the sample code
+## 运行示例代码
 
-1. Refer to the "Integrating SDK" section in [Getting started](./Send%20and%20receive%20messages.mdx) to complete the SDK integration.
+1. 由于示例源码中缺少 SDK，请集成 SDK，详情请参考”实现基本消息收发“的 [集成 SDK](./Send%20and%20receive%20messages.mdx#集成 SDK)。
 
-2. Fill in the "appID" and "appSign" mentioned in the previous "Prerequisites" section in the `Assets/Scripts/KeyCenter.cs` file.
+2. 由于示例源码中缺少 SDK 初始化所需的“appID”和“appSign”，请修改“Assets/Scripts/KeyCenter.cs”文件。请使用本文 [前提条件](#前提条件) 已获取的 AppID 和 AppSign 正确填写，否则示例源码无法正常运行。
 
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/appIDSet.jpeg" /></Frame>
 
-3. Click the "Projects" tab in Unity Hub, click "Open" in the upper right corner, and open the downloaded sample source code.
+3. 点击 Unity Hub 的 “Projects” 选项卡，单击右上角 “Open”，打开下载好的示例源码。
 
+    <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/demoDownload.jpeg" /></Frame>
 
-4. After opening the sample source code, an `Editor version not installed` prompt may pop up, indicating that the Unity Editor version used by the sample source code project cannot be found. **At this time, select another Unity Editor version and specify the Unity version you are using.**
+4. 打开示例源码后，可能会弹出“Editor version not installed”，提示找不到示例源码工程使用的 Unity Editor 版本。**此时，选择其它 Unity Editor 版本，并指定您正在使用的 Unity 版本即可。**
 
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/changeVersion.jpg" /></Frame>
 
-
-5. After opening the project, select "Login" and "Conv" under the "Project > Assets > Scenes" directory in the lower left corner and drag them to the "Hierarchy" window in the upper left corner.
+5. 打开工程后，选择左下角 “Project > Assets > Scenes” 目录下的 “Login”和“Conv”，将它们拖动到左上角“Hierarchy”窗口。
 
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/buildReady.jpeg" /></Frame>
 
-6. In the top menu bar, select "File > Build Settings."
+6. 在上方菜单栏，选择“File > Build Settings”。
 
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/buildSetting_1.jpeg" /></Frame>
 
-
-7. Make sure that "Scenes/Login" is 0 and "Scenes/Conv" is 1 in "Scenes in Build," select the platform in "Platform," and switch to the platform you want to run.
+7. 确保"Scenes in Build"中，"Scenes/Login"为0， “Scenes/Conv”为1，在 "Platform" 中选择平台，切换需要运行的平台。
 
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/buildReady_1.jpeg" /></Frame>
 
-8. Start running.
+8. 开始运行。
 
-<details class="zg-primary">
-    <summary>Run on Android device</summary>
+<Accordion title="运行到 Android 设备" defaultOpen="false">
 
-1. Refer to step 7, switch the "Platform" to the "Android" platform, click "Player Settings" to set package name and other configurations.
+1. 参考步骤 7，将“Platform”切换到“Android”平台，单击“Player Settings”，设置包名等配置。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/Unity3D/ZegoExpressEngine/QuickStart/demo_build_android.png" /></Frame>
-2. After completing the settings, connect the Android device and click "Build And Run".
-</details>
+2. 完成设置后，连接 Android 设备并单击“Build And Run”。
 
-<details class="zg-primary">
-    <summary>Run on iOS device</summary>
+</Accordion>
 
-1. Refer to step 7, switch the "Platform" to the "iOS" platform, click "Build" to save the iOS project locally, and open the built project through Xcode.
-2. In the opened Xcode project, open the "Targets - Unity-iPhone - Signing & Capabilities - Signing" tab, first make sure to check "Automatically manage signing", then switch "Team" to your own team, and modify "Bundle Identifier" to your own Bundle ID.
+<Accordion title="运行到 iOS 设备" defaultOpen="false">
+1. 参考步骤 7，将 “Platform” 切换到 “iOS” 平台，单击 “Build” 将 iOS 工程保存到本地，通过 Xcode 打开build构建后的工程。
+2. 在打开的 Xcode 工程中，打开 “Targets - Unity-iPhone - Signing & Capabilities - Signing” 选项卡，首先确保勾选 “Automatically manage signing”，然后切换 “Team” 为自己的 Team，再修改 “Bundle Identifier” 为自己的 Bundle ID。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/iOSSet.jpeg" /></Frame>
-3. Open "Targets - Unity-iPhone - Build Phases - Embeded Frameworks", click the plus sign "+", and select the path of the integrated ZIM SDK: "ZIM/Plugins/IOS/ZIM.xcframework/ios-arm64_armv7/ZIM.framework".
+3. 打开 “Targets - Unity-iPhone - Build Phases - Embeded Frameworks”，点击加号 “+” ，选择集成好的 ZIM SDK 下的路径：“ZIM/Plugins/IOS/ZIM.xcframework/ios-arm64_armv7/ZIM.framework”。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/setIOSPackage.jpg" /></Frame>   
-4. Open "Targets - Unity-iPhone - Build Settings", search for bitcode in the search box, and make sure that Enable Bitcode is set to "No".
+4. 打开 “Targets - Unity-iPhone - Build Settings“，在搜索框搜索 bitcode，确保 Enable Bitcode 是“No”状态。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/bitcode_set.jpeg" /></Frame>
-5. Click the Run button to run the sample demo.
-</details>
+5. 点击 Run 按钮运行示例 Demo。
+</Accordion>
 
-<details class="zg-primary">
-    <summary>Run on Mac device</summary>
+<Accordion title="运行到 mac 设备" defaultOpen="false">
 
-1. Refer to step 7, switch the "Platform" to the "macOS" platform, select the architecture to be built, such as Intel + Apple Silicon, and then click "Build" to generate the App locally.
+1. 参考步骤 7，将 “Platform” 切换到 “macOS” 平台，选择好要构建的架构，比如 Intel + Apple silicon，然后点击 “Build” 生成 App 到本地。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/macBuild.jpg" /></Frame>
-2. After the application is generated, double-click to run it.
-</details>
+2. 生成应用后，双击即可运行。
+</Accordion>
 
+<Accordion title="运行到 Windows 设备" defaultOpen="false">
 
-<details class="zg-primary">
-    <summary>Run on Windows device</summary>
-
-1. Refer to step 7, switch the "Platform" to the "Windows" platform, select the architecture to be built, **note that the architecture selected here must be consistent with the SDK architecture retained during integration**, and then click "Build" to generate the App locally.
+1. 参考步骤 7，将 “Platform” 切换到 “Windows” 平台，选择好要构建的架构，**注意此处选择的架构要与集成时保留的 SDK 架构一致**，然后点击 “Build” 生成 App 到本地。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/winBuild.jpeg" /></Frame>
-2. Double-click the generated .exe file to run it.
+2. 双击生成的 .exe 文件即可运行。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/exeDemo.jpg" /></Frame>
-</details>
+
+</Accordion>

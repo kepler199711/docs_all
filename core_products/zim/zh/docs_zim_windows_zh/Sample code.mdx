@@ -1,42 +1,33 @@
-# Sample app
+import Content from '/snippets/Reuse/ZIM_BasicPrerequisites_AppSign-zh.md'
+import Content1 from '/snippets/Reuse/ZIM_AppSign-zh.mdx'
+import Content2 from '/snippets/Reuse/ZIMSampleAppIntro-zh.md'
 
-- - -
+# 跑通示例源码
+---
 
+<Card title="示例源码" href="https://storage.zego.im/zim/example/windows/ZIMDemo.zip" target="_blank">点击获得完整代码。</Card>
+## 1 概览
 
-<Card title="Sample Code" href="https://storage.zego.im/zim/example/windows/ZIMDemo.zip" target="_blank">Click here to get the complete sample code.</Card>
+本文介绍如何快速跑通示例源码，体验即时通讯服务。
 
+## 2 准备环境
 
-### Overview
+请确保开发环境满足以下技术要求：
 
-This article explains how to quickly run the example source code and experience instant messaging services.
-
-### Prepare the Environment
-
-Please make sure that your development environment meets the following technical requirements:
-
-* Windows: Windows 7 or above.
-* macOS: macOS 11.0 or above.
-* Install Qt 5.12.12 version: [Download Link](https://download.qt.io/archive/qt/5.12/5.12.12/). First-time Qt developers can refer to the [official tutorial](https://doc.qt.io/qt-5/gettingstarted.html).
-
-### Prerequisites
+* Windows: Windows 7 或以上版本。
+* macOS: macOS 11.0 或以上版本。
+* 安装了 Qt 5.12.12 版本：[下载地址](https://download.qt.io/archive/qt/5.12/5.12.12/)，首次使用 Qt 的开发者可阅读其 [官方教程](https://doc.qt.io/qt-5/gettingstarted.html)。
 
 
-- Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com), and do the following:
-    - Create a project, get the AppID and AppSign.
-    - Subscribe to the In-app Chat service (contact us if the subscription doesn't go well).
-
-<Warning title="注意">
-
-For SDK `2.3.0` or later, the AppSign authentication mode and Token-based authentication mode are both supported.
-
-If you want to change your authentication mode, please refer to the [Upgrade the authentication mode from using the AppSign to Token](https://docs.zegocloud.com/faq/token_upgrade).
-</Warning>
+## 3 前提条件
 
 
+<Content />
+<Content1 />
 
-### Sample code structure 
+## 4 示例源码目录结构
 
-The following structure shows the subdirectory structure of the In-app Chat sample code:
+下列结构为 IM 源码文件的子目录结构，下文所涉及的文件路径均为相对于此目录的路径。
 
 ```bash
 ZIMDemo	
@@ -141,37 +132,56 @@ ZIMDemo
 \---sdk
 ```
 
-### Run the sample code
+## 5 运行示例源码
 
-1. Go to the [SDK downloads](./Client%20SDKs/SDK%20downloads.mdx) to download the latest version of SDK, and copy the unzipped SDK package to the `./sdk` directory. 
+1. 请参考 [下载 SDK](./Client%20SDKs/SDK%20downloads.mdx)，下载最新版本的 SDK 包，解压后，将文件拷贝到示例源码的 “./sdk/zim” 目录下，替换掉旧的 SDK 包。
 
-2. In Visual Studio 2019, click the **Open a project or solution**. Navigate to the unzipped sample code files, select the `ZIMDemo.sln` file under the **ZIMDemo** folder, and then click **Open**.
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/sava_sdk.png" />
+</Frame>
 
-3. Modify the `ZIMKeyCenter.cpp` file under the `ZIMDemo/` folder with the AppID and ServerSecret that you get in the previous **Prerequisites** steps. 
+2. 使用 IDE 打开项目。
+    
+    示例源码中自带了 .pro 工程文件，开发者可以使用 Qt 打开。步骤如下示例：
 
-    ```cpp
-    unsigned int ZIMConfigManager::getAppID()
-    {
-      return 0;     // input AppID here
-    }
+  1. 在开发电脑中找到 Qt 软件，并打开。
 
-    std::string ZIMConfigManager::getSecret()
-    {
-      return "";     // input Secret here
-    }
-    ```
+      <Frame width="512" height="auto" caption="">
+      <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Windows/qt_icon.png" />
+      </Frame>
 
-4. Then, you can start to run the sample code and experience the In-app Chat service. 
-![/Pics/Windows/ZIM/DebuggerAndRun.png](https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/DebuggerAndRun.png)
+    2. 选择 Projects，点击右侧的 Open。
 
-### FAQ
+      <Frame width="512" height="auto" caption="">
+      <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Windows/qt_open.png" />
+      </Frame>
 
-1. **Compliance failed because the Platform Toolset or Windows SDK version used in the project properties is different from the version in the sample source code, such as Visual Studio 2015/2017.**
+    3. 在解压后的示例源码文件夹中，选择 “ZIMQTDemo” 下的 “ZIMQTDemo.pro” 文件，打开工程。
 
-    In the General Properties, change the Platform Toolset to Visual Studio 140 or later, and the Windows SDK that you installed (10.0 or later).
+<Frame width="512" height="auto" caption="">
+<img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Windows/qt_path_icon.png" />
+</Frame>
 
-    ![/Pics/Windows/ZIM/Property_Win_and_MSVC_SDK.png](https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/Property_Win_and_MSVC_SDK.png)
+3. 点击左侧 Dubug，选择 MSVC2017 组件，再点击 Debug 选项，编译并运行项目。
 
-2. **An error that shows `Zim.dll` file can't be found when running the sample project.**
+    **Windows 系统选用 MSVC2017 组件；macOS 系统使用默认的 Clang 即可。**
 
-    Copy the `ZIM.dll` file under the corresponding OS folder (x86 or x84) to the `ZIMDemo.exe` directory (the default directory is `ZIMDemo/_out/(x64 or x86)/(Release or Debug)/_product`).
+    <Warning title="Warning">
+
+    如果您在 Windows 环境下使用 MSVC 编译，需要将 Qt 的 “qt\Tools\QtCreator\bin\libssl-1_1-x64.dll” 文件、以及 "qt\Tools\QtCreator\bin\libcrypto-1_1-x64.dll" 文件，复制到 "Qt\Qt5.12.4\5.12.4\msvc2017_64\bin" 路径下，才能使用 OpenSSL 服务下载图片消息。  
+    </Warning>
+
+    <Frame width="512" height="auto" caption="">
+      <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Windows/qt_debug_icon.png" />
+    </Frame>
+
+
+4. 代码运行起来后，在弹出的 ZIM 对话框中，填写您的 userID（必填）、userName。
+    
+    首次登录时，点击 settings，在弹出的对话框中，使用本文 [3 前提条件](#3-前提条件) 已获取的 AppID 和 AppSign 正确填写，点击 update，再点击 loginZIM，登录 ZIM。
+
+    <Frame width="512" height="auto" caption="">
+      <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Windows/login.png" />
+    </Frame>
+
+    **若您的项目已切换为 “Token 鉴权”，请在 settings 中切换为 “Token 鉴权”（默认为 AppSign 鉴权），并在 [ZEGO 控制台](https://console.zego.im) 上，申请临时 Token 用于调试。**
