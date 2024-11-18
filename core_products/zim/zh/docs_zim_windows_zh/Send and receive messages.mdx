@@ -1,140 +1,144 @@
 ---
-articleID: 13934
+articleID: 11623
 ---
 
 
-# Send and receive messages
+# 实现基本消息收发
 
----
+--- 
 
-This document describes how to use the ZIM SDK (In-app Chat) to send and receive messages.
+本文介绍如何使用 ZIM SDK 快速实现基本的单聊会话消息收发功能。
 
+## 1 前提条件
 
----
+在使用 ZIM SDK 前，请确保：
 
-## Solution
+- 开发环境满足以下要求：
+    - Visual Studio 2015 或以上版本。
+    - Windows 7 或以上版本。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，获取到了接入 ZIM SDK 服务所需的 AppID、AppSign。ZIM 服务权限不是默认开启的，使用前，请先在 [ZEGO 控制台](https://console.zego.im) 自助开通 ZIM 服务（详情请参考 [项目管理 - 即时通讯](https://doc-zh.zego.im/article/14994)），若无法开通 ZIM 服务，请联系 ZEGO 技术支持开通。
 
-The following shows the access solution that the ZIM SDK provides.
+<Warning title="注意">
 
-![/Pics/InappChat/im_solution_en.png](https://storage.zego.im/sdk-doc/Pics/InappChat/im_solution_en.png)
-
-In this solution, you will need to implement the following business logic based on your actual business requirements:
-
-- The logic for managing the users on the client, and the logic for distributing user ID for users to log in.
-
-## Prerequisites
-
-Before you begin, make sure:
-
-- Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com), and do the following:
-  - Create a project, get the **AppID** and **AppSign**.
-  - Activate the **In-app Chat** service (as shown in the following figure).
-![/Pics/InappChat/ActivateZIMinConsole2.png](https://storage.zego.im/sdk-doc/Pics/InappChat/ActivateZIMinConsole2.png)
+`2.3.0 及以上`版本的 SDK，开始支持 “AppSign 鉴权”，同时仍支持 “Token 鉴权”，若您需要升级鉴权方式，可参考 [ZIM 如何从 AppSign 鉴权升级为 Token 鉴权](http://doc-zh.zego.im/faq/token_upgrade_zim)。
+</Warning>
 
 
-- Visual Studio 2015 or later
-- Windows 7 or later
+## 2 集成 SDK  
 
-## Integrate the SDK
+### 2.1 （可选）新建项目
 
-### Optional: Create a project
+<Accordion title="此步骤以如何创建新项目为例，如果是集成到已有项目，可忽略此步" defaultOpen="false">
 
-Skip this step if a project already exists.
+1. 打开 Microsoft Visual Studio，选择“文件 > 新建 > 项目”菜单。
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/add_project_1.png" />
+</Frame>
 
-<details class="zg-primary">
-    <summary>Create a new project</summary>
+2. 在新建项目窗口，选择项目类型为“MFC 应用程序”，输入项目名称，选择项目存储路径，并单击“确定”。
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/add_project_2.png" />
+</Frame>
 
-1. Open Xcode, and in the **Welcome to Xcode** window, click **Create a new Xcode project** or select **File > New > Project**. In the dialog that appears, select the **iOS** tab, then select **App** in the **Application** section.
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/QuickStart/NewProject_1.png" /></Frame>
+3. 进入 MFC 应用程序窗口，选择“应用程序类型”为“基于对话框”，并单击“完成”。 
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/add_project_3.png" />
+</Frame>
 
-2. Fill in items or choose options for the new project, click **Next** after configuration is completed.
+</Accordion>
 
-**Product Name** and **Organization Identifier** are required, which will be used for creating the App UID - **Bundle Identifier**.
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/QuickStart/NewProject_2.png" /></Frame>
+### 2.2 导入 SDK  
+ 
+1. 请参考 [下载 SDK](./Client%20SDKs/SDK%20downloads.mdx)，下载最新版本的 SDK。
+2. 解压 SDK，并拷贝到项目SDK目录下。
 
-3. Choose a particular directory to restore the project to be created, and click **Create** to create a project.
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/QuickStart/NewProject_3.png" /></Frame>
-
-</details>
-
-### Import the SDK 
-
-1. Download the latest version of SDK from [SDK downloads](./Client%20SDKs/SDK%20downloads.mdx).
-2. Extract the files from the SDK packages and copy the files to your project directory.
-
-    The SDK package includes two directories: **include** and **lib**. The SDK contains two folders as illustrated below: 
+    SDK 包含 “include” 和 “lib” 两个目录，每个目录包含的文件说明如下。 
     
     ```cpp
-    x86            --------------- 32-bit version
-    | include      --------------- SDK header file included.
-    x64            --------------- 64-bit version
-    | include      --------------- SDK header file included.
+    x86            --------------- 32位版本,包含SDK的.lib和.dll文件
+    | include      --------------- 包含SDK头文件
+    x64            --------------- 64位版本,包含SDK的.lib和.dll文件
+    | include      --------------- 包含SDK头文件
    ```
 
+### 2.3 设置项目属性  
 
-### Set project property 
+在解决方案资源管理器窗口中，右击项目名称，单击“属性”，进入项目属性页。在项目属性页面内进行以下配置，配置完成后单击“确定”。
 
-To set project property, right-click the project name in the **Solution Explorer** window, click **Properties**, and configure the following :
+1. 将 “include” 目录加入到头文件搜索路径。
+选择“配置属性 > C/C++ > 常规”菜单，在“附加包含目录”中添加 “SDK/x86/include” 或 “SDK/x64/include” 目录。
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/project_properties1.png" />
+</Frame>
 
-1. Add the `include` directory to the header file search path.
-* **C/C++** -> **General**-> Add the `include` directory to **Additional include Directories**
-2. Add the `lib` directory to the library search path.
+2. 将 “lib” 目录加入到库搜索路径。
+选择“配置属性 > 链接器 > 常规”菜单，在“附加库目录”中添加 “SDK/x86” 或 “SDK/x64” 目录。
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/project_properties2.png" />
+</Frame>
 
-* **Linker**-> **General**-> Add the library directory `lib/x86` or ` lib/x64` to the **Additional Library Directories**
-
-3. Specify the link library `ZIM.lib`.
-
-* **Linker**-> **Input**-> Add `ZIM.lib` to **Additional Dependencies**
-
-## Implementation steps
-
-### Get the sample code
-
-To download and run the sample code, see [Sample app](./Sample%20app.mdx).
-
-For the sample code related to this feature, check out the source files in the `CZIMConversationView.h` and `CZIMConversationView.cpp` files under the `ZIMDemo` directory in the SDK sample code package. 
-
+3. 指定链接库 “ZIM.lib”。
+选择“配置属性 > 链接器 > 输入”菜单，在“附加依赖项”中添加 “ZIM.lib”。
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/Windows/ZIM/project_properties3.png" />
+</Frame>
 
 
-### Import the header file 
+## 3 实现基本收发消息
 
-Import the header file `ZIM.h` to the project, and define the macro `ZIM_MAIN_CONFIG` once in the source file of the project file (`*.cpp` or `*.cc` file) (you only need to define the macro once at the very beginning).
+以下流程中，我们以客户端 A 和 B 的消息交互为例：
+
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/quick_start_Implementation.png" />
+</Frame>
+
+
+### 3.1 实现流程
+
+请参考 [跑通示例源码](./Sample%20code.mdx) 获取源码，相关功能的源码请查看 “ZIMDemo” 文件下的 “CZIMConversationView.h” 和 “CZIMConversationView.cpp” 文件。
+
+
+#### 1. 导入头文件
+
+在项目文件中引入头文件 “ZIM.h”，并在项目文件的源文件（“*.cpp” 或 “*.cc” 文件）中定义一次宏 `ZIM_MAIN_CONFIG`（需要且仅需要定义一次，且需要放到最前面定义）。
+
 
 ```cpp
-//The header file.
+//头文件
 #include "ZIM.h"
 ...
 ```
 
 ```cpp
-//The source file.
+//源文件
 #include "pch.h"
 #define ZIM_MAIN_CONFIG
 #include "framework.h"
 ...
 ```
 
-### Create a ZIM SDK instance
+#### 2. 创建 ZIM 实例
 
-Creating a ZIM instance is the very first step, an instance corresponds to a user logging in to the system as a client.
+首先我们需要在 SDK 中创建 ZIM 实例，一个实例对应的是一个用户，表示一个用户以客户端的身份登录系统。
 
-
-So, let's suppose we have two clients now, client A and client B. To send and receive messages to each other, both of them will need to call the [create](@create) method with the AppID and the AppSign you get in the previous **Prerequisites** steps to create a ZIM SDK instance of their own:
+例如，客户端 A、B 分别调用 [create](@create) 接口，传入在 [1 前提条件](#1-前提条件) 中获取到的 AppID、AppSign，创建了 A、B 的实例：
 
 ```cpp
-// Create a ZIM SDK instance. We recommend creating a ZIM SDK instance for a client.
-zim_ = zim::ZIM::create(app_id)
+// 创建 ZIM 对象，传入 appID、appSign，目前仅建议一个客户端创建一个zim实例
+// 请注意：ZIM 从 2.3.0 版本开始支持 AppSign 鉴权，SDK 也默认为 AppSign 鉴权，如果您需要切换鉴权方式：
+// (1) 2.3.3 及以上版本的 SDK，支持鉴权方式的自主切换; (2) 2.3.0 ~ 2.3.1 版本的 SDK，需要切换为 “Token 鉴权” 时，请联系 ZEGO 技术支持处理
+zim::ZIMAppConfig app_config;
+app_config.appID = 12345;     //替换为您申请到的 AppID
+app_config.appSign = "appSign";   //替换为您申请到的 AppSign
+zim_ = zim::ZIM::create(app_config);
 ```
 
 <details class="zg-primary">
-    <summary>The sample code to create a ZIM SDK singleton</summary>
+    <summary>ZIM 创建单例的示例</summary>
 
+由于大多数开发者，在整个流程中，只需要将 ZIM 实例化一次，因此 ZEGO 建议您将 ZIM 单例化并保存。
 
-For most cases, you will only need to create the ZIM SDK instance once. We recommend you create a singleton and save it.
-
-
-Create a `ZIMManage` class, declare and implement a `sharedInstance` static method in this class, which will create and return a `ZIMManager` object the first time it is called.
-Then, when you import the `ZIMManager` class anywhere in the project and call the `sharedInstance`, a zim object will be returned.
+创建一个 ZIMManager 类，在该类中声明并实现了一个 “sharedInstance” 静态方法，该方法将会在首次调用时创建并返回一个 ZIM 的对象，此后在项目的任意位置导入 ZIMManager 头文件，调用 “sharedInstance” 将会返回 zim 对象。
 
 ```cpp
 ...
@@ -142,8 +146,12 @@ class ZIMManager {
     ...
     zim::ZIM * sharedInstance() {
         static zim::ZIM* zim_instance = nullptr;
-        if(!zim_instance)
-            zim_instance = zim::ZIM::create(app_id);
+        if(!zim_instance){
+          zim::ZIMAppConfig app_config;
+          app_config.appID = 12345;
+          app_config.appSign = "appSign";
+          zim_instance = zim::ZIM::create(app_config);    
+        }
         return zim_instance;
     }
     ...
@@ -152,22 +160,21 @@ class ZIMManager {
 ```
 
 ```cpp
-// Use this in other situations. 
+// 在其他位置使用
 #include "ZIMManager.h"
 ...
 
-// Take login as an example. 
+// 以登录为例
 ZIMManager::sharedInstance()->login(userInfo, token, [=](zim::ZIMError errorInfo){
-    // Callback for the result of login. 
+    // 登录结果回调
 });
 ...
 ```
 </details>
 
-### Set an event handler object 
+#### 3. 设置 setEventHandler 回调
 
-
-Before a client user's login, you will need to call the [setEventHandler](@setEventHandler) method to implement an event handler object, and customize the event callbacks, such as you can receive callback notifications when SDK errors occur or receive message related callback notifications.
+在客户端登录前，开发者可以通过调用 [setEventHandler](@setEventHandler) 接口，自定义 ZIM 中的事件回调，接收到 SDK 异常、消息通知回调等的通知。
 
 ```cpp
 class CZIMEventHandler :public zim::ZIMEventHandler
@@ -176,22 +183,14 @@ public:
     CZIMEventHandler();
     ~CZIMEventHandler();
 private:
-    // The callback for receiving error codes. This callback will be triggered when SDK returns error codes.   
+    // 错误消息回调
     virtual void onError(zim::ZIM* /*zim*/, zim::ZIMError /*errorInfo*/, const std::string& /*desc*/) override;
-    // The callback for connection status changes. This callback will be triggered when the connection status changes, and you can customize a UI for this event.
+    // 连接状态变更回调
     virtual void onConnectionStateChanged(zim::ZIM* /*zim*/, zim::ZIMConnectionState /*state*/, zim::ZIMConnectionEvent /*event*/, const std::string& /*extendedData*/)  override;
-    // The callback for room state changes. 
-    virtual void onRoomStateChanged(zim::ZIM* /*zim*/,  const std::string& /*roomID*/, zim::ZIMRoomState /*state*/, zim::ZIMRoomEvent /*event*/, const std::string& /*extendedData*/)  override;
-    // The callback for Token expires. This callback will be triggered when the Token is about to expire, and you can customize a UI for this event. 
+    // token即将过期提醒回调
     virtual void onTokenWillExpire(zim::ZIM* /*zim*/, unsigned int /*second*/)  override;
-    // The callback for receiving one-to-one messages. You can receive message notifications through this callback after login. 
-    virtual void onReceivePeerMessage(zim::ZIM* /*zim*/, const std::vector<std::shared_ptr<zim::ZIMMessage>>& /*messageList*/, const std::string& /*fromUserID*/)  override;
-    // The callback for receiving the in-room messages. You can receive in-room message notifications through this callback after login and joining a room.
-    virtual void onReceiveRoomMessage(zim::ZIM* /*zim*/, const std::vector<std::shared_ptr<zim::ZIMMessage>>& /*messageList*/, const std::string& /*fromRoomID*/)  override;
-    // The callback for a new user joins the room. You can receive notifications when a new user joins the room through this callback after login and joining a room.
-    virtual void onRoomMemberJoined(zim::ZIM* /*zim*/, const std::vector<zim::ZIMUserInfo>& /*memberList*/, const std::string& /*roomID*/)  override;
-    // The callback for an existing user leaves the room. You can receive notifications when an existing user leaves the room through this callback after login and joining a room.
-    virtual void onRoomMemberLeft(zim::ZIM* /*zim*/, const std::vector<zim::ZIMUserInfo>& /*memberList*/, const std::string& /*roomID*/)  override;
+    // 收到 1v1 通信的消息回调
+    virtual void onPeerMessageReceived(ZIM * /*zim*/, const std::vector<std::shared_ptr<ZIMMessage>> & /*messageList*/,const ZIMMessageReceivedInfo & /*info*/, const std::string & /*fromUserID*/) override;
 }
 ```
 
@@ -199,19 +198,21 @@ private:
 im_event_handler_ = std::make_shared<CZIMEventHandler>();
 zim_->setEventHandler(im_event_handler_);
 
-// You can set the event callbacks by Register##callback_name as needed.
+// 开发者接下来可通过 Register##callback_name 注册自己希望接受到的回调
 ```
 
-<Warning title="注意">
+详细的接口介绍，请参考 [onConnectionStateChanged](@onConnectionStateChanged)、[onTokenWillExpire](@onTokenWillExpire)、[onReceivePeerMessage](@onReceivePeerMessage)。
 
-You need to switch to your own thread for further operations When you receive callbacks.
 
-</Warning>
+<div class = 'mk-warning'>
 
-For example, when you receive an in-room message, to process the message, you need to switch it to your own thread (the following sample code is for switching to the UI thread).
+请注意，收到 SDK 回调消息时，开发者需要切换到自己的线程进行操作。
+</div>
+
+例如收到房间消息时，若要处理该消息，开发者需要将其切换至自己的线程进行操作（示例代码中以切换至 UI 线程为例）。
 
 ```cpp
-// The OnReceiveRoomMessage here refers to the onReceiveRoomMessage of the bounded SDK.
+// 此处的 OnReceiveRoomMessage 是绑定的 SDK 中的 onReceiveRoomMessage
 void CZIMDemoDlg::OnReceiveRoomMessage(zim::ZIM* zim, const std::vector<std::shared_ptr<zim::ZIMMessage>>& message_list, const std::string& from_room_id)
 {
   global_main_dialog_->PostUiThread([=]() {
@@ -220,101 +221,134 @@ void CZIMDemoDlg::OnReceiveRoomMessage(zim::ZIM* zim, const std::vector<std::sha
 }
 ```
 
-### Log in to the ZIM SDK
+<a id="login"></a>
 
-For client A and client B to send, receive, and renew the Token after creating the ZIM SDK instance, they will need to log in to the ZIM SDK.
+#### 4. 登录 ZIM
 
-To log in, Clients A and B both need to do the following:
-1. Call the [ZIMUserInfo](@-ZIMUserInfo)  method to create a user object.
-2. Then, call the [login](@login) method with their own user information and the Token they get in the previous **Prerequisites** steps.
+创建实例后，客户端 A 和 B 需要登录 ZIM，只有登录成功后才可以开始发送、接收消息、更新 Token 等。
+
+客户端需要使用各自的用户信息进行登录。调用 [login](@login) 接口，传入用户信息 [ZIMUserInfo](@-ZIMUserInfo) 对象，进行登录。
 
 <Warning title="注意">
 
-- You can custom the **userID** and **userName**, and we recommend you set the  **userID** to a meaningful value and associate them with the account system of your application.
-- For SDK 2.3.0 or later: The SDK uses the AppSign authentication mode by default. You only need to pass the [ZIMUserInfo](@-ZIMUserInfo) when logging in. 
-
-- If you use the Token-based authentication mode, please refer to the [Authentication](./Guides/Users/Authentication.mdx) to get the Token first, and pass it when logging in. 
+- “userID”、“userName” 支持开发者自定义规则生成。建议开发者将 “userID” 设置为一个有意义的值，可将其与自己的业务账号系统进行关联。
+- `2.3.0` 或以上版本的 SDK，默认鉴权方式为 “AppSign 鉴权”，登录 ZIM 时只需传入 [ZIMUserInfo](@-ZIMUserInfo)、Token 传入空字符串即可。
+- 如果您使用的是 “Token 鉴权”，请参考 [使用 Token 鉴权](./Guides/Users/Authentication.mdx) 文档，获取 Token 后，并在登录 ZIM 时传入 Token，鉴权通过后才能登录成功。
 </Warning>
-
-
 ```cpp
-// userID must be within 32 bytes, and can only contain letters, numbers, and the following special characters: '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '-', '`', ';', '’', ',', '.', '<', '>', '/', '\'.
-//  userName must be within 256 bytes, no special characters limited.
+// userID 最大 32 字节的字符串。仅支持数字，英文字符 和 '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'。
+// userName 最大 256 字节的字符串，无特殊字符限制。
 zim::ZIMUserInfo user_info;
 user_info.userID = user_id;
 user_info.userName = user_name;
 
-// When logging in: 
-// If you are using the Token-based authentication mode, you will need to fill in the Token which you generated by referring to the [Authentication] doc.
-// If you are using the AppSign mode for authentication (the default auth mode for v2.3.0 or later), leave the Token parameter blank. 
+// 登录时：
+// 使用 Token 鉴权，请传入您的 Token，详情请参考 [使用 Token 鉴权] 或使用临时 Token
+// 使用 AppSign 鉴权 (2.3.0 或以上版本的默认鉴权方式)，Token 字段填空字符串
 
 zim_->login(user_info, [=](zim::ZIMError errorInfo){
-    // You can get the return code to check whether the login is successful. And handle it accordingly if the login fails. 
+    // 这里可以获取登录结果返回值，并根据错误码执行用户代码
 });
 ```
 
+#### 5. 发送消息
 
-### Send messages 
-
-Client A can send messages to client B after logging in successfully. 
-
-Currently, the ZIM SDK supports the following message types:
+客户端 A 登录成功后，可以向客户端 B 发送消息。
 
 <table>
 
 <tbody><tr data-row-level="1">
-<th>Message type</th>
-<th>Description</th>
-<th>Details</th>
+<th>消息类型</th>
+<th>说明</th>
+<th>特性及适用场景</th>
 </tr>
 <tr data-row-level="2">
 <td>ZIMTextMessage(1)</td>
-<td>Text message. Size limit: 32 KB. Rate limit: 10 requests/second.</td>
-<td>Enable messages to be more deliverable, and can be stored as message history. Suitable for one-on-one chat and group chat.</td>
+<td>文本消息。消息大小不超过 32 KB，单个客户端发送频率限制为 10 次/秒。</td>
+<td>
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般适用于“单聊”、“群聊”等即时聊天的场景和“房间聊天”的公屏聊天场景。房间解散后，“房间聊天”的消息不存储。
+
+相关接口：[sendMessage](@sendMessage)
+</td>
 </tr>
 <tr data-row-level="3">
 <td>ZIMCommandMessage(2)</td>
-<td>Customizable signaling message. Size limit: 5 KB. Rate limit: 10 requests/second. </td>
-<td>Supports massive concurrency. Suitable for live audio room, online classroom, the messages won't be stored after the room is destroyed. </td>
+<td>开发者可自定义数据内容的信令消息。消息大小不超过 5 KB，单个客户端发送频率限制为 10 次/秒。</td>
+<td>
+不可存储，支持更高的并发；一般适用于“语聊房”、“在线课堂”等房间内的信令传输，比如上下麦操作、送礼物，发送在线课堂课件等。
+
+相关接口：[sendMessage](@sendMessage)
+</td>
 </tr>
 <tr data-row-level="4">
 <td>ZIMBarrageMessage(20)</td>
-<td>In-room barrage message (bullet) screen message). Size limit: 5 KB. No specific rate limit. </td>
-<td><p>The high-frequency messages that don't require 100% deliverability, this message type is often used to send bullet screen messages. </p><p>Supports massive concurrency, but the message deliverability can't be guaranteed. </p></td>
+<td>房间内弹幕文本消息。消息大小不超过 5 KB，单个客户端发送频率无限制。</td>
+<td>
+<p>不可存储，专门用于房间内的高频、不可靠、允许丢掉的消息，一般适用于发送“弹幕消息”的场景中。</p><p>支持高并发，但不可靠，不保证消息送达。</p>
+
+相关接口：[sendMessage](@sendMessage)
+</td>
 </tr>
 <tr data-row-level="5">
 <td>ZIMImageMessage(11)</td>
-<td>Image message. Supports major image formats, including JPG, PNG, BMP, TIFF, and GIF. Size limit: 10 MB. Rate limit: 10 requests/second. </td>
-<td rowspan="4">Enable messages to be more deliverable, and can be stored as history messages. Suitable for one-on-one chat, room chat, and group chat.</td>
+<td>图片消息。支持主流图片格式，包括 JPG、PNG、BMP、TIFF、GIF、WebP，大小不超过 10 MB，单个客户端发送频率限制为 10 次/秒。</td>
+<td rowspan="4">
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般用于单聊、房间、群聊等即时聊天场景。
+
+相关接口：
+[sendMediaMessage](@sendMediaMessage)
+</td>
 </tr>
 <tr data-row-level="6">
 <td>ZIMFileMessage(12)</td>
-<td>File message. Supports files in any format. Size limit: 100 MB. Rate limit: 10 requests/second. </td>
+<td>文件消息。消息内容为文件，格式不限，大小不超过 100 MB，单个客户端发送频率限制为 10 次/秒。</td>
 </tr>
 <tr data-row-level="7">
 <td>ZIMAudioMessage(13)</td>
-<td>Voice message. Supports voice messages in MP3 format within 300 seconds. Size limit: 6 MB. Rate limit: 10 requests/second. </td>
+<td>语音消息。支持 MP3、M4A 格式的语音文件，时长不超过 300 秒，大小不超过 6 MB，单个客户端发送频率限制为 10 次/秒。</td>
 </tr>
 <tr data-row-level="8">
 <td>ZIMVideoMessage(14)</td>
-<td>Video message. Supports video messages in MP4 or MOV format. Size limit: 100 MB. Rate limit: 10 requests/second. </td>
+<td>视频消息。支持 MP4、MOV 格式的视频文件，大小不超过 100 MB，单个客户端发送频率限制为 10 次/秒。**仅支持视频编码格式为 H264 和 H265 的视频文件在消息发送成功后获取该视频首帧的宽、高信息。**</td>
+</tr>
+<tr data-row-level="9">
+<td>ZIMCombineMessage(100)</td>
+<td>合并消息，消息大小无限制，单个客户端发送频率限制为 10 次/秒。</td>
+<td>
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般用于单聊、房间、群聊等即时聊天场景。
+
+相关接口：[sendMessage](@sendMessage)
+</td>
+</tr>
+<tr data-row-level="10">
+<td>ZIMCustomMessage(200)</td>
+<td>自定义消息。开发者可自定义消息的类型，并自行完成消息的解析，ZIM SDK 不负责定义和解析自定义消息的具体内容。</td>
+<td>
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般可用于发送投票类型、接龙类型、视频卡片类型等消息。
+
+相关接口：
+[sendMessage](@sendMessage)
+</td>
 </tr>
 </tbody>
 </table>
 
 
+以下为发送`单聊文本消息`为例：客户端 A 可以调用 [sendMessage](@sendMessage) 接口，传入客户端 B 的 userID、消息内容、消息类型 [ZIMConversationType](@-ZIMConversationType)，即可发送一条`文本消息`到 B 的客户端。
 
-To send one-to-one messages, for example, client A wants to send a message to client B, then client A needs to call the [sendMessage](@sendMessage) method with client B's userID, message content, and the [ZIMConversationType](@-ZIMConversationType)
-And client A can be notified whether the message is delivered successfully through the callback [ZIMMessageSentCallback](/article/api?doc=zim_API~cpp_windows~interface~ZIMDefines#zim-message-sent-callback) (correspond to the `send_callback` shows below).
-
-- [onMessageAttached](@onMessageAttached-ZIMMediaMessageSendNotification) callback: The callback on the message not sent yet. Before the message is sent, you can get a temporary [ZIMMessage](@-ZIMMessage) message for you to implement your business logic as needed. For example, you can get the ID of the message before sending it. Or when sending a message with large content, such as a video, you can get the localMessageID of th
+- [ZIMMessageSentCallback](@ZIMMessageSentCallback) 回调，判断消息是否发送成功。
+- [onMessageAttached](@onMessageAttached-ZIMMessageSendNotification) 回调，在消息发送前，可以获得一个临时的 [ZIMMessage](@-ZIMMessage)，以便您添加一些业务处理逻辑。例如：在发送消息前，获取到该条消息的 ID 信息。开发者在发送“视频”等内容较大的消息时，可以在消息上传完成前，获取对应该条消息的 localMessageID，实现发送前 Loading 的效果。
 
 ```cpp
-// The following shows how to send one-to-one text message.
+// 发送单聊信息，此处示例为发送文本消息
 zim::ZIMMessage* message = nullptr;
 zim::ZIMTextMessage text_message;
 text_message.message = "message";
-// Set priority for the message. 1: Low (by default). 2: Medium. 3: High.
+// 消息优先级，取值为 低:1 默认,中:2,高:3
 zim::ZIMMessageSendConfig config;
 config.priority = zim::ZIM_MESSAGE_PRIORITY_LOW;
 message = &text_message;
@@ -324,38 +358,40 @@ auto notification = std::make_shared<zim::ZIMMessageSendNotification>();
 
 notification->onMessageAttached = std::move([=](const std::shared_ptr<zim::ZIMMessage> &message) { int i = 0; });
 
-// In 1-on-1 chats, the conversationID is the peer user ID. In group chats, the conversationID is the groupID. In the chat room, the conversationID is the roomID.
+// 单聊时，conversationID 即是对方的 userID；群组时，conversationID 即是群组的 groupID；房间时，conversationID 即是房间的 roomID
 zim_->sendMessage(std::static_pointer_cast<zim::ZIMMessage>(smessage), "conversationID",
                           zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER, sendConfig,
                           notification,
                           [=](const std::shared_ptr<zim::ZIMMessage> &message,
                               const zim::ZIMError &errorInfo) { int i = 0; });
+
 ```
 
+#### 6. 接收消息
 
-### Receive messages
+客户端 B 登录 ZIM 后，将会收到在 [setEventHandler](@setEventHandler) 设置的回调类中 [onReceivePeerMessage](@onReceivePeerMessage) 监听接口，收到客户端 A 发送过来的消息。
 
-After client B logs in, he will receive client A's message through the callback [onReceivePeerMessage](@onReceivePeerMessage) which is already set in the [setEventHandler](@setEventHandler) method. 
+<Warning title="注意">
 
-<div class = 'mk-warning'>
-
-When a message is received, you need to determine whether the message is a Text message or a Command message because these two message types are based on the basic message. You need to convert the basic message class to a concrete message type and then retrieve the message content from the `Message` field.
-</div>
+收到消息时，由于类型是基类，首先需要判断消息类型是 Text 还是 Command，开发者需要强转基类为具体的子类，然后从 message 字段获取消息内容。
+</Warning>
 
 ```cpp
-// The OnReceiveRoomMessage here refers to the onReceiveRoomMessage of the bounded SDK.
-void ZIMConversationView::OnReceivePeerMessage(zim::ZIM* zim, const std::vector<std::shared_ptr<zim::ZIMMessage>>& message_list, const std::string& from_user_id)
+// 此处的 OnReceivePeerMessage 是绑定的 SDK 中的 onReceivePeerMessage
+void ZIMConversationView::onPeerMessageReceived(
+        ZIM * /*zim*/, const std::vector<std::shared_ptr<ZIMMessage>> & messageList,
+        const ZIMMessageReceivedInfo & info, const std::string & fromUserID) 
 {
   for (auto message : message_list)
   {
-    if (message->type == zim::ZIM_MESSAGE_TYPE_CUSTOM)
+    if (message->type == zim::ZIM_MESSAGE_TYPE_COMMAND)
     {
-      auto custom_message = std::dynamic_pointer_cast<zim::ZIMCustomMessage>(message);
+      auto command_message = std::dynamic_pointer_cast<zim::ZIM_MESSAGE_TYPE_COMMAND>(message);
 
       CFile file;
-      file.Open(L"Binary message file", CFile::typeBinary | CFile::shareDenyNone | CFile::modeCreate | CFile::modeReadWrite);
+      file.Open(L"二进制消息文件", CFile::typeBinary | CFile::shareDenyNone | CFile::modeCreate | CFile::modeReadWrite);
 
-      file.Write(&custom_message->message[0], custom_message->message.size());
+      file.Write(& command_message->message[0], command_message->message.size());
     }
   }
 
@@ -365,18 +401,44 @@ void ZIMConversationView::OnReceivePeerMessage(zim::ZIM* zim, const std::vector<
 }
 ```
 
-### Log out 
+#### 7. 退出登录
 
-For a client to log out, call the [logout](@logout) method. 
+如果客户端需要退出登录，直接调用 [logout](@logout) 接口即可。
 
 ```cpp
 zim_->logout();
 ```
 
-### Destroy the ZIM SDK instance
+#### 8. 销毁 ZIM 实例
 
-To destroy the ZIM SDK instance, call the [destroy](@destroy) method.
+如果不需要 ZIM 实例，可直接调用 [destroy](@destroy) 接口，销毁实例。
 
 ```cpp
 zim_->destroy();
 ```
+
+### 3.2 API 时序图
+
+通过以上的实现流程描述，API 接口调用时序图如下：
+
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/peerMessage_Android_Windows_new.png" /></Frame>
+
+<div class="mk-hint">
+
+- 发送消息时，统一使用 [sendMessage](@sendMessage) 接口，并根据消息类型传入对应的 ZIMConversationType 取值。
+- 接收消息时：
+  + 单聊消息（Peer 类型），通过 [onReceivePeerMessage](@onReceivePeerMessage) 回调接收。
+  + 房间消息（Room 类型），通过 [onReceiveRoomMessage](@onReceiveRoomMessage) 回调接收。
+  + 群组消息（Group 类型），通过 [onReceiveGroupMessage](@onReceiveGroupMessage) 回调接收。
+</div>
+
+
+
+## 相关文档
+
+- [如何获取 SDK 的堆栈信息？](https://doc-zh.zego.im/faq/IM_sdkStack)
+- [如何获取 SDK 的日志信息？](https://doc-zh.zego.im/faq/IM_sdkLog)
+- [如何设置消息的优先级更为合理？](https://doc-zh.zego.im/faq/IM_Message_Priority)
+- [什么时候使用自定义消息？](https://doc-zh.zego.im/faq/IM_CustomMessage)
+- [如何限制只有好友之间才能互发消息？](https://doc-zh.zego.im/faq/IM_FriendMeassge)
+- [支持发送消息给自己吗？](http://doc-zh.zego.im/faq/IM_send_toSelf)

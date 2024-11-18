@@ -1,63 +1,61 @@
 ---
-articleID: 13935
+articleID: 12681
 ---
 
-
-# Send and receive messages
+# 实现基本消息收发
 
 --- 
 
-This document describes how to use the ZIM SDK to send and receive messages.
-<br/>
-<br/>
+本文介绍如何使用 ZIM SDK 快速实现基本的单聊会话消息收发功能。
 
----
+## 1 方案介绍
 
-## Solution 
+ZIM SDK 提供了如下接入方案：
 
-The following shows the access solution that ZEGOCLOUD'S In-app Chat (the ZIM SDK) provides.  
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/quick_start_Structure.png" />
+</Frame>
 
-![/Pics/InappChat/im_solution_en.png](https://storage.zego.im/sdk-doc/Pics/InappChat/im_solution_en.png)
+在此方案中，您需要通过您自己的业务系统实现以下业务逻辑：
 
-In this solution, you will need to implement the following business logic based on your actual business requirements: 
-
-- The logic for managing the users on the client, and the logic for distributing user ID for users to log in. 
-- The logic for generating the **Token** for SDK to authenticate the user. We recommend you implement the logic for generating tokens on your app server for data security.
-
-## Prerequisites
-
-Before you begin, make sure:
-
-- Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com), and do the following:
-  - Create a project, get the **AppID** and **ServerSecret**.
-  - Activate the **In-app Chat** service (as shown in the following figure).
-![/Pics/InappChat/ActivateZIMinConsole2.png](https://storage.zego.im/sdk-doc/Pics/InappChat/ActivateZIMinConsole2.png)
+- 搭建客户端的用户管理逻辑，并下发用户 ID 用于客户端登录。
+- 鉴权 Token，建议由您的业务后台自行实现，保证鉴权数据安全。
 
 
-- Get the **Token** that SDK required for login authentication. For details, see [Authentication](./Guides/Users/Authentication.mdx).
 
-## Integrate the SDK
+## 2 前提条件
 
-### Optional: Create a new project
+在使用 ZIM SDK 前，请确保：
 
-Skip to this step if a project already exists.
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，获取到了接入 ZIM SDK 服务所需的 AppID 和 ServerSecret。ZIM 服务权限不是默认开启的，使用前，请先在 [ZEGO 控制台](https://console.zego.im) 自助开通 ZIM 服务（详情请参考 [项目管理 - 即时通讯](#14994)），若无法开通 ZIM 服务，请联系 ZEGO 技术支持开通。
+- 已获取登录 SDK 所需的 Token，详情请参考 [使用 Token 鉴权](./Guides/Users/Authentication.mdx)。
 
-<details class="zg-primary">
-    <summary>Create a new project</summary>
 
-1. Create a folder as the basic audio and video project folder as shown below: 
+
+## 3 集成 SDK  
+
+### 3.1 （可选）新建项目
+
+<Note title="说明">
+
+为了提高接入的效率，我们建议您参考 [示例源码](./Sample%20code.mdx) 创建自己的项目。
+</Note>
+
+<Accordion title="此步骤以如何创建新项目为例，如果是集成到已有项目，可忽略此步。" defaultOpen="false">
+
+1. 创建一个文件夹作为项目文件夹，结构类似如下： 
 
     ```bash
     ├── assets
     │   ├── css
-    │   │   └── index.css # Used to set the page style.
+    │   │   └── index.css # 页面的样式
     │   └── js
-    │       ├── biz.js    # The JavaScript code that is used to implement the features.
+    │       ├── biz.js    # 实现 im 业务功能
     │       └── zim.js    # zim sdk
-    ├── index.html        # The front page file of the application
+    ├── index.html        # 应用的前端页面文件
     ```
 
-2. Copy the following code to the `index.html` file.
+2. 将以下代码拷贝到 “index.html” 文件中。
 
     ```html
     <!DOCTYPE html>
@@ -78,211 +76,252 @@ Skip to this step if a project already exists.
     </html>
     ```
 
-3. Open the `index.html` on the local browser.
+3. 用浏览器打开 “index.html” 文件。
 
-</details>
-
-
-### Import the SDK 
-
-Choose either of the following methods to integrate the SDK into your project.
-
-#### Method 1: Integrate the SDK manually
-
-1. Download and extract the latest version of SDK from [SDK downloads](./Client%20SDKs/SDK%20downloads.mdx).
+</Accordion>
 
 
-2. Import the SDK using the following script.
+### 3.2 导入 SDK
 
-    ```html
-    <!-- Path to index.html corresponding to zim SDK -->
-    <script src="./zego-zim-web/index.js"></script>
-    ```
+使用 npm 方式集成 SDK。
 
-#### Method 2: Integrate the SDK with NPM
-
-1. Execute the `npm i zego-zim-web` command to install the dependencies.
+1. 执行 `npm i zego-zim-web` 命令安装依赖。
 
     <Note title="说明">
 
-    - We recommend you use the NPM package that supports the TypeScript language.
-    - If the error `permission denied` occurs when executing the npm command on macOS or Linux, add a `sudo` before the npm command and try again.
+    - npm 下载包支持 typescript 语言(推荐)。
+    - 如果在 macOS 或 Linux 系统中执行 npm 命令失败，提示 “permission denied”，请在 npm 命令前加上 sudo 重新执行即可。 
     </Note>
 
-2. Import the SDK.
+2. 导入 SDK。
 
     ```javascript
     import { ZIM } from 'zego-zim-web';
     ```
-   
-    or
-
-    ```javascript
-    const ZIM = require('zego-zim-web').ZIM;
-    ```
-
-## Implementation steps
-
-### Get the sample code
-
-To download and run the sample code, see [Sample app](./Sample%20app.mdx).
 
 
-### Import the SDK file 
+## 4 实现基本收发消息
 
-Refer to the [**Method 2: Integrate the SDK with NPM**](#method-2-integrate-the-sdk-with-npm) to import the SDK package file. 
+以下流程中，我们以客户端 A 和 B 的消息交互为例，实现 1v1 通信功能：
+
+<Frame width="512" height="auto" caption="">
+  <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/quick_start_Implementation_Web.png" />
+</Frame>
 
 
-### Create a ZIM SDK instance
+### 4.1 实现流程
 
-Creating a ZIM instance is the very first step, an instance corresponds to a user logging in to the system as a client.
+请参考 [跑通示例源码](./Sample%20code.mdx) 获取源码。
 
-So, let's suppose we have two clients now, client A and client B. To send and receive messages to each other, both of them will need to call the [create](@create) method with the AppID in the previous **Prerequisites** steps to create a ZIM SDK instance of their own:
 
+#### 1. 导入 SDK 文件
+
+请参考 [3.1 导入 SDK](#32-导入-sdk)，选择 “方式一：使用 npm 获取 SDK”，导入 SDK 文件。
+
+#### 2. 创建 ZIM 实例
+
+首先我们需要在项目中创建 ZIM 实例，一个实例对应的是一个用户，表示一个用户以客户端的身份登录系统。
+
+例如，客户端 A、B 分别调用 [create](@create) 接口，传入在 [2 前提条件](#2-前提条件) 中获取到的 AppID，创建了 A、B 的实例：
 
 ```javascript
-var appID = xxxx; // Note: the appID is a set of numbers, not a String. 
-// The [create] method creates a ZIM instance only on the first call. Any subsequent calls return null.
+var appID = xxxx;
+// 静态同步方法，创建 zim 实例，传入 AppID。
+// create 方法仅第一次调用时会创建 ZIM 实例，后续调用会返回 null。
 ZIM.create({ appID });
-// Get the instance via [getInstance] to avoid hot updates that cause you to use the [create] method multiple times to create a singleton and return null.
+// 通过 getInstance 获取单实例，避免热更新导致 create 多次创建返回 null。
 var zim = ZIM.getInstance();
 ```   
 
-### Set event callbacks
+#### 3. 监听回调事件
 
-Before a client user's login, you will need to call the [on](@on) method to customize the event callbacks, such as you can receive callback notifications when SDK errors occur or receiving message related callback notifications.
-
+在客户端登录前，开发者可以通过调用 [on](@on) 接口，自定义 ZIM 中的事件回调，接收到 SDK 异常、消息通知回调等的通知。
 
 ```javascript
-// Set up and listen for the callback for receiving error codes. 
+// 注册监听“运行时错误信息”的回调  
 zim.on('error', function (zim, errorInfo) {
     console.log('error', errorInfo.code, errorInfo.message);
 });
 
-// Set up and listen for the callback for connection status changes.
+// 注册监听“网络连接状态变更”的回调
 zim.on('connectionStateChanged', function (zim, { state, event, extendedData }) {
     console.log('connectionStateChanged', state, event, extendedData);
-    // When SDK logout occurred due to a long-time network disconnection, you will need to log in again. 
-    if (state == 0 && event == 3) {
-        zim.login(userInfo, token)
+    // 当长时间网络连接断开导致SDK内部登出时，需要重新登录
+    if (state == 0 && event != 0 && event != 4) {
+        zim.login(userID, config)
     }
 });
 
-// Set up and listen for the callback for receiving one-to-one messages. 
+// 注册监听“收到单聊消息”的回调
 zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID }) {
     console.log('receivePeerMessage', messageList, fromConversationID);
 });
 
-// Set up and listen for the callback for token expires.
+// 注册监听“Token 即将过期”的回调
 zim.on('tokenWillExpire', function (zim, { second }) {
     console.log('tokenWillExpire', second);
-    // You can call the renewToken method to renew the token. 
-    // To generate a new Token, refer to the Prerequisites.
+    // 可以在这里调用 renewToken 接口来更新 token
+    // 新 token 生成可以参考上文
     zim.renewToken(token)
         .then(function({ token }){
-            // Renewed successfully.
+            // 更新成功
         })
         .catch(function(err){
-            // Renew failed.
+            // 更新失败
         })
 });
 ```
 
+详细的接口介绍，请参考 [connectionStateChanged](@connectionStateChanged)、[receivePeerMessage](@receivePeerMessage)、[tokenWillExpire](@tokenWillExpire)。
 
+<a id="login"></a>
 
-### Log in to the ZIM SDK
+#### 4. 登录 ZIM
 
-For client A and client B to send, receive messages, and renew the token after creating the ZIM SDK instance, they will need to log in to the ZIM SDK.
+1. 申请 Token
 
-To log in, Clients A and B both need to do the following:
-1. Call the [ZIMUserInfo](@-ZIMUserInfo)  method to create a user object.
-2. Then, call the [login](@login) method with their own user information and the Token they get in the previous **Prerequisites** steps.
+登录 ZIM 需要用于验证身份的 Token，开发者可以直接 [ZEGO 控制台](https://console.zego.im/dashboard) 获取临时 Token（有效期为 24 小时）来使用，详情请参考 [控制台 - 开发辅助](#16309)。
 
 <Warning title="注意">
 
-- You can custom the **userID** and **userName**, and we recommend you set these two to a meaningful value and associate them with the account system of your application.
-- If the token has expired, you will need to call the [renewToken](@renewToken) method in the [tokenWillExpire](@tokenWillExpire) method to renew the token before you try again.
+临时 Token 仅供调试，正式上线前，请从开发者的业务服务器生成 Token，详情可参考 [使用 Token 鉴权](!IM-common_features/Authenticate_users_with_tokens)。
 </Warning>
 
 
-```javascript
-// To get the token for login, refer to the [Guides - Authentication] document. 
-// userID must be within 32 bytes, and can only contain letters, numbers, and the following special characters: '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '-', '`', ';', '’', ',', '.', '<', '>', '/', '\'.
-// userName must be within 256 bytes, no special characters limited.
-var userInfo = { userID: 'xxxx', userName: 'xxxx' };
-var token = '';
+2. 登录 ZIM
 
-zim.login(userInfo, token)
+创建实例后，客户端 A 和 B 需要登录 ZIM，只有登录成功后才可以开始发送、接收消息、更新 Token 等。
+
+客户端需要使用各自的用户信息和 Token 进行登录。调用 [login](@login__2) 接口进行登录，传入 `userID` 和 [ZIMLoginConfig](@-ZIMLoginConfig) 对象（必须包含 `userName` 和 Token），等待 Token 鉴权通过后才能登录成功。
+
+<Warning title="注意">
+
+- “userID”、“userName” 支持开发者自定义规则生成。建议开发者将 “userID” 设置为一个有意义的值，可将其与自己的业务账号系统进行关联。
+- 如果 Token 过期，需要在 [tokenWillExpire](@tokenWillExpire) 即将过期回调接口中，调用 [renewToken](@renewToken) 接口，更新 Token 后才能正常使用 SDK。
+</Warning>
+
+```javascript
+// 登录时，需要开发者 按照 "使用 Token 鉴权" 文档生成 token 即可
+// userID 最大 32 字节的字符串。仅支持数字，英文字符 和 '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'。
+// userName 最大 256 字节的字符串，无特殊字符限制。
+var userID = 'xxxx';
+var config = {
+    userName: 'xxxx',
+    token: '',
+};
+
+zim.login(userID, config)
     .then(function () {
-        // Login successful.
+        // 登录成功
     })
     .catch(function (err) {
-        // Login failed.
+        // 登录失败
     });
 ```
 
-### Send messages 
+#### 5. 发送消息
 
-Client A can send messages to client B after logging in successfully. 
+客户端 A 登录成功后，可以向客户端 B 发送消息。
+
+目前 ZIM 支持的消息类型如下：
 
 <table>
-
 <tbody><tr data-row-level="1">
-<th>Message type</th>
-<th>Description</th>
-<th>Details</th>
+<th>消息类型</th>
+<th>说明</th>
+<th>特性及适用场景</th>
 </tr>
 <tr data-row-level="2">
 <td>ZIMTextMessage(1)</td>
-<td>Text message. Size limit: 32 KB. Rate limit: 10 requests/second.</td>
-<td>Enable messages to be more deliverable, and can be stored as message history. Suitable for one-on-one chat and group chat.</td>
+<td>文本消息。消息大小不超过 32 KB，单个客户端发送频率限制为 10 次/秒。</td>
+<td>
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般适用于“单聊”、“群聊”等即时聊天的场景和“房间聊天”的公屏聊天场景。房间解散后，“房间聊天”的消息不存储。
+
+相关接口：[sendMessage](@sendMessage)
+</td>
 </tr>
 <tr data-row-level="3">
 <td>ZIMCommandMessage(2)</td>
-<td>Customizable signaling message. Size limit: 5 KB. Rate limit: 10 requests/second. </td>
-<td>Supports massive concurrency. Suitable for live audio room, online classroom, the messages won't be stored after the room is destroyed. </td>
+<td>开发者可自定义数据内容的信令消息。消息大小不超过 5 KB，单个客户端发送频率限制为 10 次/秒。</td>
+<td>
+不可存储，支持更高的并发；一般适用于“语聊房”、“在线课堂”等房间内的信令传输，比如上下麦操作、送礼物，发送在线课堂课件等。
+
+相关接口：[sendMessage](@sendMessage)
+</td>
 </tr>
 <tr data-row-level="4">
 <td>ZIMBarrageMessage(20)</td>
-<td>In-room barrage message (bullet) screen message). Size limit: 5 KB. No specific rate limit. </td>
-<td><p>The high-frequency messages that don't require 100% deliverability, this message type is often used to send bullet screen messages. </p><p>Supports massive concurrency, but the message deliverability can't be guaranteed. </p></td>
+<td>房间内弹幕文本消息。消息大小不超过 5 KB，单个客户端发送频率无限制。</td>
+<td>
+<p>不可存储，专门用于房间内的高频、不可靠、允许丢掉的消息，一般适用于发送“弹幕消息”的场景中。</p><p>支持高并发，但不可靠，不保证消息送达。</p>
+
+相关接口：[sendMessage](@sendMessage)
+</td>
 </tr>
 <tr data-row-level="5">
 <td>ZIMImageMessage(11)</td>
-<td>Image message. Supports major image formats, including JPG, PNG, BMP, TIFF, and GIF. Size limit: 10 MB. Rate limit: 10 requests/second. </td>
-<td rowspan="4">Enable messages to be more deliverable, and can be stored as history messages. Suitable for one-on-one chat, room chat, and group chat.</td>
+<td>图片消息。支持主流图片格式，包括 JPG、PNG、BMP、TIFF、GIF、WebP，大小不超过 10 MB，单个客户端发送频率限制为 10 次/秒。</td>
+<td rowspan="4">
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般用于单聊、房间、群聊等即时聊天场景。
+
+相关接口：
+[sendMediaMessage](@sendMediaMessage)
+</td>
 </tr>
 <tr data-row-level="6">
 <td>ZIMFileMessage(12)</td>
-<td>File message. Supports files in any format. Size limit: 100 MB. Rate limit: 10 requests/second. </td>
+<td>文件消息。消息内容为文件，格式不限，大小不超过 100 MB，单个客户端发送频率限制为 10 次/秒。</td>
 </tr>
 <tr data-row-level="7">
 <td>ZIMAudioMessage(13)</td>
-<td>Voice message. Supports voice messages in MP3 format within 300 seconds. Size limit: 6 MB. Rate limit: 10 requests/second. </td>
+<td>语音消息。支持 MP3、M4A 格式的语音文件，时长不超过 300 秒，大小不超过 6 MB，单个客户端发送频率限制为 10 次/秒。</td>
 </tr>
 <tr data-row-level="8">
 <td>ZIMVideoMessage(14)</td>
-<td>Video message. Supports video messages in MP4 or MOV format. Size limit: 100 MB. Rate limit: 10 requests/second. </td>
+<td>视频消息。支持 MP4、MOV 格式的视频文件，大小不超过 100 MB，单个客户端发送频率限制为 10 次/秒。**仅支持视频编码格式为 H264 和 H265 的视频文件在消息发送成功后获取该视频首帧的宽、高信息。**</td>
+</tr>
+<tr data-row-level="9">
+<td>ZIMCombineMessage(100)</td>
+<td>合并消息，消息大小无限制，单个客户端发送频率限制为 10 次/秒。</td>
+<td>
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般用于单聊、房间、群聊等即时聊天场景。
+
+相关接口：[sendMessage](@sendMessage)
+</td>
+</tr>
+<tr data-row-level="10">
+<td>ZIMCustomMessage(200)</td>
+<td>自定义消息。开发者可自定义消息的类型，并自行完成消息的解析，ZIM SDK 不负责定义和解析自定义消息的具体内容。</td>
+<td>
+消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](./Introduction/Pricing.mdx) 中“历史消息存储天数”。）；
+一般可用于发送投票类型、接龙类型、视频卡片类型等消息。
+
+相关接口：
+[sendMessage](@sendMessage)
+</td>
 </tr>
 </tbody>
 </table>
 
 
-To send one-to-one messages, for example, if client A wants to send a message to client B, then client A needs to call the [sendMessage](@sendMessage) method with client B's userID, message content, and other info.
-And client A can be notified whether the message is delivered successfully through the callback [ZIMMessageSentResult](@-ZIMMessageSentResult).
+以下为发送`单聊文本消息`为例：客户端 A 可以调用 [sendMessage](@sendMessage) 接口，传入客户端 B 的 userID、消息内容、消息类型 conversationType 等参数，即可发送一条`文本消息`到 B 的客户端。
 
-- [onMessageAttached](@onMessageAttached-ZIMMediaMessageSendNotification) callback: The callback on the message not sent yet. Before the message is sent, you can get a temporary [ZIMMessage](@-ZIMMessage) message for you to implement your business logic as needed. For example, you can get the ID of the message before sending it. Or when sending a message with large content, such as a video, you can get the localMessageID of the message before the message is uploaded to implement a Loading UI effect.
+- [ZIMMessageSentResult](@-ZIMMessageSentResult) 回调，判断消息是否发送成功。
+- [onMessageAttached](@onMessageAttached-ZIMMessageSendNotification) 回调，在消息发送前，可以获得一个临时的 [ZIMMessage](@-ZIMMessage)，以便您添加一些业务处理逻辑。例如：在发送消息前，获取到该条消息的 ID 信息。开发者在发送“视频”等内容较大的消息时，可以在消息上传完成前，缓存该消息对象，直到收到 SDK 发送成功通知时，通过比较对象相同来实现发送前 Loading 的效果。
 
 ```javascript
-//  Send one-to-one text messages. 
+// 发送单聊 `Text` 信息
 
-var toConversationID = ''; // Peer user's ID.
-var conversationType = 0; // Message type; 1-on- chat: 0, in-room chat: 1, group chat:2 
+var toConversationID = ''; // 对方 userID
+var conversationType = 0; // 会话类型，取值为 单聊:0, 房间:1, 群组:2
 var config = { 
-    priority: 1, // Set priority for the message. 1: Low (by default). 2: Medium. 3: High.
+    priority: 1, // 设置消息优先级，取值为 低：1（默认），中：2，高：3
 };
 
-var messageTextObj = { type: 1, message: 'Message text', extendedData: 'Message extended info(optional)' };
+var messageTextObj = { type: 1, message: '文本消息内容', extendedData: '消息的扩展信息（可选）' };
 var notification = {
     onMessageAttached: function(message) {
         // todo: Loading
@@ -291,37 +330,66 @@ var notification = {
 
 zim.sendMessage(messageTextObj, toConversationID, conversationType, config, notification)
     .then(function ({ message }) {
-        // Message sent successfully.
+        // 发送成功
     })
     .catch(function (err) {
-        // Failed to send a message.
+        // 发送失败
     });
 ```
 
+#### 6. 接收消息
 
-### Receive messages
-
-After client B logs in, he will receive client A's message through the callback [on](@on) which is already set in the [receivePeerMessage](@receivePeerMessage) method. 
+客户端 B 登录 ZIM 后，将会收到在 [on](@on) 回调中设置的 [receivePeerMessage](@receivePeerMessage) 监听接口，收到客户端 A 发送过来的消息。
 
 
 ```javascript 
-// Set up and listen for the callback for receiving the one-to-one messages. 
+// 注册监听“收到单聊消息”的回调
 zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID }) {
     console.log('receivePeerMessage', messageList, fromConversationID);
 });
 ```
 
-### Log out 
+#### 7. 退出登录
 
-For a client to log out, call the [logout](@logout) method. 
+如果客户端需要退出登录，直接调用 [logout](@logout) 接口即可。
+
 ```java
 zim.logout();
 ```
 
-### Destroy the ZIM SDK instance
+#### 8. 销毁 ZIM 实例
 
-To destroy the ZIM SDK instance, call the [destroy](@destroy) method.
+如果不需要 ZIM 实例，可直接调用 [destroy](@destroy) 接口，销毁实例。
+
+<Warning title="注意">
+
+调用 [destroy](@destroy) 后会关闭 web socket 长链接，随后 30 秒内，已登录的用户还是处于在线状态；30 秒后，用户才会被 ZIM 后台判断为处于离线状态。如果想立即使当前用户处于离线状态，在调用 [destroy](@destroy) 前请先调用 [logout](@logout)。 
+</Warning>
 
 ```java
 zim.destroy();
 ```
+
+### 4.2 API 时序图
+
+通过以上的实现流程描述，API 接口调用时序图如下：
+
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Web/peerMessage_Web_new.png" /></Frame>
+
+<Note title="说明">
+
+- 发送消息时，统一使用 [sendMessage](@sendMessage) 接口，并根据消息类型传入对应的 conversationType 取值。
+- 接收消息时：
+  + 单聊消息（Peer 类型），通过 [receivePeerMessage](@receivePeerMessage) 回调接收。
+  + 房间消息（Room 类型），通过 [receiveRoomMessage](@receiveRoomMessage) 回调接收。
+  + 群组消息（Group 类型），通过 [receiveGroupMessage](@receiveGroupMessage) 回调接收。
+</Note>
+
+
+## 相关文档
+
+- [如何获取 SDK 的日志信息？](https://doc-zh.zego.im/faq/IM_sdkLog)
+- [如何设置消息的优先级更为合理？](https://doc-zh.zego.im/faq/IM_Message_Priority)
+- [什么时候使用自定义消息？](https://doc-zh.zego.im/faq/IM_CustomMessage)
+- [如何限制只有好友之间才能互发消息？](https://doc-zh.zego.im/faq/IM_FriendMeassge)
+- [支持发送消息给自己吗？](http://doc-zh.zego.im/faq/IM_send_toSelf)
