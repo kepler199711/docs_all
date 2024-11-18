@@ -1,62 +1,105 @@
 ---
-articleID: 17479
+articleID: 19314
 ---
 
-import { getPlatformData } from '/snippets/utils-content-parser.js';
+import { getPlatformData } from "/snippets/utils-content-parser.js"
 
-
-export const enableAGCMethod={
-    "Android,RN,iOS": <a href="@enableAGC" target="_blank">enableAGC</a>,
-    "Flutter": <a href="https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/enableAGC.html" target="_blank">enableAGC</a>
+export const initMap = {
+  'Android': <a href='@init' target='_blank'>init</a>,
+  'iOS': <a href='@initWithLicense' target='_blank'>initWithLicense</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/init.html' target='_blank'>init</a>,
+}
+export const enableAGCMap = {
+  'Android': <a href='@enableAGC' target='_blank'>enableAGC</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/enableAGC.html' target='_blank'>enableAGC</a>,
 }
 
-# AGC
+# 音量增益（AGC）
 
+- - -
 
-The ZIM Audio SDK provides the automatic gain control (AGC) feature to flexibly adjust the volume of the microphone, improve sound quality and stability, and enhance user experience.
+ZIM Audio SDK 支持自动调整麦克风音量，以适应远近拾音并保持音量稳定。如需确保音量稳定性以改善录制音频的人声质量和用户体验时，可以开启此功能。
 
-<Warning title="注意">
-To use this feature, contact ZEGOCLOUD Technical Support to enable it. Pro or Enterprise users can enable it free of charge.
+<Warning title="Warning">
+
+如需使用本功能，请联系 ZEGO 技术支持开通，专业版和旗舰版用户可免费开通。
 </Warning>
 
-## Prerequisites
+## 前提条件
 
-Before you implement the `AGC` feature, make sure that the following conditions are met:
-- You have implemented [Integrate the ZIM Audio SDK](./Integrate%20the%20ZIM%20Audio%20SDK.mdx).
-- You have implemented [Implement online authentication](./Implement%20online%20authentication.mdx).
+在实现“音量增益”功能之前，请确保：
+- 已实现 [集成 SDK](./Integrate%20the%20ZIM%20Audio%20SDK.mdx)。
+- 已实现 [在线鉴权](./Implement%20online%20authentication.mdx)。
 
 
-## Enable the feature
+## 实现流程
 
-After the initialization, call the {getPlatformData(props, enableAGCMethod)} method to enable the feature.
+### 1 完成鉴权
+
+音量增益功能需要搭配鉴权文件 License 使用。请在调用 {getPlatformData(props,initMap)} 时传入有效的 License，否则会导致音量增益相关接口调用失败。
 
 :::if{props.platform=undefined}
+
 ```java
-// Enable the AGC feature.
-ZIMAudio.getInstance().enableAGC(true);
-```
-:::
-:::if{props.platform="iOS"}
-```objc
-// Enable the AGC feature.
-[[ZIMAudio sharedInstance] enableAGC:YES];
+// 携带鉴权文件 License 初始化
+ZIMAudio.getInstance().init(application, "xxx");
 ```
 :::
 :::if{props.platform="Flutter"}
+
 ```dart
-// Enable the AGC feature.
-ZIMAudio.getInstance().enableAGC(true);
+// 携带鉴权文件 License 初始化
+ZIMAudio.sharedInstance().init('xxx');
+```
+:::
+:::if{props.platform="iOS"}
+
+```objc
+// 携带鉴权文件 License 初始化
+[[ZIMAudio sharedInstance] initWithLicense:@"xxx"];
 ```
 :::
 :::if{props.platform="RN"}
 ```javascript
-// Enable the AGC feature.
-ZIMAudio.getInstance().enableAGC(true);
+// 携带鉴权文件 License 初始化
+ZIMAudio.sharedInstance().init('xxx');
 ```
 :::
 
-After the feature is enabled, you can start recording audio files. For more information, see [Send and receive audio messages](./Send%20and%20receive%20audio%20messages.mdx#4-record-an-audio-file).
+### 2 启用功能
 
-<Note title="说明">
-If the AGC feature is enabled after recording starts, this feature does not take effect for this recording and takes effect for subsequent recordings only.
+初始化完成后，调用 {getPlatformData(props,enableAGCMap)} 即可启用该功能。
+
+:::if{props.platform=undefined}
+
+```java
+// 启用 AGC 功能
+ZIMAudio.getInstance().enableAGC(true);
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+// 启用 AGC 功能
+ZIMAudio.getInstance().enableAGC(true);
+```
+:::
+:::if{props.platform="iOS"}
+
+```objc
+// 启用 AGC 功能
+[[ZIMAudio sharedInstance] enableAGC:YES];
+```
+:::
+:::if{props.platform="RN"}
+```javascript
+// 携带鉴权文件 License 初始化
+ZIMAudio.sharedInstance().init('xxx');
+```
+:::
+
+启用音量增益功能后，可开始 [录制音频文件](./Send%20and%20receive%20audio%20messages.mdx#4-录制音频文件)。
+
+<Note title="Note">
+
+如果在开始录制后才启用音量增益功能，则音量增益功能对当前录制无效，仅对下一次及之后的录制生效。
 </Note>
