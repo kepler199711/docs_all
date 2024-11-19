@@ -936,7 +936,7 @@ zim.leaveAllRoom(roomIDs)
 
 ### 销毁房间
 
-开发者可以在后台调用 ZIM 服务端接口进行 [销毁房间](/zh/zim-server/room/destroy-the-room)。房间被销毁后，用户通过 {getPlatformData(props,onRoomStateChangedMap)} 收到房间状态（ {getPlatformData(props,ZIMRoomStateMap)} ）从 {getPlatformData(props,CONNECTEDMap)} 转变为 {getPlatformData(props,DISCONNECTEDMap)} 的事件通知。根据 ZIM SDK 版本不同，回调中描述导致房间连接状态发生变更的事件（ {getPlatformData(props,ZIMRoomEventMap)} ）如下所示：
+开发者可以在后台调用 ZIM 服务端接口进行 [销毁房间](/zim-server/room/destroy-the-room)。房间被销毁后，用户通过 {getPlatformData(props,onRoomStateChangedMap)} 收到房间状态（ {getPlatformData(props,ZIMRoomStateMap)} ）从 {getPlatformData(props,CONNECTEDMap)} 转变为 {getPlatformData(props,DISCONNECTEDMap)} 的事件通知。根据 ZIM SDK 版本不同，回调中描述导致房间连接状态发生变更的事件（ {getPlatformData(props,ZIMRoomEventMap)} ）如下所示：
 - 当 ZIM SDK 版本小于 2.13.0 时，事件为 {getPlatformData(props,KICKED_OUTMap)} 。
 - 当 ZIM SDK 版本为 2.13.0 及之后版本时，事件为 {getPlatformData(props,ROOM_NOT_EXISTMap)} 。
 
