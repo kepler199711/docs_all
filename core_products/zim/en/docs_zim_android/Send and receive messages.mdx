@@ -88,9 +88,7 @@ If you want to change your authentication mode, please refer to the [Upgrade the
 
 ### Optional: Create a new project
 
-<details className="zg-primary">
-<summary>Create a new project</summary>
-
+<Accordion title="Create a new project" defaultOpen="false">
 1. Open Android Studio, select **File > New > Project**.
 
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/Android/ExpressSDK/Integration/android_new_project.png" /></Frame>
@@ -101,7 +99,7 @@ If you want to change your authentication mode, please refer to the [Upgrade the
 
 3. All other items in the panel can be left as their defaults, click **Next** and then click **Finish**.
 
-</details>
+</Accordion>
 
 ### Import the SDK
 
@@ -256,8 +254,7 @@ appConfig.appSign = "appSign";
 zim = ZIM.create(appConfig, application);
 ```
 
-<details className="zg-primary">
-<summary>The sample code to create a ZIM SDK singleton</summary>
+<Accordion title="The sample code to create a ZIM SDK singleton" defaultOpen="false">
 
 For most cases, you will only need to create the ZIM SDK instance once. We recommend you create a singleton and save it.
 
@@ -288,7 +285,7 @@ public void create(Application application) {
 }
 }
 ```
-</details>
+</Accordion>
 
 
 ### Set an event handler object

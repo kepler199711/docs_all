@@ -46,14 +46,14 @@ The SDK also supports token authentication. If you need to upgrade the authentic
 
 Skip this step if a project already exists.
 
-<details class="zg-primary">
-    <summary>Create a new project</summary>
+<Accordion title="Create a new project" defaultOpen="false">
 
 Click the "New" button, select the "3D" template, fill in the "Project Name", choose a "Location" to store the project, and click the "Create" button to create the project.
 
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/Unity3D/ZegoExpressEngine/QuickStart/int-create.png" /></Frame>
 
-</details>
+</Accordion>
+
 
 ### Import the SDK
 
@@ -63,9 +63,7 @@ Click the "New" button, select the "3D" template, fill in the "Project Name", ch
 
 2. Additional processing is required for different platforms.
 
-<details class="zg-primary">
-    <summary>Windows</summary>
-
+<Accordion title="Windows" defaultOpen="false">
 In a Unity project, there cannot be `.dll` files with the same name, otherwise the `Multiple plugins with the same name 'zim'` error will occur during Build. You need to delete the `x64 folder` or `x86 folder` under the "Plugins/Windows" folder according to the actual business situation.
 
 
@@ -75,16 +73,14 @@ If you do not plan to run the sample source code on the Windows platform, you ca
 </Note>   
 
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/win_dll.jpeg" /></Frame>     
-</details>
 
-<details class="zg-primary">
-    <summary>macOS</summary>
+</Accordion>
 
+<Accordion title="macOS" defaultOpen="false">
 If Unity is version 2019.3 or earlier, because it does not support macOS dylib as Plugins, please rename "libZIM.dylib" to "libZIM.bundle" to import the SDK correctly. In addition, macOS should be version 10.5 or above.
-</details>
+</Accordion>
 
-<details class="zg-primary">
-    <summary>iOS</summary>
+<Accordion title="iOS" defaultOpen="false">
 
 As shown in the figure below, there are three folders under the path "ZIM/Plugins/IOS/XCFramework":
 
@@ -98,15 +94,15 @@ The explanations are as follows:
 | ios-arm64_x86_64-simulator | Simulator architecture, used for simulator debugging. | If you need to run on an iOS simulator, please keep this folder and delete other folders. (i.e., when the project is configured with iOS Target SDK specified as Simulator SDK.) |
 | ios-arm64_x86_64-maccatalyst |  iOS MacCatalyst architecture. | Currently, Unity does not support this architecture, **please delete directly**. |
 
-</details>
-    
-<details class="zg-primary">
-    <summary>Android</summary>
+</Accordion>
 
+<Accordion title="Android" defaultOpen="false">
 When building an Android app, it may also prompt that there are multiple Windows DLL files. Please use the same method as above to handle it on Windows.
 
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Unity/win_dll.jpeg" /></Frame>     
-</details>
+
+</Accordion>
+
 
 ## Implementation steps
 
@@ -146,9 +142,7 @@ zim = ZIM.Create(config);
 #### 3. Register callbacks for receiving notifications
 
 Before calling the login interface, you must register the required callbacks.
-
-<details class="zg-primary">   
-    <summary>Registered through lambda expression.</summary>  
+<Accordion title="Registered through lambda expression." defaultOpen="false">
 
 ```c#
 void SetZIMEventHandler()
@@ -292,7 +286,7 @@ void SetZIMEventHandler()
                                                         string callID) => {};
     }
 ```
-</details>  
+</Accordion>
 
 Refer to the detailed API introduction for more information: [OnConnectionStateChanged](@OnConnectionStateChanged), [OnRoomStateChanged](@OnRoomStateChanged), [OnTokenWillExpire](@OnTokenWillExpire), [OnReceivePeerMessage](@OnReceivePeerMessage, [OnReceiveRoomMessage](@OnReceiveRoomMessage), [OnReceiveGroupMessage](@OnReceiveGroupMessage), [OnMessageReceiptChanged](@OnMessageReceiptChanged), [OnMessageRevokeReceived](@OnMessageRevokeReceived), [OnMessageSentStatusChanged](@OnMessageSentStatusChanged), [OnConversationChanged](@OnConversationChanged), [OnConversationTotalUnreadMessageCountUpdated](@OnConversationTotalUnreadMessageCountUpdated), [OnConversationMessageReceiptChanged](@OnConversationMessageReceiptChanged), [OnRoomMemberJoined](@OnRoomMemberJoined), [OnRoomMemberLeft](@OnRoomMemberLeft), [OnRoomAttributesUpdated](@OnRoomAttributesUpdated), [OnRoomAttributesBatchUpdated](@OnRoomAttributesBatchUpdated), [OnRoomMemberAttributesUpdated](@OnRoomMemberAttributesUpdated), [OnGroupStateChanged](@OnGroupStateChanged), [OnGroupNameUpdated](@OnGroupNameUpdated), [OnGroupAvatarUrlUpdated](@OnGroupAvatarUrlUpdated), [OnGroupNoticeUpdated](@OnGroupNoticeUpdated), [OnGroupAttributesUpdated](@OnGroupAttributesUpdated), [OnGroupMemberStateChanged](@OnGroupMemberStateChanged), [OnGroupMemberInfoUpdated](@OnGroupMemberInfoUpdated), [OnCallInvitationReceived](@OnCallInvitationReceived), [OnCallInvitationCancelled](@OnCallInvitationCancelled), [OnCallInvitationAccepted](@OnCallInvitationAccepted), [OnCallInvitationRejected](@OnCallInvitationRejected), [OnCallInvitationTimeout](@OnCallInvitationTimeout), [OnCallInviteesAnsweredTimeout](@OnCallInviteesAnsweredTimeout).
 
