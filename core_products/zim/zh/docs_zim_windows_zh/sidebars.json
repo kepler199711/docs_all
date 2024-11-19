@@ -305,6 +305,11 @@
           ]
         },
         {
+          "type": "doc",
+          "label": "缓存管理",
+          "id": "guides/cache-management"
+        },
+        {
           "type": "category",
           "label": "内容审核",
           "items": [
