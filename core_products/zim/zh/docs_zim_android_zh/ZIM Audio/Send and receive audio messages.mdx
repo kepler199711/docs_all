@@ -99,7 +99,7 @@ ZIMAudio.getInstance().init(application, license);
         public void onRecorderProgress(int currentDuration) {}
         ```
 
-    - 在录音开始时或在录音过程中，如果因异常导致录音失败，ZIM Audio SDK 将会通过 [onRecorderFailed](@onRecorderFailed) 进行通知，消息发送客户端可以监听该回调并参考 [ZIM Audio 错误码文档](!IM-ZIM_Audio_ErrorCodes) 处理失败事件。
+    - 在录音开始时或在录音过程中，如果因异常导致录音失败，ZIM Audio SDK 将会通过 [onRecorderFailed](@onRecorderFailed) 进行通知，消息发送客户端可以监听该回调并参考 [ZIM Audio 错误码文档](../SDK%20Error%20Codes/ZIM%20Audio.mdx) 处理失败事件。
 
         ```java
         public void onRecorderFailed(ZIMAudioErrorCode errorCode) {}
@@ -109,7 +109,7 @@ ZIMAudio.getInstance().init(application, license);
 
 1. 如需结束录制音频，请调用 [completeRecord](@completeRecord) 接口。
 
-    <Note title="Note">
+    <Note title="说明">
 
     - 请在调用 [completeRecord](@completeRecord) 接口之前，您已监听到 [onRecorderStarted](@onRecorderStarted) 回调，否则会导致本次录制取消，且收到录制时间过短的报错。
     - 如果录制没有被 <a href="#42-完成录制-">完成</a> 或 <a href="#43可选取消录制">取消</a>，当录制时长达到时间上限时，ZIM Audio SDK 将会自动完成录制，并触发 [onRecorderCompleted](@onRecorderCompleted) 回调。
@@ -150,7 +150,7 @@ boolean isRecording = ZIMAudio.getInstance().isRecording();
 
 ### 5 发送语音消息
 
-<Warning title="Warning">
+<Warning title="注意">
 
 实现此步骤前，请确认用户已 [登录 ZIM](../Send%20and%20receive%20messages.mdx#4-登录-zim)。
 </Warning>
@@ -193,7 +193,7 @@ ZIMAudio.getInstance().setEventHandler(new ZIMAudioEventHandler() {
 
 ### 6 接收语音消息
 
-<Warning title="Warning">
+<Warning title="注意">
 
 实现此步骤前，请确认用户已 [登录 ZIM](../Send%20and%20receive%20messages.mdx#4-登录-zim)。
 </Warning>
@@ -237,7 +237,7 @@ ZIMAudio.getInstance().setEventHandler(new ZIMAudioEventHandler() {
     }  
 ```
 
-如需了解下载进度，请参考收发消息文档的 [富媒体文件消息的下载进度回调](!IM-sendMessages#5_2_1)。
+如需了解下载进度，请参考收发消息文档的 [富媒体文件消息的下载进度回调](/zh/zim-android/guides/messaging/send-and-receive-messages#富媒体文件消息的下载进度回调)。
 
 ### 7 播放音频文件
 
@@ -273,7 +273,7 @@ ZIMAudio.getInstance().setEventHandler(new ZIMAudioEventHandler() {
         public void onPlayerProgress(int currentDuration) {}
         ```
 
-    - 在播放开始时或在播放过程中，如果因异常导致播放失败，ZIM Audio SDK 将会通过 [onPlayerFailed](@onPlayerFailed) 进行通知，消息接收客户端可以监听该回调并参考 [ZIM Audio 错误码文档](!IM-ZIM_Audio_ErrorCodes) 处理失败事件。
+    - 在播放开始时或在播放过程中，如果因异常导致播放失败，ZIM Audio SDK 将会通过 [onPlayerFailed](@onPlayerFailed) 进行通知，消息接收客户端可以监听该回调并参考 [ZIM Audio 错误码文档](../SDK%20Error%20Codes/ZIM%20Audio.mdx) 处理失败事件。
 
         ```java
         public void onPlayerFailed(ZIMAudioErrorCode errorCode) {}
@@ -293,7 +293,7 @@ ZIMAudio.getInstance().setEventHandler(new ZIMAudioEventHandler() {
 
 3. （可选）如需在播放过程中切换音频输出设备(扬声器或听筒)，请调用 [setAudioRouteType](@setAudioRouteType) 。
 
-    <Warning title="Warning">
+    <Warning title="注意">
 
     若用户已连接耳机，该接口调用将不会生效，音频输出仍将通过耳机进行。
     </Warning>

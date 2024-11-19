@@ -87,7 +87,7 @@ ZIMAudioEventHandler.onError = (ZIMAudioError errorInfo){
 
 1. 如需结束录制音频，请调用 [completeRecord](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/completeRecord.html) 接口。
 
-    <Note title="Note">
+    <Note title="说明">
 
     - 请在调用 [completeRecord](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/completeRecord.html) 接口之前，您已监听到 [onRecorderStarted](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudioEventHandler/onRecorderStarted.html) 回调，否则会导致本次录制取消，且收到录制时间过短的报错。
     - 如果录制没有被 <a href="#32-完成录制-">完成</a> 或 <a href="#33可选取消录制">取消</a>，当录制时长达到时间上限时，ZIM Audio SDK 将会自动完成录制，并触发 [onRecorderCompleted](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudioEventHandler/onRecorderCompleted.html) 回调。
@@ -128,7 +128,7 @@ bool isRecording = await ZIMAudio.getInstance().isRecording();
 
 ### 4 发送语音消息
 
-<Warning title="Warning">
+<Warning title="注意">
 
 实现此步骤前，请确认用户已 [登录 ZIM](../Send%20and%20receive%20messages.mdx#4-登录-zim)。
 </Warning>
@@ -170,7 +170,7 @@ ZIMAudioEventHandler.onRecorderCompleted = (int totalDuration) async{
 ### 5 接收语音消息
 
 
-<Warning title="Warning">
+<Warning title="注意">
 
 实现此步骤前，请确认用户已 [登录 ZIM](../Send%20and%20receive%20messages.mdx#4-登录-zim)。
 </Warning>
@@ -248,7 +248,7 @@ ZIMEventHandler.onReceivePeerMessage = (zim, messageList, fromUserID) async{
 
 3. （可选）如需在播放过程中切换音频输出设备(扬声器或听筒)，请调用 [setAudioRouteType](https://pub.dev/documentation/zego_zim_audio/latest/zego_zim_audio/ZIMAudio/setAudioRouteType.html) 。
 
-    <Warning title="Warning">
+    <Warning title="注意">
 
     若用户已连接耳机，该接口调用将不会生效，音频输出仍将通过耳机进行。
     </Warning>
