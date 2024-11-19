@@ -2,7 +2,7 @@
 
 
 <Warning title="Warning">
-The newly released **In-app Chat 2.0.0** has been upgraded considerably (for detailed changes, see [Release notes](./../Client%20SDKs/Release%20notes.mdx)). If the version of the SDK you are using is **earlier than 2.0.0**, for its error codes, see [Error codes for In-app Chat 1.x.x](https://docs.zegocloud.com/article/14297).
+The newly released **In-app Chat 2.0.0** has been upgraded considerably (for detailed changes, see [Release notes](./../Client%20SDKs/ZIM%20release%20notes.mdx)). If the version of the SDK you are using is **earlier than 2.0.0**, for its error codes, see [Error codes for In-app Chat 1.x.x](https://docs.zegocloud.com/article/14297).
 For a better development experience, we recommend you use the latest version of SDK.
 </Warning>
 
@@ -31,7 +31,7 @@ If the `errorCode` field exists in the result after the method is called, which 
 ```
 :::
 :::if{props.platform="Flutter"}
-If the `errorCode` field exists in the result after the method is called, which indicates that an error occurs. And the code will be like this: 
+If the `errorInfo` field exists in the result after the method is called, which indicates that an error occurs. And the code will be like this: 
 ```dart
 ZIMEventHandler.onError = (errorInfo) {
     log(errorInfo.code.toString()); // Error code
