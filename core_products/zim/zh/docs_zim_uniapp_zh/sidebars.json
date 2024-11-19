@@ -50,6 +50,17 @@
         },
         {
           "type": "category",
+          "label": "升级指南",
+          "items": [
+            {
+              "type": "doc",
+              "label": "ZIM",
+              "id": "client-sdks/zim-upgrade-guide"
+            }
+          ]
+        },
+        {
+          "type": "category",
           "label": "错误码",
           "items": [
             {
@@ -121,6 +132,11 @@
               "type": "doc",
               "label": "好友管理",
               "id": "guides/users/friend-management"
+            },
+            {
+              "type": "doc",
+              "label": "在线状态订阅",
+              "id": "guides/users/online-status-subscription"
             }
           ]
         },
@@ -290,6 +306,11 @@
               "type": "doc",
               "label": "保存会话草稿",
               "id": "guides/conversation/set-conversation-draft"
+            },
+            {
+              "type": "doc",
+              "label": "标记会话",
+              "id": "guides/conversation/mark-conversations"
             }
           ]
         },

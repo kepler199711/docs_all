@@ -127,6 +127,11 @@
               "type": "doc",
               "label": "好友管理",
               "id": "guides/users/friend-management"
+            },
+            {
+              "type": "doc",
+              "label": "在线状态订阅",
+              "id": "guides/users/online-status-subscription"
             }
           ]
         },
