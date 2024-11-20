@@ -346,7 +346,7 @@
         {
           "type": "link",
           "label": "服务端 API",
-          "href": "https://www.zegocloud.com/docs/zim-server/overview"
+          "href": "https://doc-zh.zego.im/zim-server/overview"
         }
       ]
     },
