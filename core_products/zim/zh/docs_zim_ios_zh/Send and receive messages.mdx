@@ -129,7 +129,10 @@ articleID: 11567
 
 例如，客户端 A、B 分别调用 [createWithAppConfig](@createWithAppConfig) 接口，传入在 [1 前提条件](#1-前提条件) 中获取到的 AppID、AppSign，创建了 A、B 的实例：
 
-@@@ZIM_AppSign@@@
+<Warning title="注意">
+
+`2.3.0 及以上`版本的 SDK，开始支持 “AppSign 鉴权”，同时仍支持 “Token 鉴权”，若您需要升级鉴权方式，可参考 [ZIM 如何从 AppSign 鉴权升级为 Token 鉴权](http://doc-zh.zego.im/faq/token_upgrade_zim)。
+</Warning>
 
 ```objc
 // 创建 ZIM 对象，传入 appID、appSign
@@ -142,11 +145,6 @@ self.zim = [ZIM createWithAppConfig: appConfig];
 ```
 
 <Accordion title="ZIM 创建单例的示例" defaultOpen="false">
-<Tabs>
-<Tab title="2.3.0 及以后版本">
-2.3.0 文案及代码
-</Tab>
-<Tab title=" 2.3.0 以前版本">
 由于大多数开发者，在整个流程中，只需要将 ZIM 实例化一次，因此 ZEGO 建议您将 ZIM 单例化并保存。
 
 创建一个 ZGZIMManager 类，在该类中声明并实现了一个 “shared” 类方法，该方法将会在首次调用时创建并返回一个 ZGZIMManager 的对象，在该对象中实例化 ZIM 并保存，此后在项目的任意位置导入 ZIMManager.h 头文件，调用 “[ZGZIMManager shared].zim” 将会返回 zim 对象。
@@ -182,11 +180,8 @@ static ZGZIMManager *_sharedManager = nil;
     }
     return _sharedManager;
 }
-
 @end
 ```
-</Tab>
-</Tabs>
 </Accordion>
 
 
