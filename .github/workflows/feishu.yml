@@ -58,7 +58,20 @@ jobs:
     name: Webhook
     runs-on: ubuntu-latest
     steps:
-      - uses: junka/feishu-bot-webhook-action@main
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+
+      - name: Send to UIKit webhook
+        if: contains(steps.changed-files.outputs.all_changed_files, 'uikit/')
+        uses: junka/feishu-bot-webhook-action@main
         with:
           webhook: ${{ secrets.FEISHU_BOT_WEBHOOK }}
           signkey: ${{ secrets.FEISHU_BOT_SIGNKEY }}
+
+      - name: Send to ZIM webhook
+        if: contains(steps.changed-files.outputs.all_changed_files, 'core_products/zim/')
+        uses: junka/feishu-bot-webhook-action@main
+        with:
+          webhook: ${{ secrets.FEISHU_BOT_WEBHOOK_ZIM }}
+          signkey: ${{ secrets.FEISHU_BOT_SIGNKEY_ZIM }}
