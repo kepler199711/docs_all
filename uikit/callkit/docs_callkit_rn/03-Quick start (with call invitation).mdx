@@ -43,16 +43,9 @@ npm install @zegocloud/zego-uikit-prebuilt-call-rn
 ```
 </CodeGroup>
 
-<Warning title="Warning">
-
-- If you are using Expo, please note that we only support Expo bare workflow. (We have only done basic testing on expo. If possible, it is recommended to integrate call kit with a standard react native project.)
-
-- call invitation feature is not compatible with "expo-notifications" and cannot be used together. If you are using "expo-notifications", it is recommended to remove this dependency or migrate to "@react-native-firebase/messaging".
-
-</Warning>
-
-
-
+<Note title="Note">
+Our SDK not support the Expo framework. Some features of the SDK require to modify the native layer, which the Expo framework does not support. It is recommended to integrate the SDK with a standard react native project.
+</Note>
 
 2. Add other dependencies.
 
