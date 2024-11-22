@@ -1034,27 +1034,27 @@
       }
     },
     {
-      "id": "safety_zh",
-      "path": "https://doc-zh.zego.im/article/16142",
-      "routeBasePath": "",
+      "id": "policies_and_agreements_zh",
+      "path": "general/zh/docs_policies_and_agreements_zh",
+      "routeBasePath": "policies-and-agreements",
       "locale": "zh",
       "navigationInfo": {
         "group": {
-          "id": "safety_zh",
-          "name": "安全合规",
+          "id": "policies_and_agreements_zh",
+          "name": "政策与协议",
           "tag": ""
         },
         "category": [
           "通用文档",
           "ZEGO 平台"
         ],
-        "platform": "Android: Java"
+        "platform": "All"
       }
     },
     {
       "id": "glossary_zh",
-      "path": "https://doc-zh.zego.im/article/5390",
-      "routeBasePath": "",
+      "path": "general/zh/docs_glossary_zh",
+      "routeBasePath": "glossary",
       "locale": "zh",
       "navigationInfo": {
         "group": {
@@ -1066,7 +1066,7 @@
           "通用文档",
           "ZEGO 平台"
         ],
-        "platform": "Android: Java"
+        "platform": "All"
       }
     },
 
