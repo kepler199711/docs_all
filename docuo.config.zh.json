@@ -220,7 +220,7 @@
           "产品",
           "互动核心产品"
         ],
-        "platform": "RN: JS"
+        "platform": "React Native: JS"
       }
     },
     {
@@ -238,7 +238,7 @@
           "产品",
           "互动核心产品"
         ],
-        "platform": "Unity 3D: C#"
+        "platform": "Unity3D: C#"
       }
     },
     {
