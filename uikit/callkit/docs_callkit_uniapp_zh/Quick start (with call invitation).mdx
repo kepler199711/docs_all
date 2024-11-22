@@ -1,0 +1,202 @@
+import UIKitCreateAccountAndServicesZh from "/snippets/uikit/UIKitCreateAccountAndServicesZh.md";
+import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.mdx";
+
+# 快速开始
+
+这份文档将指导您如何在 uni-app 项目集成 `音视频通话 UIKit` uni-app SDK 并快速开始包含呼叫邀请的音视频通话。
+## 准备环境
+
+在开始集成音视频 UIKit 前，请确保开发环境满足以下要求：
+
+<EnviromentRequiremenZh />
+
+## 前提条件
+
+<UIKitCreateAccountAndServicesZh />
+
+## 集成 SDK
+
+<Steps>
+<Step title="创建项目">
+若您已有 uni-app 项目，则跳过此步骤。若尚无 uni-app 项目，请参考 uni-app 开发者文档 [创建 uni-app](https://uniapp.dcloud.net.cn/quickstart-hx.html) 快速创建项目。
+</Step>
+
+<Step title="导入 ZEGO 即构实时音视频 SDK">
+在插件市场购买 [ZEGO 即构实时音视频 SDK](https://ext.dcloud.net.cn/plugin?id=3617)和[Zego ZIM 即时通讯 SDK](https://ext.dcloud.net.cn/plugin?id=8601)。购买时填入的 AppID 必须和后面需要运行的 AppID 一致。
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/fc005e6051.png" alt="free_buy_for_cloud_build.png"/>
+</Frame>
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/c30b1f1c5a.png" alt="free_buy_for_cloud_build.png"/>
+</Frame>
+
+单击项目目录的 “manifest.json” 文件后，单击 “App 原生插件配置 > 云端插件 [选择云端插件]”。
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/6ef174060a.png" alt="choose_native_plugins.png" />
+</Frame>
+
+在“云端插件选择”弹窗勾选上面购买的 ZEGO SDK 并确认。
+
+</Step>
+
+<Step title="创建自定义基座">
+若您已创建好了基座，则跳过该步骤。若尚未创建，则创建自定义基座，填入 AppID。
+<Note>
+
+uni-app 官方自定义调试基座使用说明请参考 [什么是自定义调试基座及使用说明](https://uniapp.dcloud.net.cn/tutorial/run/run-app.html#customplayground)。
+</Note>
+
+<Frame width="400px">
+    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/47d08e1b29.png" alt="run_with_custom.png"/>
+</Frame>
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/02f56f8dad.png" alt="config_custom.png"/>
+</Frame>
+
+<Note title="说明">
+由于 iOS 项目需要 Apple 开发者证书。为方便测试，您可以暂时只勾选 Android 端。
+</Note>
+
+</Step>
+
+<Step title="导入 ZEGOUIKitPrebuiltCall">
+在插件市场下载 [ZEGOUIKitPrebuiltCall](https://ext.dcloud.net.cn/plugin?id=19688) 插件并导入 HBuilderX。
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/8fbac5726a.png" alt="download_and_import.png"/>
+</Frame>
+
+由于 zego-PrebuiltCall 中包含了 zego-UIKitCore、zego-ExpressUniAppzego-ExpressUniApp-JS以及zego-ZIMUniplugin-JS，因此，导入完成后，您的 uni_modules 会包含以下插件。
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/8f406c32f6.png" alt=""/>
+</Frame>
+</Step>
+
+<Step title="在业务页面中导入插件">
+
+在 Vue 的 script 中使用导入 ZegoSendCallInvitationButton 组件与 ZegoUIKitPrebuiltCallService 预设服务，生成一份呼叫邀请预设配置，在 template 中使用 ZegoSendCallInvitationButton 组件，并调用ZegoUIKitPrebuiltCallService.init将配置传入。
+
+<Note title="说明">
+
+除了预设配置，也可以自定义其他的配置。
+</Note>
+
+```vue title="pages/invite/index.vue" 
+<template>
+    <!-- 视频通话 -->
+    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VideoCall" :inviteeIDs="inviteeIDs" @pressed="onPressed" />
+    <!-- 语音通话 -->
+    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VoiceCall" :inviteeIDs="inviteeIDs" @pressed="onPressed" />
+</template>
+
+<script>
+import ZegoSendCallInvitationButton from "@/uni_modules/zego-PrebuiltCall/components/invitation/ZegoSendCallInvitationButton.vue"
+import { ZegoInvitationType } from "@/uni_modules/zego-UIKitCore";
+import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
+
+const appID = '您在 zego 控制台获取的 appID';
+const appSign = '您在 zego 控制台获取的 appSign';
+const userID = '您的 userID';
+const userName = '您的昵称';
+const inviteeIDs = ref(['需要邀请的用户ID'])
+
+onMounted(() => {
+    ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, config);
+})
+
+const onPressed = (code, message) => {
+    // 邀请回调
+}
+</script>
+```
+
+</Step>
+<Step title="配置入口与页面路由">
+根据您的业务场景为通话页配置入口。
+```vue title="pages/index/index.vue" {8-11}
+<template>
+    <view v-for="item in list" :key="item.name" @click="navigateTo(item.url)">
+        {{ item.name }}
+    </view>
+</template>
+<script lang="ts" setup>
+const list = [
+    {
+        name: "呼叫邀请",
+        url: "/pages/invite/index",
+    },
+]
+const navigateTo = (url: string) => {
+    uni.navigateTo({
+        url
+    })
+}
+</script>
+```
+
+打开 pages.json，添加 pages 配置
+```json title="pages.json"
+{
+	"pages": [
+        // 首页
+		{
+		    "path": "pages/index/index",
+		    "style": {
+		        "navigationBarTitleText": "首页"
+		    }
+		}
+        // 新增呼叫邀请页
+		{
+		    "path": "pages/invite/index",
+		    "style": {
+		        "navigationBarTitleText": "呼叫邀请"
+		    }
+		}
+	],
+}
+```
+#### ZegoSendCallInvitationButton 属性
+
+| 属性        | 类型    | 必需 | 描述                                                      |
+| :---------- | :------ | :--- | :-------------------------------------------------------- |
+| inviteeIDs  | Array   | 是   | 被叫用户ID。               |
+| type        | number  | 是   | 呼叫类型。0:语音呼叫；1:视频呼叫  |
+| callName    | String  | 否   | 呼叫等待页显示的被叫用户名称。                          |
+| callID      | String  | 否   | 指定邀请ID。                          |
+| timeout     | Number  | 否   | 超时时长。默认为60秒。超时后会自动取消本次呼叫。          |
+| customData  | String  | 否   | 您需要传递给被叫者的自定义参数。                          |
+| showWaitingPageWhenGroupCall  | Boolean  | 否 | 是否显示呼叫等待页。当只有一个被叫用户时，默认为true。 |
+| text        | String  | 否   | 发起呼叫邀请按钮的文本。                                  |
+| icon        | String  | 否   | 自定义发起呼叫按钮图标                                  |
+| iconWidth   | String  | 否   | 自定义发起呼叫按钮图标宽度                                  |
+| iconHeight  | String  | 否   | 自定义发起呼叫按钮图标高度                                  |
+| onWillPressed | PromiseFunction | 否  | 点击发起呼叫邀请按钮前的自定义事件。                  |
+| onPressed   | Functon | 否   | 点击发起呼叫邀请按钮的回调。                              |
+</Step>
+</Steps>
+
+## 运行和测试
+
+至此，您已经完成了所有步骤！
+
+只需在 HBuilderX 中点击**运行到手机或模拟器**，选择需要运行的端侧与基座，即可在设备上运行和测试您的应用程序。
+
+## 相关指南
+
+<CardGroup cols={2}>
+    <Card title="呼叫邀请配置" href="./Calling%20config/Call%20invitation%20config.mdx">
+    </Card>
+</CardGroup>
+
+## 资源
+
+<CardGroup cols={2}>
+    <Card title="示例代码" href="https://github.com/ZEGOCLOUD/zego_uikit_prebuilt_call_uniapp" target="_blank">
+    获取完整示例代码。
+    </Card>
+</CardGroup>
