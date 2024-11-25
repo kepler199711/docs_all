@@ -225,3 +225,13 @@ public static ZegoAudioOutputDevice getAudioRouteType() ;
 ```java
 public static void resetAllBeautiesToDefault() ;
 ```
+
+### sendInRoomCommand
+
+用于在房间内发送自定义命令的接口。最大长度为1024字节。
+房间内的其他用户可以通过调用CallEvents.addInRoomCommandListener(ZegoInRoomCommandListener)来监听这个命令。当toUserList为[null]时，SDK会将自定义命令发送给房间内的所有用户。
+
+函数原型：
+```java title="函数原型"
+void sendInRoomCommand(String command, ArrayList<String> toUserList, ZegoSendInRoomCommandCallback callback) ;
+```
