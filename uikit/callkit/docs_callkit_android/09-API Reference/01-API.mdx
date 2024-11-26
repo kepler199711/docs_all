@@ -200,8 +200,10 @@ public static void resetAllBeautiesToDefault() ;
 
 ### sendInRoomCommand
 
-interface to send custom command in room.Max Length is 1024 bytes
-Other users in the room can listen to this by CallEvents.addInRoomCommandListener(ZegoInRoomCommandListener).When 'toUserList' is [null], the SDK will send custom command to all users in the room
+After the user joins the room, you can call this interface to send custom commands within the room. The maximum length of the command is 1024 bytes.  
+Other users in the room can listen and receive this command by calling `onInRoomCommandReceived`. For more details, please refer to the [onInRoomCommandReceived](./Event.mdx#oninroomcommandreceived) section in the Event documentation.  
+When `toUserList` is `[null]`, the SDK will send the custom command to all users in the room.
+
 ```java title="function prototype"
 void sendInRoomCommand(String command, ArrayList<String> toUserList, ZegoSendInRoomCommandCallback callback) ;
 ```

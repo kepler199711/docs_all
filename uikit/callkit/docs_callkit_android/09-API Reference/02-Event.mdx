@@ -1,26 +1,5 @@
 # Event
 
-- [CallEvents](#callevents)
-    - [IExpressEngineEventHandler](#iexpressengineeventhandler)
-    - [onBackPressed](#onbackpressed)
-    - [onOnlySelfInRoom](#ononlyselfinroom)
-    - [onCallEnd](#oncallend)
-    - [onAudioOutputDeviceChanged](#onaudiooutputdevicechanged)
-    - [onClick](#onclick)
-    - [onInRoomCommandReceived](#onInRoomCommandReceived)
-- [InvitationEvents](#invitationevents)
-    - [onIncomingCallDeclineButtonPressed](#onincomingcalldeclinebuttonpressed)
-    - [onIncomingCallAcceptButtonPressed](#onincomingcallacceptbuttonpressed)
-    - [onOutgoingCallCancelButtonPressed](#onoutgoingcallcancelbuttonpressed)
-    - [onIncomingCallReceived](#onincomingcallreceived)
-    - [onIncomingCallCanceled](#onincomingcallcanceled)
-    - [onIncomingCallTimeout](#onincomingcalltimeout)
-    - [onOutgoingCallAccepted](#onoutgoingcallaccepted)
-    - [onOutgoingCallRejectedCauseBusy](#onoutgoingcallrejectedcausebusy)
-    - [onOutgoingCallDeclined](#onoutgoingcalldeclined)
-    - [onOutgoingCallTimeout](#onoutgoingcalltimeout)
-- [onError](#onerror)
-
 ## CallEvents
 
 ### IExpressEngineEventHandler
@@ -135,7 +114,8 @@ ZegoUIKitPrebuiltCallService.events.callEvents.setButtonClickListener(new ZegoMe
 </CodeGroup>
 
 ### onInRoomCommandReceived
-Listen for Command messages in the room.
+
+This callback is triggered when a user receives a custom command sent by another user in the room.
 
 <CodeGroup>
 ```java title="function prototype"

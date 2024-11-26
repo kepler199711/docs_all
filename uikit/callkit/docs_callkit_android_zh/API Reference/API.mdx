@@ -4,11 +4,11 @@
 ## ZegoUIKitPrebuiltCallFragment
 
 您可以将此 Fragment 添加到项目的任何 Activity 中，以集成通话功能。
-如果您需要 `通话邀请` 功能，请使用 `ZegoUIKitPrebuiltCallService`。
+如果您需要 `通话邀请 `         功能，请使用 `ZegoUIKitPrebuiltCallService`。
 
 函数原型：
 ```java
-/// 您可以在 [ZEGO 管理控制台](https://console.zego.im) 创建项目并获取appID。 
+/// 您可以在 [ZEGO 管理控制台](https://console.zego.im) 创建项目并获取appID。 sendInRoomCommand
 final long appID;
   
 /// 您可以在 [ZEGO 管理控制台](https://console.zego.im) 创建项目并获取 appSign。 
@@ -189,8 +189,6 @@ public static boolean isMicrophoneOn();
 public static boolean isCameraOn() ;
 ```
 
-
-
 ### setAudioOutputToSpeaker
 
 设置音频输出设备为扬声器。   
@@ -215,8 +213,6 @@ public static void setAudioOutputToSpeaker(boolean outputToSpeaker) ;
 public static ZegoAudioOutputDevice getAudioRouteType() ;
 ```
 
-
-
 ### resetAllBeautiesToDefault
 
 重置所有的美颜效果和选中状态,在下次进入通话页面生效。
@@ -228,8 +224,9 @@ public static void resetAllBeautiesToDefault() ;
 
 ### sendInRoomCommand
 
-用于在房间内发送自定义命令的接口。最大长度为1024字节。
-房间内的其他用户可以通过调用CallEvents.addInRoomCommandListener(ZegoInRoomCommandListener)来监听这个命令。当toUserList为[null]时，SDK会将自定义命令发送给房间内的所有用户。
+当用户加入房间后，可调用此接口在房间内发送自定义信令，信令最大长度为 1024 字节。  
+房间内其他用户可以通过调用 `onInRoomCommandReceived` 来监听接收这个信令，详情请参考 Event 文档的 [onInRoomCommandReceived](./Event.mdx#oninroomcommandreceived)。  
+当 `toUserList`为 `[null]` 时，SDK 会将自定义信令发送给房间内的所有用户。
 
 函数原型：
 ```java title="函数原型"
