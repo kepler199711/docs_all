@@ -8,7 +8,8 @@ on:
       - synchronize
       - reopened
       - closed
-      - review_requested
+      # 移除 review_requested 事件，因为当一个 PR 请求多个 reviewer 时
+      # 每个 reviewer 都会触发一次 review_requested 事件
       - converted_to_draft
       - ready_for_review
       - review_request_removed
@@ -53,6 +54,9 @@ jobs:
               echo "export reviewer='${{ github.event.review.user.login }}'"
             fi
           } > pr_info.txt
+          
+          # 打印文件内容
+          cat pr_info.txt
 
       - name: Get changed files
         if: github.event.pull_request
