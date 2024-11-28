@@ -29,7 +29,7 @@ Please [Check if the NavigatorKey and useSystemCallingUI are correctly configure
 
 The problem usually occurs because the "auto login" related logic in your app does not call `ZegoUIKitPrebuiltCallInvitationService().init` after the user successfully "auto login", resulting in a failure to log in to our sdk. Please refer to [Check if the init logic is handled correctly.](#check-if-the-init-logic-is-handled-correctly)
 
-### 4 No sound during call
+### 4 No ringtone sound during invitation
 
 
 If the call only vibrates without sound, please check the following:
@@ -41,7 +41,17 @@ If the call only vibrates without sound, please check the following:
 
 If all of the above configurations are correct, the issue should be resolved.
 
-### 5 Call invitations limited to specific screens
+
+### 5 The invitation notification message-box did not pop up in background mode(only Android)
+
+- Check if `SystemChannels.lifecycle.setMessageHandler` is used
+  
+  Due to the fact that `SystemChannels.lifecycle.setMessageHandler` can only be listened to once in the entire app.
+  
+  if you also want to listen to this event, please use `ZegoUIKit().adapterService().registerMessageHandler(youHandler)` to handle, Of course, remember that when the page is disposed, you need to `ZegoUIKit().adapterService().unregisterMessageHandler(youHandler)`.
+
+
+### 6 Call invitations limited to specific screens
 
 
 The issue is likely caused by calling the `ZegoUIKitPrebuiltCallInvitationService().init` method only on a specific screen, which prevents the call invitation notification from being received on other screens.
@@ -62,24 +72,24 @@ Offline call issues can be complex and tricky, particularly on Android devices. 
 
 
 
-### 6 I can receive the call invitation, but after clicking accept, it jumps to the app without entering the calling page.
+### 1 I can receive the call invitation, but after clicking accept, it jumps to the app without entering the calling page.
 
 
 1. Please [Check if the NavigatorKey and useSystemCallingUI are correctly configured.](#check-if-the-navigatorkey-and-usesystemcallingui-are-correctly-configured)
 2. Please [Check if the init logic is handled correctly.](#check-if-the-init-logic-is-handled-correctly)
 
-### 7 I can receive call invitations, but only get notifications without accept and decline buttons on the invitation dialog.
+### 2 I can receive call invitations, but only get notifications without accept and decline buttons on the invitation dialog.
 
 
 Please [Check if the ResourceID configuration is correct.](#check-if-the-resourceid-configuration-is-correct)
 
-### 8 I can receive the call invitation, but there is only ringing without an invitation dialog.
+### 3 I can receive the call invitation, but there is only ringing without an invitation dialog.
 
 
 1. Please [Check if the NavigatorKey and useSystemCallingUI are correctly configured.](#check-if-the-navigatorkey-and-usesystemcallingui-are-correctly-configured)
 2. Please [Check the configuration of AndroidManifest.xml.](#check-the-configuration-of-androidmanifestxml)
 
-### 9 I can receive the call invitation, but after clicking accept, the application cannot be launched.
+### 4 I can receive the call invitation, but after clicking accept, the application cannot be launched.
 
 
 1. Please [Check if the test device has granted the APP related permissions.](#check-if-the-test-device-has-granted-the-app-related-permissions)
@@ -87,12 +97,12 @@ Please [Check if the ResourceID configuration is correct.](#check-if-the-resourc
 
 
 
-### 10 After accepting the call, I was able to enter the call page, but immediately redirected to another page.
+### 5 After accepting the call, I was able to enter the call page, but immediately redirected to another page.
 
 
 This is usually because your app triggers timed page navigation after it starts. Please carefully check your page navigation logic.
 
-### 11 Users can still receive offline notifications after logging out of the app.
+### 6 Users can still receive offline notifications after logging out of the app.
 
 
 After the user logs out of the APP, you should call `ZegoUIKitPrebuiltCallInvitationService().uninit()`.
@@ -106,7 +116,7 @@ void onUserLogout() {
 }
 ```
 
-### 12 Callee does not receive call invitation notification when offline
+### 7 Callee does not receive call invitation notification when offline
 
 
 <Tip title="Tip">If you have just configured an iOS certificate, it may take some time for it to take effect.</Tip>
@@ -168,15 +178,15 @@ The `Manufacturer Push Servers` error may be caused by the following:
 
 
 
-### Check List
+## Check List
 
 
-#### Check if the latest package version is being used
+### Check if the latest package version is being used
 
 
 It is possible that your issue has already been fixed in the old version. Before further troubleshooting, we strongly recommend that you upgrade [zego_uikit_prebuilt_call](https://pub.dev/packages/zego_uikit_prebuilt_call), [zego_uikit_signaling_plugin](https://pub.dev/packages/zego_uikit_signaling_plugin), and [zego_uikit](https://pub.dev/packages/zego_uikit) to the latest version for testing. If you encounter any problems during the upgrade, please refer to our [migration guide](https://pub.dev/documentation/zego_uikit_prebuilt_call/latest/topics/Migration_v4.x-topic.html).
 
-#### Check if there is any error on the calling side.
+### Check if there is any error on the calling side.
 
 
 Please listen and check the [onPressed](https://pub.dev/documentation/zego_uikit_prebuilt_call/latest/zego_uikit_prebuilt_call/ZegoSendCallInvitationButton/onPressed.html) callback of the [ZegoSendCallInvitationButton](https://pub.dev/documentation/zego_uikit_prebuilt_call/latest/zego_uikit_prebuilt_call/ZegoSendCallInvitationButton-class.html) on the caller side. The callback type is `void onPressed(String code, String message, List\<String> errorInvitees)`. Please check the error code and message, and check if the `errorInvitees` list is empty.
@@ -185,7 +195,7 @@ Please refer to [this link](https://docs.zegocloud.com/article/13792) for error 
 
 > In addition, if you use the `customData` parameter when sending a call invitation, please note that this parameter cannot exceed 1024 bytes.
 
-#### Check if the test device has granted the APP related permissions.
+### Check if the test device has granted the APP related permissions.
 
 
 Pease make sure that the app has been granted relevant permissions in the phone settings. Also please check if the phone is in `Do Not Disturb mode`.
@@ -208,7 +218,7 @@ The permissions that usually need to be checked are:
 
 > You can find the relevant permission setting methods for your phone brand [here](https://dontkillmyapp.com/).
 
-#### Check the configuration of AndroidManifest.xml.
+### Check the configuration of AndroidManifest.xml.
 
 
 Open the file `your_project/app/src/main/AndroidManifest.xml`, make sure the following permissions are added.
@@ -234,7 +244,7 @@ Please pay attention and check item by item, especially the permissions related 
 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 ```
 
-#### Check if the NavigatorKey and useSystemCallingUI are correctly configured.
+### Check if the NavigatorKey and useSystemCallingUI are correctly configured.
 
 
 1. Please make sure that you call the following two methods:
@@ -283,7 +293,7 @@ class MyAppState extends State {
 }
 ```
 
-#### Check if the init logic is handled correctly.
+### Check if the init logic is handled correctly.
 
 You need to ensure that every time the app is launched, whether the user logs in automatically or manually registers and logs in, you should make sure to call `ZegoUIKitPrebuiltCallInvitationService().init`.
 
@@ -310,7 +320,7 @@ void onUserLogout() {
 }
 ```
 
-#### Check if the ResourceID configuration is correct.
+### Check if the ResourceID configuration is correct.
 
 
 1. Please check that the resourceID configuration in the console is of the following types:
