@@ -275,6 +275,13 @@ extension CallInvitationVC: ZegoUIKitPrebuiltCallInvitationServiceDelegate {
   func onOutgoingCallTimeout(_ callID: String, callees: [ZegoCallUser]) {
         
   }
+  // Add a view to the upper layer of the audio and video call interface. The size of the view is determined by the view.frame passed in by the client
+  func requireRoomForegroundView() -> UIView? {
+    let view = UIView(frame: CGRectMake(0, 100, UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height - 100))
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .red
+    return view
+  }
 }
 ```
 </Accordion>
