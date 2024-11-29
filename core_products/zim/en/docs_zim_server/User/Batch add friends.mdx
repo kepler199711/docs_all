@@ -47,7 +47,7 @@ After friends are added, the client of the user receives the notification in the
 ## Operation prototype
 
 - Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=AddFriends
+- Request URL: `https://zim-api.zego.im/?Action=AddFriends`
 - Protocol: HTTPS
 - QPS limit: 20 calls per second
 
@@ -100,7 +100,7 @@ The following table describes only the operation-specific request parameters and
 <td>The time when the friendship was established. This parameter can be used to migrate the list of friends during data migration.<ul><li>If the value is set to `0`, the ZIM server uses the current time.</li><li>If the value is not set to `0`, this parameter needs to be a Unix timestamp in ms and cannot be later than the current time.</li></ul></td>
 </tr>
 <tr data-row-level="4-7" data-row-child="true">
-<td>Attributes</td>
+<td>└Attributes</td>
 <td>Array of Object</td>
 <td>No</td>
 <td>
@@ -111,13 +111,13 @@ The friend attributes. Up to five attributes are supported.
 </td>
 </tr>
 <tr data-row-level="4-7-1">
-<td>└Key</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Key</td>
 <td>String</td>
 <td>Yes</td>
 <td>The key of a friend attribute. Valid values: `k0`, `k1`, `k2`, `k3`, and `k4`.</td>
 </tr>
 <tr data-row-level="4-7-2">
-<td>└Value</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Value</td>
 <td>String</td>
 <td>Yes</td>
 <td>The value of a friend attribute.</td>
@@ -189,7 +189,7 @@ The `FromUserId` and `UserId` parameters can contain only digits, letters, and t
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.<Note title="Note">When you request to add multiple specified users at a time, take note of the following items:<ul><li>If one or more friends are successfully added, `0` is returned. For more information, see `ErrorList`.</li><li>If all specified friends fail to be added, a corresponding code is returned. For more information, see <a href="!Server_APIs/Return_Codes" target="_blank">Return codes</a>.</li></ul></Note></td>
+<td>The return code.<Note title="Note">When you request to add multiple specified users at a time, take note of the following items:<ul><li>If one or more friends are successfully added, `0` is returned. For more information, see `ErrorList`.</li><li>If all specified friends fail to be added, a corresponding code is returned. For more information, see [Return codes](./../Return%20codes.mdx).</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>

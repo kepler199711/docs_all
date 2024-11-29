@@ -6,6 +6,16 @@ articleID: 14694
 
 - - -
 
+## Version 2.18.2 
+
+**Release date: 2024-11-19**
+
+<h4>Enhancement</h4>
+
+Known issues fixed.
+
+---
+
 ## Version 2.18.0 
 
 **Release date: 2024-10-17**
@@ -30,6 +40,12 @@ articleID: 14694
 | Improvement of parameters of callback on message sent | When a message fails to send, the `msg_id` parameter in the callback on message sent will no longer be empty. | [Callback on message sent](/zim-server/callbacks/message-sent) |
 | Retrieving the message extension field from the server | Through the `payload` parameter in the server callback on not sent yet, ZIM supports retrieving the extension field passed by users when sending messages. | [Callback on not sent yet](/zim-server/callbacks/message-not-sent-yet) |
 | Increased length limit for `ExtendedData` in `MessageBody` | The default maximum length of `ExtendedData` in the `MessageBody` structure is 1 KB. If you need to increase it, please contact ZEGOCLOUD technical support. | [MessageBody Introduction](/zim-server/messagebody-introduction) |
+
+<h4>Deprecation</h4>
+
+| Item | Description | Method |
+| -----  | ---- | ----- |
+| Deprecation of callbacks for receiving message in one-to-one, room, and group chats | The callbacks of `receivePeerMessage`, `receiveGroupMessage` and `receiveRoomMessage` have been deprecated, please use the following callbacks instead: [peerMessageReceived](@peerMessageReceived), [groupMessageReceived](@groupMessageReceived), and [roomMessageReceived](@roomMessageReceived).<Note title="Note">Please refer to [ZIM Upgrade Guide](./ZIM%20upgrade%20guide.mdx#2180-upgrade-guide) for details on callback changes.</Note>| <ul><li>[peerMessageReceived](@peerMessageReceived)</li><li>[groupMessageReceived](@groupMessageReceived)</li><li>[roomMessageReceived](@roomMessageReceived)</li></ul> |
 ---
 
 ## Version 2.17.1 
@@ -279,7 +295,7 @@ Known issues fixed.
 
 | Item | Description | Method |
 | -----  | ---- | ----- |
-| Deprecated system message types | [ZIMMessageType](@-ZIMMessageType) (value 30) have been deprecated. Developers are advised to use more versatile custom messages (value 200) instead. | [ZIMMessageTypeCustom](/article/api?doc=zim_API~javascript_web~enum~ZIMMessageType#custom) |
+| Deprecated system message types | [ZIMMessageType](@-ZIMMessageType) (value 30) have been deprecated. Developers are advised to use more versatile custom messages (value 200) instead. | [ZIMMessageTypeCustom](https://www.zegocloud.com/article/api?doc=zim_API~javascript_web~enum~ZIMMessageType#custom) |
 
 <h5>Other Matters</h5>
 

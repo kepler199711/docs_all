@@ -13,6 +13,11 @@
           "type": "doc",
           "label": "Basic concepts",
           "id": "introduction/basic-concepts"
+        },
+        {
+          "type": "doc",
+          "label": "Pricing",
+          "id": "introduction/pricing"
         }
       ]
     },
@@ -244,6 +249,23 @@
       "type": "doc",
       "label": "Migration solution",
       "id": "migration-solution"
+    },
+    {
+      "type": "category",
+      "collapsed": true,
+      "label": "API Reference",
+      "items": [
+        {
+          "type": "link",
+          "label": "Client API",
+          "href": "https://docs.zegocloud.com/article/17321"
+        },
+        {
+          "type": "link",
+          "label": "Server API",
+          "href": "https://www.zegocloud.com/docs/zim-server/overview"
+        }
+      ]
     }
   ]
 }

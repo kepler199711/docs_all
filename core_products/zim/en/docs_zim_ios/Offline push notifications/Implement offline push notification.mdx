@@ -21,7 +21,7 @@ The solution we provide is as follows:
 2. The APNs Server returns the DeviceToken. 
 3. The receiver generates a PushID, and sends it to the ZIM Server for binding the client user and PushID.
     
-    If you use the ZPNs SDK together with the ZIM SDK, the SDK will automatically bind the client user to PushID, you don't need to do other operations; If you use the ZPNs SDK alone, you will need to connect to the ZPNs server and implement the binding logic. **Note: Before switching the userID on the same device, remember to call the [`logout`\|_blank](@logout) method to remove the PushID that userID is binding.**
+    If you use the ZPNs SDK together with the ZIM SDK, the SDK will automatically bind the client user to PushID, you don't need to do other operations; If you use the ZPNs SDK alone, you will need to connect to the ZPNs server and implement the binding logic. **Note: Before switching the userID on the same device, remember to call the [`logout`](@logout) method to remove the PushID that userID is binding.**
 
 4. The sender starts sending messages, and the messages are stored in the ZIM Server.
 5. The ZIM Server checks whether the receiver is online. 
@@ -51,7 +51,7 @@ Enable the Push Notifications for the iOS device (which can only be running on a
 In Xcode, select the target object, click the **Signing & Capabilities > Capabilities > Push Notification**, select the **Capability**, and then enable the **Push Notifications**. 
 
 <Frame width="512" height="auto" caption="">
-  <img src="http://doc.oa.zego.im/Pics/ZIM/offline_push_enable_pushNotification.png" />
+  <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/offline_push_enable_pushNotification.png" />
 </Frame>
 
 ## Get the DeviceToken
@@ -100,7 +100,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 ```
 
 2. Call the [`registerAPNs`](@registerAPNs) method to set up the APNs. You will receive the DeviceToken through the callback `didRegisterForRemoteNotificationsWithDeviceToken` when APNs is set successfully. 
-```oc
+```objc
 [[ZPNs shared] registerAPNs];
 ```
 
@@ -222,7 +222,7 @@ Before implementing offline push, you should:
     }];
     ```
 
-4. The invitees who are offline can receive an offline push notification. Once they come online, if the call invitation is still ongoing, they will receive the callback [callInvitationReceived\|_blank](/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-call-invitation-received-call-id).
+4. The invitees who are offline can receive an offline push notification. Once they come online, if the call invitation is still ongoing, they will receive the callback [callInvitationReceived\|_blank](https://www.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-call-invitation-received-call-id).
 
 ## Unregister Offline Push
 

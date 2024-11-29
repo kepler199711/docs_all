@@ -8,3 +8,14 @@ export const getPlatformData = (props, data)=> {
     }
     return data["Android"]
 }
+
+export const getPlatformData2 = (props, data)=> {
+    const platform = props.platform ?? "default";
+    for (const [key, value] of Object.entries(data)) {
+        const pList = key.split(",");
+        if (pList.includes(platform)) {
+            return value
+        }
+    }
+    return data["default"]
+}

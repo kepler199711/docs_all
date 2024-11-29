@@ -30,5 +30,4 @@ docuo clear & docuo dev
 
 登录以下网址触发重新爬取数据。
 
-https://crawler.algolia.com/
-
+https://dashboard.algolia.com/

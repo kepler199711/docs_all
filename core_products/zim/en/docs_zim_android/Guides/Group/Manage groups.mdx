@@ -71,17 +71,12 @@ export const onGroupApplicationUpdatedMap = {
 export const loginMap = {
   'Android': <a href='@login__2' target='_blank'>login</a>,
   'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIM#login-with-user-id-config-callback-2' target='_blank'>loginWithUserID</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2' target='_blank'>login</a>,
+  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIM#login-with-user-id-config-callback-2' target='_blank'>loginWithUserID</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html' target='_blank'>login</a>,
 }
 export const inviteUsersIntoGroupMap = {
   'Android': <a href='@inviteUsersIntoGroup' target='_blank'>inviteUsersIntoGroup</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/inviteUsersIntoGroup.html' target='_blank'>inviteUsersIntoGroup</a>,
-}
-export const loginWithUserInfoMap = {
-  'Android': <a href='@login' target='_blank'>login</a>,
-  'iOS,mac': <a href='@loginWithUserInfo' target='_blank'>loginWithUserInfo</a>,
-  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/login.html' target='_blank'>login</a>,
 }
 export const sendGroupInviteApplicationsMap= {
   'Android': <a href='@sendGroupInviteApplications' target='_blank'>sendGroupInviteApplications</a>,
@@ -865,7 +860,7 @@ zim.on('groupApplicationUpdated', (zim, { applicationList }) => {
 Make sure that the invitee has been registered by calling the {getPlatformData(props,loginMap)}  method; otherwise, the operation fails.
 </Warning>
 
-- {getPlatformData(props,inviteUsersIntoGroupMap)}: Invite a user to a group.
+- {getPlatformData(props,inviteUsersIntoGroupMap)}: Invite a user to a group without the user's approval.
 
 :::if{props.platform=undefined}
 ```java
@@ -929,13 +924,6 @@ zim.inviteUsersIntoGroup(userIDs, groupID)
 }];
 ```
 :::
-
-<Warning title="Warning">
-
-If a group member calls the {getPlatformData(props,inviteUsersIntoGroupMap)}  method to invite a user to the group:
-- The invitee joins the group without approval.
-- The invitee has registered a valid `userID` by calling the {getPlatformData(props,loginWithUserInfoMap)}  method; otherwise, the operation fails.
-</Warning>
 
 - {getPlatformData(props,sendGroupInviteApplicationsMap)}: Send the group invitation to the user.
 

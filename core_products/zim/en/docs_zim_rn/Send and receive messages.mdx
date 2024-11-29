@@ -36,8 +36,7 @@ Before you begin, make sure:
 
 Skip to this step if a project already exists.
 
-<details class="zg-primary">
-    <summary>Create a new project</summary>
+<Accordion title="Create a new project" defaultOpen="false">
 
 
 1. Use React Native's built-in command line utility to create a new project called `Zego-zim-example`.
@@ -61,7 +60,8 @@ This command line utility doesn't need to be installed and can be used directly 
     ```
     yarn react-native run-android
     ```
-</details>
+</Accordion>
+
 
 
 ### Import the SDK 
@@ -70,10 +70,10 @@ The following shows how to integrate the SDK using NPM:
 
 1. Execute the `npm i zego-zim-react-native` or  `yarn add zego-zim-react-native`command to install the dependencies.
 
-    <div class="mk-hint">
+    <Note title="Note">
 
     We recommend you use the NPM package that supports the TypeScript language.
-    </div>
+    </Note>
 
 2. Import the SDK.
 
@@ -166,7 +166,7 @@ To log in, Clients A and B both need to do the following:
 - You can custom the **userID** and **userName**, and we recommend you set the  **userID** to a meaningful value and associate them with the account system of your application.
 - For SDK 2.3.0 or later: The SDK uses the AppSign authentication mode by default. You only need to pass the [ZIMUserInfo`\](@-ZIMUserInfo) when logging in. 
 
-- If you use the Token-based authentication mode, please refer to the [Authentication\](!token_authentication/token_authentication) to get the Token first, and pass it when logging in. 
+- If you use the Token-based authentication mode, please refer to the [Authentication\](./Guides/Users/Authentication.mdx) to get the Token first, and pass it when logging in. 
 </Warning>
 
 

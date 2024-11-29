@@ -13,6 +13,11 @@
           "type": "doc",
           "label": "Basic concepts",
           "id": "introduction/basic-concepts"
+        },
+        {
+          "type": "doc",
+          "label": "Pricing",
+          "id": "introduction/pricing"
         }
       ]
     },
@@ -83,7 +88,7 @@
             {
               "type": "doc",
               "label": "Online Status Subscription",
-              "id": "guides/users/online-status-subscription" 
+              "id": "guides/users/online-status-subscription"
             }
           ]
         },
@@ -258,6 +263,11 @@
               "type": "doc",
               "label": "Mark conversations",
               "id": "guides/conversation/mark-conversations"
+            },
+            {
+              "type": "doc",
+              "label": "Set conversation draft",
+              "id": "guides/conversation/set-conversation-draft"
             }
           ]
         },
@@ -299,6 +309,23 @@
       "type": "doc",
       "label": "Migration solution",
       "id": "migration-solution"
+    },
+    {
+      "type": "category",
+      "collapsed": true,
+      "label": "API Reference",
+      "items": [
+        {
+          "type": "link",
+          "label": "Client API",
+          "href": "https://docs.zegocloud.com/article/17317"
+        },
+        {
+          "type": "link",
+          "label": "Server API",
+          "href": "https://www.zegocloud.com/docs/zim-server/overview"
+        }
+      ]
     }
   ]
 }

@@ -41,8 +41,7 @@ Before you begin, make sure:
 
 Skip this step if a project already exists.
 
-<details class="zg-primary">
-    <summary>Create a new project</summary>
+<Accordion title="Create a new project" defaultOpen="false">
 
 1. Open Xcode, and in the **Welcome to Xcode** window, click **Create a new Xcode project** or select **File > New > Project**. In the dialog that appears, select the **iOS** tab, then select **App** in the **Application** section.
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/QuickStart/NewProject_1.png" /></Frame>
@@ -55,7 +54,8 @@ Skip this step if a project already exists.
 3. Choose a particular directory to restore the project to be created, and click **Create** to create a project.
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/QuickStart/NewProject_3.png" /></Frame>
 
-</details>
+</Accordion>
+
 
 ### Import the SDK 
 
@@ -126,9 +126,7 @@ So, let's suppose we have two clients now, client A and client B. To send and re
 zim_ = zim::ZIM::create(app_id)
 ```
 
-<details class="zg-primary">
-    <summary>The sample code to create a ZIM SDK singleton</summary>
-
+<Accordion title="The sample code to create a ZIM SDK singleton" defaultOpen="false">
 
 For most cases, you will only need to create the ZIM SDK instance once. We recommend you create a singleton and save it.
 
@@ -162,7 +160,8 @@ ZIMManager::sharedInstance()->login(userInfo, token, [=](zim::ZIMError errorInfo
 });
 ...
 ```
-</details>
+</Accordion>
+
 
 ### Set an event handler object 
 
@@ -305,7 +304,7 @@ Currently, the ZIM SDK supports the following message types:
 
 
 To send one-to-one messages, for example, client A wants to send a message to client B, then client A needs to call the [sendMessage](@sendMessage) method with client B's userID, message content, and the [ZIMConversationType](@-ZIMConversationType)
-And client A can be notified whether the message is delivered successfully through the callback [ZIMMessageSentCallback](/article/api?doc=zim_API~cpp_windows~interface~ZIMDefines#zim-message-sent-callback) (correspond to the `send_callback` shows below).
+And client A can be notified whether the message is delivered successfully through the callback [ZIMMessageSentCallback](https://www.zegocloud.com/article/api?doc=zim_API~cpp_windows~interface~ZIMDefines#zim-message-sent-callback) (correspond to the `send_callback` shows below).
 
 - [onMessageAttached](@onMessageAttached-ZIMMediaMessageSendNotification) callback: The callback on the message not sent yet. Before the message is sent, you can get a temporary [ZIMMessage](@-ZIMMessage) message for you to implement your business logic as needed. For example, you can get the ID of the message before sending it. Or when sending a message with large content, such as a video, you can get the localMessageID of th
 
@@ -337,10 +336,10 @@ zim_->sendMessage(std::static_pointer_cast<zim::ZIMMessage>(smessage), "conversa
 
 After client B logs in, he will receive client A's message through the callback [onReceivePeerMessage](@onReceivePeerMessage) which is already set in the [setEventHandler](@setEventHandler) method. 
 
-<div class = 'mk-warning'>
+<Warning title="Warning">
 
 When a message is received, you need to determine whether the message is a Text message or a Command message because these two message types are based on the basic message. You need to convert the basic message class to a concrete message type and then retrieve the message content from the `Message` field.
-</div>
+</Warning>
 
 ```cpp
 // The OnReceiveRoomMessage here refers to the onReceiveRoomMessage of the bounded SDK.

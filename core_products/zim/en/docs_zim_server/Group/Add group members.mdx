@@ -45,7 +45,7 @@ After users are added, all group members, including newly added ones, receive th
 ## Operation prototype
 
 - Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=InviteUsersIntoGroup
+- Request URL: `https://zim-api.zego.im/?Action=InviteUsersIntoGroup`
 - Protocol: HTTPS
 - QPS limit: 1 call per second, applicable to group chats only. If you need a higher limit, contact ZEGOCLOUD technical support.
 
@@ -130,24 +130,24 @@ The `FromUserId`, `GroupId`, and `UserIds` parameters can contain only digits, l
 ## Sample request
 
 - Request URL
-  
-  ```json
-  https://zim-api.zego.im/?Action=InviteUsersIntoGroup
-  &<Common request parameters>
-  ```
+
+```json
+https://zim-api.zego.im/?Action=InviteUsersIntoGroup
+&<Common request parameters>
+```
 
 - Request body
-  
-  ```json
-  {
-      "FromUserId": "zego_user",
-      "GroupId": "groupA",
-      "UserIds": [
-          "usera",
-          "userb"
-      ]
-  }
-  ```
+
+```json
+{
+    "FromUserId": "zego_user",
+    "GroupId": "groupA",
+    "UserIds": [
+        "usera",
+        "userb"
+    ]
+}
+```
 
 ## Response parameters
 
@@ -228,7 +228,7 @@ If `Code` is not `0`:
 
 ## Return codes
 
-The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes|_blank](#14024).
+The following table describes only the return codes related to the business logic of the operation. For the complete list of return codes, see [Return codes](./../Return%20codes.mdx).
 
 <table>
 

@@ -32,8 +32,8 @@ export const setEventHandlerMap = {
 export const onRoomMemberJoinedMap = {
   'Android': <a href='@onRoomMemberJoined' target='_blank'>onRoomMemberJoined</a>,
   'Web,RN': <a href='@roomMemberJoined' target='_blank'>roomMemberJoined</a>,
-  'iOS': <a href='/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
-  'mac': <a href='/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
+  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
+  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-joined-room-id' target='_blank'>roomMemberJoined</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMemberJoined.html' target='_blank'>onRoomMemberJoined</a>,
 }
 export const leaveRoomMap = {
@@ -43,8 +43,8 @@ export const leaveRoomMap = {
 export const onRoomMemberLeftMap = {
   'Android': <a href='@onRoomMemberLeft' target='_blank'>onRoomMemberLeft</a>,
   'Web,RN': <a href='@roomMemberLeft' target='_blank'>roomMemberLeft</a>,
-  'iOS': <a href='/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
-  'mac': <a href='/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
+  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
+  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-room-member-left-room-id' target='_blank'>roomMemberLeft</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMemberLeft.html' target='_blank'>onRoomMemberLeft</a>,
 }
 export const leaveAllRoomMap = {
@@ -75,6 +75,28 @@ export const switchRoomMap = {
 export const ZIMRoomAdvancedConfigMap = {
   'Android': <a href='@-ZIMRoomAdvancedConfig' target='_blank'>config</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomAdvancedConfig-class.html' target='_blank'>config</a>,
+}
+
+export const CONNECTEDMap = {
+  'Android': "CONNECTED",
+  'Flutter': "connected",
+  'Web,RN,uniapp': "Connected",
+  'iOS,mac': "ZIMRoomStateConnected",
+  "window": "ZIM_ROOM_STATE_CONNECTED"
+}
+export const SUCCESSMap = {
+  'Android': "SUCCESS",
+  'Flutter': "success",
+  'Web,RN,uniapp': "Success",
+  'iOS,mac': "ZIMRoomEventSuccess",
+  "window": "ZIM_ROOM_EVENT_SUCCESS"
+}
+export const DISCONNECTEDMap = {
+  'Android': "DISCONNECTED",
+  'Flutter': "disconnected",
+  'Web,RN,uniapp': "Disconnected",
+  "window": "ZIM_ROOM_STATE_DISCONNECTED",
+  "iOS,mac": "ZIMRoomStateDisconnected"
 }
 
 # Manage rooms
@@ -204,7 +226,7 @@ zim_->createRoom(room_info, [=](ZIMRoomFullInfo room_info, zim::ZIMError error_i
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomInfo = { roomID: '', roomName: '' };
 zim.createRoom(roomInfo)
@@ -277,7 +299,7 @@ zim_->joinRoom(roomId, [=](ZIMRoomFullInfo room_info, zim::ZIMError error_info) 
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomID = '';
 zim.joinRoom(roomID)
@@ -342,7 +364,7 @@ void onRoomMemberJoined(ZIM* zim, const std::vector<ZIMUserInfo>& member_list, c
 }
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 // Callback for receiving event notification when new room members join the room. And it also returns the information of the user who just joined the room. 
 zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
@@ -448,7 +470,7 @@ zim_->enterRoom(room_info, config, [=](ZIMRoomFullInfo room_info, zim::ZIMError 
 });
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomInfo = { roomID: '', roomName: '' };
 zim.enterRoom(roomInfo)
@@ -465,7 +487,6 @@ zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
 });
 ```
 :::
-:::if{props.platform="ios|undefined|RN|window"}
 ## Switch Rooms
 
 If a user wants to switch from one room to another, the user can call the {getPlatformData(props,switchRoomMap)} method, passing in the ID of the original room (`fromRoomID`) and the information of the target room (`toRoomInfo`), which includes the room ID and room name. This will allow the user to switch rooms.
@@ -481,7 +502,6 @@ After a successful room switch, other users in the original room can be notified
     </Frame>
 
 - Sample code:
-:::
 :::if{props.platform=undefined}
 ```java
 String fromRoomID = "fromRoomID";
@@ -583,11 +603,15 @@ zim->switchRoom(
     });
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 const fromRoomID = 'fromRoomID';
 const toRoomInfo = { roomID: 'toRoomID', roomName: 'toRoomName' };
+
+// Whether to create a room if it does not exist.
+// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
 const isCreateWhenRoomNotExisted = true;
+
 // Advanced configuration for creating a room
 const to_room_attr = {
     key1: 'value1', // Replace this code to the actual key-value pair
@@ -610,6 +634,30 @@ zim.switchRoom(fromRoomID, toRoomInfo, isCreateWhenRoomNotExisted, config)
     .catch(function (err) {
         // Operation failed
     });
+```
+:::
+:::if{props.platform="Flutter"}
+```dart
+String fromRoomID = 'fromRoomID';
+ZIMRoomInfo toRoomInfo = ZIMRoomInfo();
+toRoomInfo.roomID = 'toRoomID';
+toRoomInfo.roomName = 'toRoomName';
+
+// Whether to create a room if it does not exist.
+// Only when this is true and the target room does not exist, the toRoomName and config in toRoomInfo are meaningful
+bool isCreateWhenRoomNotExisted = true;
+
+// Advanced configuration for creating a room
+ZIMRoomAdvancedConfig config = ZIMRoomAdvancedConfig();
+config.roomAttributes['key1'] = 'value1';
+config.roomDestroyDelayTime = 90;
+try{
+    ZIMRoomSwitchedResult? result = await ZIM.getInstance()?.switchRoom(fromRoomID, toRoomInfo, isCreateWhenRoomNotExisted, config);
+    // Operation successful
+} on PlatformException catch (onError){
+    onError.code; // Return code for switch failure
+    onError.message; // Error message
+}
 ```
 :::
 
@@ -710,7 +758,7 @@ void onRoomMemberLeft(ZIM* zim, const std::vector<ZIMUserInfo>& member_list, con
 ```
 
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```javascript
 var roomID = '';
 zim.leaveRoom(roomID)
@@ -797,7 +845,7 @@ zim->leaveAllRoom([](const std::vector<std::string>& roomIDList, const ZIMError&
 }];
 ```
 :::
-:::if{props.platform="Web,RN"}
+:::if{props.platform="Web|RN"}
 ```js
 var roomIDs = [];
 zim.leaveAllRoom(roomIDs)
@@ -812,7 +860,7 @@ zim.leaveAllRoom(roomIDs)
 
 Other users in the room receive the member change notification in the {getPlatformData(props,setEventHandlerMap)}  callback of the {getPlatformData(props,onRoomMemberLeftMap)}  method.
 
-After leaving all rooms, the user receives the {getPlatformData(props,onRoomStateChangedMap)} callback multiple times based on the number of rooms. The value of {getPlatformData(props,ZIMRoomStateMap)} is `DISCONNECTED`, and the value of {getPlatformData(props,ZIMRoomEventMap)} is `SUCCESS`.
+After leaving all rooms, the user receives the {getPlatformData(props,onRoomStateChangedMap)} callback multiple times based on the number of rooms. The value of {getPlatformData(props,ZIMRoomStateMap)} is {getPlatformData(props,DISCONNECTEDMap)} , and the value of {getPlatformData(props,ZIMRoomEventMap)} is {getPlatformData(props,SUCCESSMap)} .
 
 After leaving a room, the user no longer receives messages in the room.
 

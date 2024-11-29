@@ -1,10 +1,7 @@
-<div class="mk-hint">
+<Note title="说明">
 
-[2024 行业风向，头部客户验证的热门玩法，畅享实时互动，全线产品 1 折起 >>\|_blank](https://www.zego.im/activity/2400001)
-
-</div>
-
-
+[11.11采购节，社交出海正当时，实时互动产品一站式采购>>](https://doc-office.zego.im/activity/2400011)
+</Note>
 
 
 

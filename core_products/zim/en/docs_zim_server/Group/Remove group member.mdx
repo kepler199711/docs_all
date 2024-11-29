@@ -23,10 +23,10 @@ After a user is successfully removed, all group members (including the group own
 <th>Windows</th>
 </tr>
 <tr>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id)</td>
-<td>[onGroupMemberStateChanged|_blank](/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-state-changed)</td>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id)</td>
-<td>[onGroupMemberStateChanged|_blank](/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-state-changed)</td>
+<td>[groupMemberStateChanged](https://www.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id)</td>
+<td>[onGroupMemberStateChanged](https://www.zegocloud.com/article/api?doc=zim_API~java_android~class~ZIMEventHandler#on-group-member-state-changed)</td>
+<td>[groupMemberStateChanged](https://www.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-group-member-state-changed-event-user-list-operated-info-group-id)</td>
+<td>[onGroupMemberStateChanged](https://www.zegocloud.com/article/api?doc=zim_API~cpp_windows~class~ZIMEventHandler#on-group-member-state-changed)</td>
 </tr>
 <tr>
 <th>Web</th>
@@ -35,17 +35,17 @@ After a user is successfully removed, all group members (including the group own
 <th>Unity3D</th>
 </tr>
 <tr>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-state-changed)</td>
-<td>[onGroupMemberStateChanged|_blank](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupMemberStateChanged.html)</td>
-<td>[groupMemberStateChanged|_blank](/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-state-changed)</td>
-<td>[OnGroupMemberStateChanged|_blank](/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-state-changed)</td>
+<td>[groupMemberStateChanged](https://www.zegocloud.com/article/api?doc=zim_API~javascript_web~interface~ZIMEventHandler#group-member-state-changed)</td>
+<td>[onGroupMemberStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupMemberStateChanged.html)</td>
+<td>[groupMemberStateChanged](https://www.zegocloud.com/article/api?doc=zim_API~javascript_react-native~interface~ZIMEventHandler#group-member-state-changed)</td>
+<td>[OnGroupMemberStateChanged](https://www.zegocloud.com/article/api?doc=zim_API~cs_unity3d~class~ZIMEventHandler#on-group-member-state-changed)</td>
 </tr>
 </tbody></table>
 
 ## Operation prototype
 
 - Request method: POST
-- Request endpoint: https://zim-api.zego.im/?Action=KickoutGroupUser
+- Request endpoint: `https://zim-api.zego.im/?Action=KickoutGroupUser`
 - Protocol: HTTPS
 - Rate limit: 20 requests/second
 
@@ -126,7 +126,7 @@ FromUserId, GroupId, UserId[], and CustomReason only support numbers, English ch
 <td>Code</td>
 <td>Number</td>
 <td>Return code.
-<div class="mk-hint">If you remove multiple users at the same time: <ul><li>If one or more users are successfully removed, Code will return 0. Please refer to the specific information in ErrorList to confirm the operation result.</li><li>If all users are not successfully removed, Code will return the relevant return code, please refer to <a href="!Server_APIs/Return_Codes" target="_blank">Return codes</a> for details.</li></ul></div></td>
+<Note title="Note">If you remove multiple users at the same time: <ul><li>If one or more users are successfully removed, Code will return 0. Please refer to the specific information in ErrorList to confirm the operation result.</li><li>If all users are not successfully removed, Code will return the relevant return code, please refer to  [Return codes](../Return%20codes.mdx) for details.</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>
@@ -159,15 +159,15 @@ FromUserId, GroupId, UserId[], and CustomReason only support numbers, English ch
 
 ```json
 {
-   "Code":0,
-   "Message":"success",
-   "RequestId":"343649807833778782",
-   "ErrorList": [
-      {
-         "UserId":"u2",
-         "SubCode":660000012
-      } 
-   ]
+  "Code":0,
+  "Message":"success",
+  "RequestId":"343649807833778782",
+  "ErrorList": [
+    {
+        "UserId":"u2",
+        "SubCode":660000012
+    } 
+  ]
 }
 ```
 

@@ -55,7 +55,7 @@ After a friend request is sent, the client of the user receives the notification
 ## Operation prototype
 
 - Request method: POST
-- Request URL: https://zim-api.zego.im/?Action=SendFriendApplication
+- Request URL: `https://zim-api.zego.im/?Action=SendFriendApplication`
 - Protocol: HTTPS
 - QPS limit: 20 calls per second
 
@@ -95,25 +95,25 @@ The following table describes only the operation-specific request parameters and
 <td>The information included in the friend request, which cannot exceed 256 characters in length.</td>
 </tr>
 <tr data-row-level="4-5">
-<td>FriendAlias</td>
+<td>└FriendAlias</td>
 <td>String</td>
 <td>No</td>
 <td>The alias to be set for the target user, which cannot exceed 256 characters in length.</td>
 </tr>
 <tr data-row-level="4-6">
-<td>CreateTime</td>
+<td>└CreateTime</td>
 <td>Number</td>
 <td>No</td>
 <td>The time when the request was created. This parameter can be used to migrate the list of friends during data migration.<ul><li>If the value is set to `0`, the ZIM server uses the current time.</li><li>If the value is not set to `0`, this parameter needs to be a Unix timestamp in ms and cannot be later than the current time.</li></ul></td>
 </tr>
 <tr data-row-level="4-7">
-<td>UpdateTime</td>
+<td>└UpdateTime</td>
 <td>Number</td>
 <td>No</td>
 <td>The time when the request was updated. This parameter can be used to migrate the list of friends during data migration.<ul><li>If the value is set to `0`, the ZIM server uses the current time.</li><li>If the value is not set to `0`, this parameter needs to be a Unix timestamp in ms and cannot be later than the current time.</li></ul></td>
 </tr>
 <tr data-row-level="4-8" data-row-child="true">
-<td>Attributes</td>
+<td>└Attributes</td>
 <td>Array of Object</td>
 <td>No</td>
 <td>
@@ -123,13 +123,13 @@ The friend attributes. Up to five attributes are supported.
 </Note></td>
 </tr>
 <tr data-row-level="4-8-1">
-<td>└Key</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Key</td>
 <td>String</td>
 <td>Yes</td>
 <td>The key of a friend attribute. Valid values: `k0`, `k1`, `k2`, `k3`, and `k4`.</td>
 </tr>
 <tr data-row-level="4-8-2">
-<td>└Value</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;└Value</td>
 <td>String</td>
 <td>Yes</td>
 <td>The value of a friend attribute.</td>
@@ -202,7 +202,7 @@ The `FromUserId` and `UserId` parameters can contain only digits, letters, and t
 <tr data-row-level="2">
 <td>Code</td>
 <td>Number</td>
-<td>The return code.<Note title="Note">When you send friend requests to multiple users at a time, take note of the following items:<ul><li>If one or more requests are successfully sent, `0` is returned. For more information, see `ErrorList`.</li><li>If all friend requests fail to be sent, a corresponding code is returned. For more information, see <a href="!Server_APIs/Return_Codes" target="_blank">Return codes</a>.</li></ul></Note></td>
+<td>The return code.<Note title="Note">When you send friend requests to multiple users at a time, take note of the following items:<ul><li>If one or more requests are successfully sent, `0` is returned. For more information, see `ErrorList`.</li><li>If all friend requests fail to be sent, a corresponding code is returned. For more information, see [Return codes](./../Return%20codes.mdx).</li></ul></Note></td>
 </tr>
 <tr data-row-level="3">
 <td>Message</td>

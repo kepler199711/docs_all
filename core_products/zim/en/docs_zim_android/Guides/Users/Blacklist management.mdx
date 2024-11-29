@@ -2,17 +2,8 @@
 articleID: 17621
 ---
 
+import { getPlatformData } from "/snippets/utils-content-parser.js"
 
-export const getPlatformData = (props, data) => {
-  const platform = props.platform ?? "Android";
-  return platform in data ? data[platform] : data["Android"]
-}
-
-export const messageMap = {
-  // 错误链接
-  'Android': <a href="!Implementation_of_sending_and_receiving" target="_blank">Send and receive messages</a>,
-
-}
 export const queryBlacklistMap = {
   
   'Android': <a href="@queryBlacklist" target="_blank">queryBlacklist</a>,
@@ -90,7 +81,7 @@ The query result is returned through the {getPlatformData(props,ZIMBlacklistQuer
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java
+```java title="Sample code"
 // Query blacklist
 ZIMBlacklistQueryConfig config = new ZIMBlacklistQueryConfig();
 // Fill in the number of user information to be obtained at one time
@@ -113,7 +104,7 @@ zim.queryBlacklist(config, new ZIMBlacklistQueriedCallback() {
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart
+```dart title="Sample code"
 // Query the blacklist
 ZIMBlacklistQueryConfig config = ZIMBlacklistQueryConfig();
 // Fill in the number of user information obtained at one time
@@ -132,7 +123,7 @@ zim.queryBlacklist(config).then((ZIMBlacklistQueriedResult result) => {
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc
+```objc title="Sample code"
 // Query the blocklist.
 ZIMBlacklistQueryConfig *config = [[ZIMBlacklistQueryConfig alloc] init];
 // Enter the number of blocked users to be queried per time.
@@ -150,7 +141,7 @@ config.nextFlag = 0;
 
 :::if{props.platform="windows"}
 <CodeGroup>
-```cpp
+```cpp title="Sample code"
 // Query blacklist list
 zim::ZIMBlacklistQueryConfig config;
 // Fill in the number of blacklist user information obtained at one time
@@ -165,7 +156,6 @@ zim_sdk_->queryBlacklist(
             // Developers can get the blacklist list from blacklist.
         }
     });
-});
 ```
 </CodeGroup>
 :::
@@ -184,7 +174,7 @@ The result of blocking users is returned through the {getPlatformData(props,ZIMB
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java
+```java title="Sample code"
 // Add user "zego" to the blacklist
 ArrayList<String> userIDs = new ArrayList();
 userIDs.add("zego");
@@ -203,7 +193,7 @@ zim.addUsersToBlacklist(userIDs, new ZIMBlacklistUsersAddedCallback() {
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart
+```dart title="Sample code"
 // Add user "zego" to the blacklist
 try{
     ZIMBlacklistUsersAddedResult result = await ZIM.getInstance()!.addUsersToBlacklist(['zego']);
@@ -217,7 +207,7 @@ try{
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc
+```objc title="Sample code"
 // Block user "zegocloud".
 NSArray *userIDs = @[@"zegocloud"];
 [[ZIM getInstance] addUsersToBlacklistWithUserIDs:userIDs callback:^(NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo) {
@@ -231,7 +221,7 @@ NSArray *userIDs = @[@"zegocloud"];
 
 :::if{props.platform="windows"}
 <CodeGroup>
-```cpp
+```cpp title="Sample code"
 // Add user "zegocloud" to the blacklist
 std::vector<std::string> user_id_list;
 user_id_list.push_back("zegocloud");
@@ -260,7 +250,7 @@ Up to 20 users can be removed with one API call. Exceeding the limit will cause 
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java
+```java title="Sample code"
 // Remove user "zego" from the blacklist
 ArrayList<String> userIDs = new ArrayList();
 userIDs.add("zego");
@@ -279,7 +269,7 @@ zim.removeUsersFromBlacklist(userIDs, new ZIMBlacklistUsersRemovedCallback() {
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart
+```dart title="Sample code"
 // Remove user "zego" from the blacklist
 try{
     ZIMBlacklistUsersRemovedResult result = await ZIM.getInstance()!.removeUsersFromBlacklist(["zego"]);
@@ -293,7 +283,7 @@ try{
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc
+```objc title="Sample code"
 // Unblock user "zegocloud".
 NSArray *userIDs = @[@"zegocloud"];
 [[ZIM getInstance] removeUsersFromBlacklistWithUserIDs:userIDs callback:^(NSArray<ZIMErrorUserInfo *> * _Nonnull errorUserList, ZIMError * _Nonnull errorInfo)     {
@@ -307,7 +297,7 @@ NSArray *userIDs = @[@"zegocloud"];
 
 :::if{props.platform="windows"}
 <CodeGroup>
-```cpp
+```cpp title="Sample code"
 // Remove user "zegocloud" from the blacklist
 std::vector<std::string> user_id_list;
 user_id_list.push_back("zegocloud");
@@ -331,7 +321,7 @@ The result of the check operation is returned through the {getPlatformData(props
 
 :::if{props.platform=undefined}
 <CodeGroup>
-```java
+```java title="Sample code"
 // Check if the user "zego" is in the blacklist
 zim.checkUserIsInBlackList("zego", new ZIMBlacklistCheckedCallback(){
     @Override
@@ -348,7 +338,7 @@ zim.checkUserIsInBlackList("zego", new ZIMBlacklistCheckedCallback(){
 
 :::if{props.platform="Flutter"}
 <CodeGroup>
-```dart
+```dart title="Sample code"
 // Check if user "zego" is in the blacklist
 try{
     ZIMBlacklistCheckedResult result = await ZIM.getInstance()!.checkUserIsInBlacklist("zego");
@@ -362,7 +352,7 @@ try{
 
 :::if{props.platform="iOS"}
 <CodeGroup>
-```objc
+```objc title="Sample code"
 // Check whether user "zegocloud" is in the blocklist. 
 [[ZIM getInstance] checkUserIsInBlackListByUserID:@"zegocloud" callback:^(BOOL isUserInBlacklist, ZIMError * _Nonnull errorInfo) {
     if(errorInfo.code == ZIMErrorCodeSuccess) {
@@ -375,14 +365,13 @@ try{
 
 :::if{props.platform="windows"}
 <CodeGroup>
-```cpp
+```cpp title="Sample code"
 zim_sdk_->checkUserIsInBlacklist(
     "zegocloud", [=](bool isUserInBlacklist, const zim::ZIMError &errorInfo) {
         if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
             // The `isUserInBlacklist` parameter indicates whether the user is in the blocklist. Valid values: `true`: yes; `false`: no.
         }
     });
-})
 ```
 </CodeGroup>
 :::

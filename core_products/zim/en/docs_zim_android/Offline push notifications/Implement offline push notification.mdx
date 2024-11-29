@@ -39,14 +39,14 @@ To implement the offline push notification feature, you need to access Google FC
 
 ### Import the ZPNs SDK
 
-When developers are automatically integrating the SDK:
+Developers have two ways to import ZPNs SDK:
 
-- For SDK versions **2.2.0 and later**, you can integrate using Method 1.
-- For SDK versions **2.1.0 and earlier**, please integrate using Method 2.
+- Method 1: Automatically Integrate SDK Using Maven Central
+- Method 2: Manual Integration by Copying SDK Files
 
-
-##### Method 1: Automatically Integrate SDK Using Maven Central (Available for versions `2.2.0 and later`)
-
+<Tabs>
+<Tab title="Method 1">
+<Warning title="Warning">Available for versions `2.2.0 and later`</Warning>
 1. Navigate to the project's root directory and open the "build.gradle" file. Add the following code within the "allprojects" block.
 
     ```gradle
@@ -60,7 +60,7 @@ When developers are automatically integrating the SDK:
     }
     ```
 
-2. Enter the "app" directory and open the "build.gradle" file. Add `implementation 'im.zego:zpns:x.y.z'` to the "dependencies" block. Replace "x.y.z" with the version number of the SDK. Refer to the release history in the [release log](#11594) for the version number.
+2. Enter the "app" directory and open the "build.gradle" file. Add `implementation 'im.zego:zpns:x.y.z'` to the "dependencies" block. Replace "x.y.z" with the version number of the SDK. Refer to the release history in the [release log](./../docs_zim_rn/Client%20SDKs/ZIM%20release%20notes.mdx) for the version number.
 
     ```gradle
     ...
@@ -72,9 +72,8 @@ When developers are automatically integrating the SDK:
         implementation 'im.zego:zpns-fcm:2.7.0'
     }
     ```
-
-##### Method 2: Manual Integration by Copying SDK Files
-
+</Tab>
+<Tab title="Method 2">
 1. Download the latest version of the [ZPNs SDK](./../Client%20SDKs/SDK%20downloads.mdx).
 
 2. Extract the downloaded SDK package to the `app/libs` folder.
@@ -89,6 +88,8 @@ When developers are automatically integrating the SDK:
     //The following are for the ZPNS package supporting Google FCM
     implementation files('libs/fcm/zpns-android-plugin-fcm-release.aar')
     ```
+</Tab>
+</Tabs>
 
 ### Set permissions
 

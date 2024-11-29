@@ -1,0 +1,37 @@
+name: send_feishu_notification
+
+on:
+  workflow_run:
+    workflows: [prepare_pr_info]
+    types:
+      - completed
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Send Feishu notification
+        uses: ./.github/actions/feishu-notification
+        with:
+          webhooks: |
+            {
+              "uikit": "${{ secrets.WEBHOOK_UIKIT }}",
+              "core_products/zim": "${{ secrets.WEBHOOK_ZIM }}"
+            }
+          user_mapping: |
+            {
+              "Match-Yang": "oliveryang",
+              "docuo": "oliveryang",
+              "OliverYeung": "oliveryang",
+              "JadenatZEGO": "Jaden",
+              "I-am-shy": "shy",
+              "jinweishi": "shijinwei",
+              "yoer": "adam",
+              "iamyoer": "adam",
+              "azrael": "azraellong",
+              "nangonghuang": "alanliu"
+            }

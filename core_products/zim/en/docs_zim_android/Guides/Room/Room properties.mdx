@@ -7,68 +7,28 @@ import { getPlatformData } from '/snippets/utils-content-parser.js'
 export const createRoomMap = {
   'Android': <a href='@createRoom' target='_blank'>createRoom</a>,
 }
-export const ZIMRoomInfoMap = {
-  'Android': <a href='@-ZIMRoomInfo' target='_blank'>ZIMRoomInfo</a>,
-  'iOS': <a href='@-ZIMRoomInfo' target='_blank'>ZIMRoomInfo *</a>,
+export const onRoomAttributesUpdatedMap = {
+  'Android': <a href='@onRoomAttributesUpdated' target='_blank'>onRoomAttributesUpdated</a>,
+  'U3d': <a href='@OnRoomAttributesUpdated' target='_blank'>OnRoomAttributesUpdated</a>,
+  'iOS': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_iOS|mac~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id' target='_blank'>roomAttributesUpdated</a>,
+  'mac': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macOS|mac~protocol~ZIMEventHandler#zim-room-attributes-updated-room-id' target='_blank'>roomAttributesUpdated</a>,
 }
-export const ZIMRoomAdvancedConfigMap = {
-  'Android': <a href='@-ZIMRoomAdvancedConfig' target='_blank'>ZIMRoomAdvancedConfig</a>,
-  'iOS': <a href='@-ZIMRoomAdvancedConfig' target='_blank'>ZIMRoomAdvancedConfig *</a>,
-}
-export const ZIMRoomCreatedCallbackMap = {
-  'Android': <a href='@-ZIMRoomCreatedCallback' target='_blank'>ZIMRoomCreatedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomCreatedCallback' target='_blank'>ZIMRoomCreatedCallback</a>,
-}
-export const ZIMRoomAttributesSetConfigMap = {
-  'Android': <a href='@-ZIMRoomAttributesSetConfig' target='_blank'>ZIMRoomAttributesSetConfig</a>,
-  'iOS': <a href='@-ZIMRoomAttributesSetConfig' target='_blank'>ZIMRoomAttributesSetConfig *</a>,
-}
-export const ZIMRoomAttributesOperatedCallbackMap = {
-  'Android': <a href='@-ZIMRoomAttributesOperatedCallback' target='_blank'>ZIMRoomAttributesOperatedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomAttributesOperatedCallback' target='_blank'>ZIMRoomAttributesOperatedCallback</a>,
-}
-export const ZIMRoomAttributesDeleteConfigMap = {
-  'Android': <a href='@-ZIMRoomAttributesDeleteConfig' target='_blank'>ZIMRoomAttributesDeleteConfig</a>,
-  'iOS': <a href='@-ZIMRoomAttributesDeleteConfig' target='_blank'>ZIMRoomAttributesDeleteConfig *</a>,
-}
-export const ZIMRoomAttributesQueriedCallbackMap = {
-  'Android': <a href='@-ZIMRoomAttributesQueriedCallback' target='_blank'>ZIMRoomAttributesQueriedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomAttributesQueriedCallback' target='_blank'>ZIMRoomAttributesQueriedCallback</a>,
+export const queryRoomAllAttributesMap = {
+  'Android': <a href='@queryRoomAllAttributes' target='_blank'>queryRoomAllAttributes</a>,
+  'iOS,mac': <a href='@queryRoomAllAttributesByRoomID' target='_blank'>queryRoomAllAttributesByRoomID</a>,
+  'U3d': <a href='@QueryRoomAllAttributes' target='_blank'>QueryRoomAllAttributes</a>,
 }
 export const beginRoomAttributesBatchOperationMap = {
   'Android': <a href='@beginRoomAttributesBatchOperation' target='_blank'>beginRoomAttributesBatchOperation</a>,
   'iOS': <a href='@beginRoomAttributesBatchOperationWithRoomID' target='_blank'>beginRoomAttributesBatchOperationWithRoomID</a>,
 }
-export const ZIMRoomAttributesBatchOperationConfigMap = {
-  'Android': <a href='@-ZIMRoomAttributesBatchOperationConfig' target='_blank'>ZIMRoomAttributesBatchOperationConfig</a>,
-  'iOS': <a href='@-ZIMRoomAttributesBatchOperationConfig' target='_blank'>ZIMRoomAttributesBatchOperationConfig *</a>,
-}
+
 export const endRoomAttributesBatchOperationMap = {
   'Android': <a href='@endRoomAttributesBatchOperation' target='_blank'>endRoomAttributesBatchOperation</a>,
   'iOS': <a href='@endRoomAttributesBatchOperationWithRoomID' target='_blank'>endRoomAttributesBatchOperationWithRoomID</a>,
 }
-export const ZIMRoomAttributesBatchOperatedCallbackMap = {
-  'Android': <a href='@-ZIMRoomAttributesBatchOperatedCallback' target='_blank'>ZIMRoomAttributesBatchOperatedCallback</a>,
-  'iOS,window,U3d': <a href='@ZIMRoomAttributesBatchOperatedCallback' target='_blank'>ZIMRoomAttributesBatchOperatedCallback</a>,
-}
-export const HashMap = {
-  'Android': "HashMap<String, String>",
-  'U3d': "Dictionary<string, string>",
-  'iOS': "NSDictionary<NSString *, NSString *> *",
-  'window': "std::unordered_map",
-}
-export const StringMap = {
-  'Android': "String",
-  'U3d': "string",
-  'iOS': "NSString *",
-  'window': "std::string",
-}
-export const ListMap = {
-  'Android': "List",
-  'U3d': "List<string>",
-  'iOS': "NSArray<NSString *> *",
-  'window': "std::vector",
-}
+
+
 
 
 # Manage room properties
@@ -311,14 +271,14 @@ ZIM.GetInstance().DeleteRoomAttributes(attributeKeyList, "roomID", config, (stri
 
 ## Get room properties
 :::if{props.platform="U3d"}
-By calling the [QueryRoomAllAttributes\|_blank](@QueryRoomAllAttributes), you can retrieve all the attributes of a room.
-
-:::
-
+By calling the [QueryRoomAllAttributes](@QueryRoomAllAttributes), you can retrieve all the attributes of a room.
 <Warning title="Warning">
 
-When logging into a room, the latest room attributes will be returned through the [OnRoomAttributesUpdated\|_blank](@OnRoomAttributesUpdated), and there is no need to call [QueryRoomAllAttributes\|_blank](@QueryRoomAllAttributes).
+When logging into a room, the latest room attributes will be returned through the {getPlatformData(props,onRoomAttributesUpdatedMap)}, and there is no need to call {getPlatformData(props,queryRoomAllAttributesMap)}.
 </Warning>
+:::
+
+
 
 
 

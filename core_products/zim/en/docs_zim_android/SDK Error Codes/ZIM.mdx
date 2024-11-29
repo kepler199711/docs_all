@@ -2,7 +2,7 @@
 
 
 <Warning title="Warning">
-The newly released **In-app Chat 2.0.0** has been upgraded considerably (for detailed changes, see [Release notes](./../Client%20SDKs/Release%20notes.mdx)). If the version of the SDK you are using is **earlier than 2.0.0**, for its error codes, see [Error codes for In-app Chat 1.x.x](https://docs.zegocloud.com/article/14297).
+The newly released **In-app Chat 2.0.0** has been upgraded considerably (for detailed changes, see [Release notes](./../Client%20SDKs/ZIM%20release%20notes.mdx)). If the version of the SDK you are using is **earlier than 2.0.0**, for its error codes, see [Error codes for In-app Chat 1.x.x](https://docs.zegocloud.com/article/14297).
 For a better development experience, we recommend you use the latest version of SDK.
 </Warning>
 
@@ -31,7 +31,7 @@ If the `errorCode` field exists in the result after the method is called, which 
 ```
 :::
 :::if{props.platform="Flutter"}
-If the `errorCode` field exists in the result after the method is called, which indicates that an error occurs. And the code will be like this: 
+If the `errorInfo` field exists in the result after the method is called, which indicates that an error occurs. And the code will be like this: 
 ```dart
 ZIMEventHandler.onError = (errorInfo) {
     log(errorInfo.code.toString()); // Error code
@@ -156,9 +156,9 @@ zim.login({ userID: '', userName: '' }, '')
 | 6000210 | File module error. Check the error message or submit the log to contact ZEGOCLOUD technical support |
 | 6000211 | The rich media content file doesn't exist. Please check it first. |
 | 6000212 | Failed to send rich media conetent. Please upload the log and contact ZEGOCLOUD Technical Support. |
-| 6000213 | Unsupported image/audio/video format. Please check the format first. For more details, refer to the [Message types\|_blank](!sendMessages#1). |
-| 6000214 | File size error. Please check the size first. For more about the size limit, refer to the [Message types\|_blank](!sendMessages#1).|
-| 6000215 | Audio duration error. Please check the duration first. For more about the duration limit, refer to the [Message types\|_blank](!sendMessages#1). |
+| 6000213 | Unsupported image/audio/video format. Please check the format first. For more details, refer to the [Message types\|_blank](./../Guides/Messaging/Send%20and%20receive%20messages.mdx#message-types). |
+| 6000214 | File size error. Please check the size first. For more about the size limit, refer to the [Message types\|_blank](./../Guides/Messaging/Send%20and%20receive%20messages.mdx#message-types).|
+| 6000215 | Audio duration error. Please check the duration first. For more about the duration limit, refer to the [Message types\|_blank](./../Guides/Messaging/Send%20and%20receive%20messages.mdx#message-types). |
 | 6000216 | The file does not have the correct read permissions. | Commonly used in sending rich media messages. The file to be sent does not have the correct read permissions and needs to be given corresponding permissions. |
 | 6000217 | A common error message for file download failure. Please upload the log first and contact ZEGOCLOUD technical support team for processing. |
 | 6000218 | The file size exceeds the upper limit, causing the download to fail. The upper limit of file size is 200 MB by default. If you need to adjust it, please contact ZEGOCLOUD technical support team. |

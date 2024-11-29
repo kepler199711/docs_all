@@ -8,11 +8,11 @@ ZEGO 语聊房解决方案预设 5 个麦位（包括主播麦位），听众人
 
 本方案房间内业务的整体架构如下图所示。由于业务后台仅管理房间列表，不涉及房间内业务，因此没有在下图中体现。房间内通过 ZIM SDK 进行消息的可靠传输，实现麦位管理，通过 ZEGO Express SDK 实现推拉流管理。   
 
-![/Pics/GoEnjoy/chathouse/Android/chat_house_internal_buiness_architec.png](http://doc.oa.zego.im/Pics/GoEnjoy/chathouse/Android/chat_house_internal_buiness_architec.png)
+![/Pics/GoEnjoy/chathouse/Android/chat_house_internal_buiness_architec.png](https://storage.zego.im/sdk-doc/Pics/GoEnjoy/chathouse/Android/chat_house_internal_buiness_architec.png)
 
 <div class="mk-warning">
 
-在实现本方案过程中，如果您无需使用 `视频` 相关服务（`纯音频` 场景），请及时调用 Express SDK 的 [enableCamera\|_blank](/article/api?doc=Express_Video_SDK_API~java_android~class~ZegoExpressEngine#enable-camera) 接口关闭摄像头（默认是开启的），以免产生视频使用时长，造成额外费用，给您带来不便。
+在实现本方案过程中，如果您无需使用 `视频` 相关服务（`纯音频` 场景），请及时调用 Express SDK 的 [enableCamera](https://doc-zh.zego.im/article/api?doc=Express_Video_SDK_API~java_android~class~ZegoExpressEngine#enable-camera) 接口关闭摄像头（默认是开启的），以免产生视频使用时长，造成额外费用，给您带来不便。
 </div>
 
 ## 体验 App 源码

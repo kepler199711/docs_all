@@ -13,8 +13,12 @@
           "type": "doc",
           "label": "Basic concepts",
           "id": "introduction/basic-concepts"
-        }
-      ]
+        },
+        {
+          "type": "doc",
+          "label": "Pricing",
+          "id": "introduction/pricing"
+        }      ]
     },
     {
       "type": "doc",
@@ -99,6 +103,11 @@
               "type": "doc",
               "label": "Friend management",
               "id": "guides/users/friend-management"
+            },
+            {
+              "type": "doc",
+              "label": "Online Status Subscription",
+              "id": "guides/users/online-status-subscription"
             }
           ]
         },
@@ -320,8 +329,13 @@
         },
         {
           "type": "doc",
-          "label": "Integrate FCM",
+          "label": "Integrate FCM (for Android)",
           "id": "offline-push-notifications/integrate-fcm"
+        },
+        {
+          "type": "doc",
+          "label": "Integrate FCM (for Web)",
+          "id": "offline-push-notifications/integrate-fcm-(for-web)"
         },
         {
           "type": "doc",
@@ -452,6 +466,23 @@
       "type": "doc",
       "label": "Migration solution",
       "id": "migration-solution"
+    },
+    {
+      "type": "category",
+      "collapsed": true,
+      "label": "API Reference",
+      "items": [
+        {
+          "type": "link",
+          "label": "Client API",
+          "href": "https://docs.zegocloud.com/article/17320"
+        },
+        {
+          "type": "link",
+          "label": "Server API",
+          "href": "https://www.zegocloud.com/docs/zim-server/overview"
+        }
+      ]
     }
   ]
 }
