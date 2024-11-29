@@ -89,9 +89,9 @@ uni-app 官方自定义调试基座使用说明请参考 [什么是自定义调�
 ```vue title="pages/invite/index.vue" 
 <template>
     <!-- 视频通话 -->
-    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VideoCall" :inviteeIDs="inviteeIDs" @pressed="onPressed" />
+    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VideoCall" :invitees="invitees" @pressed="onPressed" />
     <!-- 语音通话 -->
-    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VoiceCall" :inviteeIDs="inviteeIDs" @pressed="onPressed" />
+    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VoiceCall" :invitees="invitees" @pressed="onPressed" />
 </template>
 
 <script>
@@ -103,7 +103,7 @@ const appID = '您在 zego 控制台获取的 appID';
 const appSign = '您在 zego 控制台获取的 appSign';
 const userID = '您的 userID';
 const userName = '您的昵称';
-const inviteeIDs = ref(['需要邀请的用户ID'])
+const invitees = ref([{userID: '需要邀请的用户ID', userName: '需要邀请的用户名'}])
 
 onMounted(() => {
     ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, config);
@@ -164,7 +164,7 @@ const navigateTo = (url: string) => {
 
 | 属性        | 类型    | 必需 | 描述                                                      |
 | :---------- | :------ | :--- | :-------------------------------------------------------- |
-| inviteeIDs  | Array   | 是   | 被叫用户ID。               |
+| invitees  | [ZegoUser](./API%20Reference/config#zegouser)[]   | 是   | 被叫用户ID。               |
 | type        | number  | 是   | 呼叫类型。0:语音呼叫；1:视频呼叫  |
 | callName    | String  | 否   | 呼叫等待页显示的被叫用户名称。                          |
 | callID      | String  | 否   | 指定邀请ID。                          |
