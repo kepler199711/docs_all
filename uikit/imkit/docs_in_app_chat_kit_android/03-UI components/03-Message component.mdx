@@ -187,23 +187,145 @@ ZIMKit.registerMessageListListener(new ZIMKitMessagesListListener() {
 
 </Accordion>
 
-<Accordion title="Customizing input bar" defaultOpen="false">
 
-To customize the buttons on the input bar, you can configure them using `InputConfig`:
+<Accordion title="Modify Message Operation Menu" defaultOpen="false">
 
-- `showVoiceButton`: Whether to display the voice button.
-- `showEmojiButton`: Whether to display the Emoji button.
-- `showAddButton`: Whether to display the Add button.
+After long-pressing a message, the interface will display a message operation menu, providing options for copying, replying, forwarding messages, and other operations. To modify this menu, you can use `ZIMKitConfig.messageConfig`. This configuration allows for customizing the operation menu for different message types (text, image, video, file, voice, and combined messages).
 
+<Frame width="200" height="auto">
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/5abadcbf1b.jpeg" alt="MessageActionMenu.jpeg"/>
+</Frame>
 
-Here's the reference code:
+| Available Operation Types | Text Messages | Image Messages | Video Messages | File Messages | Voice Messages | Combined Messages |
+| ------------------------ | ------------ | ------------- | -------------- | ------------- | ------------- | --------------- |
+| COPY | ✔️ | ✖ | ✖ | ✖ | ✖ | ✖ |
+| REPLY | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+| FORWARD | ✔️ | ✔️ | ✔️ | ✔️ | ✖ | ✔️ |
+| MULTIPLE_CHOICE | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+| DELETE | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+| REVOKE | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+| SPEAKER | ✖ | ✖ | ✖ | ✖ | ✔️ | ✖ |
+| REACTION | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+
+Below is the reference code:
 
 ```java
-InputConfig inputConfig = new InputConfig();
-inputConfig.showVoiceButton = true;
-inputConfig.showEmojiButton = true;
-inputConfig.showAddButton = false;
-ZIMKit.setInputConfig(inputConfig);
+ZIMKitConfig config = ZIMKitConfig();
+
+// Text messages
+config.messageConfig.textMessageConfig.operations = new ArrayList<>(
+   Arrays.asList( ZIMKitMessageOperationName.COPY, // COPY
+    ZIMKitMessageOperationName.REPLY, // REPLY
+    ZIMKitMessageOperationName.FORWARD, // FORWARD
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE, // MULTIPLE_CHOICE
+    ZIMKitMessageOperationName.DELETE, // DELETE
+    ZIMKitMessageOperationName.REVOKE, // REVOKE
+    ZIMKitMessageOperationName.REACTION // REACTION
+    ) );
+
+// Image messages
+config.messageConfig.imageMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY,
+    ZIMKitMessageOperationName.FORWARD,
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE,
+    ZIMKitMessageOperationName.DELETE,
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+
+// Video messages
+config.messageConfig.videoMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY,
+    ZIMKitMessageOperationName.FORWARD,
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE,
+    ZIMKitMessageOperationName.DELETE,
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+
+// File messages
+config.messageConfig.fileMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY,
+    ZIMKitMessageOperationName.FORWARD,
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE,
+    ZIMKitMessageOperationName.DELETE,
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+
+// Voice messages
+config.messageConfig.audioMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.SPEAKER, // SPEAKER
+    ZIMKitMessageOperationName.FORWARD,
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE,
+    ZIMKitMessageOperationName.DELETE,
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+
+// Combined forward messages
+config.messageConfig.combineMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY,
+    ZIMKitMessageOperationName.FORWARD,
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE,
+    ZIMKitMessageOperationName.DELETE,
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+```
+
+</Accordion>
+
+<Accordion title="Customize Input Bar" defaultOpen="false">
+
+To customize the buttons on the bottom toolbar, you can use `ZIMKitConfig.inputConfig.smallButtons` and `ZIMKitConfig.inputConfig.expandButtons` for configuration:
+
+- `smallButtons`: Configure the input box quick buttons, which currently default to showing voice input, emojis, photo album pictures, and extension buttons.
+- `expandButtons`: Configure the input box extension buttons, which currently default to showing send photo and send file buttons.
+
+Below is the reference code:
+
+```java
+// smallButtons add send file button to the bottom toolbar input box quick buttons
+config.inputConfig.smallButtons.add(ZIMKitInputButtonName.FILE);
+
+// expandButtons add send picture button to the bottom toolbar input box extension buttons
+config.bottomConfig.expandButtons.add(ZIMKitInputButtonName.VOICE_CALL);
+```
+
+</Accordion>
+
+<Accordion title="Modify Input Box Hint Text" defaultOpen="false">
+
+If you need to modify the default hint text of the bottom input box, you can use `ZIMKitConfig.inputConfig.inputHint` for configuration:
+
+Below is the reference code:
+```java
+ZIMKitConfig config = ZIMKitConfig();
+config.inputConfig.inputHint = "input hint";
+```
+
+</Accordion>
+
+<Accordion title="Customize Emoji Panel" defaultOpen="false">
+
+In-app Chat Kit provides a series of default emojis for sending emojis in conversations and expressing attitudes towards messages. If you are not satisfied with the default emojis provided, you can pass all the emojis you need through `ZIMKitConfig.inputConfig.emojis`.
+
+<table>
+  <tr>
+    <th>Send Emojis</th>
+    <th>Message Reactions</th>
+  </tr>
+  <tr>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/06864fe88e.jpeg" alt="Emoji_1.jpeg" width="200"/></td>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/a884ba82f8.jpeg" alt="Emoji_2.jpeg" width="200" /></td>
+  </tr>
+</table>
+
+Below is the reference code:
+```java
+ZIMKitConfig config = ZIMKitConfig();
+ZIMKitConfig.inputConfig.emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂"];
 ```
 
 </Accordion>
