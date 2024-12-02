@@ -44,7 +44,7 @@
 
 ### 2 创建引擎并登录房间
 
-具体流程请参考“实现视频通话”文档的 [创建引擎\|_blank](!Integration/Solution_Implementation#4_1) 和 [登录房间\|_blank](!Integration/Solution_Implementation#4_2) 章节。
+具体流程请参考“实现视频通话”文档的 [创建引擎](!Integration/Solution_Implementation#4_1) 和 [登录房间](!Integration/Solution_Implementation#4_2) 章节。
 
 <div class = 'mk-warning'>
 

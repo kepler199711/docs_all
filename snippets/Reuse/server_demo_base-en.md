@@ -1,6 +1,6 @@
 ## GET 请求示例代码
 
-ZEGO 提供多种编程语言的示例代码，开发者可根据实际情况进行参考。以 [获取房间用户列表\|_blank](#13276) 接口，向 ZEGO 服务端发送 GET 请求为例：
+ZEGO 提供多种编程语言的示例代码，开发者可根据实际情况进行参考。以 [获取房间用户列表](#13276) 接口，向 ZEGO 服务端发送 GET 请求为例：
 
 <details class="zg-primary">
     <summary>获取房间用户列表（Go）</summary>
@@ -413,7 +413,7 @@ request(url, function(error, response, body){
 
 ## POST 请求示例代码
 
-ZEGO 提供多种编程语言的示例代码，开发者可根据实际情况进行参考。我们以 [开始混流\|_blank](#8791)，向 ZEGO 服务端发送 POST 请求为例。
+ZEGO 提供多种编程语言的示例代码，开发者可根据实际情况进行参考。我们以 [开始混流](#8791)，向 ZEGO 服务端发送 POST 请求为例。
 
 <details class="zg-primary">
     <summary>开始混流（Go）</summary>

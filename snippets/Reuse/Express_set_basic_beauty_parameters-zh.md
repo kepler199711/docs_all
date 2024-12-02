@@ -1,4 +1,4 @@
-初始化美颜环境后，您可以在推流前后，调用 [setEffectsBeautyParam\|_blank](@setEffectsBeautyParam) 接口实时设置美颜效果参数。
+初始化美颜环境后，您可以在推流前后，调用 [setEffectsBeautyParam](@setEffectsBeautyParam) 接口实时设置美颜效果参数。
 
 - smoothIntensity：磨皮，在保留脸部细节的基础上进行磨皮，比如脸上的痣会保留。
 - whitenIntensity：美白，对画面整体调高亮度来美白脸部。

@@ -14,9 +14,9 @@
 
 ### 前提条件
 
-- 已在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，并获取该项目的 AppID 和 ServerSecret，详情请参考 [控制台 - 项目信息\|_blank](https://doc-zh.zego.im/article/12107)。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并获取该项目的 AppID 和 ServerSecret，详情请参考 [控制台 - 项目信息](https://doc-zh.zego.im/article/12107)。
 - 已联系 ZEGO 商务人员开通小游戏服务。
-- 已获取服务端示例源码，详情请参考 [下载\|_blank](!ZegoMiniGameEngine-download)。
+- 已获取服务端示例源码，详情请参考 [下载](!ZegoMiniGameEngine-download)。
 
 ### 示例源码目录结构
 

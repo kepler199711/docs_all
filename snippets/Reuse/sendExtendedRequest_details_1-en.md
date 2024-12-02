@@ -4,7 +4,7 @@
 
 <div class="mk-hint">
 
-相比原有 [歌单\|_blank](#15438) 接口，[标签\|_blank](!copyright_music_agreement/copyright_music_agreement#0_1) 接口歌曲资源更丰富，且支持动态更新。因此，ZEGO 推荐开发者使用 [标签\|_blank](!copyright_music_agreement/copyright_music_agreement#0_1) 接口获得歌曲列表相关内容。
+相比原有 [歌单](#15438) 接口，[标签](!copyright_music_agreement/copyright_music_agreement#0_1) 接口歌曲资源更丰富，且支持动态更新。因此，ZEGO 推荐开发者使用 [标签](!copyright_music_agreement/copyright_music_agreement#0_1) 接口获得歌曲列表相关内容。
 
 </div>
 
@@ -123,7 +123,7 @@
 
 ### 1.2 根据标签获取歌曲
 
-需通过 [获取标签列表\|_blank](!copyright_music_agreement/copyright_music_agreement#0_1) 中的标签 ID，可获取对应的歌曲 ID、歌曲名、歌曲专辑、以及版权相关信息等。
+需通过 [获取标签列表](!copyright_music_agreement/copyright_music_agreement#0_1) 中的标签 ID，可获取对应的歌曲 ID、歌曲名、歌曲专辑、以及版权相关信息等。
 
 #### 请求参数
 

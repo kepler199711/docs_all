@@ -17,14 +17,14 @@ ZEGO 语聊房解决方案预设 5 个麦位（包括主播麦位），听众人
 
 ## 体验 App 源码
 
-ZEGO 针对语聊房场景提供了 [体验 App 源码\|_blank](!ChatHouse-DownloadDemo)，以供开发者进一步了解 ZEGO 语聊房方案。
+ZEGO 针对语聊房场景提供了 [体验 App 源码](!ChatHouse-DownloadDemo)，以供开发者进一步了解 ZEGO 语聊房方案。
 
 ## 前提条件
 
-- 已在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息\|_blank](#12107)。
-- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成|_blank](!ExpressVideoSDK-Integration/SDK_Integration)。
-- 已在项目中集成 ZIM SDK，实现基本的消息收发功能，详情请参考 [即时通讯 - 快速开始 - 实现基本消息收发|_blank](!IM-Quick_Starts/Implementation_of_sending_and_receiving)。
-- 已在 [ZEGO 控制台\|_blank](https://console.zego.im) 开通即时通讯服务，详情请参考 [控制台 - 服务配置 - 即时通讯\|_blank](#14994)。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息](#12107)。
+- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成](!ExpressVideoSDK-Integration/SDK_Integration)。
+- 已在项目中集成 ZIM SDK，实现基本的消息收发功能，详情请参考 [即时通讯 - 快速开始 - 实现基本消息收发](!IM-Quick_Starts/Implementation_of_sending_and_receiving)。
+- 已在 [ZEGO 控制台](https://console.zego.im) 开通即时通讯服务，详情请参考 [控制台 - 服务配置 - 即时通讯](#14994)。
 
 
 

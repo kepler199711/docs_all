@@ -13,7 +13,7 @@ For business security, you must generate tokens on your app server; Otherwise, t
 
 </div>
 
-ZEGOCLOUD provides an open-source [token generator\|_blank](https://github.com/zegoim/zego_server_assistant) plug-in on GitHub, which you can use to generate tokens on your app server or client using different programming languages such as Go, C++, Java, Python, PHP,.NET, and Node.js.
+ZEGOCLOUD provides an open-source [token generator](https://github.com/zegoim/zego_server_assistant) plug-in on GitHub, which you can use to generate tokens on your app server or client using different programming languages such as Go, C++, Java, Python, PHP,.NET, and Node.js.
 
 
 

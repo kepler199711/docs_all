@@ -59,6 +59,6 @@
 
 实现“在线鉴权”之前：
 
-1. 请先在 [ZEGO 控制台\|_blank](https://console.zego.im/) 创建项目，并申请有效的 AppId 并申请有效的 AppId，详情请参考 [控制台 - 项目管理\|_blank](#12107) 中的“项目信息”。
+1. 请先在 [ZEGO 控制台](https://console.zego.im/) 创建项目，并申请有效的 AppId 并申请有效的 AppId，详情请参考 [控制台 - 项目管理](#12107) 中的“项目信息”。
 
 2. 请联系 ZEGO 商务人员，提供申请到的 AppId，获取鉴权需要使用的 AppSign，并开通相关权限。

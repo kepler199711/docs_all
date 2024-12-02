@@ -9,7 +9,7 @@ the custom video pre-processing does not require you to manage the device input 
  
 <div class="mk-hint">
  
-For more advanced features such as layer blending, we recommend you refer to the [Customize how the video captures\|_blank](!VideoAdvanced/CustomVideoCapture).  	 
+For more advanced features such as layer blending, we recommend you refer to the [Customize how the video captures](!VideoAdvanced/CustomVideoCapture).  	 
 </div>
 
 

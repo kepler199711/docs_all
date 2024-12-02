@@ -24,7 +24,7 @@ ZEGO 不提供GO课堂后台运营服务，开放GO课堂服务源代码，开�
 
 ## 2 服务简介
 
-GO课堂服务是采用 Go 语言，基于开源的 HTTP 框架 [beego\|_blank](https://github.com/astaxie/beego) 开发出来的一款后端服务应用。目前版本仅依赖 `redis` 来存储数据，支持水平扩展，开发者可以根据需要进行扩容。
+GO课堂服务是采用 Go 语言，基于开源的 HTTP 框架 [beego](https://github.com/astaxie/beego) 开发出来的一款后端服务应用。目前版本仅依赖 `redis` 来存储数据，支持水平扩展，开发者可以根据需要进行扩容。
 
 
 <div class="mk-warning">
@@ -43,7 +43,7 @@ GO课堂服务是采用 Go 语言，基于开源的 HTTP 框架 [beego\|_blank](
 
 <div class="mk-hint">
 
-请到 [ZEGO 控制台\|_blank](https://console-express.zego.im/account/login) 注册账号并申请 AppID 与 ServerSecret，申请流程请参考 [项目管理\|_blank](https://doc-zh.zego.im/zh/1265.html)。  
+请到 [ZEGO 控制台](https://console-express.zego.im/account/login) 注册账号并申请 AppID 与 ServerSecret，申请流程请参考 [项目管理](https://doc-zh.zego.im/zh/1265.html)。  
 </div>
 
 ```

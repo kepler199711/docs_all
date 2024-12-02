@@ -44,9 +44,9 @@
 | 6000210 | 文件模块错误。  | 查看 error message，或提交日志联系 ZEGO 技术支持。 |
 | 6000211 | The rich media content file doesn't exist. Please check it first. |
 | 6000212 | Failed to send rich media conetent. Please upload the log and contact ZEGOCLOUD Technical Support. |
-| 6000213 | Unsupported image/audio/video format. Please check the format first. For more details, refer to the [Message types\|_blank](!sendMessages#1). |
-| 6000214 | File size error. Please check the size first. For more about the size limit, refer to the [Message types\|_blank](!sendMessages#1).|
-| 6000215 | Audio duration error. Please check the duration first. For more about the duration limit, refer to the [Message types\|_blank](!sendMessages#1). |
+| 6000213 | Unsupported image/audio/video format. Please check the format first. For more details, refer to the [Message types](!sendMessages#1). |
+| 6000214 | File size error. Please check the size first. For more about the size limit, refer to the [Message types](!sendMessages#1).|
+| 6000215 | Audio duration error. Please check the duration first. For more about the duration limit, refer to the [Message types](!sendMessages#1). |
 | 6000216 | The file does not have the correct read permissions. | Commonly used in sending rich media messages. The file to be sent does not have the correct read permissions and needs to be given corresponding permissions. |
 | 6000217 | A common error message for file download failure. Please upload the log first and contact ZEGOCLOUD technical support team for processing. |
 | 6000218 | The file size exceeds the upper limit, causing the download to fail. The upper limit of file size is 200 MB by default. If you need to adjust it, please contact ZEGOCLOUD technical support team. |

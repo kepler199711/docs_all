@@ -2,7 +2,7 @@ After getting your AppID and ServerSecret, you can define the validation rules o
 
 Upon request from your app clients, your app server generates Tokens and sends the Tokens to the corresponding app clients. 
 
-ZEGOCLOUD provides an open-source [Token generator\|_blank](https://github.com/ZEGOCLOUD/zego_server_assistant) plug-in on GitHub, which you can use to generate Tokens on your app server using different programming languages such as Go, C++, Java, Python, PHP,.NET, and Node.js.
+ZEGOCLOUD provides an open-source [Token generator](https://github.com/ZEGOCLOUD/zego_server_assistant) plug-in on GitHub, which you can use to generate Tokens on your app server using different programming languages such as Go, C++, Java, Python, PHP,.NET, and Node.js.
 
 Currently, the Token generator we provided supports generating the following two Tokens:
 
@@ -15,7 +15,7 @@ Currently, the Token generator we provided supports generating the following two
 <div class="mk-warning">
 
 - For business security, you must generate Tokens on your app server; Otherwise, there is a risk of ServerSecret being stolen.
-- For the ZEGO Express SDK 2.17.0 or later, use the `token04` of the [Token generator\|_blank](https://github.com/ZEGOCLOUD/zego_server_assistant) to generate a Token.
+- For the ZEGO Express SDK 2.17.0 or later, use the `token04` of the [Token generator](https://github.com/ZEGOCLOUD/zego_server_assistant) to generate a Token.
 </div>
 
 <table>
@@ -189,7 +189,7 @@ func main() {
 
 ## How to get a temporary Token
 
-To make it easier for you to try and test the user authentication feature, [ZEGOCLOUD Admin Console\|_blank](https://console.zegocloud.com) provides a tool for generating temporary Tokens, which you can use directly in a testing environment. In production, you must generate Tokens on your app server.
+To make it easier for you to try and test the user authentication feature, [ZEGOCLOUD Admin Console](https://console.zegocloud.com) provides a tool for generating temporary Tokens, which you can use directly in a testing environment. In production, you must generate Tokens on your app server.
 
 
 

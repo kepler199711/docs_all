@@ -1,4 +1,4 @@
-您可以通过注册 [onPlayerVideoSizeChanged\|_blank](@onPlayerVideoSizeChanged) 获取拉流分辨率变更通知。拉流成功后，在拉流中途如果有视频分辨率发生变化将会收到此回调，用户可根据流的最终分辨率调整显示。
+您可以通过注册 [onPlayerVideoSizeChanged](@onPlayerVideoSizeChanged) 获取拉流分辨率变更通知。拉流成功后，在拉流中途如果有视频分辨率发生变化将会收到此回调，用户可根据流的最终分辨率调整显示。
 
 <div class='mk-hint'>
 

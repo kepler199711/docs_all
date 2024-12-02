@@ -208,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
                 // Login successful.
                 Toast.makeText(this, "Login successful.", Toast.LENGTH_LONG).show();
             } else {
-                // Login failed. For details, see [Error codes\|_blank](!Error_Code).
-                Toast.makeText(this, "Login failed. For details, see [Error codes\|_blank](!Error_Code).", Toast.LENGTH_LONG).show();.
+                // Login failed. For details, see [Error codes](!Error_Code).
+                Toast.makeText(this, "Login failed. For details, see [Error codes](!Error_Code).", Toast.LENGTH_LONG).show();.
             }
         });
     }

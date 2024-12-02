@@ -1,4 +1,4 @@
-After initializing the face beautification environment, you can call the [`setEffectsBeautyParam`\|_blank](@setEffectsBeautyParam) method to set the intensity as needed **after or before the stream publishing**.
+After initializing the face beautification environment, you can call the [`setEffectsBeautyParam`](@setEffectsBeautyParam) method to set the intensity as needed **after or before the stream publishing**.
 
 - smoothIntensity: Skin smoothing. Smooth the skin while preserving details of the face, such as moles.
 - whitenIntensity: Skin tone enhancement. Turn up the overall brightness to whiten your face.

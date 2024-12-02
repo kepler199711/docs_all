@@ -7,7 +7,7 @@ ZIM SDK 集成到 App 后，App 的增量大小如下：
 | macOS | <ul><li>arm64：5.11 MB</li><li>x64：5.69 MB</li></ul> |
 | Windows | <ul><li>x64：5.7 MB</li><li>x86：4.7 MB</li></ul> |
 
-如需了解更多，请参考 [什么是 SDK 的安装包大小增量？\|_blank](https://doc-zh.zego.im/faq/common_faq_sdk_package_size?product=ZegoAvatar&platform=flutter)
+如需了解更多，请参考 [什么是 SDK 的安装包大小增量？](https://doc-zh.zego.im/faq/common_faq_sdk_package_size?product=ZegoAvatar&platform=flutter)
 
 
 

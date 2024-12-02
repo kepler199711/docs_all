@@ -20,7 +20,7 @@ The following figure shows how to perform token-based authentication during init
 
 ## Prerequisites
 
-Before you perform token-based authentication, make sure that ZEGO MiniGameEngine SDK is integrated with the project. For more information, see [Integrate the SDK\|_blank](!ZegoMiniGameEngine-Integrate_SDK).
+Before you perform token-based authentication, make sure that ZEGO MiniGameEngine SDK is integrated with the project. For more information, see [Integrate the SDK](!ZegoMiniGameEngine-Integrate_SDK).
 
 ## Procedure
 
@@ -36,7 +36,7 @@ To ensure security, we recommend that you generate a token on your own server.
 
 #### 1.1 Obtain the values of the `AppID` and `ServerSecret` parameters
 
-Log in to the [ZEGO console\|_blank](https://console.zegocloud.com) and create a project. Obtain the values of the `AppID` and `ServerSecret` parameters that are required to connect to the mini-game service. Then, contact ZEGO business staff to activate the mini-game service.
+Log in to the [ZEGO console](https://console.zegocloud.com) and create a project. Obtain the values of the `AppID` and `ServerSecret` parameters that are required to connect to the mini-game service. Then, contact ZEGO business staff to activate the mini-game service.
 
 #### 1.2 Generate a token on your server
 

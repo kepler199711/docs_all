@@ -1,4 +1,4 @@
-ZEGO 针对移动端提供 4 种采集旋转模式（固定比例模式、拉流自适应模式、拉流适应推流模式及自定义模式），以简化开发者实现多端旋转表现时面临的复杂适配问题，如摄像头角度、分辨率、自动旋转、statusbar（状态栏）位置适配等。您可以根据旋转表现和业务场景要求，通过 [setAppOrientationMode\|_blank](@setAppOrientationMode) 接口配置不同模式。
+ZEGO 针对移动端提供 4 种采集旋转模式（固定比例模式、拉流自适应模式、拉流适应推流模式及自定义模式），以简化开发者实现多端旋转表现时面临的复杂适配问题，如摄像头角度、分辨率、自动旋转、statusbar（状态栏）位置适配等。您可以根据旋转表现和业务场景要求，通过 [setAppOrientationMode](@setAppOrientationMode) 接口配置不同模式。
 
 <div class="mk-warning">
 
@@ -90,12 +90,12 @@ ZEGO 针对移动端提供 4 种采集旋转模式（固定比例模式、拉流
 ### 自定义模式
 
 
-在自定义模式模式下，您可以根据需求自定义视频采集旋转的表现形式，实现方式更加灵活，具体实现步骤，请参考 [如何自定义视频采集旋转方式？\|_blank](http://doc-zh.zego.im/faq/express_video_capture_rotation?product=ExpressVideo&platform=ios)
+在自定义模式模式下，您可以根据需求自定义视频采集旋转的表现形式，实现方式更加灵活，具体实现步骤，请参考 [如何自定义视频采集旋转方式？](http://doc-zh.zego.im/faq/express_video_capture_rotation?product=ExpressVideo&platform=ios)
 
 ## 实现流程
 
 <div class="mk-warning">
 
 
-以下实现流程仅适用于固定比例模式、拉流自适应模式及拉流适应推流模式，如需自定义视频采集旋转方式，请参考 [如何自定义视频采集旋转方式？\|_blank](http://doc-zh.zego.im/faq/express_video_capture_rotation?product=ExpressVideo&platform=ios)
+以下实现流程仅适用于固定比例模式、拉流自适应模式及拉流适应推流模式，如需自定义视频采集旋转方式，请参考 [如何自定义视频采集旋转方式？](http://doc-zh.zego.im/faq/express_video_capture_rotation?product=ExpressVideo&platform=ios)
 </div>

@@ -23,8 +23,8 @@
 
 在实现实时有序数据功能之前，请确保：
 
-- 已在项目中集成 ZEGO Express SDK，详情请参考 [快速开始 - 集成\|_blank](!Integration/SDK_Integration)。
-- 已在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理\|_blank](#1265)。
+- 已在项目中集成 ZEGO Express SDK，详情请参考 [快速开始 - 集成](!Integration/SDK_Integration)。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理](#1265)。
 
 
 ## 4 使用步骤
@@ -44,5 +44,5 @@
 
 ### 4.1 创建引擎
 
-首先，开发者需要调用 [createEngine\|_blank](@createEngine) 接口，创建 Express 引擎单例对象；并调用 [setEventHandler\|_blank](@setEventHandler) 接口，设置相关事件回调通知。
+首先，开发者需要调用 [createEngine](@createEngine) 接口，创建 Express 引擎单例对象；并调用 [setEventHandler](@setEventHandler) 接口，设置相关事件回调通知。
 

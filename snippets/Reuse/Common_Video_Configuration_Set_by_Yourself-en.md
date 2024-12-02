@@ -1,13 +1,13 @@
 <div class="mk-warning">
 
-You will need to set up the video configuration before the stream publishing starts ([`startPublishingStream`\|_blank](@startPublishingStream)) or local video preview starts ([`startPreview`\|_blank](@startPreview)).
+You will need to set up the video configuration before the stream publishing starts ([`startPublishingStream`](@startPublishingStream)) or local video preview starts ([`startPreview`](@startPreview)).
 
 Only the encoder resolution and bitrate can be modified after stream publishing. 
 
 </div>
 
 
-To set up the video configuration, call the [`setVideoConfig`\|_blank](@setVideoConfig-ZegoExpressEngine) method. If you don't customize your video configuration, ZEGO uses the default values as shown below:
+To set up the video configuration, call the [`setVideoConfig`](@setVideoConfig-ZegoExpressEngine) method. If you don't customize your video configuration, ZEGO uses the default values as shown below:
 
 |Item|Default value|
 |-|-|

@@ -35,7 +35,7 @@
 
 #### 3.1.1 获取 AppID 和 ServerSecret
 
-生成 ZEGO 影视资源 Token 需要开发者项目的唯一标识 AppId 和密钥 ServerSecret，请参考 [控制台 - 项目管理\|_blank](#12107) 中的 “项目信息”获取。
+生成 ZEGO 影视资源 Token 需要开发者项目的唯一标识 AppId 和密钥 ServerSecret，请参考 [控制台 - 项目管理](#12107) 中的 “项目信息”获取。
 
 <div class="mk-warning">
 

@@ -2,13 +2,13 @@
 
 在实现基本的播放视频功能之前，请确保：
 
-- 已在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息\|_blank](#12107)。
-- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成 SDK|_blank](!ExpressVideoSDK-Integration/SDK_Integration)。
-- 已在项目中集成 ZegoAccurateSyncMediaPlayer SDK，详情请参考 [精准同步播放器 - 快速开始 - 集成 SDK\|_blank](!ZegoAccurateSyncMediaPlayerSDK-Integrated_CopyrightedVideo_SDK)。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息](#12107)。
+- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成 SDK](!ExpressVideoSDK-Integration/SDK_Integration)。
+- 已在项目中集成 ZegoAccurateSyncMediaPlayer SDK，详情请参考 [精准同步播放器 - 快速开始 - 集成 SDK](!ZegoAccurateSyncMediaPlayerSDK-Integrated_CopyrightedVideo_SDK)。
 
 ## 示例 Demo
 
-ZEGO 提供了[示例 Demo\|_blank](#15768)，以供开发者进一步了解。
+ZEGO 提供了[示例 Demo](#15768)，以供开发者进一步了解。
 
 ## 实现流程
 
@@ -256,7 +256,7 @@ ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
 
 ### 进度同步
 
-观众注册了 [onVideoProgressGapWithServer\|_blank](@onVideoProgressGapWithServer) 后，在播放过程中，会收到进度不同步的相关通知，此时可以调用 [syncServerProgress\|_blank](@syncServerProgress) 接口，同步自己的播放进度，和服务器保持一致。
+观众注册了 [onVideoProgressGapWithServer](@onVideoProgressGapWithServer) 后，在播放过程中，会收到进度不同步的相关通知，此时可以调用 [syncServerProgress](@syncServerProgress) 接口，同步自己的播放进度，和服务器保持一致。
 
 ```objc
 // videoID 为房间内正在播放的视频的 ID
@@ -265,7 +265,7 @@ ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
 
 <div class="mk-hint">
 
-自定义影视资源的 videoID，需要调用 [loadVideo\|_blank](@loadVideo) 接口加载成功后，才能从 ZegoAccurateSyncMediaPlayer 的 属性 [videoID\|_blank](@videoID-ZegoAccurateSyncMediaPlayer) 获得。
+自定义影视资源的 videoID，需要调用 [loadVideo](@loadVideo) 接口加载成功后，才能从 ZegoAccurateSyncMediaPlayer 的 属性 [videoID](@videoID-ZegoAccurateSyncMediaPlayer) 获得。
 </div>
 
 ### 资源回收
@@ -279,7 +279,7 @@ ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
     ```
 
 2. 销毁播放的视频资源。 
-播放视频结束后，观众如需销毁本地的视频播放资源，可以调用 [unInit\|_blank](@unInit) 接口，销毁本地资源，并反初始化 SDK。
+播放视频结束后，观众如需销毁本地的视频播放资源，可以调用 [unInit](@unInit) 接口，销毁本地资源，并反初始化 SDK。
 
     ```objc
     [[ZegoAccurateSync sharedManager] unInit];
@@ -295,10 +295,10 @@ ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
 ## 更多功能
 
 ### 实时通话
-用户可以向房间内其他用户发起实时音视频通话。详情请参考 [实时音视频\|_blank](#5413)。
+用户可以向房间内其他用户发起实时音视频通话。详情请参考 [实时音视频](#5413)。
 
 ### 实时消息互动
-通过 ZEGO 即时通讯服务，实时展示房间内的消息，例如文本消息和弹幕消息发送、进退房提示、互动通知等。详情请参考 [即时通讯\|_blank](#11587)。
+通过 ZEGO 即时通讯服务，实时展示房间内的消息，例如文本消息和弹幕消息发送、进退房提示、互动通知等。详情请参考 [即时通讯](#11587)。
 
 ### 送礼物
-用户可向房间内其他用户赠送礼物。详情请参考 [即时通讯\|_blank](#11587)。
+用户可向房间内其他用户赠送礼物。详情请参考 [即时通讯](#11587)。

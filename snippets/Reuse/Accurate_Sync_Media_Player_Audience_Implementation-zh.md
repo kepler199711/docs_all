@@ -2,14 +2,14 @@
 
 在实现同步播放视频之前，请确保：
 
-- 已在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息\|_blank](#12107)。
-- 已在项目中集成 ZegoAccurateSyncMediaPlayer SDK，详情请参考 [精准同步播放器 - 快速开始 - 集成 SDK\|_blank](!ZegoAccurateSyncMediaPlayerSDK-Integrated_CopyrightedVideo_SDK)。
-- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成 SDK|_blank](!ExpressVideoSDK-Integration/SDK_Integration)。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息](#12107)。
+- 已在项目中集成 ZegoAccurateSyncMediaPlayer SDK，详情请参考 [精准同步播放器 - 快速开始 - 集成 SDK](!ZegoAccurateSyncMediaPlayerSDK-Integrated_CopyrightedVideo_SDK)。
+- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成 SDK](!ExpressVideoSDK-Integration/SDK_Integration)。
 
 
 ## 示例 Demo
 
-ZEGO 提供了[示例 Demo\|_blank](!DownloadDemo/DownloadDemo)，以供开发者进一步了解。
+ZEGO 提供了[示例 Demo](!DownloadDemo/DownloadDemo)，以供开发者进一步了解。
 
 
 ## 实现流程

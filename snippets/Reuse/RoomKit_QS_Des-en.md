@@ -2,7 +2,7 @@
 RoomKit provides different system integration solutions for different cases:
 
 1. If your application already has a user management system and room (channel, group) management system, you can use your existing systems to manage user IDs and room IDs. 
-2. If your application doesn't have a room (channel, group) management system, you can integrate ZEGO's Education Cloud Service to manage rooms. For detailed integration instructions, see [Manage rooms with Education Cloud Service\|_blank](!Advanced_Function/AdvFunc_EduCS).
+2. If your application doesn't have a room (channel, group) management system, you can integrate ZEGO's Education Cloud Service to manage rooms. For detailed integration instructions, see [Manage rooms with Education Cloud Service](!Advanced_Function/AdvFunc_EduCS).
 
 This document describes the implementation process based on the first scenario. 
 

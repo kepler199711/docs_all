@@ -1,4 +1,4 @@
-- 安装 Unity 2021.3.18f1c1 或以上版本。若未安装，可以在 [Unity 官网\|_blank](https://unity.com/download) 下载 Unity Hub，然后安装您需要的 Unity 版本（若不清楚，建议您安装最新的 LTS 版本）。下载时，推荐根据自身需要运行到的平台，勾选对应的 Plaforms 模块一起下载，以在 Windows 上安装为例：
+- 安装 Unity 2021.3.18f1c1 或以上版本。若未安装，可以在 [Unity 官网](https://unity.com/download) 下载 Unity Hub，然后安装您需要的 Unity 版本（若不清楚，建议您安装最新的 LTS 版本）。下载时，推荐根据自身需要运行到的平台，勾选对应的 Plaforms 模块一起下载，以在 Windows 上安装为例：
 
     <img src="/Pics/ZIM/Unity/unityEnv.jpeg" width="80%">
 

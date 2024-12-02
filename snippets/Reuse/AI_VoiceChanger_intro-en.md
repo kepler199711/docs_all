@@ -6,7 +6,7 @@ The AI voice changer changes a user's voice as needed while retaining the origin
 
 - The AI voice changer is a paid feature. For more information about free trials or official billing, contact ZEGOCLOUD business staff.
 - This feature is available for ZEGO Express SDK 3.10.0 or later and is unavailable for the SDK on the official website. If you need to use it, contact ZEGO technical support for dedicated package building.
-- This feature cannot work with the [custom audio processing\|_blank](!AudioAdvanced/Audio_preprocessing) feature.
+- This feature cannot work with the [custom audio processing](!AudioAdvanced/Audio_preprocessing) feature.
 </div>
 
 ### Advantages

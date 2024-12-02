@@ -1,6 +1,6 @@
 #### 1. **How to capture screen video and system audio?**
 
-To capture screen video and system audio, please refer to [Share the screen\|_blank](!ExpressVideoSDK-Other_Functions/Share_Screen).
+To capture screen video and system audio, please refer to [Share the screen](!ExpressVideoSDK-Other_Functions/Share_Screen).
 
 #### 2. **Is it possible to set up multiple media players?**
 

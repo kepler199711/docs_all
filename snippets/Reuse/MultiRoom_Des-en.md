@@ -29,8 +29,8 @@
 
 在实现多房间功能之前，请确保：
 
-- 已在项目中集成 ZEGO LiveRoom SDK，实现基本的实时音视频功能，详情请参考 [快速开始 - 集成\|_blank](!Integration/SDK_Integration) 等。
-- 已在 ZEGO 控制台 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理\|_blank](#1265)。
+- 已在项目中集成 ZEGO LiveRoom SDK，实现基本的实时音视频功能，详情请参考 [快速开始 - 集成](!Integration/SDK_Integration) 等。
+- 已在 ZEGO 控制台 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理](#1265)。
 - 已联系 ZEGO 技术支持开通多房间功能。
 
 

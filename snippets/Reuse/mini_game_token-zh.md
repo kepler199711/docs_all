@@ -19,7 +19,7 @@
 
 ## 前提条件
 
-在使用 Token 鉴权之前，请确保已在项目中集成 ZEGO MiniGameEngine SDK，详情请参考 [集成 SDK\|_blank](!ZegoMiniGameEngine-Integrate_SDK)。
+在使用 Token 鉴权之前，请确保已在项目中集成 ZEGO MiniGameEngine SDK，详情请参考 [集成 SDK](!ZegoMiniGameEngine-Integrate_SDK)。
 
 ## 使用步骤
 
@@ -34,7 +34,7 @@
 
 #### 1.1 获取 AppID 和 ServerSecret。
 
-前往 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，获取接入小游戏服务所需的 AppID 和 ServerSecret。随后联系 ZEGO 商务人员开通小游戏服务。
+前往 [ZEGO 控制台](https://console.zego.im) 创建项目，获取接入小游戏服务所需的 AppID 和 ServerSecret。随后联系 ZEGO 商务人员开通小游戏服务。
 
 #### 1.2 开发者服务端生成 Token。
 
