@@ -606,3 +606,20 @@ ZegoUIKitPrebuiltCallInvitationService.shared.callVCDelegate = self
 >    }
 >}
 > ```
+## ZegoUIKitEventHandle
+
+## onIMRecvCustomCommand
+
+> - function prototype：
+>    ```swift
+>    func onIMRecvCustomCommand(_ fromUser: ZegoUIKitUser, command: String)
+>    ```
+
+> - example：
+>    ```swift
+>    extension ViewController: ZegoUIKitEventHandle {
+>         func onIMRecvCustomCommand(_ fromUser: ZegoUIKitUser, command: String) {
+>           // ...
+>        }
+>    }
+>    ```

@@ -502,3 +502,21 @@ ZegoUIKitPrebuiltCallInvitationService.shared.callVCDelegate = self
         }
     }
     ```
+
+## ZegoUIKitEventHandle
+
+## onIMRecvCustomCommand
+
+- 函数原型：
+    ```swift
+    func onIMRecvCustomCommand(_ fromUser: ZegoUIKitUser, command: String)
+    ```
+
+- 示例：
+    ```swift
+    extension ViewController: ZegoUIKitEventHandle {
+         func onIMRecvCustomCommand(_ fromUser: ZegoUIKitUser, command: String) {
+
+        }
+    }
+    ```
