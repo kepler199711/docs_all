@@ -95,6 +95,9 @@ Open the `my_project/android/app/proguard-rules.pro` file and add the following:
 
 ```xml
 -keep class **.zego.**  { *; }
+
+-keep class com.hiennv.flutter_callkit_incoming.SharedPreferencesUtils* {*;}
+-keep class com.fasterxml.jackson.** {*;}
 ```
 </Accordion>
 
