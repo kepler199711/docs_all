@@ -205,8 +205,11 @@ extension CallInvitationVC: ZegoUIKitPrebuiltCallInvitationServiceDelegate {
 
 - func `onOutgoingCallTimeout(_ callID：String，callees：[ZegoCallUser])`：当呼叫邀请在超时时间后未收到响应时，将通过此回调向呼叫者发送通知。
 
-- func `requireRoomForegroundView`() -> UIView?: 音视频通话界面上蹭添加一个view，view的大小由客户传入的 view.frame 来决定在音视频通话界面最上层加一个view
+- func `requireRoomForegroundView`() -> UIView?: 在音视频通话界面上层添加一个 view。view 的大小由您传入的 `view.frame` 来决定。如下图所示，您可以在音视频通话界面上层添加一个红色的 view，并占满整个界面。
 
+    <Frame width="auto" height="400px">
+        <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/a3c6256547.jpeg" alt="roomForeground.jpeg"/>
+    </Frame>
 
 代码参考如下：
 
@@ -284,7 +287,7 @@ extension CallInvitationVC: ZegoUIKitPrebuiltCallInvitationServiceDelegate {
   func onOutgoingCallTimeout(_ callID: String, callees: [ZegoCallUser]) {
         
   }
-  // 在音视频通话界面最上层加一个view view的大小由客户传入的 view.frame 来决定
+  // 在音视频通话界面最上层加一个 view。view 的大小由您传入的 view.frame 决定。
   func requireRoomForegroundView() -> UIView? {
     let view = UIView(frame: CGRectMake(0, 100, UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height - 100))
     view.translatesAutoresizingMaskIntoConstraints = false

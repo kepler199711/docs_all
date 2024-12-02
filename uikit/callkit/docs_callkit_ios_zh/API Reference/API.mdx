@@ -81,9 +81,13 @@ public static func setRemoteNotificationsDeviceToken(_ deviceToken: Data)
 public func endCall()
 ```
 
-### sendInRoomCommand
+## sendInRoomCommand
 
-> 您可以通过调用此接口发送房间消息
+> 当用户加入房间后，可调用此接口在房间内发送自定义信令，信令最大长度为 1024 字节。
+>
+> 房间内其他用户可以通过调用 onIMRecvCustomCommand 来监听接收这个信令，详情请参考 Event 文档的 [onIMRecvCustomCommand](./Event.mdx#onIMRecvCustomCommand)。
+>
+> 当 toUserList为 [] 时，SDK 会将自定义信令发送给房间内的所有用户。
 >
 > 函数原型:
 >
