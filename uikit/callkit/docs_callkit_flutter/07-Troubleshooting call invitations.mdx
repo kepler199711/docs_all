@@ -42,14 +42,9 @@ If the call only vibrates without sound, please check the following:
 If all of the above configurations are correct, the issue should be resolved.
 
 
-### 5 The invitation notification message-box did not pop up in background mode(only Android)
+### 5 The invitation notification dialog box did not pop up in background mode(only Android)
 
-- Check if `SystemChannels.lifecycle.setMessageHandler` is used
-  
-  Due to the fact that `SystemChannels.lifecycle.setMessageHandler` can only be listened to once in the entire app.
-  
-  if you also want to listen to this event, please use `ZegoUIKit().adapterService().registerMessageHandler(youHandler)` to handle, Of course, remember that when the page is disposed, you need to `ZegoUIKit().adapterService().unregisterMessageHandler(youHandler)`.
-
+Please check if `SystemChannels.lifecycle.setMessageHandler` is used. `SystemChannels.lifecycle.setMessageHandler` can be listened to only once in the entire app. Therefore, if you also want to listen to this event, please use `ZegoUIKit().adapterService().registerMessageHandler(youHandler)` to handle, Moreover, remember that when the page is disposed, you should use `ZegoUIKit().adapterService().unregisterMessageHandler(youHandler)`.
 
 ### 6 Call invitations limited to specific screens
 
@@ -121,19 +116,14 @@ void onUserLogout() {
 
 <Tip title="Tip">If you have just configured an iOS certificate, it may take some time for it to take effect.</Tip>
 
-#### Step 1: Ensure that the latest package version is being used
-
-
+<Steps>
+<Step title="Ensure that the latest package version is being used">
 Please make sure that you are using the latest versions of both [zego_uikit_prebuilt_call](https://pub.dev/packages/zego_uikit_prebuilt_call) and [zego_uikit_signaling_plugin](https://pub.dev/packages/zego_uikit_signaling_plugin). Using outdated versions may cause bugs that prevent offline call functionality from working properly.
-
-#### Step 2: Check if the app has necessary permissions enabled
-
-
+</Step>
+<Step title="Check if the app has necessary permissions enabled">
 After installation, some Android devices may block the app from displaying notifications by default. We recommend opening your app settings and checking if notification permissions have been granted to your app, ensuring that your app is allowed to display notifications
-
-#### Step 3: Check if the callee has obtained the Push ID correctly
-
-
+</Step>
+<Step title="Check if the callee has obtained the Push ID correctly">
 When debugging from your IDE (Android Studio/Xcode/VS Code), you can usually view ​​​​​​​&#8203;important information such as `push id` or `pushID` in your app's console logs. Make sure to check that the callee has obtained the Push ID correctly.
 
 <Frame width="720" height="123" caption="">
@@ -155,10 +145,8 @@ If you are still unable to obtain a Push ID after configuring your certificate o
 For iOS projects, the `Bundle ID` of your certificate must match the Bundle Identifier of your Xcode project. For Android projects, the `package_name` in the `google-service.json` file must match the `package` attribute in the `AndroidManifest.xml` file of your project.
 
 Once you have confirmed that your certificate is properly configured and the project information matches the certificate, you should be able to obtain the Push ID correctly.
-
-#### Step 4: Check if you can receive debug messages from the ZEGOCLOUD Console
-
-
+</Step>
+<Step title="Check if you can receive debug messages from the ZEGOCLOUD Console">
 To check if you can receive debug messages from the ZEGOCLOUD console, please log in to [ZEGOCLOUD's Admin Console](https://console.zegocloud.com)
 
 and navigate to **Projects Management > Your Project > Service Management > In-app Chat** page. Here, you will find a `Push Debug` button. Click on this button and fill in the example information provided in the popup window. Once the information is filled in, click the **Test** button to complete the process.
@@ -167,7 +155,6 @@ and navigate to **Projects Management > Your Project > Service Management > In-a
   <img src="https://media-resource.spreading.io/5fa3f99cda659c8c9f2907cbb0242e6c/workspace86/234791990-76dd72d1-2655-41fc-909f-96236ad182e4.png" />
 </Frame>
 
-
 If you encounter errors related to `Manufacturer Push Servers` when clicking the **Test** button, click on `View details` to see more information. This can help you identify the root cause of the issue.
 
 The `Manufacturer Push Servers` error may be caused by the following:
@@ -175,8 +162,8 @@ The `Manufacturer Push Servers` error may be caused by the following:
 1. The callee is not registered or logged in, which can cause the test to fail. Ensure that the callee's app has not been uninstalled or the callee has not logged out of the app.
 2. For Android devices, your Firebase project may have been modified or deleted, causing the information to be mismatched. Confirm this by logging in to the Firebase console.
 3. For iOS devices, your push certificate may have been modified or deleted on the Apple developer website, causing the information to be mismatched. Confirm this by logging in to the Apple developer website.
-
-
+</Step>
+</Steps>
 
 ## Check List
 
