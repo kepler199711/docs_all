@@ -205,6 +205,9 @@ extension CallInvitationVC: ZegoUIKitPrebuiltCallInvitationServiceDelegate {
 
 - func `onOutgoingCallTimeout(_ callID：String，callees：[ZegoCallUser])`：当呼叫邀请在超时时间后未收到响应时，将通过此回调向呼叫者发送通知。
 
+- func `requireRoomForegroundView`() -> UIView?: 音视频通话界面上蹭添加一个view，view的大小由客户传入的 view.frame 来决定在音视频通话界面最上层加一个view
+
+
 代码参考如下：
 
 <CodeGroup>

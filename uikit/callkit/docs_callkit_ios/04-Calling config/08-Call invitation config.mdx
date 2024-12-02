@@ -198,6 +198,7 @@ The following are supported event callbacks:
 
 - func `onOutgoingCallTimeout`(_ callID: String, callees: [ZegoCallUser]): The caller will receive a notification through this callback when the call invitation didn't get responses after a timeout duration.
 
+- func `requireRoomForegroundView`() -> UIView?: Add a view on the audio and video call interface. The size of the view is determined by the view.frame passed by the customer. Add a view on the top layer of the audio and video call interface
 
 
 <Accordion title="Here is the reference code:" defaultOpen="false">

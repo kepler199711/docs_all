@@ -106,6 +106,18 @@ config.bottomConfig.expandButtons.append(.voiceCall)
   <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/5abadcbf1b.jpeg" alt="MessageActionMenu.jpeg"/>
 </Frame>
 
+
+| 消息支持的操作类型    | 文字消息 | 图片消息 |  视频消息 | 文件消息 | 语音消息 | 组合消息 |
+| ------------------ | ------  | -------- | -------- | --------| ------ | ------- |
+| copy               | 支持     | 不支持    | 不支持   | 不支持    | 不支持    |  不支持  |
+| reply              | 支持     | 支持     | 支持     | 支持     | 支持     | 支持     |
+| forward            | 支持     | 支持     | 支持     | 支持     | 支持     | 支持     |
+| multipleChoice     | 支持     | 支持     | 支持     | 支持     | 支持     | 支持     |
+| delete             | 支持     | 支持     | 支持     | 支持     | 支持     | 支持     |
+| revoke             | 支持     | 支持     | 支持     | 支持     | 支持     | 支持     |
+| speaker            | 不支持   | 不支持    | 不支持   | 不支持   | 支持     | 不支持     |
+| reaction           | 支持     | 支持     | 支持     | 支持     | 支持     | 支持     |
+
 以下是参考代码：
 
 ```swift
@@ -156,7 +168,6 @@ config.messageConfig.fileMessageConfig.operations = [
 config.messageConfig.audioMessageConfig.operations = [
     .speaker,           // 使用扬声器播放
     .reply, 
-    .forward, 
     .multipleChoice, 
     .delete, 
     .reaction, 
