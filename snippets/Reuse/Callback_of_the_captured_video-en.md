@@ -1,4 +1,4 @@
-您可以通过注册 [onPublisherVideoSizeChanged\|_blank](@onPublisherVideoSizeChanged) 监听采集视频大小变更回调。推流成功后，在推流中途如果视频采集分辨率发生变化将会收到此回调。
+您可以通过注册 [onPublisherVideoSizeChanged](@onPublisherVideoSizeChanged) 监听采集视频大小变更回调。推流成功后，在推流中途如果视频采集分辨率发生变化将会收到此回调。
 
 <div class='mk-hint'>
 

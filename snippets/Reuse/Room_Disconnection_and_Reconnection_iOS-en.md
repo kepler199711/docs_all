@@ -3,7 +3,7 @@
 <div class="mk-warning">
 
 
-如果用户 A 短暂断线，但是在 90 秒内重连成功了，那么用户 B 不会收到 [onRoomStateChanged\|_blank](@onRoomStateChanged) 的回调通知。
+如果用户 A 短暂断线，但是在 90 秒内重连成功了，那么用户 B 不会收到 [onRoomStateChanged](@onRoomStateChanged) 的回调通知。
 </div>
 
 

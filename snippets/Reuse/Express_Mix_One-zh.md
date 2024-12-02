@@ -2,7 +2,7 @@
 
 ![/Pics/Common/ZegoExpressEngine/mixstream.png](/Pics/Common/ZegoExpressEngine/mixstream.png)
 
-开发者可通过 SDK 或 ZEGO 服务端 API 实现手动混流功能，服务端相关接口请参考 [开始混流\|_blank](#8791) 和 [停止混流\|_blank](#8792)。
+开发者可通过 SDK 或 ZEGO 服务端 API 实现手动混流功能，服务端相关接口请参考 [开始混流](#8791) 和 [停止混流](#8792)。
 
 以下介绍如何使用 SDK 实现手动混流。
 

@@ -5,5 +5,5 @@
 <div class="mk-hint">
 
 
-两种场景的区别请参考 [通过 CDN 推流/拉流\|_blank](!Publisher_Player_Advanced/RelayToCDN#1_3) 中的 “功能对比”。
+两种场景的区别请参考 [通过 CDN 推流/拉流](!Publisher_Player_Advanced/RelayToCDN#1_3) 中的 “功能对比”。
 </div>

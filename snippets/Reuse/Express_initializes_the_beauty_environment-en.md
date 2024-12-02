@@ -1,4 +1,4 @@
-To use the basic face beautification features, call the [`startEffectsEnv`\|_blank](@startEffectsEnv) method to initialize the face beautification environment before starting the local video view ([`startPreview`\|_blank](@startPreview)) and publishing streams ([`startPublishingStream`\|_blank](@startPublishingStream)).
+To use the basic face beautification features, call the [`startEffectsEnv`](@startEffectsEnv) method to initialize the face beautification environment before starting the local video view ([`startPreview`](@startPreview)) and publishing streams ([`startPublishingStream`](@startPublishingStream)).
 
 After initializing the face beautification environment, the SDK implements the transmission with the default video frame data type. If you need to use the custom video pre-processing feature, you will need to configure the corresponding video frame data type:
 

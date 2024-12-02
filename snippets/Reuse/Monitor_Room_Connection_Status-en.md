@@ -1,4 +1,4 @@
-A user can monitor the connection state of the user in the current room in real time by listening for the [`onRoomStateChanged`\|_blank](@onRoomStateChanged) callback. If the connection state of the user changes, the SDK triggers the callback, and the current connection state and related error code are returned in the callback. 
+A user can monitor the connection state of the user in the current room in real time by listening for the [`onRoomStateChanged`](@onRoomStateChanged) callback. If the connection state of the user changes, the SDK triggers the callback, and the current connection state and related error code are returned in the callback. 
 
 The SDK will retry internally if the connection to the room is interrupted due to poor network quality.
 

@@ -1,4 +1,4 @@
-传入用户 ID 参数 “userID” 创建 ZegoUser 用户对象后，调用 [loginRoom \|_blank](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-zego-express-engine#login-room) 接口，传入房间 ID 参数 “roomID” 和用户参数 “user”，登录房间。  
+传入用户 ID 参数 “userID” 创建 ZegoUser 用户对象后，调用 [loginRoom ](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-zego-express-engine#login-room) 接口，传入房间 ID 参数 “roomID” 和用户参数 “user”，登录房间。  
 
 <div class = 'mk-warning'>  
 

@@ -33,19 +33,19 @@ The following table describes the definitions, trigger events, and common busine
 <tr>
 <td>`ZegoGameIdle`</td>
 <td>The game is idle.</td>
-<td>Game in the mode of host-joined gaming with specified players: - A player calls the [loadGame\|_blank](@loadGame) operation to load the game in the mode of host-joined gaming with specified players. - A player does not meet the game conditions and the backend wait time of the game runs out. - The current round of the game is ended, and the host does not start a new round.</td>
+<td>Game in the mode of host-joined gaming with specified players: - A player calls the [loadGame](@loadGame) operation to load the game in the mode of host-joined gaming with specified players. - A player does not meet the game conditions and the backend wait time of the game runs out. - The current round of the game is ended, and the host does not start a new round.</td>
 <td>If the game status is `ZegoGameIdle`, the game image is not displayed.</td>
 </tr>
 <tr>
 <td>`ZegoGamePreparing`</td>
 <td>The game is loading.</td>
-<td>Game in the mode of host-joined gaming with specified players: - After the host calls the [startGame\|_blank](@startGame) operation, the system checks whether all players meet the game conditions in the backend.</td>
+<td>Game in the mode of host-joined gaming with specified players: - After the host calls the [startGame](@startGame) operation, the system checks whether all players meet the game conditions in the backend.</td>
 <td>The system displays a loading pop-up window during game loading.</td>
 </tr>
 <tr>
 <td>`ZegoGamePlaying`</td>
 <td>The game is running.</td>
-<td>- Game in the mode of host-joined gaming with specified players: - All players meet the game conditions.&nbsp;&nbsp; - Game in the mode of half- or full-screen gaming with randomly matched players: - A player calls the [loadGame\|_blank](@loadGame) operation to load the game. - The current round of the game is ended and a new round starts. - The game is resumed.</td>
+<td>- Game in the mode of host-joined gaming with specified players: - All players meet the game conditions.&nbsp;&nbsp; - Game in the mode of half- or full-screen gaming with randomly matched players: - A player calls the [loadGame](@loadGame) operation to load the game. - The current round of the game is ended and a new round starts. - The game is resumed.</td>
 <td>If the game statue is `ZegoGamePlaying`, the game image is displayed.</td>
 </tr>
 <tr>

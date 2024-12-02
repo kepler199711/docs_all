@@ -147,7 +147,7 @@
 </tr>
 <tr>
 <td>参考文档</td>
-<td>[集成 SDK - 导入资源|_blank](!ZegoAvatar-SDK_Integration#3)</td>
+<td>[集成 SDK - 导入资源](!ZegoAvatar-SDK_Integration#3)</td>
 </tr>
 </tbody></table>
 

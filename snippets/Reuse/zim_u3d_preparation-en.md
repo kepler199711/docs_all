@@ -1,5 +1,5 @@
 
-- Install Unity 2021.3.18f1c1 or later version. If not installed, you can download Unity Hub from [Unity official website\|_blank](https://unity3d.com/get-unity/download), and then install the Unity version you need (if you are not sure, it is recommended to install the latest LTS version). When downloading, it is recommended to select the corresponding Platforms module according to your needs, for example, installing on Windows:
+- Install Unity 2021.3.18f1c1 or later version. If not installed, you can download Unity Hub from [Unity official website](https://unity3d.com/get-unity/download), and then install the Unity version you need (if you are not sure, it is recommended to install the latest LTS version). When downloading, it is recommended to select the corresponding Platforms module according to your needs, for example, installing on Windows:
     <img src="/Pics/ZIM/Unity/unityEnv.jpeg" width="80%">
 
 - Select the corresponding development environment or device according to the platform that the sample code needs to run on:

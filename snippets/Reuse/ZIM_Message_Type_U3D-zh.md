@@ -14,9 +14,9 @@
 <tr data-row-level="2">
 <td>ZIMTextMessage(1)</td>
 <td>文本消息。消息大小不超过 32 KB，单个客户端发送频率限制为 10 次/秒。</td>
-<td>消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明\|_blank](!IM-Introduction/IM_price#2) 中“历史消息存储天数”。）；一般适用于“单聊”、“群聊”等即时聊天的场景。
+<td>消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](!IM-Introduction/IM_price#2) 中“历史消息存储天数”。）；一般适用于“单聊”、“群聊”等即时聊天的场景。
 
-相关接口：[SendMessage\|_blank](@SendMessage)
+相关接口：[SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="3">
@@ -24,7 +24,7 @@
 <td>开发者可自定义数据内容的信令消息。消息大小不超过 5 KB，单个客户端发送频率限制为 10 次/秒。</td>
 <td>支持更高的并发；一般适用于“语聊房”、“在线课堂”等房间内的即时聊天；房间解散后，消息不保存。
 
-相关接口：[SendMessage\|_blank](@SendMessage)
+相关接口：[SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="4">
@@ -32,16 +32,16 @@
 <td>房间内弹幕文本消息。消息大小不超过 5 KB，单个客户端发送频率无限制。</td>
 <td><p>专门用于房间内的高频、不可靠、允许丢掉的消息，一般适用于发送“弹幕消息”的场景中。</p><p>支持高并发，但不可靠，不保证消息送达。</p>
 
-相关接口：[SendMessage\|_blank](@SendMessage)
+相关接口：[SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="5">
 <td>ZIMImageMessage(11)</td>
 <td>图片消息。支持主流图片格式，包括 JPG、PNG、BMP、TIFF、GIF、WebP，大小不超过 10 MB，单个客户端发送频率限制为 10 次/秒。</td>
-<td rowspan="4">消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明\|_blank](!IM-Introduction/IM_price#2) 中“历史消息存储天数”。）；一般用于单聊、房间、群聊等即时聊天场景。
+<td rowspan="4">消息可靠有序，可存储为历史消息（保存时间请参考 [计费说明 - 版本说明](!IM-Introduction/IM_price#2) 中“历史消息存储天数”。）；一般用于单聊、房间、群聊等即时聊天场景。
 
 相关接口：
-[SendMediaMessage\|_blank](@SendMediaMessage)
+[SendMediaMessage](@SendMediaMessage)
 </td>
 </tr>
 <tr data-row-level="6">

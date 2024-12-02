@@ -1,10 +1,10 @@
 <div class="mk-warning">
 
-需要在推流（[startPublishingStream\|_blank](@startPublishingStream)）前或预览（[startPreview\|_blank](@startPreview)）前设置好相关视频配置，在推流后仅支持编码分辨率和码率的修改。
+需要在推流（[startPublishingStream](@startPublishingStream)）前或预览（[startPreview](@startPreview)）前设置好相关视频配置，在推流后仅支持编码分辨率和码率的修改。
 
 </div>
 
-调用 [setVideoConfig\|_blank](@setVideoConfig) 接口修改推流视频配置，可通过该接口设置视频帧率、码率、视频采集分辨率和视频编码输出分辨率。若不进行设置，则默认的视频配置如下：
+调用 [setVideoConfig](@setVideoConfig) 接口修改推流视频配置，可通过该接口设置视频帧率、码率、视频采集分辨率和视频编码输出分辨率。若不进行设置，则默认的视频配置如下：
 
 |配置项|默认值|
 |-|-|
@@ -14,7 +14,7 @@
 
 <div class="mk-hint">
 
-如果拉流端需要拉取 60 帧的流，需要联系技术支持，详情可参考 FAQ [ZEGO Express SDK 是否支持拉 60 帧的流\|_blank](https://doc-zh.zego.im/faq/Pull_the_stream_of_60_frames)。
+如果拉流端需要拉取 60 帧的流，需要联系技术支持，详情可参考 FAQ [ZEGO Express SDK 是否支持拉 60 帧的流](https://doc-zh.zego.im/faq/Pull_the_stream_of_60_frames)。
 
 </div>
 

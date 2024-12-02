@@ -4,7 +4,7 @@
 
     <div class="mk-hint">
 
-    This rule also applies to the conversation list fetched by calling the [queryConversationList\|_blank](@queryConversationList) interface. Developers can confirm whether a conversation is pinned by checking the [isPinned\|_blank](@isPinned-ZIMConversation) field of the ZIMConversation in the fetched results.
+    This rule also applies to the conversation list fetched by calling the [queryConversationList](@queryConversationList) interface. Developers can confirm whether a conversation is pinned by checking the [isPinned](@isPinned-ZIMConversation) field of the ZIMConversation in the fetched results.
     </div>
 
 - After a user pins multiple conversations, the relative order between these conversations will remain unchanged.   

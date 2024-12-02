@@ -373,7 +373,7 @@ ZIM::getInstance()->queryRoomMemberAttributesList(std::string("roomID"), queryCo
 
 ### User attribute change notification
 :::if{props.platform="U3d"}
-When user attributes of members in a room are changed, you can register the [`OnRoomMemberAttributesUpdated`\|_blank](@OnRoomMemberAttributesUpdated) callback API to listen for user attribute change notifications of members in the room.
+When user attributes of members in a room are changed, you can register the [`OnRoomMemberAttributesUpdated`](@OnRoomMemberAttributesUpdated) callback API to listen for user attribute change notifications of members in the room.
 :::
 :::if{props.platform="undefined|iOS|mac|Web|window|Flutter"}
 When user attributes of members in a room are changed, developers can register the {getPlatformData(props,onRoomMemberAttributesUpdatedMap)} method of the {getPlatformData(props,setEventHandlerMap)} callback API to listen for user attribute change notifications of members in the room.

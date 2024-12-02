@@ -23,7 +23,7 @@ The solution we provide is as follows:
 2. The push servers return tokens. 
 3. The receiver generates a PushID, and sends it to the ZIM Server for binding the client user and PushID.
     
-    If you use the ZPNs SDK together with the ZIM SDK, the SDK will automatically bind the client user to PushID, you don't need to do other operations; If you use the ZPNs SDK alone, you will need to connect to the ZPNs server and implement the binding logic. **Note: Before switching the userID on the same device, remember to call the [`logout`\|_blank](@logout) method to remove the PushID that userID is binding.**
+    If you use the ZPNs SDK together with the ZIM SDK, the SDK will automatically bind the client user to PushID, you don't need to do other operations; If you use the ZPNs SDK alone, you will need to connect to the ZPNs server and implement the binding logic. **Note: Before switching the userID on the same device, remember to call the [`logout`](@logout) method to remove the PushID that userID is binding.**
 
 4. The sender starts sending messages, and the messages are stored in the ZIM Server.
 5. The ZIM Server checks whether the receiver is online. 

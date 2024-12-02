@@ -18,7 +18,7 @@
 <tr>
 <td>`ZegoPlayerStartPlay`</td>
 <td>The player starts to play a game.</td>
-<td>- The player calls the [loadGame\|_blank](@loadGame) operation to load a game in the mode of half- or full-screen gaming with randomly matched players, and joins in the game. - The host calls the [startGame\|_blank](@startGame) operation to start a game in the mode of host-joined gaming with specified players.</td>
+<td>- The player calls the [loadGame](@loadGame) operation to load a game in the mode of half- or full-screen gaming with randomly matched players, and joins in the game. - The host calls the [startGame](@startGame) operation to start a game in the mode of host-joined gaming with specified players.</td>
 <td>Check whether the player can switch between pages. This prevents unexpected game pauses caused by accidental touches on the UI during gaming.<ul><li>If the status of the player is `ZegoPlayerStartPlay` and the SDK does not obtain the `ZegoPlayerStopPlay` status, the player cannot switch between pages.</li></ul></td>
 </tr>
 <tr>
@@ -31,7 +31,7 @@
 
 <div class="mk-warning">
 
-After a user calls the [loadGame\|_blank](@loadGame) operation and views a game as a participant rather than a player, no player status is returned.
+After a user calls the [loadGame](@loadGame) operation and views a game as a participant rather than a player, no player status is returned.
 
 </div>
 

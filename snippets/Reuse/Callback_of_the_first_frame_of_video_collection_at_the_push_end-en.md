@@ -1,4 +1,4 @@
-您可以通过注册 [onPublisherCapturedVideoFirstFrame\|_blank](@onPublisherCapturedVideoFirstFrame) 接收视频首帧回调。调用推流接口成功后，SDK 采集到第一帧视频数据时会收到此回调。
+您可以通过注册 [onPublisherCapturedVideoFirstFrame](@onPublisherCapturedVideoFirstFrame) 接收视频首帧回调。调用推流接口成功后，SDK 采集到第一帧视频数据时会收到此回调。
 
 <div class='mk-hint'>
 

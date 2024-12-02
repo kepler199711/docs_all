@@ -9,7 +9,7 @@
 
     > Don't want to waste time developing basic features
 
-To finest-grained build an in-app chat app, you may try our [In-app Chat SDK\|_blank](!zim-Introduction/Overview) to make full customization.
+To finest-grained build an in-app chat app, you may try our [In-app Chat SDK](!zim-Introduction/Overview) to make full customization.
 
 
 
