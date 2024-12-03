@@ -71,6 +71,19 @@
 > public func endCall()
 > ```
 
+### sendInRoomCommand
+
+> After the user joins the room, you can call this interface to send custom commands within the room. The maximum length of the command is 1024 bytes.
+>
+> Other users in the room can listen and receive this command by calling onInRoomCommandReceived. For more details, please refer to the [onIMRecvCustomCommand](./02-Event.mdx#onIMRecvCustomCommand) section in the Event documentation.
+>
+> When toUserList is [null], the SDK will send the custom command to all users in the room.
+>
+> function prototype:
+>
+> ```swift
+> func sendInRoomCommand(_ command: String, toUserIDs: [String], callback: ZegoSendInRoomCommandCallback?)
+> ```
 
 ### setAudioOutputToSpeaker
 
