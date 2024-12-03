@@ -279,13 +279,13 @@ config.messageConfig.combineMessageConfig.operations = new ArrayList<>(
 
 </Accordion>
 
-<Accordion title="自定义输入栏" defaultOpen="false">
+<Accordion title="自定义底部工具栏按钮" defaultOpen="false">
 
 要自定义底部工具栏上的按钮，您可以使用 `ZIMKitConfig.inputConfig.smallButtons` 和
 `ZIMKitConfig.inputConfig.expandButtons` 进行配置：
 
-- `smallButtons`: 配置输入框快捷按钮,目前默认显示 语音输入，表情，相册图片，扩展按钮。
-- `expandButtons`: 配置输入框扩展按钮，目前默认显示发送拍照， 发送文件按钮。
+- `smallButtons`: 配置输入框快捷按钮，目前默认显示语音输入、表情、相册图片以及扩展按钮。
+- `expandButtons`: 配置输入框扩展按钮，目前默认显示发送拍照，以及发送文件按钮。
 
 以下是参考代码：
 
@@ -312,7 +312,7 @@ config.inputConfig.inputHint = "input hint",
 
 <Accordion title="自定义表情面板" defaultOpen="false">
 
-In-app Chat Kit 提供一系列默认表情用于在会话中发送表情，以及对消息进行表态。如果您不满意默认提供的表情，您可以通过 `ZIMKitConfig.inputConfig.emojis` 传入所有您需要的表情。
+IMKit 提供一系列默认表情用于在会话中发送表情，以及对消息进行表态。如果您不满意默认提供的表情，您可以通过 `ZIMKitConfig.inputConfig.emojis` 传入所有您需要的表情。
 
 <table>
   <tr>

@@ -276,20 +276,20 @@ config.messageConfig.combineMessageConfig.operations = new ArrayList<>(
 
 </Accordion>
 
-<Accordion title="Customize Input Bar" defaultOpen="false">
+<Accordion title="Customize Bottom Toolbar" defaultOpen="false">
 
-To customize the buttons on the bottom toolbar, you can use `ZIMKitConfig.inputConfig.smallButtons` and `ZIMKitConfig.inputConfig.expandButtons` for configuration:
+To customize the buttons on the bottom toolbar, you can use `ZIMKitConfig.inputConfig.smallButtons` and `ZIMKitConfig.inputConfig.expandButtons`:
 
-- `smallButtons`: Configure the input box quick buttons, which currently default to showing voice input, emojis, photo album pictures, and extension buttons.
-- `expandButtons`: Configure the input box extension buttons, which currently default to showing send photo and send file buttons.
+- `smallButtons`: Configure the input box quick buttons, which currently default to voice input, emojis, pictures, and extension buttons.
+- `expandButtons`: Configure the input box extension buttons, which currently default to photography and file-sending buttons.
 
 Below is the reference code:
 
 ```java
-// smallButtons add send file button to the bottom toolbar input box quick buttons
+// Add the file-sending button to the bottom toolbar as a quick button
 config.inputConfig.smallButtons.add(ZIMKitInputButtonName.FILE);
 
-// expandButtons add send picture button to the bottom toolbar input box extension buttons
+// Add the picture-sending button to the bottom toolbar as an extension button
 config.bottomConfig.expandButtons.add(ZIMKitInputButtonName.VOICE_CALL);
 ```
 
