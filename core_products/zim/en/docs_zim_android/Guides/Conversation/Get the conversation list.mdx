@@ -37,6 +37,7 @@ export const ZIMConversationQueryConfigMap = {
 
 :::if{props.platform="undefined|iOS|macOS|Web|Flutter|window"}
 <table>
+    <tbody>
     <tr>
         <th>Message Type</th>
         <th>Conversation Types</th>
@@ -58,6 +59,7 @@ export const ZIMConversationQueryConfigMap = {
         <td>Tip Messages</td>
         <td>You need to contact ZEGOCLOUD technical support to enable the **group management** type of Tip message feature. Afterwards, when a user creates a group, the ZIM SDK will convert this operation into a special type of message (Tip message) within the group conversation, resulting in the successful creation of the group conversation.</td>
     </tr>
+    </tbody>
 </table>
 
 <Note title="Explanation">If a user [inserts a local message](./../Messaging/Insert%20local%20messages.mdx) or [saves a conversation draft](./Set%20conversation%20draft.mdx) before the conversation exists, a local conversation will be created. When the user [gets the conversation list from the local database](#from-the-local-database), these local sessions will be retrieved.</Note>
