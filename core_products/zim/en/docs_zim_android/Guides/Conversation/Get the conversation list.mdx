@@ -66,6 +66,7 @@ export const ZIMConversationQueryConfigMap = {
 :::
 :::if{props.platform="U3d"}
 <table>
+    <tbody>
     <tr>
         <th>Message Type</th>
         <th>Conversation Types</th>
@@ -83,6 +84,7 @@ export const ZIMConversationQueryConfigMap = {
     <tr>
         <td>Custom Messages</td>
     </tr>
+    </tbody>
 </table>
 
 <Note title="Explanation">If a user [inserts a local message](./../Messaging/Insert%20local%20messages.mdx) before the conversation exists, a local conversation will be created. When the user [gets the conversation list from the local database](#from-the-local-database), these local sessions will be retrieved.</Note>

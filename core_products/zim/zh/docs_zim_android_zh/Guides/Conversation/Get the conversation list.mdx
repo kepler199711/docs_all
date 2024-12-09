@@ -39,6 +39,7 @@ export const ZIMConversationQueryConfigMap = {
 
 :::if{props.platform="undefined|iOS|macOS|Web|Flutter|window"}
 <table>
+  <tbody>
     <tr>
         <th>消息类型</th>
         <th>可创建会话类型</th>
@@ -60,12 +61,14 @@ export const ZIMConversationQueryConfigMap = {
         <td>Tips 消息</td>
         <td>您需要先联系 ZEGO 技术支持开通**群组管理**类的 Tips 消息特性。随后，当用户创建群组时，ZIM SDK 会将此操作转换为一条群组会话内的特殊类型消息（Tips 消息），由此，群组会话成功创建。</td>
     </tr>
+  </tbody>
 </table>
 
 <Note title="说明">若用户在会话尚未存在时 [插入本地消息](./../Messaging/Insert%20local%20messages.mdx) 或 [保存会话草稿](./Set%20conversation%20draft.mdx)，将生成本地会话。当该用户 [从本地数据库获取会话列表](#从本地数据库获取) 时，这些本地会话会被查到。</Note>
 :::
 :::if{props.platform="U3d"}
 <table>
+  <tbody>
     <tr>
         <th>消息类型</th>
         <th>可创建会话类型</th>
@@ -80,6 +83,7 @@ export const ZIMConversationQueryConfigMap = {
     <tr>
         <td>自定义消息</td>
     </tr>
+  </tbody>
 </table>
 
 <Note title="说明">若用户在会话尚未存在时 [插入本地消息](./../Messaging/Insert%20local%20messages.mdx)，将生成本地会话。当该用户 [从本地数据库获取会话列表](#从本地数据库获取) 时，这些本地会话会被查到。</Note>
