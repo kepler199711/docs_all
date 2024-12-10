@@ -85,11 +85,11 @@ export const CONNECTEDMap = {
   "window": "ZIM_ROOM_STATE_CONNECTED"
 }
 export const CONNECTINGMap = {
-  'Android': <a href='@connecting-ZIMRoomState' target='_blank'>CONNECTING</a>,
-  'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMRoomState.html' target='_blank'>connecting</a>,
-  'Web,RN,uniapp': <a href='@connecting-ZIMRoomState' target='_blank'>connecting</a>,
-  'iOS,mac': <a href='@ZIMRoomStateConnecting-ZIMRoomState' target='_blank'>ZIMRoomStateConnecting</a>,
-  "window": <a href='@zim_room_state_connecting-ZIMRoomState' target='_blank'>ZIM_ROOM_STATE_CONNECTING</a>
+  'Android': "CONNECTING",
+  'Flutter': "connecting",
+  'Web,RN,uniapp': "connecting",
+  'iOS,mac': "ZIMRoomStateConnecting",
+  "window": "ZIM_ROOM_STATE_CONNECTING"
 }
 export const SUCCESSMap = {
   'Android': "SUCCESS",
@@ -118,7 +118,20 @@ export const ROOM_NOT_EXISTMap = {
   'iOS,mac': `ZIMRoomEventRoomNotExist`,
   "window": `ZIM_ROOM_EVENT_ROOM_NOT_EXIST`
 }
-
+export const ActiveSwitchMap = {
+  'Android': `ACTIVE_SWITCH`,
+  'Flutter': `activeSwitch`,
+  'Web,RN,uniapp': `ActiveSwitch`,
+  'iOS,mac': `ZIMRoomEventActiveSwitch`,
+  "window": `ZIM_ROOM_EVENT_ACTIVE_SWITCH`
+}
+export const SwitchFailedMap = {
+  'Android': `SWITCH_FAILED`,
+  'Flutter': `switchFailed`,
+  'Web,RN,uniapp': `SwitchFailed`,
+  'iOS,mac': `ZIMRoomEventSwitchFailed`,
+  "window": `ZIM_ROOM_EVENT_SWITCH_FAILED`
+}
 export const platformMap = {
   'Android':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=android" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
   'window':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=windows" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
@@ -677,10 +690,11 @@ zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
 
     如上图所示，用户在切换房间的时候会接收到数次 {getPlatformData(props,onRoomStateChangedMap)} 事件通知，根据触发时机，该事件中相关参数如下表所示：
 
-    | 触发时机                                           | roomID 值 | state 值 | event 值 | 事件意义       |
+    | 触发时机                                           | <div style={{width:"120px"}}>roomID 值</div> | state 值 | <div style={{width:"120px"}}>event 值</div> | <div style={{width:"120px"}}>事件意义</div>       |
     | ------------------------------------------------- | --------- | -------- | -------- | -------------- |
-    | 调用 {getPlatformData(props,switchRoomMap)} 接口后 | Room2     | {getPlatformData(props,CONNECTINGMap)}        | 11       | 正在连接 Room2 |
-
+    | 调用 {getPlatformData(props,switchRoomMap)} 接口后。 | Room2     | {getPlatformData(props,CONNECTINGMap)}        | {getPlatformData(props,ActiveSwitchMap)} | 正在连接 Room2。 |
+    | 调用 {getPlatformData(props,switchRoomMap)} 接口后，Room2 不存在时，以下任意情况：<ul><li>服务器内房间数量已达上限。</li><li>服务器内房间数量未达上限，但调用 {getPlatformData(props,switchRoomMap)} 接口时 `isCreateWhenRoomNoteExisted` 参数为 false。</li></ul> | Room2     | {getPlatformData(props,DISCONNECTEDMap)}        | {getPlatformData(props,SwitchFailedMap)} | 因 Room2 不存在导致切换失败。|
+    | 在以下任意情况下，用户会收到两次回调：<ul><li>调用 {getPlatformData(props,switchRoomMap)} 接口后，Room2 存在。</li><li>调用 {getPlatformData(props,switchRoomMap)} 接口后，Room2 不存在，服务器内房间数量未达上限，且调用 {getPlatformData(props,switchRoomMap)} 接口时 `isCreateWhenRoomNoteExisted` 参数为 true。</li></ul> | <ul><li>第一次回调：Room2</li><li>第二次回调：Room1</li></ul>     | <ul><li>第一次回调：{getPlatformData(props,CONNECTEDMap)}</li><li>第二次回调：{getPlatformData(props,DISCONNECTEDMap)}</li></ul> | <ul><li>第一次回调：{getPlatformData(props,SUCCESSMap)}</li><li>第二次回调：{getPlatformData(props,SUCCESSMap)}</li></ul> | <ul><li>第一次回调：成功连接 Room2。</li><li>第二次回调：成功断连 Room1。</li></ul> |
 
 - 示例代码：
 
