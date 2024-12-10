@@ -658,6 +658,7 @@ zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
 
 - 完整流程请参考下图：
 
+    :::if{props.platform="undefined|window|Flutter"}
     ```mermaid
     %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
 
@@ -687,6 +688,72 @@ zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
         L --> End
         K --> End
     ```
+    :::
+
+    :::if{props.platform="iOS|mac"}
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+
+    flowchart TD
+        Start([开始]) --> A[用户 A 通过 switchRoomFromRoomID 从 Room1 切换至 Room2]
+        A --> B[用户 A 通过 roomStateChanged 事件得知正在连接 Room2]
+        B --> C{Room2 是否存在}
+        
+        C -->|否| D{服务器内房间数量\n是否达到上限?}
+        C -->|是| E[房间切换成功\nRoom2 用户收到 roomMemberJoined 回调]
+        
+        D -->|是| K[房间切换失败\n用户 A 通过 roomStateChanged 事件得知与 Room2 断连]
+        D -->|否| F{isCreateWhen\nRoomNotExisted \n参数是否为 true}
+        
+        F -->|否| K 
+        F -->|是| G[创建新房间 Room2，房间切换成功\nRoom2 各参数与调用 switchRoomFromRoomID 传入时一致]
+        
+        G --> H[用户 A 收到 2 次 roomStateChanged 回调\n分别得知已连接 Room2 并与 Room1 断连]
+        E --> H
+        
+        H --> I{Room1 是否\n有其他成员}
+        
+        I -->|是| J[Room1 用户收到 roomMemberLeft 回调]
+        I -->|否| L[Room1 在延迟销毁时间到达时被销毁]
+            
+        J --> End([结束])
+        L --> End
+        K --> End
+    ```
+    :::
+
+    :::if{props.platform="Web|RN|uniapp"}
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+
+    flowchart TD
+        Start([开始]) --> A[用户 A 通过 switchRoom 从 Room1 切换至 Room2]
+        A --> B[用户 A 通过 roomStateChanged 事件得知正在连接 Room2]
+        B --> C{Room2 是否存在}
+        
+        C -->|否| D{服务器内房间数量\n是否达到上限?}
+        C -->|是| E[房间切换成功\nRoom2 用户收到 roomMemberJoined 回调]
+        
+        D -->|是| K[房间切换失败\n用户 A 通过 roomStateChanged 事件得知与 Room2 断连]
+        D -->|否| F{isCreateWhen\nRoomNotExisted \n参数是否为 true}
+        
+        F -->|否| K 
+        F -->|是| G[创建新房间 Room2，房间切换成功\nRoom2 各参数与调用 switchRoom 传入时一致]
+        
+        G --> H[用户 A 收到 2 次 roomStateChanged 回调\n分别得知已连接 Room2 并与 Room1 断连]
+        E --> H
+        
+        H --> I{Room1 是否\n有其他成员}
+        
+        I -->|是| J[Room1 用户收到 roomMemberLeft 回调]
+        I -->|否| L[Room1 在延迟销毁时间到达时被销毁]
+            
+        J --> End([结束])
+        L --> End
+        K --> End
+    ```
+    :::
+
 
     如上图所示，用户在切换房间的时候会接收到数次 {getPlatformData(props,onRoomStateChangedMap)} 事件通知，根据触发时机，该事件中相关参数如下表所示：
 
