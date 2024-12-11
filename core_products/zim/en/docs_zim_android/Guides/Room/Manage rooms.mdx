@@ -519,19 +519,94 @@ After a successful room switch, other users in the original room can be notified
 - Please refer to the following flowchart for the complete process:
 
     :::if{props.platform="undefined|window|Flutter"}
-    <Frame width="auto" height="auto">
-      <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/c7c7914134.jpeg"/>
-    </Frame>
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+    flowchart TD
+        Start([Start]) --> A[User A calls switchRom to \nswitch from Room1 to Room2]
+        A --> B[User A receives the onRoomStateChanged event \nindicating the user is connecting to Room2]
+        B --> C{Is Room2 \navailable?}
+        
+        C -->|No| D{Is the number of rooms\nin the server at its limit?}
+        C -->|Yes| E[Room switched successfully. \nRoom2 users receive the onRoomMemberJoined event]
+        
+        D -->|Yes| K[Room switch failed.\nUser A receives the onRoomStateChanged event \nindicating the failure to switch to Room2.]
+        D -->|No| F{Is isCreateWhen\nRoomNotExisted \n true?}
+        
+        F -->|No| K 
+        F -->|Yes| G[Room2 is created. \nRoom switched successfully.\nRoom2's parameters align with \nthose provided in the switchRoom call.]
+        
+        G --> H[User A receives onRoomStateChanged event twice\nindicating the connection to Room2 and the disconnection from Room1]
+        E --> H
+        
+        H --> I{Are there\nother members \nin Room1?}
+        
+        I -->|Yes| J[Room1 users receive onRoomMemberLeft event]
+        I -->|No| L[Room1 is destroyed when \nthe destruction delay time is reached]
+            
+        J --> End([End])
+        L --> End
+        K --> End
+    ```
     :::
     :::if{props.platform="iOS|mac"}
-    <Frame width="auto" height="auto">
-      <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/55b2e7d978.jpeg"/>
-    </Frame>
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+    flowchart TD
+        Start([Start]) --> A[User A calls switchRoomFromRoomID to \nswitch from Room1 to Room2]
+        A --> B[User A receives the roomStateChanged event \nindicating the user is connecting to Room2]
+        B --> C{Is Room2 \navailable?}
+        
+        C -->|No| D{Is the number of rooms\nin the server at its limit?}
+        C -->|Yes| E[Room switched successfully. \nRoom2 users receive the roomMemberJoined event]
+        
+        D -->|Yes| K[Room switch failed.\nUser A receives the roomStateChanged event \nindicating the failure to switch to Room2.]
+        D -->|No| F{Is isCreateWhen\nRoomNotExisted \n true?}
+        
+        F -->|No| K 
+        F -->|Yes| G[Room2 is created. \nRoom switched successfully.\nRoom2's parameters align with \nthose provided in the switchRoomFromRoomID call.]
+        
+        G --> H[User A receives roomStateChanged event twice\nindicating the connection to Room2 and the disconnection from Room1]
+        E --> H
+        
+        H --> I{Are there\nother members \nin Room1?}
+        
+        I -->|Yes| J[Room1 users receive roomMemberLeft event]
+        I -->|No| L[Room1 is destroyed when \nthe destruction delay time is reached]
+            
+        J --> End([End])
+        L --> End
+        K --> End
+    ```
     :::
     :::if{props.platform="Web|RN"}
-    <Frame width="auto" height="auto">
-      <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/08966e9265.jpeg"/>
-    </Frame>
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+    flowchart TD
+        Start([Start]) --> A[User A calls switchRoom to \nswitch from Room1 to Room2]
+        A --> B[User A receives the roomStateChanged event \nindicating the user is connecting to Room2]
+        B --> C{Is Room2 \navailable?}
+        
+        C -->|No| D{Is the number of rooms\nin the server at its limit?}
+        C -->|Yes| E[Room switched successfully. \nRoom2 users receive the roomMemberJoined event]
+        
+        D -->|Yes| K[Room switch failed.\nUser A receives the roomStateChanged event \nindicating the failure to switch to Room2.]
+        D -->|No| F{Is isCreateWhen\nRoomNotExisted \n true?}
+        
+        F -->|No| K 
+        F -->|Yes| G[Room2 is created. \nRoom switched successfully.\nRoom2's parameters align with \nthose provided in the switchRoom call.]
+        
+        G --> H[User A receives roomStateChanged event twice\nindicating the connection to Room2 and the disconnection from Room1]
+        E --> H
+        
+        H --> I{Are there\nother members \nin Room1?}
+        
+        I -->|Yes| J[Room1 users receive roomMemberLeft event]
+        I -->|No| L[Room1 is destroyed when \nthe destruction delay time is reached]
+            
+        J --> End([End])
+        L --> End
+        K --> End
+    ```
     :::
 
 
