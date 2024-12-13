@@ -2,13 +2,13 @@
 
 在实现基本的播放视频功能之前，请确保：
 
-- 已在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息\|_blank](#12107)。
-- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成 SDK|_blank](!ExpressVideoSDK-Integration/SDK_Integration)。
-- 已在项目中集成 ZegoAccurateSyncMediaPlayer SDK，详情请参考 [精准同步播放器 - 快速开始 - 集成 SDK\|_blank](!ZegoAccurateSyncMediaPlayerSDK-Integrated_CopyrightedVideo_SDK)。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理 - 项目信息](#12107)。
+- 已在项目中集成 ZEGO Express SDK，实现基本的实时音视频功能，详情请参考 [实时音视频 - 快速开始 - 集成 SDK](!ExpressVideoSDK-Integration/SDK_Integration)。
+- 已在项目中集成 ZegoAccurateSyncMediaPlayer SDK，详情请参考 [精准同步播放器 - 快速开始 - 集成 SDK](!ZegoAccurateSyncMediaPlayerSDK-Integrated_CopyrightedVideo_SDK)。
 
 ## 示例 Demo
 
-ZEGO 提供了[示例 Demo\|_blank](!DownloadDemo/DownloadDemo)，以供开发者进一步了解。
+ZEGO 提供了[示例 Demo](!DownloadDemo/DownloadDemo)，以供开发者进一步了解。
 
 
 ## 实现流程
@@ -72,7 +72,7 @@ ZEGO 提供了[示例 Demo\|_blank](!DownloadDemo/DownloadDemo)，以供开发�
     }
     ```
 
-2. 调用 [init\|_blank](@init) 接口，传入 userID，设置用户角色为 “ ZegoAccurateSyncUserRoleHost”，初始化 ZegoAccurateSyncMediaPlayer SDK。
+2. 调用 [init](@init) 接口，传入 userID，设置用户角色为 “ ZegoAccurateSyncUserRoleHost”，初始化 ZegoAccurateSyncMediaPlayer SDK。
 
     <div class="mk-hint">
 
@@ -116,7 +116,7 @@ ZegoExpressEngine.getEngine().loginRoom(roomID, user);
 
 ### 5 透传房间附加消息
 
-在 ZEGO Express SDK 的 [IZegoEventHandler](https://doc-zh.zego.im/article/api?doc=Express_Video_SDK_API~java_android~class~IZegoEventHandler) 回调中，注册 [onRoomExtraInfoUpdate](https://doc-zh.zego.im/article/api?doc=Express_Video_SDK_API~java_android~class~IZegoEventHandler#on-room-extra-info-update) 监听，将房间内的附加消息，透传给 ZegoAccurateSyncMediaPlayer SDK。再调用 ZegoAccurateSyncMediaPlayer SDK 的 [roomExtraInfoUpdated\|_blank](@roomExtraInfoUpdated) 接口，同步“主持人端”和“观众端”的视频播放进度。
+在 ZEGO Express SDK 的 [IZegoEventHandler](https://doc-zh.zego.im/article/api?doc=Express_Video_SDK_API~java_android~class~IZegoEventHandler) 回调中，注册 [onRoomExtraInfoUpdate](https://doc-zh.zego.im/article/api?doc=Express_Video_SDK_API~java_android~class~IZegoEventHandler#on-room-extra-info-update) 监听，将房间内的附加消息，透传给 ZegoAccurateSyncMediaPlayer SDK。再调用 ZegoAccurateSyncMediaPlayer SDK 的 [roomExtraInfoUpdated](@roomExtraInfoUpdated) 接口，同步“主持人端”和“观众端”的视频播放进度。
 
 ``` Java
 ZegoAccurateSync.roomExtraInfoUpdated(roomID, roomExtraInfoList);
@@ -124,7 +124,7 @@ ZegoAccurateSync.roomExtraInfoUpdated(roomID, roomExtraInfoList);
 
 ### 6 创建播放器，加载视频资源。
 
-调用 [createMediaPlayer\|_blank](@createMediaPlayer) 创建播放器，设置播放界面视图。调用 [loadVideo\|_blank](@loadVideo) 接口加载视频资源。
+调用 [createMediaPlayer](@createMediaPlayer) 创建播放器，设置播放界面视图。调用 [loadVideo](@loadVideo) 接口加载视频资源。
 
 <div class="mk-warning">
 
@@ -145,12 +145,12 @@ mediaPlayer.loadVideo(
 
 ### 7 开始播放
 
-主持人登录房间，并且播放器设置完成后，可以调用 [start\|_blank](@start) 接口，开始播放选择的视频资源了。
+主持人登录房间，并且播放器设置完成后，可以调用 [start](@start) 接口，开始播放选择的视频资源了。
 
 <div class=mk-warning>
 
-- 只有 [loadVideo\|_blank](@loadVideo) 成功后，才能调用 [start\|_blank](@start) 开始播放视频。
-- 如果在播放视频资源过程中需要切换视频，不能直接调用 [loadVideo\|_blank](@loadVideo)，需要先调用 [stop\|_blank](@stop) 接口停止播放当前视频，具体做法请参看 [停止播放](#15759#4_10)。
+- 只有 [loadVideo](@loadVideo) 成功后，才能调用 [start](@start) 开始播放视频。
+- 如果在播放视频资源过程中需要切换视频，不能直接调用 [loadVideo](@loadVideo)，需要先调用 [stop](@stop) 接口停止播放当前视频，具体做法请参看 [停止播放](#15759#4_10)。
 
 </div>
 
@@ -160,7 +160,7 @@ mediaPlayer.start(); //开始播放
 
 ### 8 暂停/恢复播放
 
-播放过程中，主持人可以调用 [pause\|_blank](@pause) 接口暂停播放，然后调用 [resume\|_blank](@resume) 接口恢复播放。
+播放过程中，主持人可以调用 [pause](@pause) 接口暂停播放，然后调用 [resume](@resume) 接口恢复播放。
 
 
 ``` Java
@@ -173,7 +173,7 @@ mediaPlayer.resume();//恢复播放
 
 ### 9 跳转到指定时间播放
 
-播放过程中，主持人如果想要改变播放进度，跳转到指定时间的位置播放，可以调用 [seekTo\|_blank](@seekTo) 接口，传入时间（单位为 ms），进行跳转。
+播放过程中，主持人如果想要改变播放进度，跳转到指定时间的位置播放，可以调用 [seekTo](@seekTo) 接口，传入时间（单位为 ms），进行跳转。
 
 ```Java
 mediaPlayer.seekTo(your_start_position);
@@ -181,7 +181,7 @@ mediaPlayer.seekTo(your_start_position);
 
 ### 10 停止播放
 
-播放过程中，主持人可以调用 [stop\|_blank](@stop) 接口，直接停止播放。
+播放过程中，主持人可以调用 [stop](@stop) 接口，直接停止播放。
 
 ``` Java
 mediaPlayer.stop(); //停止播放
@@ -191,7 +191,7 @@ mediaPlayer.stop(); //停止播放
 
 ### 播放器播放状态变化回调通知
 
-播放过程中，播放器的状态发生变化时，开发者可以通过 [ZegoAccurateSyncMediaPlayerEventHandler\|_blank](@-ZegoAccurateSyncMediaPlayerEventHandler) 回调接口，获取相关的状态通知，并在回调中根据不同状态处理业务逻辑。
+播放过程中，播放器的状态发生变化时，开发者可以通过 [ZegoAccurateSyncMediaPlayerEventHandler](@-ZegoAccurateSyncMediaPlayerEventHandler) 回调接口，获取相关的状态通知，并在回调中根据不同状态处理业务逻辑。
 
 
 ```java
@@ -220,7 +220,7 @@ ZegoAccurateSyncMediaPlayerEventHandler playerEventHandler = new ZegoAccurateSyn
 
 ### 进度同步
 
-主持人注册了 [onVideoProgressGapWithServer\|_blank](@onVideoProgressGapWithServer) 后，如果在播放过程中，主持人的进度与服务器的进度不同步，主持人会收到相关通知。此时如果主持人调用 [syncServerProgress\|_blank](@syncServerProgress) 接口，房间内所有人会向服务器同步进度。
+主持人注册了 [onVideoProgressGapWithServer](@onVideoProgressGapWithServer) 后，如果在播放过程中，主持人的进度与服务器的进度不同步，主持人会收到相关通知。此时如果主持人调用 [syncServerProgress](@syncServerProgress) 接口，房间内所有人会向服务器同步进度。
 
 ``` Java
 // videoID 为房间内正在播放的视频的 ID
@@ -230,7 +230,7 @@ ZegoAccurateSync.syncServerProgress(videoID);
 
 <div class="mk-hint">
 
-自定义影视资源的 videoID，需要调用 [loadVideo\|_blank](@loadVideo) 接口加载成功后，才能从 ZegoAccurateSyncMediaPlayer 的 属性 [videoID\|_blank](@videoID-ZegoAccurateSyncMediaPlayer) 获得。
+自定义影视资源的 videoID，需要调用 [loadVideo](@loadVideo) 接口加载成功后，才能从 ZegoAccurateSyncMediaPlayer 的 属性 [videoID](@videoID-ZegoAccurateSyncMediaPlayer) 获得。
 </div>
 
 ### 资源回收
@@ -249,7 +249,7 @@ ZegoAccurateSync.syncServerProgress(videoID);
     </div>
 
 2. 销毁播放的视频资源     
-播放视频结束后，主持人如需销毁本地的视频播放资源，可以调用 [unInit\|_blank](@unInit) 接口，销毁本地资源，并反初始化 SDK。
+播放视频结束后，主持人如需销毁本地的视频播放资源，可以调用 [unInit](@unInit) 接口，销毁本地资源，并反初始化 SDK。
 
     ``` Java
     // 销毁播放器
@@ -269,12 +269,12 @@ ZegoAccurateSync.syncServerProgress(videoID);
 ## 更多功能
 
 ### 实时通话
-用户可以向房间内其他用户发起实时音视频通话。详情请参考 [实时音视频\|_blank](#5416)。
+用户可以向房间内其他用户发起实时音视频通话。详情请参考 [实时音视频](#5416)。
 
 ### 实时消息互动
-通过 ZEGO 即时通讯服务，实时展示房间内的消息，例如文本消息和弹幕消息发送、进退房提示、互动通知等。详情请参考 [即时通讯\|_blank](#11588)。
+通过 ZEGO 即时通讯服务，实时展示房间内的消息，例如文本消息和弹幕消息发送、进退房提示、互动通知等。详情请参考 [即时通讯](#11588)。
 
 ### 送礼物
-用户可向房间内其他用户赠送礼物。详情请参考 [即时通讯\|_blank](#11588)。
+用户可向房间内其他用户赠送礼物。详情请参考 [即时通讯](#11588)。
 
 

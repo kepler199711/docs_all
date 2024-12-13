@@ -31,17 +31,17 @@ ZEGO 建议您在业务层上，定时拉取、更新在线鉴权的 License 数
 
 ## 前提条件
 
-开始实现鉴权之前，请在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目，获取到了接入 ZEGO 服务所需的 AppID 和 ServerSecret，详情请参考 [控制台 - 项目管理\|_blank](#12107) 中的“项目信息”。
+开始实现鉴权之前，请在 [ZEGO 控制台](https://console.zego.im) 创建项目，获取到了接入 ZEGO 服务所需的 AppID 和 ServerSecret，详情请参考 [控制台 - 项目管理](#12107) 中的“项目信息”。
 
 ## 实现流程
 
 ### 1 向 ZEGO 服务端请求鉴权文件
 
-开发者服务端通过公共网关接口，构造消息体，直接发送请求到 ZEGO 服务端，申请鉴权文件。消息体结构请参考服务端 API - 获取鉴权信息文档的 [接口原型\|_blank](!IM-CgiDescribeZIMAudioLicense#2)、[请求参数\|_blank](!IM-CgiDescribeZIMAudioLicense#3) 和 [请求示例\|_blank](!IM-CgiDescribeZIMAudioLicense#4)。
+开发者服务端通过公共网关接口，构造消息体，直接发送请求到 ZEGO 服务端，申请鉴权文件。消息体结构请参考服务端 API - 获取鉴权信息文档的 [接口原型](!IM-CgiDescribeZIMAudioLicense#2)、[请求参数](!IM-CgiDescribeZIMAudioLicense#3) 和 [请求示例](!IM-CgiDescribeZIMAudioLicense#4)。
 
 ### 2 ZEGO 服务端返回鉴权文件 License
 
-ZEGO 服务端返回的消息请参考服务端 API - 获取鉴权信息文档的 [响应参数\|_blank](!IM-CgiDescribeZIMAudioLicense#5) 和 [响应示例\|_blank](!IM-CgiDescribeZIMAudioLicense#6)。
+ZEGO 服务端返回的消息请参考服务端 API - 获取鉴权信息文档的 [响应参数](!IM-CgiDescribeZIMAudioLicense#5) 和 [响应示例](!IM-CgiDescribeZIMAudioLicense#6)。
 
 
 

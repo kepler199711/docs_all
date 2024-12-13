@@ -1,6 +1,6 @@
 ### 回调结果
 
-错误码，具体请参见 [精准同步播放器 - 常见错误码\|_blank](!ZegoAccurateSyncMediaPlayerSDK-Common_error_codes)，如查询不到可联系 ZEGO 技术支持。
+错误码，具体请参见 [精准同步播放器 - 常见错误码](!ZegoAccurateSyncMediaPlayerSDK-Common_error_codes)，如查询不到可联系 ZEGO 技术支持。
 
 | 参数 | 类型 | 描述 |
 | --- | ---- | --- |
@@ -11,7 +11,7 @@
 <div class="mk-hint">
 
 
-回调结果可作为参数用于 [getCopyrightedVideoList\|_blank](@getCopyrightedVideoList) 接口调用，详情请参考 <a href="#2">根据条件获取视频列表</a>。
+回调结果可作为参数用于 [getCopyrightedVideoList](@getCopyrightedVideoList) 接口调用，详情请参考 <a href="#2">根据条件获取视频列表</a>。
 </div>
 
 ### 回调示例

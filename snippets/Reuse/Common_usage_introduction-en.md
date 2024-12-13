@@ -13,7 +13,7 @@ Basic concepts:
     2. Users can only receive notifications about changes in the room they are in (such as new users joining the room, existing users leaving the room, new audio and video streams being published, etc.).
 
 
-For more basic concepts, refer to the [Glossary\|_blank](#7535).
+For more basic concepts, refer to the [Glossary](#7535).
 
 
 

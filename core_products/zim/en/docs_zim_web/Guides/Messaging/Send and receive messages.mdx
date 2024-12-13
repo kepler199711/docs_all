@@ -25,7 +25,7 @@ This document describes how to send and receive messages with the ZIM SDK.
 <td>
 Text messages are reliable and in order and can be stored as historical messages, applicable to one-to-one chats, group chats, and on-screen comments in chat rooms. After a room is disbanded, messages in it are not stored.
 
-API: [sendMessage|_blank](@sendMessage)
+API: [sendMessage](@sendMessage)
 </td>
 </tr>
 <tr data-row-level="3">
@@ -34,7 +34,7 @@ API: [sendMessage|_blank](@sendMessage)
 <td>
 Signaling messages are applicable to signaling transmission (for example, co-hosting, virtual gifting, and course materials sending) in scenarios with a higher concurrency, such as chat rooms and online classrooms.
 
-API: [sendMessage|_blank](@sendMessage)
+API: [sendMessage](@sendMessage)
 </td>
 </tr>
 <tr data-row-level="4">
@@ -43,7 +43,7 @@ API: [sendMessage|_blank](@sendMessage)
 <td>
 <p>On-screen comments are usually unreliable messages that are sent at a high frequency and can be discarded.</p><p>A high concurrency is supported, but reliability cannot be guaranteed.</p>
 
-API: [sendMessage|_blank](@sendMessage)
+API: [sendMessage](@sendMessage)
 </td>
 </tr>
 <tr data-row-level="5">
@@ -53,7 +53,7 @@ API: [sendMessage|_blank](@sendMessage)
 Image messages are reliable and in order and can be stored as historical messages (for 14 days by default), usually applicable to one-to-one chats, chat rooms, and group chats.
 
 API: 
-[sendMediaMessage|_blank](@sendMediaMessage)
+[sendMediaMessage](@sendMediaMessage)
 </td>
 </tr>
 <tr data-row-level="6">
@@ -78,7 +78,7 @@ The video message. A video message contains an MP4 or MOV video and cannot excee
 <td>
 Text messages are reliable and in order and can be stored as historical messages, applicable to real-time chat scenarios such as one-to-one chats, room, group chats, etc.
 
-API: [sendMessage|_blank](@sendMessage)
+API: [sendMessage](@sendMessage)
 </td>
 </tr>
 <tr data-row-level="10">
@@ -88,7 +88,7 @@ API: [sendMessage|_blank](@sendMessage)
 Custom messages are usually applicable to votes, solitaire, and video cards.
 
 API: 
-[sendMessage|_blank](@sendMessage)
+[sendMessage](@sendMessage)
 </td>
 </tr>
 </tbody>

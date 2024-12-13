@@ -16,7 +16,7 @@ Currently, the ZIM SDK supports the following message types:
 <td>Text message. Size limit: 32 KB. Rate limit: 10 requests/second.</td>
 <td>Enable messages to be more deliverable, and can be stored as message history. Suitable for one-on-one chat and group chat.
 
-Relevant method: [SendMessage\|_blank](@SendMessage)
+Relevant method: [SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="3">
@@ -24,7 +24,7 @@ Relevant method: [SendMessage\|_blank](@SendMessage)
 <td>Customizable signaling message. Size limit: 5 KB. Rate limit: 10 requests/second.</td>
 <td>Supports massive concurrency. Suitable for live audio room, online classroom, the messages won't be stored after the room is destroyed.
 
-Relevant method: [SendMessage\|_blank](@SendMessage)
+Relevant method: [SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="4">
@@ -33,7 +33,7 @@ Relevant method: [SendMessage\|_blank](@SendMessage)
 <td><p>The high-frequency messages that don't require 100% deliverability, this message type is often used to send bullet screen messages.</p><p>
 Supports massive concurrency, but the message deliverability can't be guaranteed.</p>
 
-Relevant method: [SendMessage\|_blank](@SendMessage)
+Relevant method: [SendMessage](@SendMessage)
 </td>
 </tr>
 <tr data-row-level="5">
@@ -42,7 +42,7 @@ Relevant method: [SendMessage\|_blank](@SendMessage)
 <td rowspan="4">Enable messages to be more deliverable, and can be stored as history messages (14 days by default). Suitable for one-on-one chat, room chat, and group chat.
 
 Relevant method: 
-[SendMediaMessage\|_blank](@SendMediaMessage)
+[SendMediaMessage](@SendMediaMessage)
 </td>
 </tr>
 <tr data-row-level="6">

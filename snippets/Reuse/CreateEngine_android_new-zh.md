@@ -1,7 +1,7 @@
 
-定义 SDK 引擎对象，调用 [createEngine\|_blank](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-zego-express-engine#create-engine) 接口，将申请到的 AppID 传入参数 “appID”，创建引擎单例对象。
+定义 SDK 引擎对象，调用 [createEngine](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-zego-express-engine#create-engine) 接口，将申请到的 AppID 传入参数 “appID”，创建引擎单例对象。
 
-如果需要注册回调，可将实现了 [IZegoEventHandler\|_blank](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-callback-i-zego-event-handler) 的对象传入参数 “eventHandler”。如果不需要注册回调，可将 “null” 传入参数 “eventHandler”，创建引擎后仍需要注册回调时可通过调用 [setEventHandler\|_blank](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-zego-express-engine#set-event-handler) 接口设置回调。
+如果需要注册回调，可将实现了 [IZegoEventHandler](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-callback-i-zego-event-handler) 的对象传入参数 “eventHandler”。如果不需要注册回调，可将 “null” 传入参数 “eventHandler”，创建引擎后仍需要注册回调时可通过调用 [setEventHandler](/zh/api?doc=Express_Video_SDK_API~Java_android~class~im-zego-zegoexpress-zego-express-engine#set-event-handler) 接口设置回调。
 
 ```java
 // 创建引擎，通用场景接入，并注册 self 为 eventHandler 回调

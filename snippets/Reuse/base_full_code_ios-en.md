@@ -100,7 +100,7 @@ The following is sample code for a basic video call and can be used for referenc
         if (errorCode == 0) {
             NSLog(@"Room login successful.");
         } else {
-            // Login failed. For details, see [Error codes\|_blank](!Error_Code).
+            // Login failed. For details, see [Error codes](!Error_Code).
             NSLog(@"Room login failed.");
         }
     }];

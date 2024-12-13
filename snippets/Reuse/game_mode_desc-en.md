@@ -80,7 +80,7 @@ ZEGO 小游戏平台提供 **普通小游戏** 和**弹幕游戏** 两大类游�
 
 ### 普通小游戏
 
-您需要在调用 [loadGame\|_blank](@loadGame) 接口加载游戏时指定普通小游戏的模式类型，接口调用示例请参考 [实现普通小游戏 - 加载游戏\|_blank](!ZegoMiniGameEngine-Implement_mini_games#3_7)。
+您需要在调用 [loadGame](@loadGame) 接口加载游戏时指定普通小游戏的模式类型，接口调用示例请参考 [实现普通小游戏 - 加载游戏](!ZegoMiniGameEngine-Implement_mini_games#3_7)。
 
 ### 弹幕游戏
 

@@ -6,8 +6,8 @@
     - The form values in POST/FORM format need to be decoded with urldecode.
     </div>
 
-- Request endpoint: The corresponding callback endpoint in the [ZEGOCLOUD Admin Console\|_blank](https://console.zegocloud.com). 
-(Click [here\|_blank](!Server_Callbacks/Configuration_Instructions) to learn how to config the callback endpoint)
+- Request endpoint: The corresponding callback endpoint in the [ZEGOCLOUD Admin Console](https://console.zegocloud.com). 
+(Click [here](!Server_Callbacks/Configuration_Instructions) to learn how to config the callback endpoint)
 
 - Transmission protocol: HTTPS/HTTP (HTTPS is recommended).
 

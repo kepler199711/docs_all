@@ -34,7 +34,7 @@
 <td>`ZegoGameIdle`</td>
 <td>游戏空闲中。</td>
 <td>游戏外指定匹配模式游戏：
-- 用户调用 [loadGame|_blank](@loadGame) 接口完成加载游戏外指定匹配模式游戏后。
+- 用户调用 [loadGame](@loadGame) 接口完成加载游戏外指定匹配模式游戏后。
 - 有玩家不符合游戏条件且游戏后台等待超时。
 - 游戏结束后等待主播开始新一轮游戏。</td>
 <td>当获取游戏状态为 `ZegoGameIdle` 时，判断不展示游戏画面。</td>
@@ -43,7 +43,7 @@
 <td>`ZegoGamePreparing`</td>
 <td>游戏准备中。</td>
 <td>游戏外指定匹配模式游戏：
-- 主播调用 [startGame|_blank](@startGame) 后，游戏后台检查是否所有玩家都满足游戏条件。</td>
+- 主播调用 [startGame](@startGame) 后，游戏后台检查是否所有玩家都满足游戏条件。</td>
 <td>在游戏准备的过程中，展示业务侧的加载弹窗等。</td>
 </tr>
 <tr>
@@ -52,7 +52,7 @@
 <td>- 游戏外指定匹配模式游戏：
     - 所有玩家符合游戏条件。&nbsp;&nbsp;
 - 随机匹配模式游戏：
-    - 用户调用 [loadGame|_blank](@loadGame) 加载游戏。
+    - 用户调用 [loadGame](@loadGame) 加载游戏。
     - 游戏结束后，开始新一轮游戏。
 - 恢复游戏进程。</td>
 <td>获取 `ZegoGamePlaying` 状态时，判断展示游戏界面。</td>

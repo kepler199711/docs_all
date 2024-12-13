@@ -2,7 +2,7 @@
 
 <div class="mk-hint">
 
-To know Android Studio's version changes, refer to the [Android Studio release notes\|_blank](https://developer.android.google.cn/studio/releases/index.html).
+To know Android Studio's version changes, refer to the [Android Studio release notes](https://developer.android.google.cn/studio/releases/index.html).
 </div>
 
 

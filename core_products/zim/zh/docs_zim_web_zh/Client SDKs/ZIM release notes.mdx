@@ -25,7 +25,7 @@ articleID: 12817
 
 | <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
-| 首次拉取会话列表耗时优化 | 优化用户登录后首次拉取会话列表的时效，提升用户体验。 | [queryConversationList\|_blank](@queryConversationList) |
+| 首次拉取会话列表耗时优化 | 优化用户登录后首次拉取会话列表的时效，提升用户体验。 | [queryConversationList](@queryConversationList) |
 | 服务端发送群聊消息响应参数优化 | 服务端 API `SendGroupMessage` 的响应参数新增 `MsgId`，可用于定位消息。 | [发送群组消息](/zh/zim-server/messaging/send-group-messages) |
 | 消息发送后回调参数优化 | 当消息发送失败，消息发送后回调中的 `msg_id` 参数将不再为空。 | [消息发送后回调](/zh/zim-server/callbacks/message-sent) |
 | 从服务端获取消息拓展字段 | 支持通过消息发送前回调中的 `payload` 参数获取用户发送消息时传入的拓展字段。 | [消息发送前回调](/zh/zim-server/callbacks/message-not-sent-yet) |

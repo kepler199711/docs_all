@@ -16,9 +16,9 @@ Before you run the sample server code for Node.js, make sure that the developmen
 
 ### Prerequisites
 
-- A project is created in the [ZEGO console\|_blank](https://console.zegocloud.com). The values of the `AppID` and `ServerSecret` parameters of the project are obtained. For more information, see [How to view project information\|_blank](https://www.zegocloud.com/docs/admin-console/view-project-information).
+- A project is created in the [ZEGO console](https://console.zegocloud.com). The values of the `AppID` and `ServerSecret` parameters of the project are obtained. For more information, see [How to view project information](https://www.zegocloud.com/docs/admin-console/view-project-information).
 - The mini-game service is activated by contacting ZEGO business staff.
-- The sample server code is obtained. For more information, see [Download\|_blank](!ZegoMiniGameEngine-download).
+- The sample server code is obtained. For more information, see [Download](!ZegoMiniGameEngine-download).
 
 ### Directory structure of the sample code
 

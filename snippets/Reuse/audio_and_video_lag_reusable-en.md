@@ -1,6 +1,6 @@
 <div class="mk-hint">
 
-Before diagnosing the stuttering cause, refer to [Call quality monitoring\|_blank](#15152#5) to learn functions of the **Analytics Dashboard - Call quality monitoring** module.
+Before diagnosing the stuttering cause, refer to [Call quality monitoring](#15152#5) to learn functions of the **Analytics Dashboard - Call quality monitoring** module.
 </div>
 
 ### 1 Locating target streams

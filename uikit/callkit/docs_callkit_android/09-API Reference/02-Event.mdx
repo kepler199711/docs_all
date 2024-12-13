@@ -1,25 +1,5 @@
 # Event
 
-- [CallEvents](#callevents)
-    - [IExpressEngineEventHandler](#iexpressengineeventhandler)
-    - [onBackPressed](#onbackpressed)
-    - [onOnlySelfInRoom](#ononlyselfinroom)
-    - [onCallEnd](#oncallend)
-    - [onAudioOutputDeviceChanged](#onaudiooutputdevicechanged)
-    - [onClick](#onclick)
-- [InvitationEvents](#invitationevents)
-    - [onIncomingCallDeclineButtonPressed](#onincomingcalldeclinebuttonpressed)
-    - [onIncomingCallAcceptButtonPressed](#onincomingcallacceptbuttonpressed)
-    - [onOutgoingCallCancelButtonPressed](#onoutgoingcallcancelbuttonpressed)
-    - [onIncomingCallReceived](#onincomingcallreceived)
-    - [onIncomingCallCanceled](#onincomingcallcanceled)
-    - [onIncomingCallTimeout](#onincomingcalltimeout)
-    - [onOutgoingCallAccepted](#onoutgoingcallaccepted)
-    - [onOutgoingCallRejectedCauseBusy](#onoutgoingcallrejectedcausebusy)
-    - [onOutgoingCallDeclined](#onoutgoingcalldeclined)
-    - [onOutgoingCallTimeout](#onoutgoingcalltimeout)
-- [onError](#onerror)
-
 ## CallEvents
 
 ### IExpressEngineEventHandler
@@ -127,6 +107,25 @@ void onClick(ZegoMenuBarButtonName name, View view);
 ZegoUIKitPrebuiltCallService.events.callEvents.setButtonClickListener(new ZegoMenuBarButtonClickListener() {
     @Override
     public void onClick(ZegoMenuBarButtonName name, View view) {
+        
+    }
+});
+```
+</CodeGroup>
+
+### onInRoomCommandReceived
+
+This callback is triggered when a user receives a custom command sent by another user in the room.
+
+<CodeGroup>
+```java title="function prototype"
+void onInRoomCommandReceived(ZegoUIKitUser fromUser, String command);
+```
+
+```java example
+ZegoUIKitPrebuiltCallService.events.callEvents.addInRoomCommandListener(new ZegoInRoomCommandListener() {
+    @Override
+    public void onInRoomCommandReceived(ZegoUIKitUser fromUser, String command) {
         
     }
 });

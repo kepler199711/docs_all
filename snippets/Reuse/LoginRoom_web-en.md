@@ -1,6 +1,6 @@
 <div class="mk-warning">
 
-When logging in to a room, you need to pass in a **token for user authentication**. To obtain the login token, see [User privilege control\|_blank](#11416).
+When logging in to a room, you need to pass in a **token for user authentication**. To obtain the login token, see [User privilege control](#11416).
 
 </div>
 

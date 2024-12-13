@@ -10,7 +10,7 @@
     | 参数名 | 类型 | 是否必须 | 说明 |  
 | :---- | :---- | :----- | :------ |  
 | AppId | unsigned int | 是 | 鉴权的唯一标识，请联系 ZEGO 商务人员获取。|
-| AuthInfo | string | 是 | 加密数据，由 SDK 产生的设备相关标识，通过 [getAuthInfo\|_blank](@getAuthInfo) 接口获得。 |
+| AuthInfo | string | 是 | 加密数据，由 SDK 产生的设备相关标识，通过 [getAuthInfo](@getAuthInfo) 接口获得。 |
 
     - ***消息示例：***
 

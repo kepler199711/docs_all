@@ -15,18 +15,18 @@
 
 ## 2 前提条件
 
-- 已在项目中集成 ZegoExpress-Video SDK，实现基本的实时音视频功能，详情请参考实时音视频的 [快速开始 - 集成\|_blank](!ExpressVideoSDK-Integration/SDK_Integration)。
+- 已在项目中集成 ZegoExpress-Video SDK，实现基本的实时音视频功能，详情请参考实时音视频的 [快速开始 - 集成](!ExpressVideoSDK-Integration/SDK_Integration)。
 
-- 已在项目中集成 [ZegoWhiteboardView SDK\|_blank](!WhiteBoard-DownloadSDK/DownloadSDK)，详情请参考 [快速开始 - 集成\|_blank](!WhiteBoard-QuickStart/Integration)。
+- 已在项目中集成 [ZegoWhiteboardView SDK](!WhiteBoard-DownloadSDK/DownloadSDK)，详情请参考 [快速开始 - 集成](!WhiteBoard-QuickStart/Integration)。
 
-- 已在项目中集成 [ZegoDocsView SDK\|_blank](!DocsView-DownloadSDK/DownloadSDK)，详情请参考文件共享的 [快速开始 - 集成\|_blank](!DocsView-QuickStart/Integration)。
+- 已在项目中集成 [ZegoDocsView SDK](!DocsView-DownloadSDK/DownloadSDK)，详情请参考文件共享的 [快速开始 - 集成](!DocsView-QuickStart/Integration)。
 
-- 已在 [ZEGO 控制台](https://console.zego.im/) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理\|_blank](https://doc-zh.zego.im/zh/1265.html)。
+- 已在 [ZEGO 控制台](https://console.zego.im/) 创建项目，并申请有效的 AppID 和 AppSign，详情请参考 [控制台 - 项目管理](https://doc-zh.zego.im/zh/1265.html)。
 
 
 <div class="mk-warning">
 
-`2.3.0 或以上` 版本的 SDK 支持 Token 鉴权，若您需要升级鉴权方式，可参考 [如何从 AppSign 鉴权升级为 Token 鉴权\|_blank](http://doc-zh.zego.im/faq/token_upgrade?product=ExpressVideo)。
+`2.3.0 或以上` 版本的 SDK 支持 Token 鉴权，若您需要升级鉴权方式，可参考 [如何从 AppSign 鉴权升级为 Token 鉴权](http://doc-zh.zego.im/faq/token_upgrade?product=ExpressVideo)。
 </div>
 
 

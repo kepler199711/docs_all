@@ -75,11 +75,11 @@ Currently, co-hosting and playing H.265 streams are not supported on Web pages a
 
 - Video encoding: the process of converting a given video input into a specific format that is compatible with most types of Web players and mobile devices. 
 
-- Stream mixing: the process of combining multiple media streams into a single stream on the cloud. ZEGO supports using stream mixing with three methods, manual stream mix, automatic stream mix, and full-automatic stream mix. For details, see [Stream mixing\|_blank](!Other_Functions/Mixer).
+- Stream mixing: the process of combining multiple media streams into a single stream on the cloud. ZEGO supports using stream mixing with three methods, manual stream mix, automatic stream mix, and full-automatic stream mix. For details, see [Stream mixing](!Other_Functions/Mixer).
 
-- Stream forwarding to CDN: the process of forwarding streams from ZEGO Cloud to CDN (Content Delivery Network). For details, see [Publishing streams via CDN\|_blank](!Publisher_Player_Advanced/RelayToCDN).
+- Stream forwarding to CDN: the process of forwarding streams from ZEGO Cloud to CDN (Content Delivery Network). For details, see [Publishing streams via CDN](!Publisher_Player_Advanced/RelayToCDN).
 
-- Co-hosting: a form of interaction between the users in the rooms. Users can call the [`startPublishingStream`\|_blank](@startPublishingStream) method to publish their own streams, and call the [`startPlayingStream`\|_blank](@startPlayingStream) method to play the remote users' streams for interactive communication.
+- Co-hosting: a form of interaction between the users in the rooms. Users can call the [`startPublishingStream`](@startPublishingStream) method to publish their own streams, and call the [`startPlayingStream`](@startPlayingStream) method to play the remote users' streams for interactive communication.
 
 
 

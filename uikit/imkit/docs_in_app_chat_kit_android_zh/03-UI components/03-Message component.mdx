@@ -188,24 +188,149 @@ ZIMKit.registerMessageListListener(new ZIMKitMessagesListListener() {
 
 </Accordion>
 
-<Accordion title="自定义输入栏" defaultOpen="false">
+<Accordion title="修改消息操作菜单" defaultOpen="false">
 
-要自定义输入栏上的按钮，您可以使用`InputConfig`进行配置：
+长按一条消息后，界面会显示一个消息操作菜单，提供复制、回复、转发消息以及其他操作的选项。如需修改此菜单，可以使用`ZIMKitConfig.messageConfig`。该配置允许自定义不同消息类型（文本、图片、视频、文件、语音和组合消息）的操作菜单。
 
-- `showVoiceButton`: 是否显示语音按钮。
-- `showEmojiButton`: 是否显示表情按钮。
-- `showAddButton`: 是否显示添加按钮。
+<Frame width="200" height="auto">
+  <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/5abadcbf1b.jpeg" alt="MessageActionMenu.jpeg"/>
+</Frame>
+
+
+| 可用操作类型    | 文字消息 | 图片消息 |  视频消息 | 文件消息 | 语音消息 | 组合消息 |
+| ------------------ | ------  | -------- | -------- | --------| ------ | ------- |
+| COPY（复制）               | ✔️     | ✖ | ✖ | ✖ | ✖ | ✖ |
+| REPLY（回复）              | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     |
+| FORWARD（转发）            | ✔️     | ✔️     | ✔️     | ✔️     | ✖ | ✔️     |
+| MULTIPLE_CHOICE（多选）     | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     |
+| DELETE（删除）             | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     |
+| REVOKE（撤回）             | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     |
+| SPEAKER（使用扬声器播放） | ✖   | ✖    | ✖   | ✖   | ✔️     | ✖     |
+| REACTION（表态）    | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     | ✔️     |
 
 以下是参考代码：
 
 ```java
-InputConfig inputConfig = new InputConfig();
-inputConfig.showVoiceButton = true;
-inputConfig.showEmojiButton = true;
-inputConfig.showAddButton = false;
-ZIMKit.setInputConfig(inputConfig);
+ZIMKitConfig config = ZIMKitConfig();
+
+// 文本消息
+config.messageConfig.textMessageConfig.operations = new ArrayList<>(
+   Arrays.asList(  ZIMKitMessageOperationName.COPY,               // 复制
+    ZIMKitMessageOperationName.REPLY,              // 回复
+    ZIMKitMessageOperationName.FORWARD,            // 转发
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE,     // 多选 
+    ZIMKitMessageOperationName.DELETE,             // 删除
+    ZIMKitMessageOperationName.REVOKE,             // 撤回
+    ZIMKitMessageOperationName.REACTION            // 表态
+    ) );
+] 
+
+// 图片消息 
+config.messageConfig.imageMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY, 
+    ZIMKitMessageOperationName.FORWARD, 
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE, 
+    ZIMKitMessageOperationName.DELETE, 
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+]
+
+// 视频消息 
+config.messageConfig.videoMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY, 
+    ZIMKitMessageOperationName.FORWARD, 
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE, 
+    ZIMKitMessageOperationName.DELETE, 
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+
+// 文件消息 
+config.messageConfig.fileMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY, 
+    ZIMKitMessageOperationName.FORWARD, 
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE, 
+    ZIMKitMessageOperationName.DELETE, 
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+
+// 语音消息 
+config.messageConfig.audioMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.SPEAKER,  // 使用扬声器进行播放
+    ZIMKitMessageOperationName.FORWARD, 
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE, 
+    ZIMKitMessageOperationName.DELETE, 
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
+
+// 合并转发消息
+config.messageConfig.combineMessageConfig.operations = new ArrayList<>(
+    Arrays.asList( ZIMKitMessageOperationName.REPLY, 
+    ZIMKitMessageOperationName.FORWARD, 
+    ZIMKitMessageOperationName.MULTIPLE_CHOICE, 
+    ZIMKitMessageOperationName.DELETE, 
+    ZIMKitMessageOperationName.REVOKE,
+    ZIMKitMessageOperationName.REACTION
+    ) );
 ```
 
+</Accordion>
+
+<Accordion title="自定义底部工具栏按钮" defaultOpen="false">
+
+要自定义底部工具栏上的按钮，您可以使用 `ZIMKitConfig.inputConfig.smallButtons` 和
+`ZIMKitConfig.inputConfig.expandButtons` 进行配置：
+
+- `smallButtons`: 配置输入框快捷按钮，目前默认显示语音输入、表情、相册图片以及扩展按钮。
+- `expandButtons`: 配置输入框扩展按钮，目前默认显示发送拍照，以及发送文件按钮。
+
+以下是参考代码：
+
+```java
+// smallButtons 底部工具栏输入框快捷按钮新增发送文件按钮
+config.inputConfig.smallButtons.add(ZIMKitInputButtonName.FILE)   
+
+// expandButtons 底部工具栏输入框扩展按钮新增发送图片按钮
+config.bottomConfig.expandButtons.add(ZIMKitInputButtonName.PICTURE)  
+```
+
+</Accordion>
+
+<Accordion title="修改输入框提示文本" defaultOpen="false">
+
+如需修改底部输入框的默认提示文字，您可以使用 `ZIMKitConfig.inputConfig.inputHint` 进行配置：
+
+以下是参考代码:
+```java
+ZIMKitConfig config = ZIMKitConfig()
+config.inputConfig.inputHint = "input hint", 
+```
+</Accordion>
+
+<Accordion title="自定义表情面板" defaultOpen="false">
+
+IMKit 提供一系列默认表情用于在会话中发送表情，以及对消息进行表态。如果您不满意默认提供的表情，您可以通过 `ZIMKitConfig.inputConfig.emojis` 传入所有您需要的表情。
+
+<table>
+  <tr>
+    <th>发送表情</th>
+    <th>消息表态</th>
+  </tr>
+  <tr>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/06864fe88e.jpeg" alt="Emoji_1.jpeg" width="200"/></td>
+    <td><img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/a884ba82f8.jpeg" alt="Emoji_2.jpeg" width="200" /></td>
+  </tr>
+</table>
+
+
+以下是参考代码:
+```java
+ZIMKitConfig config = ZIMKitConfig()
+ZIMKitConfig.inputConfig.emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂"]
+```
 </Accordion>
 
 ## API

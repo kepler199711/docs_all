@@ -27,7 +27,7 @@
 </div>
 
 socks5 代理服务器推荐使用 3proxy 及 Dante（ubuntu）。
-- 3proxy 安装配置，示例如下，详细配置请参考 [3proxy 安装配置教程\|_blank](https://3proxy.org/doc/howtoe.html)。
+- 3proxy 安装配置，示例如下，详细配置请参考 [3proxy 安装配置教程](https://3proxy.org/doc/howtoe.html)。
     ```
     #!/usr/local/bin/3proxy
     #3proxy 内部超时时间
@@ -59,7 +59,7 @@ socks5 代理服务器推荐使用 3proxy 及 Dante（ubuntu）。
     **maxconn** **300** 
     ```
     
-- Dante 安装配置，请参考 [Dante 安装配置教程\|_blank](http://wiki.kartbuilding.net/Dante_Socks_Server)。
+- Dante 安装配置，请参考 [Dante 安装配置教程](http://wiki.kartbuilding.net/Dante_Socks_Server)。
 
 
 

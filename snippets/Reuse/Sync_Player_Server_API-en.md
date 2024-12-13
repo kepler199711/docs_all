@@ -4,8 +4,8 @@
 
 | 接口名称 | 接口功能 |
 | -- | -- |
-| [StartVideo\|_blank](!StartPlay) | 播放影视资源。 |
-| [PauseVideo\|_blank](!PausePlay) | 暂停正在播放的影视资源。 |
-| [ResumeVideo\|_blank](!ResumePlay) | 恢复播放已暂停的影视资源。 |
-| [SeekVideo\|_blank](!SeekToPlay) | 改变影视资源的播放进度。 |
-| [StopVideo\|_blank](!StopPlay) | 停止播放影视资源。 |
+| [StartVideo](!StartPlay) | 播放影视资源。 |
+| [PauseVideo](!PausePlay) | 暂停正在播放的影视资源。 |
+| [ResumeVideo](!ResumePlay) | 恢复播放已暂停的影视资源。 |
+| [SeekVideo](!SeekToPlay) | 改变影视资源的播放进度。 |
+| [StopVideo](!StopPlay) | 停止播放影视资源。 |

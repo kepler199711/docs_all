@@ -28,11 +28,11 @@
 
 ![CDN拉流](https://storage.zego.im/sdk-doc/Pics/Common/ZegoExpressEngine/mixed_flow.png)
 
-有关混流相关接口的使用及注意事项，请参考 [实时音视频 - 基础功能 - 混流\|_blank](!ExpressVideoSDK-Other_Functions/Mixer)。    
+有关混流相关接口的使用及注意事项，请参考 [实时音视频 - 基础功能 - 混流](!ExpressVideoSDK-Other_Functions/Mixer)。    
 
-如需转推至 ZEGO 外的第三方 CDN，请参考 [实时音视频 - 基础功能 - 使用CDN直播\|_blank](!ExpressVideoSDK-Publisher_Player_Advanced/RelayToCDN)。
+如需转推至 ZEGO 外的第三方 CDN，请参考 [实时音视频 - 基础功能 - 使用CDN直播](!ExpressVideoSDK-Publisher_Player_Advanced/RelayToCDN)。
 
 <div class='mk-warning'>
 
-混流如需使用 ZEGO CDN 服务，需要在控制台开通混流时，选择混流转推方式为 **转推到 ZEGO CDN**，详情请参考 [控制台 - 项目管理 - 服务配置 - CDN\|_blank](#14214)。
+混流如需使用 ZEGO CDN 服务，需要在控制台开通混流时，选择混流转推方式为 **转推到 ZEGO CDN**，详情请参考 [控制台 - 项目管理 - 服务配置 - CDN](#14214)。
 </div>

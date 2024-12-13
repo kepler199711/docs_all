@@ -84,6 +84,13 @@ export const CONNECTEDMap = {
   'iOS,mac': "ZIMRoomStateConnected",
   "window": "ZIM_ROOM_STATE_CONNECTED"
 }
+export const CONNECTINGMap = {
+  'Android': "CONNECTING",
+  'Flutter': "connecting",
+  'Web,RN,uniapp': "connecting",
+  'iOS,mac': "ZIMRoomStateConnecting",
+  "window": "ZIM_ROOM_STATE_CONNECTING"
+}
 export const SUCCESSMap = {
   'Android': "SUCCESS",
   'Flutter': "success",
@@ -111,7 +118,20 @@ export const ROOM_NOT_EXISTMap = {
   'iOS,mac': `ZIMRoomEventRoomNotExist`,
   "window": `ZIM_ROOM_EVENT_ROOM_NOT_EXIST`
 }
-
+export const ActiveSwitchMap = {
+  'Android': `ACTIVE_SWITCH`,
+  'Flutter': `activeSwitch`,
+  'Web,RN,uniapp': `ActiveSwitch`,
+  'iOS,mac': `ZIMRoomEventActiveSwitch`,
+  "window": `ZIM_ROOM_EVENT_ACTIVE_SWITCH`
+}
+export const SwitchFailedMap = {
+  'Android': `SWITCH_FAILED`,
+  'Flutter': `switchFailed`,
+  'Web,RN,uniapp': `SwitchFailed`,
+  'iOS,mac': `ZIMRoomEventSwitchFailed`,
+  "window": `ZIM_ROOM_EVENT_SWITCH_FAILED`
+}
 export const platformMap = {
   'Android':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=android" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
   'window':<a href="https://doc-zh.zego.im/faq/reconnect_zim?product=IM&platform=windows" target="_blank" > 场景 4 : ZIM 房间断网 </a>,
@@ -638,7 +658,110 @@ zim.on('roomMemberJoined', function (zim, { roomID, memberList }) {
 
 - 完整流程请参考下图：
 
-    <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Switch_Room_zh.jpeg" /></Frame>
+    :::if{props.platform="undefined|window|Flutter"}
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+
+    flowchart TD
+        Start([开始]) --> A[用户 A 通过 switchRoom 从 Room1 切换至 Room2]
+        A --> B[用户 A 通过 onRoomStateChanged 事件得知正在连接 Room2]
+        B --> C{Room2 是否存在}
+        
+        C -->|否| D{服务器内房间数量\n是否达到上限?}
+        C -->|是| E[房间切换成功\nRoom2 用户收到 onRoomMemberJoined 回调]
+        
+        D -->|是| K[房间切换失败\n用户 A 通过 onRoomStateChanged 事件得知与 Room2 断连]
+        D -->|否| F{isCreateWhen\nRoomNotExisted \n参数是否为 true}
+        
+        F -->|否| K 
+        F -->|是| G[创建新房间 Room2，房间切换成功\nRoom2 各参数与调用 switchRoom 传入时一致]
+        
+        G --> H[用户 A 收到 2 次onRoomStateChanged 回调\n分别得知已连接 Room2 并与 Room1 断连]
+        E --> H
+        
+        H --> I{Room1 是否\n有其他成员}
+        
+        I -->|是| J[Room1 用户收到 onRoomMemberLeft 回调]
+        I -->|否| L[Room1 在延迟销毁时间到达时被销毁]
+            
+        J --> End([结束])
+        L --> End
+        K --> End
+    ```
+    :::
+
+    :::if{props.platform="iOS|mac"}
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+
+    flowchart TD
+        Start([开始]) --> A[用户 A 通过 switchRoomFromRoomID 从 Room1 切换至 Room2]
+        A --> B[用户 A 通过 roomStateChanged 事件得知正在连接 Room2]
+        B --> C{Room2 是否存在}
+        
+        C -->|否| D{服务器内房间数量\n是否达到上限?}
+        C -->|是| E[房间切换成功\nRoom2 用户收到 roomMemberJoined 回调]
+        
+        D -->|是| K[房间切换失败\n用户 A 通过 roomStateChanged 事件得知与 Room2 断连]
+        D -->|否| F{isCreateWhen\nRoomNotExisted \n参数是否为 true}
+        
+        F -->|否| K 
+        F -->|是| G[创建新房间 Room2，房间切换成功\nRoom2 各参数与调用 switchRoomFromRoomID 传入时一致]
+        
+        G --> H[用户 A 收到 2 次 roomStateChanged 回调\n分别得知已连接 Room2 并与 Room1 断连]
+        E --> H
+        
+        H --> I{Room1 是否\n有其他成员}
+        
+        I -->|是| J[Room1 用户收到 roomMemberLeft 回调]
+        I -->|否| L[Room1 在延迟销毁时间到达时被销毁]
+            
+        J --> End([结束])
+        L --> End
+        K --> End
+    ```
+    :::
+
+    :::if{props.platform="Web|RN|uniapp"}
+    ```mermaid
+    %%{ init: { 'flowchart': { 'curve': 'stepAfter' } } }%%
+
+    flowchart TD
+        Start([开始]) --> A[用户 A 通过 switchRoom 从 Room1 切换至 Room2]
+        A --> B[用户 A 通过 roomStateChanged 事件得知正在连接 Room2]
+        B --> C{Room2 是否存在}
+        
+        C -->|否| D{服务器内房间数量\n是否达到上限?}
+        C -->|是| E[房间切换成功\nRoom2 用户收到 roomMemberJoined 回调]
+        
+        D -->|是| K[房间切换失败\n用户 A 通过 roomStateChanged 事件得知与 Room2 断连]
+        D -->|否| F{isCreateWhen\nRoomNotExisted \n参数是否为 true}
+        
+        F -->|否| K 
+        F -->|是| G[创建新房间 Room2，房间切换成功\nRoom2 各参数与调用 switchRoom 传入时一致]
+        
+        G --> H[用户 A 收到 2 次 roomStateChanged 回调\n分别得知已连接 Room2 并与 Room1 断连]
+        E --> H
+        
+        H --> I{Room1 是否\n有其他成员}
+        
+        I -->|是| J[Room1 用户收到 roomMemberLeft 回调]
+        I -->|否| L[Room1 在延迟销毁时间到达时被销毁]
+            
+        J --> End([结束])
+        L --> End
+        K --> End
+    ```
+    :::
+
+
+    如上图所示，用户在切换房间的时候会接收到数次 {getPlatformData(props,onRoomStateChangedMap)} 事件通知，根据触发时机，该事件中相关参数如下表所示：
+
+    | 触发时机                                           | <div style={{width:"120px"}}>roomID 值</div> | state 值 | <div style={{width:"120px"}}>event 值</div> | <div style={{width:"120px"}}>事件意义</div>       |
+    | ------------------------------------------------- | --------- | -------- | -------- | -------------- |
+    | 调用 {getPlatformData(props,switchRoomMap)} 接口后。 | Room2     | {getPlatformData(props,CONNECTINGMap)}        | {getPlatformData(props,ActiveSwitchMap)} | 正在连接 Room2。 |
+    | 调用 {getPlatformData(props,switchRoomMap)} 接口后，Room2 不存在时，以下任意情况：<ul><li>服务器内房间数量已达上限。</li><li>服务器内房间数量未达上限，但调用 {getPlatformData(props,switchRoomMap)} 接口时 `isCreateWhenRoomNoteExisted` 参数为 false。</li></ul> | Room2     | {getPlatformData(props,DISCONNECTEDMap)}        | {getPlatformData(props,SwitchFailedMap)} | 因 Room2 不存在导致切换失败。|
+    | 在以下任意情况下，用户会收到两次回调：<ul><li>调用 {getPlatformData(props,switchRoomMap)} 接口后，Room2 存在。</li><li>调用 {getPlatformData(props,switchRoomMap)} 接口后，Room2 不存在，服务器内房间数量未达上限，且调用 {getPlatformData(props,switchRoomMap)} 接口时 `isCreateWhenRoomNoteExisted` 参数为 true。</li></ul> | <ul><li>第一次回调：Room2</li><li>第二次回调：Room1</li></ul>     | <ul><li>第一次回调：{getPlatformData(props,CONNECTEDMap)}</li><li>第二次回调：{getPlatformData(props,DISCONNECTEDMap)}</li></ul> | <ul><li>第一次回调：{getPlatformData(props,SUCCESSMap)}</li><li>第二次回调：{getPlatformData(props,SUCCESSMap)}</li></ul> | <ul><li>第一次回调：成功连接 Room2。</li><li>第二次回调：成功断连 Room1。</li></ul> |
 
 - 示例代码：
 

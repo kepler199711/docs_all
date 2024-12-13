@@ -193,7 +193,7 @@ Known issues fixed.
 | -----  | ---- | ----- |
 | Optimize roomID length limitation | Supports a maximum length of 128 bytes for [roomID](@roomID-ZIMRoomInfo).| [ZIMRoomInfo > roomID](@roomID-ZIMRoomInfo) |
 | Added user avatar field to user information related classes | [ZIMUserInfo](@-ZIMUserInfo) and [ZIMGroupMemberInfo](@-ZIMGroupMemberInfo) added `userAvatarUrl` field, which is used to set or describe the user avatar address.<p>Note: The user avatar field for room members is currently not supported. This means that the `userAvatarUrl` in the `ZIMUserInfo` obtained through [queryRoomMemberList](@queryRoomMemberList) and [queryRoomMembers](@queryRoomMembers) will be empty.</p> | <ul><li>[ZIMUserInfo](@-ZIMUserInfo)</li><li>[ZIMGroupMemberInfo](@-ZIMGroupMemberInfo)</li></ul> |
-| Optimize the callback logic of [onRoomStateChanged\|_blank](@onRoomStateChanged) | When developers call the ZIM server API to destroy a room in the backend, the callback [onRoomStateChanged\|_blank](@onRoomStateChanged) that describes the room state change reason is modified to`ZIM_ROOM_EVENT_ROOM_NOT_EXIST`. | [onRoomStateChanged\|_blank](@onRoomStateChanged) |
+| Optimize the callback logic of [onRoomStateChanged](@onRoomStateChanged) | When developers call the ZIM server API to destroy a room in the backend, the callback [onRoomStateChanged](@onRoomStateChanged) that describes the room state change reason is modified to`ZIM_ROOM_EVENT_ROOM_NOT_EXIST`. | [onRoomStateChanged](@onRoomStateChanged) |
 | Added new response parameters to the server interface for sending one-to-one chat messages  | Added the  `SuccessList` parameter, with member parameters including `UserId`、`MsgId` and `MsgSeq`, to provide information about users who have successfully received the message. `MsgSeq` can be used for [Recall a one-to-one message](/zim-server/messaging/recall-a-one-to-one-message).| [Send a one-to-one messages](/zim-server/messaging/send-a-one-to-one-message) |
 | Added new response parameters to the server interface for sending group chat messages | Added `MsgSeq`, which can be used to [Recall a group message](/zim-server/messaging/recall-a-group-message). | [Send group messages](/zim-server/messaging/send-group-messages) |
 | New field for server callback after the message is sent | Added `user_list` field, used to return messages in batches to receive user information. <p>Warning: Only when developers call the server interface [Send a one-to-one message](/zim-server/messaging/send-a-one-to-one-message), this field will have a value.</p> | [Callback on message sent](/zim-server/callbacks/message-sent) |
@@ -344,7 +344,7 @@ Known issues fixed.
 
 | Item | Description | Method |
 | -----  | ---- | ----- |
-| Deprecated system message types | [ZIMMessageType](@-ZIMMessageType) (value 30) have been deprecated. Developers are advised to use more versatile custom messages (value 200) instead. | [ZIM_MESSAGE_TYPE_CUSTOM\|_blank](https://docs.zegocloud.com/article/api?doc=zim_API~cpp_windows~enum~ZIMMessageType#zim-message-type-custom) |
+| Deprecated system message types | [ZIMMessageType](@-ZIMMessageType) (value 30) have been deprecated. Developers are advised to use more versatile custom messages (value 200) instead. | [ZIM_MESSAGE_TYPE_CUSTOM](https://docs.zegocloud.com/article/api?doc=zim_API~cpp_windows~enum~ZIMMessageType#zim-message-type-custom) |
 
 
 ---
@@ -443,14 +443,14 @@ Known issues fixed.
 | :-------- | :------- | :----- |
 | [login](@login) |  A new [login](@login) method without a Token parameter is added. When you use the "AppSign" authentication mode, you can directly use this method to log in to In-App Chat.  | 2.4.0 |
 | [sendMessage](@sendMessage) |  New method to send messages, support one-to-one, in-room, and group messages. | 2.4.0 |
-| [sendMediaMessage\|_blank](@sendMediaMessage)|  A new rich media message sending method [sendMediaMessage\|_blank](@sendMediaMessage) (overloaded with the same name) was added, which supports getting the information before media uploading and can send rich media information such as files, pictures, audio, and video.  | 2.4.0 |
+| [sendMediaMessage](@sendMediaMessage)|  A new rich media message sending method [sendMediaMessage](@sendMediaMessage) (overloaded with the same name) was added, which supports getting the information before media uploading and can send rich media information such as files, pictures, audio, and video.  | 2.4.0 |
 
 - **Deprecation**
 
 | Method | Description | Change version |
 | :-------- | :------- | :----- |
 | <ul><li>[sendPeerMessage](@sendPeerMessage)</li><li>[sendRoomMessage](@sendRoomMessage)</li><li>[sendGroupMessage](@sendGroupMessage)</li></ul> | The method for sending one-to-one, in-room, and group messages ([sendPeerMessage](@sendPeerMessage), [sendRoomMessage](@sendRoomMessage), [sendGroupMessage](@sendGroupMessage)) are abandoned. We will be unified using the [sendMessage](@sendMessage) interface, making a more standard way of sending a message.   | 2.4.0 |
-| [sendMediaMessage\|_blank](@sendMediaMessage) | The original [sendMediaMessage\|_blank](@sendMediaMessage) method for sending rich media messages is deprecated and replaced by the [sendMediaMessage\|_blank](@sendMediaMessage) method with the same name. The parameters are different, please pay attention to the change.   | 2.4.0 |
+| [sendMediaMessage](@sendMediaMessage) | The original [sendMediaMessage](@sendMediaMessage) method for sending rich media messages is deprecated and replaced by the [sendMediaMessage](@sendMediaMessage) method with the same name. The parameters are different, please pay attention to the change.   | 2.4.0 |
 
 ## Version 2.3.0 
 
