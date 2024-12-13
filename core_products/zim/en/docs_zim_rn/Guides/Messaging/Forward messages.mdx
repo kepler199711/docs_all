@@ -88,7 +88,7 @@ Below is the sample code for receiving a combined message in a one-to-one chat:
 
 ```javascript
 // The user receives a combined message in a one-to-one chat.
-zim.on('receivePeerMessage', function (zim, { messageList, fromConversationID }) {
+zim.on('peerMessageReceived', function (zim, { messageList, fromConversationID }) {
     console.log(messageList, fromConversationID);
     messageList.forEach(function (msg) {
         // The `Combine` message is received.
