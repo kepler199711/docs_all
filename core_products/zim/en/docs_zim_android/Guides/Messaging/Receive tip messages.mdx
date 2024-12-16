@@ -199,7 +199,6 @@ Read from
 </tbody>
 </table>
 
-
 :::if{props.platform=undefined}
 ```java
 // Receive a group message.
@@ -241,7 +240,6 @@ public void onGroupMessageReceived(ZIM zim, List<ZIMMessage> messageList, ZIMMes
     }
 });
 ```
-
 :::
 :::if{props.platform="window"}
 ```cpp
@@ -289,13 +287,7 @@ void zim_event_handler::onGroupMessageReceived(
 
 }
 ```
-
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
-
 :::if{props.platform="Flutter"}
 ```dart
 // Receive group messages
@@ -332,7 +324,6 @@ ZIMEventHandler.onGroupMessageReceived = (ZIM zim, List<ZIMMessage> messageList,
 };
 ```
 :::
-
 :::if{props.platform="Web"}
 ```JavaScript
 // Receive a group message.
@@ -370,13 +361,8 @@ zim.on('groupMessageReceived', (zim, { messageList, info, fromConversationID }) 
     });
 });
 ```
-
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 // Receive a group message.
 - (void)groupMessageReceived:(ZIM *)zim 
@@ -422,62 +408,9 @@ Based on the obtained tip message, generate the corresponding event string and d
     }
 }
 ```
+:::
 
 ### 3. Display a tip message
 
 Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
-:::
-:::if{props.platform="mac"}
-```objc
-// Receive a group message.
-- (void)groupMessageReceived:(ZIM *)zim 
-                 messageList:(NSArray<ZIMMessage *> *)messageList
-                  info:(ZIMMessageReceivedInfo *)info 
-                  fromGroupID:(NSString *)fromGroupID {
-    
-    for (ZIMMessage *message in messageList) {
-        // It is a tip message.
-        if (message.type == ZIMMessageTypeTips) {
-            ZIMTipsMessage *tipsMessage = (ZIMTipsMessage *)message;
-            // It is a group profile change event.
-            if (tipsMessage.event == ZIMTipsMessageEventGroupInfoChanged) {
-                ZIMTipsMessageGroupChangeInfo *info = (ZIMTipsMessageGroupChangeInfo *)tipsMessage.changeInfo;
-                
-                if (info.type == ZIMTipsMessageChangeInfoTypeGroupDataChanged) {
-                    if (info.groupDataFlag & ZIMGroupDataFlagName) {
-                        // Group name change.
-                        NSString *newGroupName = info.groupName;
-                    }
-                    
-                    if (info.groupDataFlag & ZIMGroupDataFlagNotice) {
-                        // Group notice change.
-                        NSString *newGroupNotice = info.groupNotice;
-                    }
-                    
-                    if (info.groupDataFlag & ZIMGroupDataFlagAvatarUrl) {
-                        // Group avatar change.
-                        NSString *newGroupAvatarUrl = info.groupAvatarUrl;
-                    }
-                }
-                
-                // The business logic.
-            } else if (tipsMessage.event == ZIMTipsMessageEventGroupMemberInfoChanged) {
-                // It is a group member information change event.
-                ZIMTipsMessageGroupMemberChangeInfo *info = (ZIMTipsMessageGroupMemberChangeInfo *)tipsMessage.changeInfo;
-                
-                // The business logic.
-            }
-            
-            // Other business logic.
-        }
-    }
-}
-```
-
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
-:::
 
