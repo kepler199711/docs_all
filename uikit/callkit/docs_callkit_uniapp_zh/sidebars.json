@@ -73,6 +73,48 @@
     },
     {
       "type": "category",
+      "label": "实现离线推送",
+      "items": [
+        {
+          "type": "doc",
+          "label": "实现离线推送",
+          "id": "implement-offline-call/offline-call"
+        },
+        {
+          "type": "doc",
+          "label": "Apple 推送集成指南",
+          "id": "implement-offline-call/integrate-apns"
+        },
+        {
+          "type": "category",
+          "label": "Android 推送集成指南",
+          "items": [
+            {
+              "type": "doc",
+              "label": "小米推送集成指南",
+              "id": "implement-offline-call/integrate-xiaomi"
+            },
+            {
+              "type": "doc",
+              "label": "华为推送集成指南",
+              "id": "implement-offline-call/integrate-huawei"
+            },
+            {
+              "type": "doc",
+              "label": "OPPO 推送集成指南",
+              "id": "implement-offline-call/integrate-oppo"
+            },
+            {
+              "type": "doc",
+              "label": "vivo 推送集成指南",
+              "id": "implement-offline-call/integrate-vivo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
       "label": "客户端 API",
       "items": [
         {

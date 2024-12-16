@@ -21,7 +21,7 @@ import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.md
 若您已有 uni-app 项目，则跳过此步骤。若尚无 uni-app 项目，请参考 uni-app 开发者文档 [创建 uni-app](https://uniapp.dcloud.net.cn/quickstart-hx.html) 快速创建项目。
 </Step>
 
-<Step title="导入 ZEGO 即构实时音视频 SDK">
+<Step title="导入 ZEGO 即构实时音视频 SDK、Zego ZIM 即时通讯 SDK">
 在插件市场购买 [ZEGO 即构实时音视频 SDK](https://ext.dcloud.net.cn/plugin?id=3617)和[Zego ZIM 即时通讯 SDK](https://ext.dcloud.net.cn/plugin?id=8601)。购买时填入的 AppID 必须和后面需要运行的 AppID 一致。
 
 <Frame width="100%">
@@ -115,6 +115,8 @@ const onPressed = (code, message) => {
 </script>
 ```
 
+邀请按钮参数请参考[ZegoSendCallInvitationButton](./API%20Reference/Config.mdx#ZegoSendCallInvitationButton)
+
 </Step>
 <Step title="配置入口与页面路由">
 根据您的业务场景为通话页配置入口。
@@ -160,23 +162,11 @@ const navigateTo = (url: string) => {
 	],
 }
 ```
+
+ZegoSendCallInvitationButton 属性请参考
 #### ZegoSendCallInvitationButton 属性
 
-| 属性        | 类型    | 必需 | 描述                                                      |
-| :---------- | :------ | :--- | :-------------------------------------------------------- |
-| invitees  | [ZegoUser](./API%20Reference/config#zegouser)[]   | 是   | 被叫用户ID。               |
-| type        | number  | 是   | 呼叫类型。0:语音呼叫；1:视频呼叫  |
-| callName    | String  | 否   | 呼叫等待页显示的被叫用户名称。                          |
-| callID      | String  | 否   | 指定邀请ID。                          |
-| timeout     | Number  | 否   | 超时时长。默认为60秒。超时后会自动取消本次呼叫。          |
-| customData  | String  | 否   | 您需要传递给被叫者的自定义参数。                          |
-| showWaitingPageWhenGroupCall  | Boolean  | 否 | 是否显示呼叫等待页。当只有一个被叫用户时，默认为true。 |
-| text        | String  | 否   | 发起呼叫邀请按钮的文本。                                  |
-| icon        | String  | 否   | 自定义发起呼叫按钮图标                                  |
-| iconWidth   | String  | 否   | 自定义发起呼叫按钮图标宽度                                  |
-| iconHeight  | String  | 否   | 自定义发起呼叫按钮图标高度                                  |
-| onWillPressed | PromiseFunction | 否  | 点击发起呼叫邀请按钮前的自定义事件。                  |
-| onPressed   | Functon | 否   | 点击发起呼叫邀请按钮的回调。                              |
+
 </Step>
 </Steps>
 
