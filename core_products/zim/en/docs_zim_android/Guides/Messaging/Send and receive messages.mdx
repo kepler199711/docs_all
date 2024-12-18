@@ -1,109 +1,48 @@
 ---
 articleID: 14227
 ---
+import {getPlatformData, getPlatformData2} from "/snippets/utils-content-parser.js"
+import MarkMessageType from '/core_products/zim/en/snippets/MessageTypeEn.mdx'
+import MarkSendMessageEvent from '/core_products/zim/en/snippets/SendMessageEventEn.mdx'
 
-import {getPlatformData} from "/snippets/utils-content-parser.js"
-
-export const setEventHandlerMap = {
-  'Android': <a href='@setEventHandler' target='_blank'>setEventHandler</a>,
-}
-export const ZIMTextMessageMap = {
-  'Android': <a href='@-ZIMTextMessage' target='_blank'>ZIMTextMessage</a>,
-}
-export const ZIMCommandMessageMap = {
-  'Android': <a href='@-ZIMCommandMessage' target='_blank'>ZIMCommandMessage</a>,
-}
-export const receivePeerMessageMap = {
-  'Android': <a href='@onReceivePeerMessage' target='_blank'>onReceivePeerMessage</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-receive-peer-message-from-room-id' target='_blank'>receivePeerMessage</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-peer-message-from-room-id' target='_blank'>receivePeerMessage</a>,
-}
-export const sendMessageMap = {
-  'Android': <a href='@sendMessage' target='_blank'>sendMessage</a>,
-}
-export const onReceivePeerMessageMap = {
-  'Android': <a href='@onReceivePeerMessage' target='_blank'>onReceivePeerMessage</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-receive-peer-message-from-room-id' target='_blank'>receivePeerMessage</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-peer-message-from-room-id' target='_blank'>receivePeerMessage</a>,
-}
-export const onReceiveRoomMessageMap = {
-  'Android': <a href='@onReceiveRoomMessage' target='_blank'>onReceiveRoomMessage</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-receive-room-message-from-room-id' target='_blank'>onReceiveRoomMessage</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-room-message-from-room-id' target='_blank'>onReceiveRoomMessage</a>,
-}
-export const onReceiveGroupMessageMap = {
-  'Android': <a href='@onReceiveGroupMessage' target='_blank'>onReceiveGroupMessage</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-receive-group-message-from-group-id' target='_blank'>onReceiveGroupMessage</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-receive-group-message-from-group-id' target='_blank'>onReceiveGroupMessage</a>,
-}
-export const sendMediaMessageMap = {
-  'Android': <a href='@sendMediaMessage' target='_blank'>sendMediaMessage</a>,
-}
-export const onMediaUploadingProgressMap = {
-  'Android': <a href='@onMediaUploadingProgress' target='_blank'>onMediaUploadingProgress</a>,
-}
-export const downloadMediaFileWithMessageMap = {
-  'Android': <a href='@downloadMediaFile' target='_blank'>downloadMediaFile</a>,
-  'iOS,mac': <a href='@downloadMediaFileWithMessage' target='_blank'>downloadMediaFileWithMessage</a>,
-}
-export const onMediaDownloadingProgressMap = {
-  'Android': <a href='@onMediaDownloadingProgress' target='_blank'>onMediaDownloadingProgress</a>,
-  'iOS,mac': <a href='@ZIMMediaDownloadingProgress' target='_blank'>ZIMMediaDownloadingProgress</a>,
-}
-export const ZIMCustomMessageMap = {
-  'Android': <a href='@-ZIMCustomMessage' target='_blank'>ZIMCustomMessage</a>,
-}
-export const ZIMMessageMap = {
-  'Android': <a href='@-ZIMMessage' target='_blank'>ZIMMessage</a>,
-}
-export const setMentionedUserIDsMap = {
-  'Android': "`setMentionedUserIDs`",
-  'iOS,mac': <a href='@mentionedUserIDs-ZIMMessage' target='_blank'>mentionedUserIDs</a>,
-}
-export const isMentionAllMap = {
-  'Android': <a href='@isMentionAll-ZIMMessage' target='_blank'>isMentionAll</a>,
-}
-export const mentionedInfoListMap = {
-  'Android': <a href='@mentionedInfoList-ZIMConversation' target='_blank'>mentionedInfoList</a>,
-}
-export const ZIMMessageMentionedTypeMap = {
-  'Android': <a href='@-ZIMMessageMentionedType' target='_blank'>ZIMMessageMentionedType</a>,
-}
-export const onConversationChangedMap = {
-  'Android': <a href='@onConversationChanged' target='_blank'>onConversationChanged</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-conversation-changed' target='_blank'>conversationChanged</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-conversation-changed' target='_blank'>conversationChanged</a>,
-}
-export const ZIMConversationMap = {
-  'Android': <a href='@-ZIMConversation' target='_blank'>ZIMConversation</a>,
-}
-export const queryConversationListWithConfigMap = {
-  'Android': <a href='@queryConversationList' target='_blank'>queryConversationList</a>,
-  'iOS,mac': <a href='@queryConversationListWithConfig' target='_blank'>queryConversationListWithConfig</a>,
-}
-export const queryConversationMap = {
-  'Android': <a href='@queryConversation' target='_blank'>queryConversation</a>,
-}
-export const clearConversationUnreadMessageCountMap = {
-  'Android': <a href='@clearConversationUnreadMessageCount' target='_blank'>clearConversationUnreadMessageCount</a>,
-}
-export const clearConversationTotalUnreadMessageCountMap = {
-  'Android': <a href='@clearConversationTotalUnreadMessageCount' target='_blank'>clearConversationTotalUnreadMessageCount</a>,
-}
-export const onBroadcastMessageReceivedMap = {
-  'Android': <a href='@onBroadcastMessageReceived' target='_blank'>onBroadcastMessageReceived</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-broadcast-message-received' target='_blank'>broadcastMessageReceived</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-broadcast-message-received' target='_blank'>broadcastMessageReceived</a>,
-}
-export const onMessageSentStatusChangedMap = {
-  'Android': <a href='@onMessageSentStatusChanged' target='_blank'>onMessageSentStatusChanged</a>,
-  'iOS': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-message-sent-status-changed' target='_blank'>messageSentStatusChanged</a>,
-  'mac': <a href='https://docs.zegocloud.com/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-message-sent-status-changed' target='_blank'>messageSentStatusChanged</a>,
-}
+import {
+    ZIMMessageTypeMap,
+    ZIMMessageMentionedTypeMap,
+    ZIMConversationMap,
+    ZIMMessageMap,
+    ZIMTextMessageMap,
+    ZIMCommandMessageMap,
+    ZIMCustomMessageMap,
+    ZIMMultipleMessageMap,
+    isMentionAllMap,
+    mentionedUserIDsMap,
+    mentionedInfoListMap,
+    queryConversationMap,
+    queryConversationListMap,
+    clearConversationUnreadMessageCountMap,
+    clearConversationTotalUnreadMessageCountMap,
+    sendMessageMap,
+    downloadMediaFileMap,
+    setEventHandlerMap,
+    conversationChangedMap,
+    peerMessageReceivedMap,
+    roomMessageReceivedMap,
+    groupMessageReceivedMap,
+    broadcastMessageReceivedMap,
+    messageSentStatusChangedMap,
+    onMediaUploadingProgressMap,
+    onMediaDownloadingProgressMap,
+} from "/snippets/zim/const-linkEn.mdx"
 
 # Send & Receive messages
 
 - - -
+
+:::if{props.platform="flutter"}
+<Note title="Note">
+This document is for applications developed on iOS, Android, macOS, Windows, and Web.
+</Note>
+:::
 
 ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of message management, allowing you to send and receive one-to-one, group, in-room messages, query message history, delete messages, and more. With the message management feature, you can meet different requirements of various scenarios such as social entertainment, online shopping, online education, interactive live streaming, and more. 
 
@@ -111,85 +50,7 @@ This document describes how to send and receive messages with the ZIM SDK.
 
 ## Message types
 
-<table>
-<tbody><tr data-row-level="1">
-<th>Message Type</th>
-<th>Description</th>
-<th>Feature and Scenario</th>
-</tr>
-<tr data-row-level="2">
-<td>ZIMTextMessage(1)</td>
-<td>The text message. A text message cannot exceed 32 KB in size, and up to 10 text messages can be sent per second per client.</td>
-<td>
-Text messages are reliable and in order and can be stored as historical messages, applicable to one-to-one chats, group chats, and on-screen comments in chat rooms. After a room is disbanded, messages in it are not stored.
-
-API: {getPlatformData(props,sendMessageMap)} 
-</td>
-</tr>
-<tr data-row-level="3">
-<td>ZIMCommandMessage(2)</td>
-<td>The signaling message whose content can be customized. A signaling message cannot exceed 5 KB in size, and up to 10 signaling messages can be sent per second per client.</td>
-<td>
-Signaling messages are applicable to signaling transmission (for example, co-hosting, virtual gifting, and course materials sending) in scenarios with a higher concurrency, such as chat rooms and online classrooms.
-
-API: {getPlatformData(props,sendMessageMap)} 
-</td>
-</tr>
-<tr data-row-level="4">
-<td>ZIMBarrageMessage(20)</td>
-<td>The on-screen comment in a chat room. An on-screen comment cannot exceed 5 KB in size, and there is no limit on the number of comments that can be sent per second per client.</td>
-<td>
-<p>On-screen comments are usually unreliable messages that are sent at a high frequency and can be discarded.</p><p>A high concurrency is supported, but reliability cannot be guaranteed.</p>
-
-API: {getPlatformData(props,sendMessageMap)} 
-</td>
-</tr>
-<tr data-row-level="5">
-<td>ZIMImageMessage(11)</td>
-<td>The image message. Mainstream image formats, such as JPG, PNG, BMP, TIFF, GIF, and WebP, are supported. An image message cannot exceed 10 MB in size, and up to 10 image messages can be sent per second per client.</td>
-<td rowspan="4">
-Image messages are reliable and in order and can be stored as historical messages (for 14 days by default), usually applicable to one-to-one chats, chat rooms, and group chats.
-
-API: {getPlatformData(props,sendMessageMap)} 
-</td>
-</tr>
-<tr data-row-level="6">
-<td>ZIMFileMessage(12)</td>
-<td>The file message. A file message contains a file of any format and cannot exceed 100 MB in size. Up to 10 file messages can be sent per second per client.</td>
-</tr>
-<tr data-row-level="7">
-<td>ZIMAudioMessage(13)</td>
-<td>The audio message. An audio message contains an MP3 or M4A audio of up to 300 seconds and cannot exceed 6 MB in size. Up to 10 audio messages can be sent per second per client.</td>
-</tr>
-<tr data-row-level="8">
-<td>ZIMVideoMessage(14)</td>
-<td>
-The video message. A video message contains an MP4 or MOV video and cannot exceed 100 MB in size. Up to 10 video messages can be sent per second per client. 
-
-**The width and height of the first frame of a video can be obtained after successful message sending only if the video is H.264- or H.265-encoded.**
-</td>
-</tr>
-<tr data-row-level="9">
-<td>ZIMCombineMessage(100)</td>
-<td>Merge messages, there is no limit on message size, and the sending frequency of a single client is limited to 10 times/second.</td>
-<td>
-Text messages are reliable and in order and can be stored as historical messages, applicable to real-time chat scenarios such as one-to-one chats, room, group chats, etc.
-
-API: {getPlatformData(props,sendMessageMap)} 
-</td>
-</tr>
-<tr data-row-level="10">
-<td>ZIMCustomMessage(200)</td>
-<td>The custom message. You can customize the message type and parse the message without using the ZIM SDK.</td>
-<td>
-Custom messages are usually applicable to votes, solitaire, and video cards.
-
-API: {getPlatformData(props,sendMessageMap)} 
-</td>
-</tr>
-</tbody>
-</table>
-
+<MarkMessageType />
 
 ## Send/Receive regular messages
 
@@ -202,55 +63,27 @@ Regular messages refer to the messages of the following message types: ZIMTextMe
 - When a message is received, it can be sorted using the message's `orderKey`. The larger the `orderKey`, the newer the message. And the number of unread messages will be updated automatically upon receiving.
 </Warning>
 
-
-### Send/Receive messages
+#### Send messages
 
 The following process shows how Client A sends messages to Client B:
 
 <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/In_app_Chat/14226.png" /></Frame>
 
-1. Client A and Client B create their own ZIM SDK instances, and set up an event handler {getPlatformData(props,setEventHandlerMap)} to listen for the callback on the result of message sending {getPlatformData(props,receivePeerMessageMap)}.
+1. Client A and Client B create their own ZIM SDK instances, and set up an event handler {getPlatformData(props,setEventHandlerMap)} to listen for the callback on the result of message sending {getPlatformData(props,peerMessageReceivedMap)}.
 2. Client A and Client B log in to the ZIM SDK.
 3. Client A calls the {getPlatformData(props,sendMessageMap)} method, and set the `converversationType` to `ZIMConversationTypePeer` to send a one-to-one message to Client B.
-4. Client B listens for the {getPlatformData(props,receivePeerMessageMap)} callback to receive Client A's messages.
+4. Client B listens for the {getPlatformData(props,peerMessageReceivedMap)} callback to receive Client A's messages.
 
 <Warning title="Warning">
 
-You can't send messages to yourself by calling the `sendMessage` method (when toConversationID = your ID). If you did so, the error code 6000001 will return. 
+You can't send messages to yourself by calling the {getPlatformData(props,sendMessageMap)} method (when toConversationID = your ID). If you did so, the error code 6000001 will return. 
 
 </Warning>
-
-#### Send messages
 
 :::if{props.platform=undefined}
 <CodeGroup>
 ```java SampleCode
-//  1. Create a ZIM SDK object with the AppID and AppSign you get, and the Application of the Android app.
-ZIMAppConfig appConfig = new ZIMAppConfig();
-appConfig.appID = 12345;  // The AppID you get.
-appConfig.appSign = "appSign";   // The AppSign you get.
-zim = ZIM.create(appConfig, application);
-
-// 2. Set up a setEventHandler.
-zim.setEventHandler(new ZIMEventHandler() {
-    @Override
-    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
-        // Callback on the one-on-one message received.
-    }
-});
-
-// 3. Log in
-ZIMUserInfo zimUserInfo = new ZIMUserInfo();
-zimUserInfo.userID = "xxxx";
-zimUserInfo.userName = "xxxx";
-zim.login(zimUserInfo, new ZIMLoggedInCallback() {
-    @Override
-    public void onLoggedIn(ZIMError error) {
-          // You can be told whether the login is successful according to the ZIMError.         
-    }
- });
-
-// 4. Send regular messages
+// Send a text message to a one-to-one conversation
 String toConversationID = "xxxx1";
 
 ZIMTextMessage zimMessage = new ZIMTextMessage();
@@ -267,19 +100,9 @@ pushConfig.content= "Offline notification content";
 pushConfig.extendedData = "Extension info of the offline notification";
 config.pushConfig = pushConfig;
 
-// Set conversation type. Set it based on your conversation type.
-// Send one-on-one messages. 
 ZIMConversationType type = ZIMConversationType.Peer;
 
-// Send group messages. 
-ZIMConversationType type = ZIMConversationType.Gourp;
-
-// Send in-room messages.
-ZIMConversationType type = ZIMConversationType.Room;
-
-// 5. Send messages.
-
-zim.sendMessage(zimMessage, toConversationID, type,config, new ZIMMessageSentCallback() {
+zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentFullCallback() {
     @Override
     public void onMessageAttached(ZIMMessage zimMessage) {
     // You can use this callback to monitor whether the message is ready to be sent. This callback will be thrown only if the message passes the local basic parameter verification, otherwise an error will be thrown through the onMessageSent callback.
@@ -293,26 +116,10 @@ zim.sendMessage(zimMessage, toConversationID, type,config, new ZIMMessageSentCal
 ```
 </CodeGroup>
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc SampleCode
-// 1. Create a ZIM SDK object with the AppID and AppSign you get.
-ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
-appConfig.appID = (unsigned int)appID;     // The AppID you get.
-appConfig.appSign = @"appSign";     // The AppSign you get.
-self.zim = [ZIM createWithAppConfig: appConfig];
-
-// 2. Set up a setEventHandler.
-[self.zim setEventHandler:self];
-
-// 3. Log in
-ZIMUserInfo *userInfo = [[ZIMUserInfo alloc] init];
-userInfo.userID = @"xxxx";
-userInfo.userName = @"xxxx";
-[self.zim loginWithUserInfo:userInfo callback:^(ZIMError * _Nonnull errorInfo){
-    // You can be told whether the login is successful according to the ZIMError.
-}];
-
+// Send a text message to a one-to-one conversation
 NSString *toConversationID = @"xxxx1";
 
 ZIMTextMessage *textMessage = [[ZIMTextMessage alloc] init];
@@ -322,6 +129,7 @@ ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
 // Set the message priority.
 config.priority = ZIMMessagePriorityLow;
 // Set up the configurations of the offline notifications. To use this, enable this feature first. 
+// Offline push configuration of room messages is not supported. If you need to send room offline messages, please contact ZEGOCLOUD technical support team to activate relevant permissions.
 ZIMPushConfig *pushConfig = [[ZIMPushConfig alloc] init];
 pushConfig.title = @"Offline notification title";
 pushConfig.content= @"Offline notification content";
@@ -333,101 +141,112 @@ notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
     // The callback on the message not sent yet. Before the message is sent, you can get a temporary ZIMMessage message for you to implement your business logic as needed. 
 };
 
-// 4. Set conversation type. Set it based on your conversation type.
-// Send one-on-one messages. 
 ZIMConversationType type = ZIMConversationTypePeer;
 
-// Send group messages. 
-ZIMConversationType type = ZIMConversationTypeGroup;
-
-// Send in-room messages.
-ZIMConversationType type = ZIMConversationTypeRoom;
-
-// 5. Send messages.
 [self.zim sendMessage:textMessage toConversationID:toConversationID conversationType:type config:config notification:notification callback:^((ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo)) {
     // You can listen for this callback for the message sending results.
 }];
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="win"}
 <CodeGroup>
-```objc SampleCode
-// 1. Create a ZIM SDK object with the AppID and AppSign you get.
-ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
-appConfig.appID = (unsigned int)appID;     // The AppID you get.
-appConfig.appSign = @"appSign";     // The AppSign you get.
-self.zim = [ZIM createWithAppConfig: appConfig];
+```c++ title="SampleCode"
+// Send a text message to a one-to-one conversation
 
-// 2. Set up a setEventHandler.
-[self.zim setEventHandler:self];
-
-// 3. Log in
-ZIMUserInfo *userInfo = [[ZIMUserInfo alloc] init];
-userInfo.userID = @"xxxx";
-userInfo.userName = @"xxxx";
-[self.zim loginWithUserInfo:userInfo callback:^(ZIMError * _Nonnull errorInfo){
-    // You can be told whether the login is successful according to the ZIMError.
-}];
-
-NSString *toConversationID = @"xxxx1";
-
-ZIMTextMessage *textMessage = [[ZIMTextMessage alloc] init];
-textMessage.message = @"Message content";
-
-ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
+zim::ZIMMessage* message = nullptr;
+zim::ZIMTextMessage text_message;
+text_message.message = "message";
+zim::ZIMMessageSendConfig config;
 // Set the message priority.
-config.priority = ZIMMessagePriorityLow;
-// Set up the configurations of the offline notifications. To use this, enable this feature first. 
-ZIMPushConfig *pushConfig = [[ZIMPushConfig alloc] init];
-pushConfig.title = @"Offline notification title";
-pushConfig.content= @"Offline notification content";
-pushConfig.extendedData = @"Extension info of the offline notification";
-config.pushConfig = pushConfig
+config.priority = zim::ZIM_MESSAGE_PRIORITY_LOW;
+message = &text_message;
 
-ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
-notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
-    // The callback on the message not sent yet. Before the message is sent, you can get a temporary ZIMMessage message for you to implement your business logic as needed. 
+zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER
+
+auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
+            [=](const std::shared_ptr<zim::ZIMMessage> &message) { int i = 0; });
+
+zim_->sendMessage(message, "toConversationID", type, config, notification,
+                    [=](const std::shared_ptr<zim::ZIMMessage> &message,
+                              const zim::ZIMError &errorInfo) { int i = 0; });
+```
+</CodeGroup>
+:::
+:::if{props.platform="web|rn"}
+<CodeGroup>
+```javascript title="SampleCode"
+// Send a text message to a one-to-one conversation
+
+var toConversationID = ''; // The userID of the message receiver
+var conversationType = 0; // Applicable value: 0 (one-to-one), 1 (room), 2 (group).
+var config = { 
+    // Set the message priority.
+    // The applicable value is 1 (low, default), 2 (middle), 3 (high).
+    priority: 1,
 };
 
-// 4. Set conversation type. Set it based on your conversation type.
-// Send one-on-one messages. 
-ZIMConversationType type = ZIMConversationTypePeer;
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
+    }
+}
 
-// Send group messages. 
-ZIMConversationType type = ZIMConversationTypeGroup;
+var messageTextObj = {
+    type: 1,
+    message: 'xxxx'
+};
 
-// Send in-room messages.
-ZIMConversationType type = ZIMConversationTypeRoom;
-
-// 5. Send messages.
-[self.zim sendMessage:textMessage toConversationID:toConversationID conversationType:type config:config notification:notification callback:^((ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo)) {
-    // You can listen for this callback for the message sending results.
-}];
+zim.sendMessage(messageTextObj, toConversationID, conversationType, config, notification)
+    .then(function ({ message }) {
+        // Sent successfully
+    })
+    .catch(function (err) {
+        // failed to send
+    });
 ```
 </CodeGroup>
 :::
+:::if{props.platform="flutter"}
+<CodeGroup>
+```dart title="SampleCode"
+// Send a text message to a one-to-one conversation
 
+ZIMTextMessage textMessage = ZIMTextMessage(message: "message");
+ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
+// Set the message priority.
+sendConfig.priority = ZIMMessagePriority.low;
 
+ZIMPushConfig pushConfig = ZIMPushConfig();
+pushConfig.title = "Offline notification title";
+pushConfig.content = "Offline notification content";
+pushConfig.extendedData = "Extension info of the offline notificatio";
+sendConfig.pushConfig = pushConfig;
+ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message){
+    // Callback before sending: You can obtain a temporary object here, which is the same object as the zimMessage object created by you. You can utilize this feature to implement business logic, such as displaying the UI in advance.
+});
+
+ZIMConversationType type = ZIMConversationType.peer;
+
+ZIM.getInstance()!.sendMessage(textMessage, toConversationID, type, sendConfig).then((value) => {
+    // Sent successfully
+}).catchError((onError){
+    // Failed to send
+});
+```
+</CodeGroup>
+:::
 
 #### Receive messages
 
-
-<Note title="Note">
-
-- To send messages, call the {getPlatformData(props,sendMessageMap)} method and set the `ZIMConversationType` accordingly.
-- To receive messages:
-    - One-on-one messages (Peer type), through the callback {getPlatformData(props,onReceivePeerMessageMap)}.
-    - In-room messages (Room type), through the callback {getPlatformData(props,onReceiveRoomMessageMap)}.
-    - Group messages (Group type), through the callback {getPlatformData(props,onReceiveGroupMessageMap)}.
-</Note>
+<MarkSendMessageEvent platform={props.platform || "android"} />
 
 :::if{props.platform=undefined}
 <CodeGroup>
 ```java SampleCode
 zim.setEventHandler(new ZIMEventHandler() {
     @Override
-    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
+    public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID) {
         // Callback for receiving one-to-one messages. 
         for (ZIMMessage zimMessage : messageList) {
            if (zimMessage instanceof ZIMTextMessage) {
@@ -441,7 +260,7 @@ zim.setEventHandler(new ZIMEventHandler() {
     }
 
     @Override
-    public void onReceiveGroupMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromGroupID) {
+    public void onGroupMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromGroupID) {
         // Callback for receiving group messages. 
         for (ZIMMessage zimMessage : messageList) {
            if (zimMessage instanceof ZIMTextMessage) {
@@ -455,7 +274,7 @@ zim.setEventHandler(new ZIMEventHandler() {
     }
 
     @Override
-    public void onReceiveRoomMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromRoomID) {
+    public void onRoomMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromRoomID) {
         // Callback for receiving in-room messages. 
         for (ZIMMessage zimMessage : messageList) {
            if (zimMessage instanceof ZIMTextMessage) {
@@ -471,7 +290,7 @@ zim.setEventHandler(new ZIMEventHandler() {
 ```
 </CodeGroup>
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc SampleCode
 // Set up a ZIMEventHander and listen for related callbacks.
@@ -479,55 +298,89 @@ zim.setEventHandler(new ZIMEventHandler() {
 
 // Callback for receiving the one-to-one message.
 - (void)zim:(ZIM *)zim
-    receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
+    peerMessageReceived:(NSArray<ZIMMessage *> *)messageList
+            info:(ZIMMessageReceivedInfo *)info
             fromUserID:(NSString *)fromUserID{
      // Implement your event handling logic after receiving the message here. 
 }
 
 // Callback for receiving the group message.
 - (void)zim:(ZIM *)zim
-    receiveGroupMessage:(NSArray<ZIMMessage *> *)messageList
+    groupMessageReceived:(NSArray<ZIMMessage *> *)messageList
+            info:(ZIMMessageReceivedInfo *)info
             fromGroupID:(NSString *)fromGroupID{
     // Implement your event handling logic after receiving the message here. 
 }
 
 // Callback for receiving the in-room message.
 - (void)zim:(ZIM *)zim
-    receiveRoomMessage:(NSArray<ZIMMessage *> *)messageList
+    roomMessageReceived:(NSArray<ZIMMessage *> *)messageList
+            info:(ZIMMessageReceivedInfo *)info
             fromRoomID:(NSString *)fromRoomID{
     // Implement your event handling logic after receiving the message here. 
 }
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
-<CodeGroup>
-```objc SampleCode
-// Set up a ZIMEventHander and listen for related callbacks.
-[zim setEventHandler:self];
-
+:::if{props.platform="win"}
+```c++
 // Callback for receiving the one-to-one message.
-- (void)zim:(ZIM *)zim
-    receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
-            fromUserID:(NSString *)fromUserID{
-     // Implement your event handling logic after receiving the message here. 
+void onPeerMessagedReceived(ZIM *zim*,
+                         const std::vector<std::shared_ptr<ZIMMessage>> & messageList,
+                         const ZIMMessageReceivedInfo & info,
+                         const std::string &fromUserID) {
+    // Implement your event handling logic after receiving the message here. 
 }
 
 // Callback for receiving the group message.
-- (void)zim:(ZIM *)zim
-    receiveGroupMessage:(NSArray<ZIMMessage *> *)messageList
-            fromGroupID:(NSString *)fromGroupID{
+void onGroupMessagedReceived(ZIM *zim*,
+                         const std::vector<std::shared_ptr<ZIMMessage>> & messageList,
+                         const ZIMMessageReceivedInfo & info,
+                         const std::string &fromGroupID) {
     // Implement your event handling logic after receiving the message here. 
 }
 
 // Callback for receiving the in-room message.
-- (void)zim:(ZIM *)zim
-    receiveRoomMessage:(NSArray<ZIMMessage *> *)messageList
-            fromRoomID:(NSString *)fromRoomID{
+void onRoomMessagedReceived(ZIM *zim*,
+                         const std::vector<std::shared_ptr<ZIMMessage>> & messageList,
+                         const ZIMMessageReceivedInfo & info,
+                         const std::string &fromRoomID) {
     // Implement your event handling logic after receiving the message here. 
 }
 ```
-</CodeGroup>
+:::
+:::if{props.platform="web|rn"}
+```javascript
+// Callback for receiving the one-to-one message.
+zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
+    console.log(messageList, info, fromConversationID);
+});
+
+// Callback for receiving the group message.
+zim.on('groupMessageReceived', function (zim, { messageList, info, fromConversationID }) {
+    console.log(messageList, info, fromConversationID);
+});
+
+// Callback for receiving the in-room message.
+zim.on('roomMessageReceived', function (zim, { messageList, info, fromConversationID }) {
+    console.log(messageList, info, fromConversationID);
+});
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+ZIMEventHandler.onPeerMessageReceived = (zim, messageList, info, fromUserID) {
+    // Triggered when receiving the one-to-one message.
+};
+
+ZIMEventHandler.onGroupMessageReceived = (zim, messageList, info, fromGroupID) {
+    // Triggered when receiving the group message.
+};
+
+ZIMEventHandler.onRoomMessageReceived = (zim, messageList, info, fromGroupID) {
+    // Triggered when receiving the in-room message.
+};
+```
 :::
 
 ## Send/Receive rich media content
@@ -535,13 +388,22 @@ zim.setEventHandler(new ZIMEventHandler() {
 
 The ZIM SDK now supports sending and receiving messages of different rich media types, such as images, audio, video, and files. To send and receive rich media content, refer to the following:
 
-1. To send rich media content after login, you will need to specify the message type (image, file, audio, video) first and then the session type (one-on-one chat, room chat, group chat).
-2. For a receiver to receive and download the rich media content, set up and listen for related event callbacks based on the session type (one-on-one chat, room chat, group chat) after logging in.
+:::if{props.platform="undefined|iOS|mac|win|rn|flutter"}
+<div>
+1. To send rich media content after login, the message type (image, file, audio, or video) first and the conversation type (one-to-one, room, group) should be specified.
+2. To receive rich media content, the recipient should listen for relevant event callbacks related to the conversation type after logging in. This will enable them to receive message events and download the content locally.
+</div>
+:::
+:::if{props.platform="web"}
+<div>
+1. To send rich media content after login, the message type (image, file, audio, or video) first and the conversation type (one-to-one, room, group) should be specified.
+2. To receive rich media content, the recipient should listen for relevant event callbacks related to the conversation type after logging in. This will enable them to receive message events.
+</div>
+:::
 
 ### Send rich media content
 
-
-To send rich media content after login, call the {getPlatformData(props,sendMediaMessageMap)} method, and specify the message type (image, file, audio, video), the session type (one-on-one chat, room chat, group chat), and message related configurations as needed.
+To send rich media content after login, call the {getPlatformData(props,sendMessageMap)} method, and specify the message type (image, file, audio, video), the session type (one-on-one chat, room chat, group chat), and message related configurations as needed.
 
 <Warning title="Warning">
 
@@ -549,12 +411,10 @@ To send rich media content after login, call the {getPlatformData(props,sendMedi
 - To send rich media content to a room/group, the sender must be in the room/group.
 </Warning>
 
-
-
 :::if{props.platform=undefined}
 <CodeGroup>
-```java
-// Send rich media content in one-on-one chat - Send images:
+```java title="Image"
+// Send rich media content in one-on-one chat - Send an image:
 ZIMImageMessage message = new ZIMImageMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.jpg");
 // If a network URL is entered here, the SDK will pass through the path without ZIM background service processing. If both the network URL and the local path are entered, the SDK will prioritize the network URL that you want to use.
 message.setLargeImageDownloadUrl("url");
@@ -570,26 +430,103 @@ pushConfig.content= "Offline notification content";
 pushConfig.extendedData = "Extension info of the offline notification";
 config.pushConfig = pushConfig;
 
-zim.sendMediaMessage(message, toConversationID, ZIMConversationType.PEER, config, new ZIMMediaMessageSentCallback() {
+zim.sendMessage(message, toConversationID, ZIMConversationType.PEER, config, new ZIMMessageSentFullCallback() {
     @Override
     public void onMessageSent(ZIMMessage message, ZIMError errorInfo) {
      // You can use this callback to monitor whether the message is ready to be sent. This callback will be thrown only if the message passes the local basic parameter verification, otherwise an error will be thrown through the onMessageSent callback.。                    
     }
 
     @Override
-    public void onMessageAttached(ZIMMediaMessage message){
+    public void onMessageAttached(ZIMMessage message){
     
     }
 
     @Override
-    public void onMediaUploadingProgress(String fileUID, long currentFileSize, long totalFileSize, ZIMMediaMessage message) {
+    public void onMediaUploadingProgress(ZIMMediaMessage message, long currentFileSize, long totalFileSize, ) {
          // You can use this callback to monitor whether the message is sent successfully.              
+    }
+});
+```
+```java title="File"
+// Send rich media content in one-on-one chat - Send a file:
+ZIMFileMessage message = new ZIMFileMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.zip");
+// If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
+message.setFileDownloadUrl("url");
+ZIMMessageSendConfig config = new ZIMMessageSendConfig();
+config.priority = ZIMMessagePriority.HIGH;
+zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new ZIMMessageSentFullCallback() {
+    @Override
+    public void onMessageSent(ZIMMessage message, ZIMError errorInfo) {
+               
+    }
+
+    @Override
+    public void onMessageAttached(ZIMMessage message){
+    
+    }
+
+    @Override
+    public void onMediaUploadingProgress(ZIMMediaMessage message, long currentFileSize, long totalFileSize) {
+               
+    }
+});
+```
+```java title="Audio"
+// Send rich media content in one-on-one chat - Send an audio:
+ZIMAudioMessage message = new ZIMAudioMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.mp3", 300); // 300 is only for example, the unit is second.
+
+// If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
+message.setFileDownloadUrl("url");
+ZIMMessageSendConfig config = new ZIMMessageSendConfig();
+
+ZIMMessageSendConfig config = new ZIMMessageSendConfig();
+config.priority = ZIMMessagePriority.HIGH;
+zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new ZIMMessageSentFullCallback() {
+    @Override
+    public void onMessageSent(ZIMMessage message, ZIMError errorInfo) {
+               
+    }
+    
+    @Override
+    public void onMessageAttached(ZIMMessage message){
+    
+    }
+
+    @Override
+    public void onMediaUploadingProgress(ZIMMediaMessage message, long currentFileSize, long totalFileSize) {
+               
+    }
+});
+```
+```java title="Video"
+// Send rich media content in one-on-one chat - Send a video:
+ZIMVideoMessage message = new ZIMVideoMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.mp4", 300);//这里单位是秒
+
+// 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
+message.setFileDownloadUrl("url");
+message.videoFirstFrameDownloadUrl("url");
+ZIMMessageSendConfig config = new ZIMMessageSendConfig();
+config.priority = ZIMMessagePriority.HIGH;
+zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new ZIMMessageSentFullCallback() {
+    @Override
+    public void onMessageSent(ZIMMessage message, ZIMError errorInfo) {
+               
+    }
+   
+    @Override
+    public void onMessageAttached(ZIMMessage message){
+    
+    }
+
+    @Override
+    public void onMediaUploadingProgress(ZIMMediaMessage message, long currentFileSize, long totalFileSize) {
+               
     }
 });
 ```
 </CodeGroup>
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc SampleCode
 // Send rich media content in one-on-one chat - Send images:
@@ -664,21 +601,17 @@ Among which:
 - currentFileSiz: The size of the message that has been sent.
 - totalFileSize: The overall size of the message sent.
 
-
-
 ### Receive rich media content
 
 To receive the rich media content messages, do the following:
-1. Listen for the following callbacks based on the session type (one-on-one chat, room chat, group chat): {getPlatformData(props,onReceivePeerMessageMap)}, {getPlatformData(props,onReceiveRoomMessageMap)}, {getPlatformData(props,onReceiveGroupMessageMap)}.
-2. Call the {getPlatformData(props,downloadMediaFileWithMessageMap)} method to download the rich media content.
+1. Listen for the following callbacks based on the session type (one-on-one chat, room chat, group chat): {getPlatformData(props,peerMessageReceivedMap)}, {getPlatformData(props,roomMessageReceivedMap)}, {getPlatformData(props,groupMessageReceivedMap)}.
+2. Call the {getPlatformData(props,downloadMediaFileMap)} method to download the rich media content.
 
 When downloading rich media content, you need to specify the file type of the corresponding media messages first.
 
 - Image messages: You can choose to download the original file, large view, or thumbnail.
 - Files/Audio messages: Only original files/audio files can be downloaded.
 - Video messages: You can choose to download the original video file and the thumbnail of the first frame of the video.
-
-
 
 :::if{props.platform=undefined}
 <CodeGroup>
@@ -1156,7 +1089,7 @@ The "@" message is not a message type itself. A message can be both a text messa
 ### Send @ messages
 
 When calling {getPlatformData(props,sendMessageMap)} to send a message, you can use the following {getPlatformData(props,ZIMMessageMap)}  parameters (can be used simultaneously) to mark a message as an "@" message:
-- {getPlatformData(props,setMentionedUserIDsMap)}: Notifies specific users (including users outside of the session) to view the message. The length of the userID list passed in should be up to 50. If you need to increase this limit, please contact the ZEGOCLOUD technical support team.
+- {getPlatformData(props,mentionedUserIDsMap)}: Notifies specific users (including users outside of the session) to view the message. The length of the userID list passed in should be up to 50. If you need to increase this limit, please contact the ZEGOCLOUD technical support team.
 - {getPlatformData(props,isMentionAllMap)}: Notifies all other users within the session to view the message.
 
 <Note title="Note">
@@ -1300,7 +1233,7 @@ After users within a session are mentioned, developers can passively or actively
 
 #### Passive retrieval
 
-When a user is mentioned, the {getPlatformData(props,onConversationChangedMap)} will be received, allowing you to retrieve the latest {getPlatformData(props,mentionedInfoListMap)}for the current {getPlatformData(props,ZIMConversationMap)}.
+When a user is mentioned, the {getPlatformData(props,conversationChangedMap)} will be received, allowing you to retrieve the latest {getPlatformData(props,mentionedInfoListMap)}for the current {getPlatformData(props,ZIMConversationMap)}.
 
 :::if{props.platform=undefined}
 ```java
@@ -1332,7 +1265,7 @@ When a user is mentioned, the {getPlatformData(props,onConversationChangedMap)} 
 
 #### Active retrieval
 
-If you use {getPlatformData(props,queryConversationListWithConfigMap)} or {getPlatformData(props,queryConversationMap)} o actively fetch conversations, you can also retrieve the {getPlatformData(props,mentionedInfoListMap)} within the conversation. Refer to the following example code:
+If you use {getPlatformData(props,queryConversationListMap)} or {getPlatformData(props,queryConversationMap)} o actively fetch conversations, you can also retrieve the {getPlatformData(props,mentionedInfoListMap)} within the conversation. Refer to the following example code:
 
 :::if{props.platform=undefined}
 ```java
@@ -1418,7 +1351,7 @@ Please refer to the server-side API documentation [Push message to all user](/zi
 - If the SDK version on the receiving end is between [2.0.0, 2.10.0), broadcast messages sent from the server side cannot be received. If you need to access this message, please upgrade the SDK to version 2.10.0 or above. 
 </Note>
 
-Through the {getPlatformData(props,onBroadcastMessageReceivedMap)} callback, you can receive push messages from all members.
+Through the {getPlatformData(props,broadcastMessageReceivedMap)} callback, you can receive push messages from all members.
 
 Sample code:
 
@@ -1468,7 +1401,7 @@ ZIM SDK supports converting user operations within a session into Tips messages.
 ## Listen for the message status 
 
 On a weak network condition, this may happen: the ZIM SDK doesn't receive the response from the server for some reason (e.g., packet loss), while the message is successfully sent. In this case, the ZIM SDK considers the message sending failed due to the reply timeout, but the message is actually sent successfully, which results in message status confusion.
-To solve this and Clarify the message status, the SDK 2.6.0 or later now allows you to listen for the {getPlatformData(props,onMessageSentStatusChangedMap)} callback to receive the changes of the message status.
+To solve this and Clarify the message status, the SDK 2.6.0 or later now allows you to listen for the {getPlatformData(props,messageSentStatusChangedMap)} callback to receive the changes of the message status.
 And we now have three different message statuses: Sending, Success, and Failed.
 You can know whether your message is sent successfully by the status, and implement your event handling logic as needed.
 

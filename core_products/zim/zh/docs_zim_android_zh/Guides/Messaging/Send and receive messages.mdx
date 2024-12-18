@@ -88,7 +88,7 @@ ZIM SDK 支持单聊消息、群组消息、房间消息等的收发，以及查
 
 <Warning title="注意">
 
-目前 ZIM 不支持调用 `sendMessage` 接口，向自己发送消息（即 toConversationID = 自己的 ID）。如果尝试向自己发送消息，会返回错误 6000001，并提示传入参数错误。
+目前 ZIM 不支持调用 {getPlatformData(props,sendMessageMap)} 接口，向自己发送消息（即 toConversationID = 自己的 ID）。如果尝试向自己发送消息，会返回错误 6000001，并提示传入参数错误。
 
 </Warning>
 
@@ -177,7 +177,6 @@ zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_
 auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
             [=](const std::shared_ptr<zim::ZIMMessage> &message) { int i = 0; });
 
-// 5、发送消息
 zim_->sendMessage(message, "toConversationID", type, config, notification,
                     [=](const std::shared_ptr<zim::ZIMMessage> &message,
                               const zim::ZIMError &errorInfo) { int i = 0; });
@@ -232,7 +231,7 @@ pushConfig.content = "离线推送的内容";
 pushConfig.extendedData = "离线推送的扩展信息";
 sendConfig.pushConfig = pushConfig;
 ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message){
-    // 发送前的回调，客户可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
+    // 发送前的回调，开发者可以在这里获取一个临时对象，该对象与开发者创建的 zimMessage 对象属于同一对象，开发者可利用此特性做一些业务逻辑，如提前展示 UI 等
 });
 
 ZIMConversationType type = ZIMConversationType.peer;
@@ -296,7 +295,6 @@ zim.setEventHandler(new ZIMEventHandler() {
     }
 });
 ```
-
 :::
 :::if{props.platform="iOS|mac"}
 ```objc
@@ -418,8 +416,8 @@ ZIM SDK 支持发送多种类型的富媒体消息，包含图片、文件、音
 
 
 :::if{props.platform=undefined}
-<Accordion title="发送“图片”消息示例" defaultOpen="false">
-```java
+<CodeGroup>
+```java title="图片消息"
 // 发送富媒体消息消息示例 - 单聊 发送图片消息
 ZIMImageMessage message = new ZIMImageMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.jpg");
 // 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
@@ -454,10 +452,7 @@ zim.sendMessage(message, toConversationID, ZIMConversationType.PEER, config, new
     }
 });
 ```
-
-</Accordion>
-<Accordion title="发送“文件”消息示例" defaultOpen="false">
-```java
+```java title="文件消息"
 // 发送富媒体消息消息示例 - 单聊 发送文件消息
 ZIMFileMessage message = new ZIMFileMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.zip");
 // 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
@@ -481,10 +476,7 @@ zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new Z
     }
 });
 ```
-
-</Accordion>
-<Accordion title="发送“音频”消息示例" defaultOpen="false">
-```java
+```java title="音频消息"
 // 发送富媒体消息消息示例 - 单聊 发送音频消息
 ZIMAudioMessage message = new ZIMAudioMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.mp3", 300); // 这里的300只是举例，单位是秒。
 
@@ -511,10 +503,7 @@ zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new Z
     }
 });
 ```
-
-</Accordion>
-<Accordion title="发送“视频”消息示例" defaultOpen="false">
-```java
+```java title="视频消息"
 // 发送富媒体消息消息示例 - 单聊 发送视频消息
 ZIMVideoMessage message = new ZIMVideoMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.mp4", 300);//这里单位是秒
 
@@ -540,8 +529,7 @@ zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new Z
     }
 });
 ```
-
-</Accordion>
+</CodeGroup>
 :::
 :::if{props.platform="iOS|mac"}
 <Accordion title="发送“图片”消息示例" defaultOpen="false">
