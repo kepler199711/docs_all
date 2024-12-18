@@ -44,7 +44,7 @@ This document is for applications developed on iOS, Android, macOS, Windows, and
 </Note>
 :::
 
-ZEGOCLOUD's In-app Chat (the ZIM SDK) provides the capability of message management, allowing you to send and receive one-to-one, group, in-room messages, query message history, delete messages, and more. With the message management feature, you can meet different requirements of various scenarios such as social entertainment, online shopping, online education, interactive live streaming, and more. 
+ZEGOCLOUD's In-app conversation (the ZIM SDK) provides the capability of message management, allowing you to send and receive one-to-one, group, in-room messages, query message history, delete messages, and more. With the message management feature, you can meet different requirements of various scenarios such as social entertainment, online shopping, online education, interactive live streaming, and more. 
 
 This document describes how to send and receive messages with the ZIM SDK. 
 
@@ -67,7 +67,7 @@ Regular messages refer to the messages of the following message types: ZIMTextMe
 
 The following process shows how Client A sends messages to Client B:
 
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/In_app_Chat/14226.png" /></Frame>
+<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/In_app_conversation/14226.png" /></Frame>
 
 1. Client A and Client B create their own ZIM SDK instances, and set up an event handler {getPlatformData(props,setEventHandlerMap)} to listen for the callback on the result of message sending {getPlatformData(props,peerMessageReceivedMap)}.
 2. Client A and Client B log in to the ZIM SDK.
@@ -173,7 +173,7 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
 ```
 </CodeGroup>
 :::
-:::if{props.platform="web|rn"}
+:::if{props.platform="Web|rn"}
 <CodeGroup>
 ```javascript title="SampleCode"
 // Send a text message to a one-to-one conversation
@@ -301,7 +301,7 @@ zim.setEventHandler(new ZIMEventHandler() {
     peerMessageReceived:(NSArray<ZIMMessage *> *)messageList
             info:(ZIMMessageReceivedInfo *)info
             fromUserID:(NSString *)fromUserID{
-     // Implement your event handling logic after receiving the message here. 
+    // Implement your event handling logic after receiving the message here. 
 }
 
 // Callback for receiving the group message.
@@ -349,7 +349,7 @@ void onRoomMessagedReceived(ZIM *zim*,
 }
 ```
 :::
-:::if{props.platform="web|rn"}
+:::if{props.platform="Web|rn"}
 ```javascript
 // Callback for receiving the one-to-one message.
 zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
@@ -394,7 +394,7 @@ The ZIM SDK now supports sending and receiving messages of different rich media 
 2. To receive rich media content, the recipient should listen for relevant event callbacks related to the conversation type after logging in. This will enable them to receive message events and download the content locally.
 </div>
 :::
-:::if{props.platform="web"}
+:::if{props.platform="Web"}
 <div>
 1. To send rich media content after login, the message type (image, file, audio, or video) first and the conversation type (one-to-one, room, group) should be specified.
 2. To receive rich media content, the recipient should listen for relevant event callbacks related to the conversation type after logging in. This will enable them to receive message events.
@@ -403,7 +403,7 @@ The ZIM SDK now supports sending and receiving messages of different rich media 
 
 ### Send rich media content
 
-To send rich media content after login, call the {getPlatformData(props,sendMessageMap)} method, and specify the message type (image, file, audio, video), the session type (one-on-one chat, room chat, group chat), and message related configurations as needed.
+To send rich media content after login, call the {getPlatformData(props,sendMessageMap)} method, and specify the message type (image, file, audio, video), the conversation type (one-to-one, room, group), and message related configurations as needed.
 
 <Warning title="Warning">
 
@@ -414,7 +414,7 @@ To send rich media content after login, call the {getPlatformData(props,sendMess
 :::if{props.platform=undefined}
 <CodeGroup>
 ```java title="Image"
-// Send rich media content in one-on-one chat - Send an image:
+// Send rich media content in one-to-one conversation - Send an image:
 ZIMImageMessage message = new ZIMImageMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.jpg");
 // If a network URL is entered here, the SDK will pass through the path without ZIM background service processing. If both the network URL and the local path are entered, the SDK will prioritize the network URL that you want to use.
 message.setLargeImageDownloadUrl("url");
@@ -448,7 +448,7 @@ zim.sendMessage(message, toConversationID, ZIMConversationType.PEER, config, new
 });
 ```
 ```java title="File"
-// Send rich media content in one-on-one chat - Send a file:
+// Send rich media content in one-to-one conversation - Send a file:
 ZIMFileMessage message = new ZIMFileMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.zip");
 // If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
 message.setFileDownloadUrl("url");
@@ -472,7 +472,7 @@ zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new Z
 });
 ```
 ```java title="Audio"
-// Send rich media content in one-on-one chat - Send an audio:
+// Send rich media content in one-to-one conversation - Send an audio:
 ZIMAudioMessage message = new ZIMAudioMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.mp3", 300); // 300 is only for example, the unit is second.
 
 // If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
@@ -499,7 +499,7 @@ zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new Z
 });
 ```
 ```java title="Video"
-// Send rich media content in one-on-one chat - Send a video:
+// Send rich media content in one-to-one conversation - Send a video:
 ZIMVideoMessage message = new ZIMVideoMessage("/storage/emulated/0/Android/data/packagename/picture/xxx.mp4", 300);//这里单位是秒
 
 // 如果此处填了网络 URL，SDK 则会透传该路径，而不会经过 ZIM 后台服务处理，同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网络 URL
@@ -528,8 +528,8 @@ zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new Z
 :::
 :::if{props.platform="iOS|mac"}
 <CodeGroup>
-```objc SampleCode
-// Send rich media content in one-on-one chat - Send images:
+```objc title="Image"
+// Send rich media content in one-to-one conversation - Send an image:
 ZIMImageMessage *imgMsg = [[ZIMImageMessage alloc] init];
 
 // Fill in a UTF-8 local path (the path to the local picture is recommended)
@@ -542,61 +542,623 @@ imgMsg.fileDownloadUrl = @"";
 ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
 sendConfig.priority = 1;
         
-ZIMMediaMessageSendNotification *notification = [[ZIMMediaMessageSendNotification alloc] init];
+ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
 notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
     // Implement your event handling logic before the message is sent. 
 };
         
 notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
-    // You can listen for the callback to know the progress of the rich media message you sent.
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
 };
 
-[[ZIM getInstance] sendMediaMessage:imgMsg toConversationID:@"conversationID" conversationType:ZIMConversationTypePeer config:sendConfig notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+[[ZIM getInstance] sendMessage:imgMsg toConversationID:@"conversationID" conversationType:ZIMConversationTypePeer config:sendConfig notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+        
+}];
+```
+```objc title="Audio"
+// Send rich media content in one-to-one conversation - Send an audio: 
+// You need to provide the local path in UTF-8 format (it is recommended to use the path of the app's local audio), audio duration (in seconds). 
+// Here, a local audio file path is used as an example.
+ZIMAudioMessage audioMessage = [[ZIMAudioMessage alloc] initWithFileLocalPath:@"/private/var/mobile/Containers/Shared/AppGroup/D5144D14-3FE8-4C6C-8527-01F368B8E49E/File Provider Storage/IMG_0131.mp3" audioDuration:10];
+
+// If a network URL is entered here, the SDK will pass through the path without ZIM background service processing. If both the network URL and the local path are entered, the SDK will prioritize the network URL that you want to use.
+audioMessage.fileDownloadUrl = @"";
+
+ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
+sendConfig.priority = ZIMMessagePriorityHigh;
+
+ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
+notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
+    // Implement your event handling logic before the message is sent. 
+};
+        
+notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+};
+
+[[ZIM getInstance] sendMessage:audioMessage toConversationID:@"conversationID" conversationType:ZIMConversationTypePeer config:sendConfig notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+        
+}];
+```
+```objc title="Video"
+// Send rich media content in one-to-one conversation - Send an video: 
+ZIMVideoMessage *videoMessage = [[ZIMVideoMessage alloc] init];
+
+// You need to provide the local path in UTF-8 format.
+// Here, a local video file path is used as an example.
+videoMessage.fileLocalPath = @"/var/mobile/Containers/Data/Application/C142EFE6-9DEC-449D-89B7-BF99F2578F98/Documents/22-08-31-10:23:49.mp4";
+
+// If a network URL is entered here, the SDK will pass through the path without ZIM background service processing. If both the network URL and the local path are entered, the SDK will prioritize the network URL that you want to use.
+videoMessage.fileDownloadUrl = @"";
+
+ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
+sendConfig.priority = ZIMMessagePriorityHigh;
+
+ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
+notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
+    // Implement your event handling logic before the message is sent. 
+};
+        
+notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+};
+
+[[ZIM getInstance] sendMessage:videoMessage toConversationID:@"conversationID" conversationType:ZIMConversationTypePeer config:sendConfig notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+        
+}];
+```
+```objc title="File"
+// Send rich media content in one-to-one conversation - Send a file: 
+ZIMFileMessage *fileMsg = [[ZIMFileMessage alloc] init];
+
+// You need to provide the local path in UTF-8 format.
+fileMsg.fileLocalPath = @"/private/var/mobile/Containers/Shared/AppGroup/D5144D14-3FE8-4C6C-8527-01F368B8E49E/File Provider Storage/IMG_0131.HEIC";
+
+// If a network URL is entered here, the SDK will pass through the path without ZIM background service processing. If both the network URL and the local path are entered, the SDK will prioritize the network URL that you want to use.
+fileMsg.fileDownloadUrl = @"";
+
+
+ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
+sendConfig.priority = ZIMMessagePriorityHigh;
+
+ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
+notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
+    // Implement your event handling logic before the message is sent. 
+};
+        
+notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+};
+
+[[ZIM getInstance] sendMessage:fileMsg toConversationID:@"conversationID" conversationType:ZIMConversationTypePeer config:sendConfig notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
         
 }];
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="win"}
 <CodeGroup>
-```objc SampleCode
-// Send rich media content in one-on-one chat - Send images:
-ZIMImageMessage *imgMsg = [[ZIMImageMessage alloc] init];
+```cpp title="Image"
+// Send rich media content in one-to-one conversation - Send an image:
+zim::ZIMMediaMessage *message = nullptr;
+auto imageMessage = zim::ZIMImageMessage();
 
-// Fill in a UTF-8 local path (the path to the local picture is recommended)
-// The following uses a temporary image path as an example:
-imgMsg.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/C142EFE6-9DEC-449D-89B7-BF99F2578F98/tmp/D1513E30-2641-440B-B897-48CD43BE1D04.jpeg";
+zim::ZIMMessageSendConfig sendConfig;
+zim::ZIMPushConfig pushConfig;
+// Offline notification title
+pushConfig.title = "win_push_title";
+// Offline notification content
+pushConfig.content = "win_push_content";
+// Extension info of the offline notification
+pushConfig.extendedData = "win_push_extended_data";
+sendConfig.priority = zim::ZIM_MESSAGE_PRIORITY_MEDIUM;
+// Assign a value when offline push is required; if not needed, it can be assigned as nullptr.
+sendConfig.pushConfig = &pushConfig;
 
-// If a network URL is entered here, the SDK will pass through the path without ZIM background service processing. If both the network URL and the local path are entered, the SDK will prioritize the network URL that you want to use.
-imgMsg.fileDownloadUrl = @"";
+// Provide the local path in UTF-8 format. 
+imageMessage.fileLocalPath = "D:\\image\\img.jpg";
+// If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
+imageMessage.fileDownloadUrl = "";
+imageMessage.largeImageDownloadUrl = "";
+imageMessage.thumbnailDownloadUrl = "";
 
-ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
-sendConfig.priority = 1;
+message = &imageMessage;
+
+auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
+            [=](const std::shared_ptr<zim::ZIMMessage> &message) { 
+                // Implement your event handling logic before the message is sent. 
+            },
+            [=](const std::shared_ptr<zim::ZIMMediaMessage> &message,
+                unsigned long long currentFileSize,
+                unsigned long long totalFileSize) { 
+                    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+            });
+
+zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER,
+    sendConfig,notification,
+    [=](const std::shared_ptr<zim::ZIMMessage> &message, const zim::ZIMError &errorInfo) {
         
-ZIMMediaMessageSendNotification *notification = [[ZIMMediaMessageSendNotification alloc] init];
-notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
-    // Implement your event handling logic before the message is sent. 
-};
-        
-notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
-    // You can listen for the callback to know the progress of the rich media message you sent.
-};
+    });
+```
+```cpp title="File"
+// Send rich media content in one-to-one conversation - Send a file:
+zim::ZIMMediaMessage *message = nullptr;
+auto fileMessage = zim::ZIMFileMessage();
 
-[[ZIM getInstance] sendMediaMessage:imgMsg toConversationID:@"conversationID" conversationType:ZIMConversationTypePeer config:sendConfig notification:notification callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-        
-}];
+zim::ZIMMessageSendConfig sendConfig;
+zim::ZIMPushConfig pushConfig;
+// Offline notification title
+pushConfig.title = "win_push_title";
+// Offline notification content
+pushConfig.content = "win_push_content";
+// Extension info of the offline notification
+pushConfig.extendedData = "win_push_extended_data";
+
+sendConfig.priority = zim::ZIM_MESSAGE_PRIORITY_MEDIUM;
+// Assign a value when offline push is required; if not needed, it can be assigned as nullptr.
+sendConfig.pushConfig = &pushConfig;
+
+// Provide the local path in UTF-8 format. 
+fileMessage.fileLocalPath = "D:\\file\\files.zip";
+// If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
+fileMessage.fileDownloadUrl = "";
+
+message = &fileMessage;
+
+auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
+            [=](const std::shared_ptr<zim::ZIMMessage> &message) { 
+                // Implement your event handling logic before the message is sent. 
+            },
+            [=](const std::shared_ptr<zim::ZIMMediaMessage> &message,
+                unsigned long long currentFileSize,
+                unsigned long long totalFileSize) { 
+                    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+            });
+
+zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER,
+    sendConfig,,notification,
+    [=](const std::shared_ptr<zim::ZIMMessage> &message, const zim::ZIMError &errorInfo) {
+        auto media_message = std::static_pointer_cast<zim::ZIMFileMessage>(message);
+
+        int code = errorInfo.code;
+    });
+```
+```cpp title="Audio"
+// Send rich media content in one-to-one conversation - Send an audio:
+zim::ZIMMediaMessage *message = nullptr;
+auto audioMessage = zim::ZIMAudioMessage();
+
+zim::ZIMMessageSendConfig sendConfig;
+zim::ZIMPushConfig pushConfig;
+
+// Offline notification title
+pushConfig.title = "win_push_title";
+// Offline notification content
+pushConfig.content = "win_push_content";
+// Extension info of the offline notification
+pushConfig.extendedData = "win_push_extended_data";
+
+sendConfig.priority = zim::ZIM_MESSAGE_PRIORITY_MEDIUM;
+// Assign a value when offline push is required; if not needed, it can be assigned as nullptr.
+sendConfig.pushConfig = &pushConfig;
+
+// Provide the local path in UTF-8 format. 
+audioMessage.fileLocalPath = "D:\\audio\\audio.mp3";
+// If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
+audioMessage.fileDownloadUrl = "";
+// Audio duration in seconds
+audioMessage.audioDuration = 15;
+
+message = &audioMessage;
+
+auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
+            [=](const std::shared_ptr<zim::ZIMMessage> &message) { 
+                // Implement your event handling logic before the message is sent. 
+            },
+            [=](const std::shared_ptr<zim::ZIMMediaMessage> &message,
+                unsigned long long currentFileSize,
+                unsigned long long totalFileSize) { 
+                    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+            });
+
+zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER,
+    sendConfig,notification ,
+    [=](const std::shared_ptr<zim::ZIMMessage> &message, const zim::ZIMError &errorInfo) {
+        auto media_message = std::static_pointer_cast<zim::ZIMAudioMessage>(message);
+
+        int code = errorInfo.code;
+    });
+```
+```cpp title="Video"
+// Send rich media content in one-to-one conversation - Send a video:
+zim::ZIMMediaMessage *message = nullptr;
+auto videoMessage = zim::ZIMVideoMessage();
+
+zim::ZIMMessageSendConfig sendConfig;
+zim::ZIMPushConfig pushConfig;
+
+// Offline notification title
+pushConfig.title = "win_push_title";
+// Offline notification content
+pushConfig.content = "win_push_content";
+// Extension info of the offline notification
+pushConfig.extendedData = "win_push_extended_data";
+
+sendConfig.priority = zim::ZIM_MESSAGE_PRIORITY_MEDIUM;
+// Assign a value when offline push is required; if not needed, it can be assigned as nullptr.
+sendConfig.pushConfig = &pushConfig;
+
+// Provide the local path in UTF-8 format. 
+videoMessage.fileLocalPath = "D:\\file\\video.mp4";
+// If a network URL is provided here, the SDK will pass through the path directly without processing it via the ZIM backend services. When both a network URL and a local path are provided, the SDK will prioritize using the network URL. 
+videoMessage.fileDownloadUrl = "";
+videoMessage.videoFirstFrameDownloadUrl = "";
+// Video duration in seconds
+videoMessage.videoDuration = 100;
+
+message = &videoMessage;
+auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
+            [=](const std::shared_ptr<zim::ZIMMessage> &message) { 
+                // Implement your event handling logic before the message is sent. 
+            },
+            [=](const std::shared_ptr<zim::ZIMMediaMessage> &message,
+                unsigned long long currentFileSize,
+                unsigned long long totalFileSize) { 
+                    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+            });
+
+zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER,
+    sendConfig,notification,
+    [=](const std::shared_ptr<zim::ZIMMessage> &message, const zim::ZIMError &errorInfo) {
+        auto media_message = std::static_pointer_cast<zim::ZIMVideoMessage>(message);
+
+        int code = errorInfo.code;
+    });
 ```
 </CodeGroup>
 :::
+:::if{props.platform="Web"}
+<Accordion title="Example of sending a local file" defaultOpen="false">
+```javascript
+// Sending Rich Media Message with a local file - one-to-one conversation
 
+var conversationID = 'xxxx';
+var config = { priority: 1 };
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
+    },
+    onMediaUploadingProgress: function(message, currentFileSize, totalFileSize) {
+        // todo: upload progress
+    }
+};
+
+function sendMessage(file) {
+    /* The following code is for demonstration purposes only: please create the corresponding `media message object` based on the demands and file type in actual development */
+
+    // For an image 
+    var mediaMessageObj = {
+        fileLocalPath: file,
+        type: 11,
+    };
+
+    // For a file
+    mediaMessageObj = {
+        fileLocalPath: file,
+        type: 12,
+    };
+
+    // For an audio
+    mediaMessageObj = {
+        fileLocalPath: file,
+        type: 13,
+        audioDuration: 100, // Required: Audio duration in seconds
+    };
+   
+    // For a video
+    mediaMessageObj = {
+        fileLocalPath: file,
+        type: 14,
+        videoDuration: 100, // Required: Video duration in seconds
+    };
+  
+    zim.sendMessage(mediaMessageObj, conversationID, 0, config, notification);  
+}
+
+var input = document.createElement('input');
+input.type = 'file';
+input.onchange = function() {
+    sendMessage(this.files[0]);
+}
+```
+</Accordion>
+:::
+:::if{props.platform="rn"}
+<Accordion title="Example of sending a local file" defaultOpen="false">
+```javascript
+// Sending Rich Media Message with a local file - one-to-one conversation
+
+var conversationID = 'xxxx';
+var config = { priority: 1 };
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
+    },
+    onMediaUploadingProgress: function(message, currentFileSize, totalFileSize) {
+        // todo: upload progress
+    }
+};
+
+function sendMessage(file) {
+    /* The following code is for demonstration purposes only: please create the corresponding `media message object` based on the demands and file type in actual development */
+
+    // For an image 
+    var mediaMessageObj = {
+        fileLocalPath: file,
+        type: 11,
+    };
+
+    // For a file
+    mediaMessageObj = {
+        fileLocalPath: file,
+        type: 12,
+    };
+
+    // For an audio
+    mediaMessageObj = {
+        fileLocalPath: file,
+        type: 13,
+        audioDuration: 100, // Required: Audio duration in seconds
+    };
+   
+    // For a video
+    mediaMessageObj = {
+        fileLocalPath: file,
+        type: 14,
+        videoDuration: 100, // Required: Video duration in seconds
+    };
+  
+    zim.sendMessage(mediaMessageObj, conversationID, 0, config, notification);  
+}
+
+var file = ''; // The absolute path of the file to be uploaded
+sendMessage(file);
+```
+</Accordion>
+:::
+:::if{props.platform="Web|rn"}
+<Accordion title="Example of sending an online file" defaultOpen="false">
+```javascript
+// Sending Rich Media Message with an online file - one-to-one conversation
+/* When sending an online file message, the ZIM SDK only passes relevant fields to the backend, and the ZIM backend does not save the online file. */
+var conversationID = 'xxxx';
+var config = { priority: 1 };
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
+    },
+};
+
+/* The following code is for demonstration purposes only: please create the corresponding `media message object` based on the requirements and file type in actual development */
+
+// For an image
+var mediaMessageObj = {
+    fileDownloadUrl: 'https://xxxx.jpeg', // 原图
+    thumbnailDownloadUrl: 'https://xxxx-thumbnail.jpeg', // 缩略图
+    largeImageDownloadUrl: 'https://xxxx-large.jpeg', // 大图
+    type: 11,
+};
+
+// For a file
+mediaMessageObj = {
+    fileDownloadUrl: 'https://xxxx.pdf',
+    type: 12,
+};
+
+// For an audio
+mediaMessageObj = {
+    fileDownloadUrl: 'https://xxxx.mp3',
+    type: 13,
+    audioDuration: 100, // Required: Audio duration in seconds
+};
+
+// For a video
+mediaMessageObj = {
+    fileDownloadUrl: 'https://xxxx.mp4',
+    videoFirstFrameDownloadUrl: 'https://xxxx-firstframe.jpeg', // The first frame image
+    type: 14,
+    videoDuration: 100, // Required: Video duration in seconds
+};
+  
+zim.sendMessage(mediaMessageObj, conversationID, 0, config, notification);
+```
+</Accordion>
+:::
+
+:::if{props.platform="Web"}
+<Accordion title="Example of sending a recorded audio file message" defaultOpen="false">
+```javascript
+// HTTPS protocol is required.
+if (navigator.mediaDevices) {
+    var chunks = [];
+
+    navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream) => {
+            var duration = 10; // Duration of recording, in seconds
+            var mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.onstop = function (e) {
+                // After recording, send the audio message.
+                var conversationID = 'xxxx';
+                var config = { priority: 1 };
+                var notification = {
+                    onMessageAttached: function(message) {
+                        // todo: Loading
+                    },
+                    onMediaUploadingProgress: function(message, currentFileSize, totalFileSize) {
+                        // todo: upload progress
+                    }
+                };
+
+                var mediaMessageObj = {
+                    fileLocalPath: new File(chunks, '文件名xxxx.mp3'),
+                    type: 13,
+                    audioDuration: duration
+                };
+    
+                zim.sendMessage(mediaMessageObj, conversationID, 0, config, notification)
+                    .then((res) => {
+                        // Sent successfully
+                    })
+                    .catch((err) => {
+                        // Failed to send
+                    });
+
+                // Reset the chunks  
+                chunks = [];
+            };
+
+            mediaRecorder.ondataavailable = function (e) {
+                chunks.push(e.data);
+            };
+
+            // Start the recording
+            mediaRecorder.start();
+            // Stop the recording
+            setTimeout(() => mediaRecorder.stop(), duration * 1000);
+        })
+        .catch((err) => {
+            console.log('The following error occured: ' + err);
+        });
+}
+```
+</Accordion>
+:::
+:::if{props.platform="flutter"}
+<CodeGroup>
+```dart title="Image"
+// Send rich media content in one-to-one conversation - Send an image:
+ZIMImageMessage imageMessage = ZIMImageMessage('xxx/xxx.jpeg');
+ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
+ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message){
+    // Implement your event handling logic after sending the message here. 
+},onMediaUploadingProgress: (message,currentFileSize,totalFileSize){
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+});
+ZIM.getInstance()!.sendMessage(
+    imageMessage,
+    'toConversationID',
+    ZIMConversationType.peer,
+    sendConfig, notification).then((value) => {
+        // Sent successfully
+    }).catchError((onError){
+        // Failed to send
+    });
+```
+```dart title="Video"
+// Send rich media content in one-to-one conversation - Send a video:
+ZIMVideoMessage videoMessage = ZIMVideoMessage('xxx/xxx.mov');
+ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
+ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message){
+    // Implement your event handling logic after sending the message here. 
+},onMediaUploadingProgress: (message,currentFileSize,totalFileSize){
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+});
+ZIM
+    .getInstance()
+    !.sendMessage(
+        videoMessage,
+        'toConversationID',
+        ZIMConversationType.peer,
+        sendConfig, notification)
+    .then((value) => {
+        // Sent successfully
+    })
+    .catchError((onError) {
+        // Failed to send
+    });
+```
+```dart title="Audio"
+// Send rich media content in one-to-one conversation - Send an audio:
+ZIMAudioMessage audioMessage  = ZIMAudioMessage('xxx/xxx.mp3');
+ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
+ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message){
+    // Implement your event handling logic after sending the message here. 
+},onMediaUploadingProgress: (message,currentFileSize,totalFileSize){
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+});
+ZIM
+    .getInstance()
+    !.sendMessage(
+        audioMessage,
+        'toConversationID',
+        ZIMConversationType.peer,
+        ZIMMessageSendConfig(), notification)
+    .then((value) => {
+        // Sent successfully
+    })
+    .catchError((onError) {
+        // Failed to send
+    });
+```
+```dart title="File"
+// Send rich media content in one-to-one conversation - Send a file:
+ZIMFileMessage fileMessage = ZIMFileMessage('xxx/xxx.txt');
+ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
+ZIMMessageSendNotification notification = ZIMMessageSendNotification(onMessageAttached: (message){
+    // Implement your event handling logic after sending the message here. 
+},onMediaUploadingProgress: (message,currentFileSize,totalFileSize){
+    // You can listen for the callback to know the uploading progress of the rich media message you sent.
+});
+ZIM
+    .getInstance()
+    !.sendMessage(
+        fileMessage,
+        'toConversationID',
+        ZIMConversationType.peer,
+        ZIMMessageSendConfig(), notification)
+    .then((value) => {
+        // Sent successfully
+    })
+    .catchError((onError) {
+        // Failed to send
+    });
+```
+</CodeGroup>
+:::
 
 #### Callback for the sending progress of rich media content
 
-
 You will be notified of the sending progress of rich media content through the callback {getPlatformData(props,onMediaUploadingProgressMap)}.
 
-Among which:
+:::if{props.platform=undefined}
+``` java
+void onMediaUploadingProgress(ZIMMediaMessage message, long currentFileSize, long totalFileSize);
+```
+:::
+:::if{props.platform="iOS|mac"}
+``` objc
+typedef void (^ZIMMediaUploadingProgress)(ZIMMediaMessage *message, unsigned long long currentFileSize, unsigned long long totalFileSize);
+```
+:::
+:::if{props.platform="win"}
+``` cpp
+using ZIMMediaUploadingProgress = std::function<void(const std::shared_ptr<ZIMMediaMessage> &message, long long currentSize, long long totalSize)>;
+```
+:::
+:::if{props.platform="Web|rn"}
+```typescript
+function onMediaUploadingProgress(message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number);
+```
+:::
+:::if{props.platform="flutter"}
+``` dart
+typedef ZIMMediaUploadingProgress = void Function(ZIMMediaMessage message, int currentFileSize, int totalFileSize);
+```
+:::
 
+Among which:
 - message: The content of the message being sent.
 - currentFileSiz: The size of the message that has been sent.
 - totalFileSize: The overall size of the message sent.
@@ -604,152 +1166,238 @@ Among which:
 ### Receive rich media content
 
 To receive the rich media content messages, do the following:
-1. Listen for the following callbacks based on the session type (one-on-one chat, room chat, group chat): {getPlatformData(props,peerMessageReceivedMap)}, {getPlatformData(props,roomMessageReceivedMap)}, {getPlatformData(props,groupMessageReceivedMap)}.
-2. Call the {getPlatformData(props,downloadMediaFileMap)} method to download the rich media content.
+After logging in, users should listen for the following callbacks based on the conversation type (one-to-one, room, group): {getPlatformData(props,peerMessageReceivedMap)}, {getPlatformData(props,roomMessageReceivedMap)}, {getPlatformData(props,groupMessageReceivedMap)}, to receive the events of rich media messages. From the events, the URL of rich media content can be obtained directly.
+
+:::if{props.platform="undefined|iOS|mac|win|rn|uniapp|flutter"}
+
+If you want to download the rich media content locally, call the {getPlatformData(props,downloadMediaFileMap)} method.
 
 When downloading rich media content, you need to specify the file type of the corresponding media messages first.
 
+<div>
 - Image messages: You can choose to download the original file, large view, or thumbnail.
 - Files/Audio messages: Only original files/audio files can be downloaded.
 - Video messages: You can choose to download the original video file and the thumbnail of the first frame of the video.
+</div>
+:::
 
 :::if{props.platform=undefined}
 <CodeGroup>
 ``` java SampleCode
-// Receive rich media content in one-on-one chat - Receive images:
- @Override
-    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
-        super.onReceivePeerMessage(zim, messageList, fromUserID);
-        for (ZIMMessage message : messageList) {
-            // You can tell by the Type which kind of message you are receiving. 
-            if (message.getType() == ZIMMessageType.IMAGE) {
-                // Receive images.
-                ZIMImageMessage imageMessage = (ZIMImageMessage) message;
-                zim.downloadMediaFile(imageMessage, ZIMMediaFileType.ORIGINAL_FILE, new ZIMMediaDownloadedCallback() {
+// Receive rich media content in one-to-one conversation - Receive images:
+@Override
+public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID) {
+    super.onPeerMessageReceived(zim, messageList, info, fromUserID);
+    
+    ZIMMediaDownloadConfig config = new ZIMMediaDownloadConfig();
 
-                    @Override
-                    public void onMediaDownloaded(ZIMMediaMessage message, ZIMError errorInfo) {
-                        // Callback on the downloading completed.
-                    }
+    for (ZIMMessage message : messageList) {
+        // You can tell by the Type which kind of message you are receiving. 
+        if (message.getType() == ZIMMessageType.IMAGE) {
+            // Receive the image
+            ZIMImageMessage imageMessage = (ZIMImageMessage) message;
+            zim.downloadMediaFile(imageMessage, ZIMMediaFileType.ORIGINAL_FILE, config, new ZIMMediaDownloadedCallback() {
 
-                    @Override
-                    public void onMediaDownloadingProgress(ZIMMediaMessage message, long currentFileSize, long totalFileSize) {
-                        //  Callback on the downloading progress.
-                    }
+                @Override
+                public void onMediaDownloaded(ZIMMessage message, ZIMError errorInfo) {
+                    // The callback for download completion.
+                }
+
+                @Override
+                public void onMediaDownloadingProgress(ZIMMessage message, long currentFileSize, long totalFileSize) {
+                    // The download progress 
+                }
+            });
+        } else if (message.getType() == ZIMMessageType.VIDEO) {
+            // Receive the video
+            ZIMVideoMessage videoMessage = (ZIMVideoMessage) message;
+        } else if (message.getType() == ZIMMessageType.AUDIO) {
+            // Receive the audio
+            ZIMAudioMessage audioMessage = (ZIMAudioMessage) message;
+        } else if (message.getType() == ZIMMessageType.FILE) {
+            // Receive the file
+            ZIMFileMessage fileMessage = (ZIMFileMessage) message;
+        }
+    }
+}
+```
+</CodeGroup>
+:::
+
+:::if{props.platform="iOS|mac"}
+<CodeGroup>
+```objc SampleCode
+// Receive rich media content in one-to-one conversation - Receive images 
+- (void)peerMessageReceived:(NSArray<ZIMMessage *> *)messageList
+                info:(ZIMMessageReceivedInfo *)info
+                fromUserID:(NSString *)fromUserID{
+    
+    ZIMMediaDownloadConfig *config = [[ZIMMediaDownloadConfig alloc] init];
+
+    for (ZIMMessage *msg in reverseMsgList) {
+
+        // You can tell by the Type which kind of message you are receiving. 
+        switch (msg.type) {
+            case ZIMMessageTypeImage:{
+                ZIMImageMessage *imageMsg = (ZIMImageMessage *)msg;
+                [[ZIM getInstance] downloadMediaFileWithMessage:imageMsg fileType:ZIMMediaFileTypeOriginalFile config:config
+                    progress:^(ZIMMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
+                            
+                            } callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
+                                
+                }];
+                break;
+            }
+            case ZIMMessageTypeVideo:{
+                ZIMVideoMessage *videoMsg = (ZIMVideoMessage *)msg;
+                break;
+            }
+            case ZIMMessageTypeAudio:{
+                ZIMAudioMessage *audioMsg = (ZIMAudioMessage *)msg;
+                break;
+            }
+            case ZIMMessageTypeFile:{
+                ZIMFileMessage *fileMsg = (ZIMFileMessage *)msg;
+                break;
+            }
+            default:
+                break;
+        }
+        
+    }
+}
+```
+</CodeGroup>
+:::
+:::if{props.platform="win"}
+``` cpp
+// Receive rich media content in one-to-one conversation
+void onPeerMessageReceived(
+    zim::ZIM *zim, const std::vector<std::shared_ptr<zim::ZIMMessage>> &messageList,
+    const ZIMMessageReceivedInfo &info,
+    const std::string &fromUserID) {
+    
+    zim::ZIMMediaDownloadConfig download_config;
+
+    for (auto &it : messageList) {
+        // You can tell by the Type which kind of message you are receiving. 
+        if (it->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_IMAGE) {
+            // Image message type
+            auto image_message = std::dynamic_pointer_cast<zim::ZIMImageMessage>(it);
+
+            // The following demonstrates how to download the original image.
+            // If you want to get the image of another type, change ZIMMediaFileType
+            zim_->downloadMediaFile(
+                image_message.get(),
+                zim::ZIMMediaFileType::ZIM_MEDIA_FILE_TYPE_ORIGINAL_FILE,
+                download_config,
+                [=](const std::shared_ptr<zim::ZIMMessage> &message, unsigned int currentSize,
+                    unsigned int totalSize) {
+
+                },
+                [=](const std::shared_ptr<zim::ZIMMessage> &message,
+                    const zim::ZIMError &errorInfo) {
+
                 });
-            } else if (message.getType() == ZIMMessageType.VIDEO) {
-                // Receive videos.
-                ZIMVideoMessage videoMessage = (ZIMVideoMessage) message;
-            } else if (message.getType() == ZIMMessageType.AUDIO) {
-                // Receive audios.
-                ZIMAudioMessage audioMessage = (ZIMAudioMessage) message;
-            } else if (message.getType() == ZIMMessageType.FILE) {
-                // Receive files.
-                ZIMFileMessage fileMessage = (ZIMFileMessage) message;
-            }
+            ...
+        } else if (it->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_FILE) {
+            // File message type
+            auto media_message = std::dynamic_pointer_cast<zim::ZIMFileMessage>(it);
+            ...
+        } else if (it->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_AUDIO) {
+            // Audio message type
+            auto media_message = std::dynamic_pointer_cast<zim::ZIMAudioMessage>(it);
+            ...
+        } else if (it->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_VIDEO) {
+            // Video message type
+            auto media_message = std::dynamic_pointer_cast<zim::ZIMVideoMessage>(it);
+            ...
         }
     }
-```
 
-</CodeGroup>
-
-:::
-:::if{props.platform="mac"}
-<CodeGroup>
-```objc SampleCode
-// Receive rich media content in one-on-one chat - Receive images 
-- (void)receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
-                fromUserID:(NSString *)fromUserID{
-    for (ZIMMessage *msg in reverseMsgList) {
-
-        // You can tell by the Type which kind of message you are receiving. 
-        switch (msg.type) {
-            case ZIMMessageTypeImage:{
-                ZIMImageMessage *imageMsg = (ZIMImageMessage *)msg;
-                [[ZIM getInstance] downloadMediaFileWithMessage:imageMsg fileType:ZIMMediaFileTypeOriginalFile progress:^(ZIMMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
-                            
-                            } callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-                                
-                }];
-                break;
-            }
-            case ZIMMessageTypeVideo:{
-                ZIMVideoMessage *videoMsg = (ZIMVideoMessage *)msg;
-                break;
-            }
-            case ZIMMessageTypeAudio:{
-                ZIMAudioMessage *audioMsg = (ZIMAudioMessage *)msg;
-                break;
-            }
-            case ZIMMessageTypeFile:{
-                ZIMFileMessage *fileMsg = (ZIMFileMessage *)msg;
-                break;
-            }
-            default:
-                break;
-        }
-        
-    }
 }
 ```
-</CodeGroup>
 :::
-:::if{props.platform="iOS"}
-<CodeGroup>
-```objc SampleCode
-// Receive rich media content in one-on-one chat - Receive images 
-- (void)receivePeerMessage:(NSArray<ZIMMessage *> *)messageList
-                fromUserID:(NSString *)fromUserID{
-    for (ZIMMessage *msg in reverseMsgList) {
-
-        // You can tell by the Type which kind of message you are receiving. 
-        switch (msg.type) {
-            case ZIMMessageTypeImage:{
-                ZIMImageMessage *imageMsg = (ZIMImageMessage *)msg;
-                [[ZIM getInstance] downloadMediaFileWithMessage:imageMsg fileType:ZIMMediaFileTypeOriginalFile progress:^(ZIMMessage * _Nonnull message, unsigned long long currentFileSize, unsigned long long totalFileSize) {
-                            
-                            } callback:^(ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo) {
-                                
-                }];
-                break;
-            }
-            case ZIMMessageTypeVideo:{
-                ZIMVideoMessage *videoMsg = (ZIMVideoMessage *)msg;
-                break;
-            }
-            case ZIMMessageTypeAudio:{
-                ZIMAudioMessage *audioMsg = (ZIMAudioMessage *)msg;
-                break;
-            }
-            case ZIMMessageTypeFile:{
-                ZIMFileMessage *fileMsg = (ZIMFileMessage *)msg;
-                break;
-            }
-            default:
-                break;
+:::if{props.platform="rn"}
+``` javascript
+zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
+    const config = {messageInfoIndex: 0}
+    messageList.forEach((msg) => {
+        if (msg.type == 11) {
+            zim.downloadMediaFile(msg, 1, config (_msg, currentFileSize, totalFileSize) => {});
         }
-        
+    });
+});
+``` 
+:::
+:::if{props.platform="flutter"}
+``` dart
+// Receive rich media content in one-to-one conversation
+ZIMEventHandler.onPeerMessageReceived = (zim, messageList, info, fromUserID) {
+    // Triggered when receiving a message from a one-to-one 
+    for (ZIMMessage message in messageList) {
+        // You can tell by messgae.type which kind of message you are receiving
+        switch (message.type) {
+            case ZIMMessageType.image:
+                message as ZIMImageMessage;
+                break;
+            case ZIMMessageType.video:
+                message as ZIMVideoMessage;
+                break;
+            case ZIMMessageType.audio:
+                message as ZIMAudioMessage;
+                break;
+            case ZIMMessageType.File:
+                message as ZIMFileMessage;
+                break;
+            default:
+        }
     }
-}
+};
 ```
-</CodeGroup>
 :::
 
-
-
-
+:::if{props.platform="undefined|iOS|mac|win|rn|flutter"}
 #### Callback for the downloading progress of rich media content
 
 
-You will be notified of the downloading progress of rich media content through the callback {getPlatformData(props,onMediaDownloadingProgressMap)}.
+You will be notified of the downloading progress of rich media content through the callback {getPlatformData2(props,onMediaDownloadingProgressMap)}.
+:::
 
+:::if{props.platform=undefined}
+``` java
+void onMediaDownloadingProgress(ZIMMessage message, long currentFileSize, long totalFileSize);
+```
+:::
+:::if{props.platform="iOS|mac"}
+``` objc
+typedef void (^ZIMMediaDownloadingProgress)(ZIMMessage *message, unsigned long long currentFileSize, unsigned long long totalFileSize);
+```
+:::
+:::if{props.platform="win"}
+``` cpp
+using ZIMMediaDownloadingProgress = std::function<void(const std::shared_ptr<ZIMMessage> &message, unsigned int currentSize, unsigned int totalSize)>;
+```
+:::
+:::if{props.platform="rn"}
+```typescript
+function ZIMMediaDownloadingProgress(message: ZIMMessage, currentFileSize: number, totalFileSize: number);
+```
+:::
+:::if{props.platform="flutter"}
+``` dart
+typedef ZIMMediaDownloadingProgress = void Function(ZIMMessage message, int currentFileSize, int totalFileSize);
+```
+:::
 
+:::if{props.platform="undefined|iOS|mac|win|rn|uniapp|flutter"}
 Among which:
-
+<div>
 - message: The message content you are downloading.
 - currentFileSize: The size of messages that have been downloaded.
 - totalFileSize: The overall size of the download message.
-
+</div>
+:::
 
 ## Send/Receive signaling messages
 
@@ -770,20 +1418,7 @@ The following shows how to send custom messages to a specified user.
 :::if{props.platform=undefined}
 <CodeGroup>
 ```java SampleCode
-
-
-// Send signaling messages to a specified user.
-
-// 1. Create a ZIM object and pass in appID, appSign and Application in Android
-// For specific codes, please refer to the related codes of the above [Send & Receive messages - Send Messages].
-
-// 2. Set setEventHandler callback
-// For specific codes, please refer to the related codes of the above [Send & Receive messages - Send Messages].
-
-// 3. Log in
-// For specific codes, please refer to the related codes of the above [Send & Receive messages - Send Messages].
-
-// 4. Send signaling messages.
+// Send a signaling message to a user
 String userID = "xxxx";
 
 ZIMCommandMessage zimCustomMessage = new ZIMCommandMessage();
@@ -792,18 +1427,24 @@ zimCustomMessage.message = new byte[]{0x1,0x2,0x1,0x2};
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
 // Set message priority.
 config.priority = ZIMMessagePriority.LOW;
-// For a room chat, offline notification is not supported. To use it, contact ZEGOCLOUD Technical Support to enable the feature first.
+// Configure for offline notification
+// For a room conversation, offline notification is not supported. To use it, contact ZEGOCLOUD Technical Support to enable the feature first.
+ZIMPushConfig pushConfig = new ZIMPushConfig();
+pushConfig.title = "Offline notification title";
+pushConfig.content= "Offline notification content";
+pushConfig.extendedData = "Extra information for the offline notification";
+config.pushConfig = pushConfig;
 
-// Send one-on-one messages.
+// Send a one-to-one message.
 ZIMConversationType type = ZIMConversationType.Peer;
 
-// Send group messages.
-ZIMConversationType type = ZIMConversationType.Gourp;
+// Send a group message.
+// ZIMConversationType type = ZIMConversationType.Gourp;
 
-// Send in-room messages.
-ZIMConversationType type = ZIMConversationType.Room;
+// Send a in-room message.
+// ZIMConversationType type = ZIMConversationType.Room;
 
-zim.sendMessage(zimCustomMessage, toConversationID, type,config, new ZIMMessageSentCallback() {
+zim.sendMessage(zimCustomMessage, toConversationID, type, config, new ZIMMessageSentFullCallback() {
     @Override
     public void onMessageAttached(ZIMMessage zimMessage) {
         // You can use this callback to monitor whether the message is ready to be sent. This callback will be thrown only if the message passes the local basic parameter verification, otherwise an error will be thrown through the onMessageSent callback.
@@ -817,7 +1458,7 @@ zim.sendMessage(zimCustomMessage, toConversationID, type,config, new ZIMMessageS
 ```
 </CodeGroup>
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc SampleCode
 // Send signaling messages to a specified user.
@@ -833,28 +1474,94 @@ sendConfig.priority = ZIMMessagePriorityMedium;
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
-<CodeGroup>
-```objc SampleCode
+:::if{props.platform="win"}
+```cpp
 // Send signaling messages to a specified user.
-NSData *anyData = [[NSData alloc] init];
-NSString *toUserID = @"toUserID";
-ZIMCommandMessage * cmdMsg = [[ZIMCommandMessage alloc] initWithMessage:anyData];
-ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
-sendConfig.priority = ZIMMessagePriorityMedium;
+zim::ZIMMessage *message = nullptr;
+zim::ZIMCommandMessage commandMessage;
 
-[self.zim sendMessage:cmdMsg toUserID:toUserID conversationType:type config:config notification:notification callback:^((ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo)) {
-    // You can listen for this callback on the results of the message sending.
-}];
+zim::ZIMMessageSendConfig sendConfig;
+zim::ZIMPushConfig pushConfig;
+
+pushConfig.content = "win_push_content";
+pushConfig.extendedData = "win_push_extended_data";
+pushConfig.title = "win_push_title";
+
+sendConfig.priority = zim::ZIM_MESSAGE_PRIORITY_MEDIUM;
+sendConfig.pushConfig = &pushConfig;
+
+std::vector<uint8_t> uint8Message;
+uint8Message.assign(strMessage.begin(), strMessage.end());
+commandMessage.message = uint8Message;
+
+message = &commandMessage;
+
+// Send an one-to-one message 
+zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER
+
+// Send a group message
+// zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_GROUP
+
+// Send a room message
+// zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_ROOM
+
+auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
+            [=](const std::shared_ptr<zim::ZIMMessage> &message) { int i = 0; });
+
+// Send a message
+zim_->sendMessage(message, "toConversationID", type, config, notification,
+                    [=](const std::shared_ptr<zim::ZIMMessage> &message,
+                              const zim::ZIMError &errorInfo) { int i = 0; });
 ```
-</CodeGroup>
 :::
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
+```javascript
+// Send signaling messages to a specified user.
+var toConversationID = ''; // The recipient's user ID.
+var conversationType = 0; // 0: one-to-one, 1: room, 2: group
+var config = { 
+    priority: 1, // 1: low (default), 2: middle, 3: high
+};
 
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
+    }
+}
 
+// Here, a JSON string is used as an example, and the string needs to be converted to a Uint8Array.  
+// When `peerMessageReceived` receives a message with type 2, the Uint8Array needs to be converted back to a JSON string.  
+var jsonText = JSON.stringify({ id: '111', name: '张三' });
+var uint8Array = new Uint8Array(Array.from(unescape(encodeURIComponent(jsonText))).map((val) => val.charCodeAt(0)));
+
+var messageCommandObj = { type: 2, message: uint8Array };
+
+zim.sendMessage(messageCommandObj, toConversationID, conversationType, config, notification)
+    .then(function ({ message }) {
+        // Sent successfully
+    })
+    .catch(function (err) {
+        // Failed to send
+    });
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+// Send signaling messages to a specified user.
+Uint8List cmdMessage = Uint8List.fromList([1, 2, 3]);
+ZIMCommandMessage commandMessage = ZIMCommandMessage(message: cmdMessage);
+ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
+ZIM.getInstance()!.sendMessage(cmdMsg, 'toUserID', ZIMConversationType.peer, sendConfig)
+    .then((value) => {
+        // Sent successfully
+    })
+    .catchError((onError) {
+        // Failed to send
+    });
+```
+:::
 
 ### Receive signaling messages
-
-
 
 :::if{props.platform=undefined}
 <CodeGroup>
@@ -931,7 +1638,7 @@ Developers need to define custom type messages through the {getPlatformData(prop
 
 :::if{props.platform=undefined}
 ```java
-// Send a custom message to specified users in a one-to-one chat
+// Send a custom message to specified users in a one-to-one conversation
 // 1. Create a ZIM object and pass in appID, appSign and Application in Android
 // For specific codes, please refer to the related codes of the above [Send & Receive messages - Send Messages].
 
@@ -961,10 +1668,10 @@ ZIMMessageSendConfig config = new ZIMMessageSendConfig();
 // Set message priority
 config.priority = ZIMMessagePriority.LOW;
 
-// Send one-to-one chat message 
+// Send one-to-one conversation message 
 // ZIMConversationType type = ZIMConversationType.Peer;
 
-// Send group chat message
+// Send group conversation message
 // ZIMConversationType type = ZIMConversationType.Gourp;
 
 // Send room message
@@ -1025,15 +1732,15 @@ zim.sendMessage(zimCustomMessage, toConversationID, type,config, new ZIMMessageS
 
 The callback interface for receiving custom messages is the same as the callback interface for receiving regular messages. Please refer to [Send & Receive messages - Receive messages](#receive-rich-media-content) for details on the specific interface.
 
-The following is an example code for receiving custom messages in a one-on-one chat session:
+The following is an example code for receiving custom messages in a one-to-one conversation:
 
 :::if{props.platform=undefined}
 ```java
-// User receives custom message in a one-to-one chat
+// User receives custom message in a one-to-one conversation
 zim.setEventHandler(new ZIMEventHandler() {
     @Override
     public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
-        // Callback when receiving "one-to-one chat" message
+        // Callback when receiving "one-to-one conversation" message
         for (ZIMMessage zimMessage : messageList) {
             if (zimMessage instanceof ZIMCustomMessage) {
                 ZIMCustomMessage zimCustomMessage = (ZIMCustomMessage) zimMessage;
@@ -1047,7 +1754,7 @@ zim.setEventHandler(new ZIMEventHandler() {
 :::
 :::if{props.platform="mac"}
 ```objc
- // Receiving custom messages in a one-on-one chat session
+ // Receiving custom messages in a one-to-one conversation
  - (void)zim:(ZIM *)zim receivePeerMessage:(NSArray<ZIMMessage *> *)messageList fromUserID:(NSString *)fromUserID {
      if (zim != self.zim) {
          return;
@@ -1062,7 +1769,7 @@ zim.setEventHandler(new ZIMEventHandler() {
 :::
 :::if{props.platform="iOS"}
 ```objc
- // Receiving custom messages in a one-on-one chat session
+ // Receiving custom messages in a one-to-one conversation
  - (void)zim:(ZIM *)zim receivePeerMessage:(NSArray<ZIMMessage *> *)messageList fromUserID:(NSString *)fromUserID {
      if (zim != self.zim) {
          return;
@@ -1089,8 +1796,8 @@ The "@" message is not a message type itself. A message can be both a text messa
 ### Send @ messages
 
 When calling {getPlatformData(props,sendMessageMap)} to send a message, you can use the following {getPlatformData(props,ZIMMessageMap)}  parameters (can be used simultaneously) to mark a message as an "@" message:
-- {getPlatformData(props,mentionedUserIDsMap)}: Notifies specific users (including users outside of the session) to view the message. The length of the userID list passed in should be up to 50. If you need to increase this limit, please contact the ZEGOCLOUD technical support team.
-- {getPlatformData(props,isMentionAllMap)}: Notifies all other users within the session to view the message.
+- {getPlatformData(props,mentionedUserIDsMap)}: Notifies specific users (including users outside of the conversation) to view the message. The length of the userID list passed in should be up to 50. If you need to increase this limit, please contact the ZEGOCLOUD technical support team.
+- {getPlatformData(props,isMentionAllMap)}: Notifies all other users within the conversation to view the message.
 
 <Note title="Note">
 
@@ -1100,12 +1807,12 @@ Only ZIM SDK version 2.14.0 and above supports sending messages with @ informati
 
 :::if{props.platform=undefined}
 ```java
-// The following is a sample code for a user to send an @ message in a single chat session:
+// The following is a sample code for a user to send an @ message in a single conversation:
 
 // Create reminder user list
 ArrayList<String> mentionArrayList = new ArrayList<>();
 
-// Add a reminder to the user (the user does not need to be in the current session)
+// Add a reminder to the user (the user does not need to be in the current conversation)
 mentionArrayList.add("userId1");
 mentionArrayList.add("userId2");
 
@@ -1113,7 +1820,7 @@ mentionArrayList.add("userId2");
 // Call the interface to remind users in the list to view messages
 message.setMentionedUserIDs(mentionArrayList);
 
-// Remind all other users in the session to view the message
+// Remind all other users in the conversation to view the message
 boolean isMentionAll = true;
 message.setIsMentionAll(isMentionAll);
 
@@ -1124,7 +1831,7 @@ config.priority = ZIMMessagePriority.LOW;
 // Whether to forcefully push the notification to the alerted user (regardless of whether the other party has enabled Do Not Disturb mode), the default is fasle;
 config.isNotifyMentionedUsers = true;
 
-// Take sending a one-to-one chat message as an example
+// Take sending a one-to-one conversation message as an example
 ZIMConversationType type = ZIMConversationType.Peer;
 
 zim.sendMessage(message,"conv_id", type, config, new ZIMMessageSentCallback() {
@@ -1144,11 +1851,11 @@ zim.sendMessage(message,"conv_id", type, config, new ZIMMessageSentCallback() {
 :::
 :::if{props.platform="mac"}
 ```objc
-// The following is a sample code for a user to send an @ message in a single chat session:
+// The following is a sample code for a user to send an @ message in a single conversation:
 // Create a reminder user list
 NSMutableArray<NSString *> *mentionArrayList = [[NSMutableArray alloc] init];
 
-// Add a reminder to the user (the user does not need to be in the current session)
+// Add a reminder to the user (the user does not need to be in the current conversation)
 [mentionArrayList addObject:@"userId1"];
 [mentionArrayList addObject:@"userId2"];
 
@@ -1156,7 +1863,7 @@ NSMutableArray<NSString *> *mentionArrayList = [[NSMutableArray alloc] init];
 // Call the interface to remind users in the list to view messages
 [message mentionedUserIDs:mentionArrayList];
 
-// Remind all other users in the session to view the message
+// Remind all other users in the conversation to view the message
 BOOL isMentionAll = YES;
 [message isMentionAll:isMentionAll];
 
@@ -1164,7 +1871,7 @@ ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
 // Whether to forcefully push the notification to the alerted user (regardless of whether the other party has enabled Do Not Disturb mode), the default is NO;
 config.isNotifyMentionedUsers = YES;
 
-// Take sending one-to-one chat messages as an example
+// Take sending one-to-one conversation messages as an example
 ZIMConversationType type = ZIMConversationTypePeer;
 
 [zim sendMessage:message convId:@"conv_id" type:type config:config callback:^(ZIMMessage *zimMessage, ZIMError *error) {
@@ -1178,11 +1885,11 @@ ZIMConversationType type = ZIMConversationTypePeer;
 :::
 :::if{props.platform="iOS"}
 ```objc
-// The following is a sample code for a user to send an @ message in a single chat session:
+// The following is a sample code for a user to send an @ message in a single conversation:
 // Create a reminder user list
 NSMutableArray<NSString *> *mentionArrayList = [[NSMutableArray alloc] init];
 
-// Add a reminder to the user (the user does not need to be in the current session)
+// Add a reminder to the user (the user does not need to be in the current conversation)
 [mentionArrayList addObject:@"userId1"];
 [mentionArrayList addObject:@"userId2"];
 
@@ -1190,7 +1897,7 @@ NSMutableArray<NSString *> *mentionArrayList = [[NSMutableArray alloc] init];
 // Call the interface to remind users in the list to view messages
 [message mentionedUserIDs:mentionArrayList];
 
-// Remind all other users in the session to view the message
+// Remind all other users in the conversation to view the message
 BOOL isMentionAll = YES;
 [message isMentionAll:isMentionAll];
 
@@ -1198,7 +1905,7 @@ ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
 // Whether to forcefully push the notification to the alerted user (regardless of whether the other party has enabled Do Not Disturb mode), the default is NO;
 config.isNotifyMentionedUsers = YES;
 
-// Take sending one-to-one chat messages as an example
+// Take sending one-to-one conversation messages as an example
 ZIMConversationType type = ZIMConversationTypePeer;
 
 [zim sendMessage:message convId:@"conv_id" type:type config:config callback:^(ZIMMessage *zimMessage, ZIMError *error) {
@@ -1227,7 +1934,7 @@ After receiving a message, developers can implement corresponding functionalitie
 
 ### Receive mentionedInfoList
 
-After users within a session are mentioned, developers can passively or actively retrieve {getPlatformData(props,mentionedInfoListMap)}.
+After users within a conversation are mentioned, developers can passively or actively retrieve {getPlatformData(props,mentionedInfoListMap)}.
 
 {getPlatformData(props,mentionedInfoListMap)} contains the corresponding message ID, sender userID, and the type of {getPlatformData(props,ZIMMessageMentionedTypeMap)}.Developers can use this information to implement various business logics, such as marking conversations.
 
@@ -1289,12 +1996,12 @@ ArrayList<ZIMMessageMentionedInfo> mentionedInfoList = conversation.mentionedInf
 After receiving @ messages, users need to clear the [mentionedInfoList](@mentionedInfoList) of a conversation to stop receiving notifications.
 
 The interface for clearing the mentionedInfoList  is the same as clearing the unread message count of a conversation:
-- {getPlatformData(props,clearConversationUnreadMessageCountMap)}: Clears the unread message count of a single conversation. Refer to the example code in [Manage sessions - Clear single session message unread](./../Conversation/Get%20the%20conversation%20list.mdx).
-- {getPlatformData(props,clearConversationTotalUnreadMessageCountMap)}: Clears the total unread message count of all conversations. Refer to the example code in [Manage sessions - Clear all unread conversation messages](./../Conversation/Get%20the%20conversation%20list.mdx).
+- {getPlatformData(props,clearConversationUnreadMessageCountMap)}: Clears the unread message count of a single conversation. Refer to the example code in [Manage conversations - Clear single conversation message unread](./../Conversation/Get%20the%20conversation%20list.mdx).
+- {getPlatformData(props,clearConversationTotalUnreadMessageCountMap)}: Clears the total unread message count of all conversations. Refer to the example code in [Manage conversations - Clear all unread conversation messages](./../Conversation/Get%20the%20conversation%20list.mdx).
 
 ### Get reminder user list
 
-All users in the session can call the `getMentionedUserIDs` interface. Get the specific reminder user list, but this interface can only return the user list passed in by calling the `setMentionedUserIDs` interface.
+All users in the conversation can call the `getMentionedUserIDs` interface. Get the specific reminder user list, but this interface can only return the user list passed in by calling the `setMentionedUserIDs` interface.
 
 :::if{props.platform=undefined}
 ```java
@@ -1393,7 +2100,7 @@ For more information, see [Forward messages](./Forward%20messages.mdx).
 
 ## Receive Tips message
 
-ZIM SDK supports converting user operations within a session into Tips messages. When a related operation occurs, ZIM SDK will send a Tips message to the session to notify. For details, please refer to [Receive tip messages](./Receive%20tip%20messages.mdx).
+ZIM SDK supports converting user operations within a conversation into Tips messages. When a related operation occurs, ZIM SDK will send a Tips message to the session to notify. For details, please refer to [Receive tip messages](./Receive%20tip%20messages.mdx).
 
 
 

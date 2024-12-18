@@ -183,7 +183,7 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
 ```
 </CodeGroup>
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 <CodeGroup>
 ```javascript title="示例代码"
 // 发送单聊 `Text` 信息
@@ -353,7 +353,7 @@ void onRoomMessagedReceived(ZIM *zim*,
 }
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 收到单聊通信的消息回调
 zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
@@ -397,7 +397,7 @@ ZIM SDK 支持发送多种类型的富媒体消息，包含图片、文件、音
 2. 接收方用户登录成功后，根据会话类型（单聊、房间、群组）的相关回调监听，接收富媒体消息的相关通知，以及下载富媒体消息文件到本地。
 </div>
 :::
-:::if{props.platform="web|miniprogram"}
+:::if{props.platform="Web|miniprogram"}
 <div>
 1. 用户登录成功后，指定消息类型（图片、文件、音频、视频）、会话类型（单聊、房间、群组）等，向指定会话发送富媒体消息。
 2. 接收方用户登录成功后，根据会话类型（单聊、房间、群组）的相关回调监听，接收富媒体消息的相关通知。
@@ -532,8 +532,8 @@ zim.sendMessage(message, conversationID, ZIMConversationType.PEER, config, new Z
 </CodeGroup>
 :::
 :::if{props.platform="iOS|mac"}
-<Accordion title="发送“图片”消息示例" defaultOpen="false">
-```objc
+<CodeGroup>
+```objc title="图片"
 // 发送多媒体消息示例 - 单聊 发送图片消息
 ZIMImageMessage *imgMsg = [[ZIMImageMessage alloc] init];
 
@@ -541,7 +541,7 @@ ZIMImageMessage *imgMsg = [[ZIMImageMessage alloc] init];
 //此处以一个相册图片临时路径为例
 imgMsg.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/C142EFE6-9DEC-449D-89B7-BF99F2578F98/tmp/D1513E30-2641-440B-B897-48CD43BE1D04.jpeg";
 
-//如果此处填入了网络 URL, SDK 会透传该路径，而不会经过 ZIM 后台服务处理， 同时填入网络 URL 与本地路径，SDK 会优先任务用户想要使用网路 URL
+//如果此处填入了网络 URL, SDK 会透传该路径，而不会经过 ZIM 后台服务处理， 同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网路 URL
 imgMsg.fileDownloadUrl = @"";
 
 ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
@@ -560,9 +560,7 @@ notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, un
         
 }];
 ```
-</Accordion>
-<Accordion title="发送“音频”消息示例" defaultOpen="false">
-```objc
+```objc title="音频"
 // 发送多媒体消息示例 - 单聊 发送音频消息
 //需填入 UTF-8 格式的本地路径（建议填写 app 本地音频的路径）,音频时间（单位秒）
 //此处以一个本地音频文件路径为例
@@ -587,9 +585,7 @@ notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, un
         
 }];
 ```
-</Accordion>
-<Accordion title="发送“视频”消息示例" defaultOpen="false">
-```objc
+```objc title="视频"
 // 发送多媒体消息示例 - 单聊 发送视频消息
 ZIMVideoMessage *videoMessage = [[ZIMVideoMessage alloc] init];
 
@@ -597,7 +593,7 @@ ZIMVideoMessage *videoMessage = [[ZIMVideoMessage alloc] init];
 //此处以一个本地视频路径为例
 videoMessage.fileLocalPath = @"/var/mobile/Containers/Data/Application/C142EFE6-9DEC-449D-89B7-BF99F2578F98/Documents/22-08-31-10:23:49.mp4";
 
-//如果此处填入了网络 URL, SDK 会透传该路径，而不会经过 ZIM 后台服务处理， 同时填入网络 URL 与本地路径，SDK 会优先任务用户想要使用网路 URL
+//如果此处填入了网络 URL, SDK 会透传该路径，而不会经过 ZIM 后台服务处理， 同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网路 URL
 videoMessage.fileDownloadUrl = @"";
 
 ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
@@ -616,10 +612,7 @@ notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, un
         
 }];
 ```
-
-</Accordion>
-<Accordion title="发送“文件”消息示例" defaultOpen="false">
-```objc
+```objc title="文件"
 // 发送多媒体消息示例 - 单聊 发送文件消息
 ZIMFileMessage *fileMsg = [[ZIMFileMessage alloc] init];
 
@@ -627,7 +620,7 @@ ZIMFileMessage *fileMsg = [[ZIMFileMessage alloc] init];
 //此处以文件选择器选中的某个文件地址为例
 fileMsg.fileLocalPath = @"/private/var/mobile/Containers/Shared/AppGroup/D5144D14-3FE8-4C6C-8527-01F368B8E49E/File Provider Storage/IMG_0131.HEIC";
 
-//如果此处填入了网络 URL, SDK 会透传该路径，而不会经过 ZIM 后台服务处理， 同时填入网络 URL 与本地路径，SDK 会优先任务用户想要使用网路 URL
+//如果此处填入了网络 URL, SDK 会透传该路径，而不会经过 ZIM 后台服务处理， 同时填入网络 URL 与本地路径，SDK 会优先认为用户想要使用网路 URL
 fileMsg.fileDownloadUrl = @"";
 
 
@@ -647,12 +640,12 @@ notification.onMediaUploadingProgress = ^(ZIMMediaMessage * _Nonnull message, un
         
 }];
 ```
-</Accordion>
+</CodeGroup>
 :::
 
 :::if{props.platform="win"}
-<Accordion title="发送“图片”消息示例" defaultOpen="false">
-```cpp
+<CodeGroup>
+```cpp title="图片"
 // 发送多媒体消息示例 - 单聊 发送图片消息
 zim::ZIMMediaMessage *message = nullptr;
 auto imageMessage = zim::ZIMImageMessage();
@@ -696,11 +689,7 @@ zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATI
         
     });
 ```
-
-</Accordion>
-
-<Accordion title="发送“文件”消息示例" defaultOpen="false">
-```cpp
+```cpp title="文件"
 // 发送多媒体消息示例 - 单聊 发送文件消息
 zim::ZIMMediaMessage *message = nullptr;
 auto fileMessage = zim::ZIMFileMessage();
@@ -744,12 +733,7 @@ zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATI
         int code = errorInfo.code;
     });
 ```
-
-</Accordion>
-
-<Accordion title="发送“音频”消息示例" defaultOpen="false">
-
-```cpp
+```cpp title="音频"
 // 发送多媒体消息示例 - 单聊 发送音频消息
 zim::ZIMMediaMessage *message = nullptr;
 auto audioMessage = zim::ZIMAudioMessage();
@@ -795,11 +779,7 @@ zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATI
         int code = errorInfo.code;
     });
 ```
-
-</Accordion>
-
-<Accordion title="发送“视频”消息示例" defaultOpen="false">
-```cpp
+```cpp title="视频"
 // 发送多媒体消息示例 - 单聊 发送视频消息
 zim::ZIMMediaMessage *message = nullptr;
 auto videoMessage = zim::ZIMVideoMessage();
@@ -845,10 +825,9 @@ zim_->sendMessage(message, receiver_id, zim::ZIMConversationType::ZIM_CONVERSATI
         int code = errorInfo.code;
     });
 ```
-</Accordion>
+</CodeGroup>
 :::
-
-:::if{props.platform="web"}
+:::if{props.platform="Web"}
 <Accordion title="发送“本地文件”消息示例" defaultOpen="false">
 ```javascript
 // 发送“本地文件”富媒体消息示例 - 单聊
@@ -1017,7 +996,7 @@ sendMessage(file);
 </Accordion>
 :::
 
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 <Accordion title="发送“网络文件”消息示例" defaultOpen="false">
 ```javascript
 // 发送“网络文件”富媒体消息示例 - 单聊
@@ -1064,7 +1043,7 @@ zim.sendMessage(mediaMessageObj, conversationID, 0, config, notification);
 </Accordion>
 :::
 
-:::if{props.platform="web"}
+:::if{props.platform="Web"}
 <Accordion title="发送“录制的音频文件”消息示例" defaultOpen="false">
 ```javascript
 // 需要使用 HTTPS 协议
@@ -1126,8 +1105,8 @@ if (navigator.mediaDevices) {
 :::
 
 :::if{props.platform="flutter"}
-<Accordion title="发送“图片”消息示例" defaultOpen="false">
-```dart
+<CodeGroup>
+```dart title="图片"
 // 发送多媒体消息示例 - 单聊 发送图片消息
 ZIMImageMessage imageMessage = ZIMImageMessage('xxx/xxx.jpeg');
 ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
@@ -1146,10 +1125,7 @@ ZIM.getInstance()!.sendMessage(
         //失败触发此处
     });
 ```
-</Accordion>
-
-<Accordion title="发送“视频”消息示例" defaultOpen="false">
-```dart
+```dart title="视频"
 // 发送多媒体消息示例 - 单聊 发送视频消息
 ZIMVideoMessage videoMessage = ZIMVideoMessage('xxx/xxx.mov');
 ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
@@ -1172,11 +1148,7 @@ ZIM
         //失败触发此处
     });
 ```
-
-</Accordion>
-
-<Accordion title="发送“音频”消息示例" defaultOpen="false">
-```dart
+```dart title="音频"
 // 发送多媒体消息示例 - 单聊 发送音频消息
 ZIMAudioMessage audioMessage  = ZIMAudioMessage('xxx/xxx.mp3');
 ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
@@ -1199,10 +1171,7 @@ ZIM
       //失败触发此处
   });
 ```
-</Accordion>
-
-<Accordion title="发送“文件”消息示例" defaultOpen="false">
-```dart
+```dart title="文件"
 // 发送多媒体消息示例 - 单聊 发送文件消息
 ZIMFileMessage fileMessage = ZIMFileMessage('xxx/xxx.txt');
 ZIMMessageSendConfig sendConfig = ZIMMessageSendConfig();
@@ -1225,7 +1194,7 @@ ZIM
         //失败触发此处
     });
 ```
-</Accordion>
+</CodeGroup>
 :::
 
 #### 富媒体文件消息的发送进度回调
@@ -1247,7 +1216,7 @@ typedef void (^ZIMMediaUploadingProgress)(ZIMMediaMessage *message, unsigned lon
 using ZIMMediaUploadingProgress = std::function<void(const std::shared_ptr<ZIMMediaMessage> &message, long long currentSize, long long totalSize)>;
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```typescript
 function onMediaUploadingProgress(message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number);
 ```
@@ -1268,7 +1237,7 @@ typedef ZIMMediaUploadingProgress = void Function(ZIMMediaMessage message, int c
 接收方用户登录成功后，根据会话类型（单聊、房间、群组）的相关回调监听（ {getPlatformData(props,peerMessageReceivedMap)} 、 {getPlatformData(props,roomMessageReceivedMap)} 、 {getPlatformData(props,groupMessageReceivedMap)} ），接收富媒体消息的相关通知，然后可以直接获取富媒体消息的相关 URL 属性。
 
 :::if{props.platform="undefined|iOS|mac|win|rn|uniapp|flutter"}
-或调用 {getPlatformData(props,downloadMediaFileMap)} 接口，下载富媒体消息文件到本地。
+如需下载富媒体消息到本地，可调用 {getPlatformData(props,downloadMediaFileMap)} 接口。
 
 下载富媒体消息时，需要指定对应的媒体消息的文件类型。
 
@@ -1320,7 +1289,7 @@ public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZI
 ```
 :::
 :::if{props.platform="iOS|mac"}
-``` objc
+```objc
 // 接收多媒体消息示例 - 单聊 接收图片消息
 - (void)peerMessageReceived:(NSArray<ZIMMessage *> *)messageList
                 info:(ZIMMessageReceivedInfo *)info
@@ -1393,15 +1362,15 @@ void onPeerMessageReceived(
                 });
             ...
         } else if (it->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_FILE) {
-            // File message type
+            //  文件消息
             auto media_message = std::dynamic_pointer_cast<zim::ZIMFileMessage>(it);
             ...
         } else if (it->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_AUDIO) {
-            // Audio message type
+            // 音频消息
             auto media_message = std::dynamic_pointer_cast<zim::ZIMAudioMessage>(it);
             ...
         } else if (it->getType() == zim::ZIMMessageType::ZIM_MESSAGE_TYPE_VIDEO) {
-            // Video message type
+            // 视频消息
             auto media_message = std::dynamic_pointer_cast<zim::ZIMVideoMessage>(it);
             ...
         }
@@ -1602,7 +1571,7 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
                               const zim::ZIMError &errorInfo) { int i = 0; });
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 发送单聊 `Command` 信息
 
@@ -1700,7 +1669,7 @@ void onPeerMessageReceived(zim::ZIM *zim, const std::vector<std::shared_ptr<zim:
 }
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 用户接收信令消息
 zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
@@ -1844,7 +1813,7 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
                               const zim::ZIMError &errorInfo) { int i = 0; });
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 发送自定义信息
 
@@ -1965,7 +1934,7 @@ void onPeerMessageReceived(zim::ZIM *zim, const std::vector<std::shared_ptr<zim:
 }
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 用户在单聊会话中接收自定义消息
 zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
@@ -2262,7 +2231,7 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
                               const zim::ZIMError &errorInfo) { int i = 0; });
 ```
 :::
-:::if{props.platform="web"}
+:::if{props.platform="Web"}
 ```javascript
 var file = null; // 上传的文件对象
 var input = document.createElement('input');
@@ -2300,7 +2269,7 @@ wx.chooseMessageFile({
 var file = ''; // 上传的文件的绝对路径
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 发送组合消息
 
@@ -2526,7 +2495,7 @@ void onPeerMessageReceived(zim::ZIM *zim, const std::vector<std::shared_ptr<zim:
 }
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 用户在单聊会话中接收组合消息
 zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
@@ -2696,7 +2665,7 @@ zim_->sendMessage(
     });
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 以下为用户在单聊会话中发送 @ 消息（文本消息）的示例代码：
 var toConversationID = ''; // 对方 userID
@@ -2813,7 +2782,7 @@ void onConversationChanged(
 }
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 zim.on('conversationChanged', function (zim, { info }) {
     console.log(info.mentionInfoList);
@@ -2848,7 +2817,7 @@ NSArray<ZIMMessageMentionedInfo *> * mentionedInfoList = conversation.mentionedI
 std::vector<ZIMMessageMentionedInfo> mentionedInfoList = conversation.mentionedInfoList;
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 var mentionedInfoList = conversaion.mentionedInfoList;
 ```
@@ -2886,7 +2855,7 @@ NSArray<NSString *> *userIds = message.mentionedUserIDs;
 std::vector<std::string> userIds = message.mentionedUserIDs;
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 var userIds = message.mentionedUserIDs;
 ```
@@ -2916,7 +2885,7 @@ BOOL isMentionAll = message.isMentionAll;
 boolean isMentionAll = message.isMentionAll;
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 var isMentionAll = message.isMentionAll;
 ```
@@ -2970,7 +2939,7 @@ public void onBroadcastMessageReceived(ZIM zim, ZIMMessage message) {
 virtual void onBroadcastMessageReceived(ZIM * /*zim*/, const std::shared_ptr<ZIMMessage> & /*message*/) {}
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 用户接收全员推送消息
 zim.on('broadcastMessageReceived', function (zim, { message }) {
@@ -3032,7 +3001,7 @@ void onMessageSentStatusChanged(zim::ZIM *zim, const std::vector<ZIMMessageSentS
 }
 ```
 :::
-:::if{props.platform="web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
 ```javascript
 // 监听消息状态
 zim.on('messageSentStatusChanged', function (zim, { infos }) {
