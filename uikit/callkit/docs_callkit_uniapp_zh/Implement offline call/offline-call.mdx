@@ -111,7 +111,7 @@ ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
 
 ```vue title="pages/invite/index.vue" 
 <template>
-    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VideoCall" :invitees="invitees" :notificationConfig="notificationConfig" @pressed="onPressed" />
+    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VideoCall" :invitees="invitees" :notificationConfig="notificationConfig" :onPressed="onPressed" />
 </template>
 
 <script>

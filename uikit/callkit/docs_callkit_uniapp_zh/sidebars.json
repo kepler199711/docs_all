@@ -68,6 +68,11 @@
           "type":"doc",
           "label":"呼叫邀请配置",
           "id":"calling-config/call-invitation-config"
+        },
+        {
+          "type": "doc",
+          "label": "通话中邀请",
+          "id": "calling-config/invite-users-to-an-ongoing-call"
         }
       ]
     },

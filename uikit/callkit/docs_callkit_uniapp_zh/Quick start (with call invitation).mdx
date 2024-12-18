@@ -89,9 +89,9 @@ uni-app 官方自定义调试基座使用说明请参考 [什么是自定义调�
 ```vue title="pages/invite/index.vue" 
 <template>
     <!-- 视频通话 -->
-    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VideoCall" :invitees="invitees" @pressed="onPressed" />
+    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VideoCall" :invitees="invitees" :onPressed="onPressed" />
     <!-- 语音通话 -->
-    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VoiceCall" :invitees="invitees" @pressed="onPressed" />
+    <ZegoSendCallInvitationButton :type="ZegoInvitationType.VoiceCall" :invitees="invitees" :onPressed="onPressed" />
 </template>
 
 <script>
@@ -115,7 +115,36 @@ const onPressed = (code, message) => {
 </script>
 ```
 
-邀请按钮参数请参考[ZegoSendCallInvitationButton](./API%20Reference/Config.mdx#ZegoSendCallInvitationButton)
+更多邀请按钮参数请参考[ZegoSendCallInvitationButton](./API%20Reference/Config.mdx#ZegoSendCallInvitationButton)
+
+如果需要自定义通话按钮，可以通过调用 ZegoUIKitPrebuiltCallService.sendInvitation 来发起呼叫。
+
+```vue title="pages/invite/index.vue"
+<template>
+    <view @click="handleSendInvitation">发起呼叫</button>
+</template>
+
+<script>
+import ZegoSendCallInvitationButton from "@/uni_modules/zego-PrebuiltCall/components/invitation/ZegoSendCallInvitationButton.vue"
+import { ZegoInvitationType } from "@/uni_modules/zego-UIKitCore";
+import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
+
+const appID = '您在 zego 控制台获取的 appID';
+const appSign = '您在 zego 控制台获取的 appSign';
+const userID = '您的 userID';
+const userName = '您的昵称';
+const invitees = ref([{userID: '需要邀请的用户ID', userName: '需要邀请的用户名'}])
+
+onMounted(() => {
+    ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, config);
+})
+
+const handleSendInvitation = () => {
+    ZegoUIKitPrebuiltCallService.sendInvitation(config: CallInviteConfig)
+}
+</script>
+```
+sendInvitation 参数请参考[CallInviteConfig](./API%20Reference/Config.mdx#CallInviteConfig)
 
 </Step>
 <Step title="配置入口与页面路由">
@@ -162,9 +191,6 @@ const navigateTo = (url: string) => {
 	],
 }
 ```
-
-ZegoSendCallInvitationButton 属性请参考
-#### ZegoSendCallInvitationButton 属性
 
 
 </Step>
