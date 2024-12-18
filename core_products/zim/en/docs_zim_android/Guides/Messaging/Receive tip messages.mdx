@@ -45,33 +45,14 @@ Only ZIM SDK 2.15.0 or later supports tip messages.
 
 ### 1. Enable the feature
 
-To enable the tip message feature for the following events, contact ZEGOCLOUD technical support .
-- Group creation
-- Group disbandment
-- User joined
-- User joined by invitation
-- Member leave
-- Member removal
-- Group profile change, including the following sub-events:
-    <Note title="Note">
-    
-    The group profile change event is a collection of the following events that need to be specified separately.
-    </Note>
-    
-    - Group name change
-    - Group avatar change
-    - Group notice change
-    - Group muting status change
-- Group member information change, including the following sub-events:
-    <Note title="Note">
-    
-    The group member information change event is a collection of the following events that need to be specified separately.
-    </Note>
-    
-    - Group ownership change
-    - Group member role change
-    - Group role muting status change
+To enable the tip message feature for the following events, contact ZEGOCLOUD technical support.
 
+| Type             | Event                                                                                                                                                      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Group management | <Note title="Note">When enabling this event type, all events will be enabled.</Note><ul><li>Group creation</li><li>Group dismissal</li><li>User joined</li><li>User joined by invitation</li><li>Member leave</li><li>Member removal</li></ul> |
+| Group profile Changes | <Note title="Note">When enabling this event type, please specify the events you need.</Note><ul><li>Group name change</li><li>Group avatar change</li><li>Group notice change</li><li>Group muting status change</li></ul>           |
+| Group member information change | <Note title="Note">When enabling this event type, please specify the events you need.</Note><ul><li>Group ownership change</li><li>Group member role change</li><li>Group role muting status change</li></ul> |
+    
 ### 2. Receive a tip message
 
 Listen for the {getPlatformData(props,onReceiveGroupMessageMap)}  callback to receive the tip message when a group event occurs.
@@ -308,10 +289,6 @@ void zim_event_handler::onReceiveGroupMessage(
 }
 ```
 
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
 
 :::if{props.platform="Flutter"}
@@ -389,12 +366,8 @@ zim.on('receiveGroupMessage', (zim, { messageList, fromConversationID }) => {
 });
 ```
 
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 ```objc
 // Receive a group message.
 - (void)receiveGroupMessage:(ZIM *)zim 
@@ -440,60 +413,11 @@ Based on the obtained tip message, generate the corresponding event string and d
 }
 ```
 
-### 3. Display a tip message
-
-Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
 :::
-:::if{props.platform="mac"}
-```objc
-// Receive a group message.
-- (void)receiveGroupMessage:(ZIM *)zim 
-                 messageList:(NSArray<ZIMMessage *> *)messageList 
-                  fromGroupID:(NSString *)fromGroupID {
-    
-    for (ZIMMessage *message in messageList) {
-        // It is a tip message.
-        if (message.type == ZIMMessageTypeTips) {
-            ZIMTipsMessage *tipsMessage = (ZIMTipsMessage *)message;
-            // It is a group profile change event.
-            if (tipsMessage.event == ZIMTipsMessageEventGroupInfoChanged) {
-                ZIMTipsMessageGroupChangeInfo *info = (ZIMTipsMessageGroupChangeInfo *)tipsMessage.changeInfo;
-                
-                if (info.type == ZIMTipsMessageChangeInfoTypeGroupDataChanged) {
-                    if (info.groupDataFlag & ZIMGroupDataFlagName) {
-                        // Group name change.
-                        NSString *newGroupName = info.groupName;
-                    }
-                    
-                    if (info.groupDataFlag & ZIMGroupDataFlagNotice) {
-                        // Group notice change.
-                        NSString *newGroupNotice = info.groupNotice;
-                    }
-                    
-                    if (info.groupDataFlag & ZIMGroupDataFlagAvatarUrl) {
-                        // Group avatar change.
-                        NSString *newGroupAvatarUrl = info.groupAvatarUrl;
-                    }
-                }
-                
-                // The business logic.
-            } else if (tipsMessage.event == ZIMTipsMessageEventGroupMemberInfoChanged) {
-                // It is a group member information change event.
-                ZIMTipsMessageGroupMemberChangeInfo *info = (ZIMTipsMessageGroupMemberChangeInfo *)tipsMessage.changeInfo;
-                
-                // The business logic.
-            }
-            
-            // Other business logic.
-        }
-    }
-}
-```
+
+
 
 ### 3. Display a tip message
 
 Based on the obtained tip message, generate the corresponding event string and display the event string on the UI.
-
-:::
 

@@ -3,7 +3,7 @@
 游戏内指定匹配模式游戏、随机匹配半屏和全屏模式游戏无需此步骤。
 </div>
 
-当业务房间内的用户加载完`游戏外指定匹配`游戏后（监听 [onGameLoadStateUpdate\|_blank](@onGameLoadStateUpdate) 得知 `gameLoadState` 为 `ZegoGameLoaded`），需要有一名房内用户（通常是主播）调用 [startGame\|_blank](@startGame) 接口开始游戏。
+当业务房间内的用户加载完`游戏外指定匹配`游戏后（监听 [onGameLoadStateUpdate](@onGameLoadStateUpdate) 得知 `gameLoadState` 为 `ZegoGameLoaded`），需要有一名房内用户（通常是主播）调用 [startGame](@startGame) 接口开始游戏。
 
 <div class="mk-warning">
 

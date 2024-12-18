@@ -1,9 +1,9 @@
 
-After a player deposits or withdraws coins, the player needs to call the [setGameContainer\|_blank](@setGameContainer) operation to configure the parent container of the game, and call the [loadGame\|_blank](@loadGame) operation to load the game.
+After a player deposits or withdraws coins, the player needs to call the [setGameContainer](@setGameContainer) operation to configure the parent container of the game, and call the [loadGame](@loadGame) operation to load the game.
 
 After the game is loaded, the player can play games in the mode of half- or full-screen gaming with randomly matched players.
 
-If the player wants to play games in the mode of host-joined gaming with specified players, the host needs to call the [startGame\|_blank](@startGame) operation. For more information, see the [8. (Optional) Start the game](!ZegoMiniGameEngine-Implement_mini_games#3_8) section of the "Implement a mini-game" topic.
+If the player wants to play games in the mode of host-joined gaming with specified players, the host needs to call the [startGame](@startGame) operation. For more information, see the [8. (Optional) Start the game](!ZegoMiniGameEngine-Implement_mini_games#3_8) section of the "Implement a mini-game" topic.
 
 <div class="mk-warning">
 

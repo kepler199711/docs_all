@@ -24,7 +24,7 @@
 
 <div class="mk-hint">
 
-- 音视频通话（GoCall）体验 App，是对原有 [视频通话（VideoTalk）\|_blank](https://doc-zh.zego.im/scene-plan/9) 体验 App 的优化升级，支持 iOS、Android、Web 平台，并支持多端互通。
+- 音视频通话（GoCall）体验 App，是对原有 [视频通话（VideoTalk）](https://doc-zh.zego.im/scene-plan/9) 体验 App 的优化升级，支持 iOS、Android、Web 平台，并支持多端互通。
 - 旧版 VideoTalk 体验 App 后续将不再进行功能更新。
 </div>
 

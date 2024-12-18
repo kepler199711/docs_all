@@ -9,7 +9,7 @@ To use your own business server instead of using the Firebase, refer to the [Use
 
 </div>
 
-1. Create a Firebase project in the [Firebase console\|_blank](https://console.firebase.google.com/). For details, see [Firebase Documentation\|_blank](https://firebase.google.com/docs/functions/get-started).
+1. Create a Firebase project in the [Firebase console](https://console.firebase.google.com/). For details, see [Firebase Documentation](https://firebase.google.com/docs/functions/get-started).
 
 2. Create a new Realtime Database in Firebase. 
 
@@ -35,13 +35,13 @@ To use your own business server instead of using the Firebase, refer to the [Use
 5. Run the `firebase login` to log in via the browser and authenticate the firebase tool.   
 6. Go to your Firebase project directory.
 7. Run `firebase init functions`. The tool gives you an option to install dependencies with npm. It is safe to decline if you want to manage dependencies in another way, though if you do decline you'll need to run npm install before emulating or deploying your functions.
-8. Download the [Cloud function sample code\|_blank](https://github.com/ZEGOCLOUD/call_firebase_funcitons). 
+8. Download the [Cloud function sample code](https://github.com/ZEGOCLOUD/call_firebase_funcitons). 
 9. Copy the `firebase.json` and `functions\index.js` files in the sample code to your cloud function project, overwrite files with the same name.  
 10. Copy the `functions\token04` folder from the cloud function project directory, and put it in the same folder together with the `index.js`.
 
     ![/Pics/ZEGOCall/copy_cf.png](/Pics/ZEGOCall/copy_cf.png)
 
-11. Modify the `index.js` file, fill in the AppID and ServerSecret you get from [ZEGOCLOUD Admin Console\|_blank](https://console.zegocloud.com) correctly.
+11. Modify the `index.js` file, fill in the AppID and ServerSecret you get from [ZEGOCLOUD Admin Console](https://console.zegocloud.com) correctly.
 
     ![/Pics/ZEGOCall/index_appid.png](/Pics/ZEGOCall/index_appid.png)
 

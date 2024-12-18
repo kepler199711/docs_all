@@ -1,4 +1,4 @@
-您可以通过注册 [onPublisherCapturedAudioFirstFrame\|_blank](@onPublisherCapturedAudioFirstFrame) 接收音频首帧回调。调用推流接口成功后，SDK 采集到第一帧音频数据时会收到此回调。
+您可以通过注册 [onPublisherCapturedAudioFirstFrame](@onPublisherCapturedAudioFirstFrame) 接收音频首帧回调。调用推流接口成功后，SDK 采集到第一帧音频数据时会收到此回调。
 
 <div class='mk-hint'>
 

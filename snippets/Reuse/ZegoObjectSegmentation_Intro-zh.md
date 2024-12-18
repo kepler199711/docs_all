@@ -10,7 +10,7 @@
 
 如下图所示，推流端的原始视频下方的 Alpha 信息用黑色代表这部分内容是透明的。拉流端在解码后，将黑色部分归一化为 Alpha 数据，便可以将对应的原视频画面对应的区域渲染成透明效果，在视图上只会展示人的主体部分，不会展示用户的真实背景。
 
-如需了解渲染部分的实现原理，请参考 [播放透明礼物特效\|_blank](!ExpressVideoSDK-gift_special_effects)。
+如需了解渲染部分的实现原理，请参考 [播放透明礼物特效](!ExpressVideoSDK-gift_special_effects)。
 
 <table>
   <colgroup>

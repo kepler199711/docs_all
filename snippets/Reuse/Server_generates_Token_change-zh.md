@@ -4,7 +4,7 @@
 
 <div class="mk-warning">
 
-Token 临时获取方式：为方便开发者调试，[ZEGO 控制台\|_blank](https://console.zego.im/) 提供生成临时 Token 的功能，开发者可直接获取临时 Token 来使用，详情请参考 [控制台 - 开发辅助\|_blank](#16309)。但是在开发者自己的线上环境中，一定要通过自己的服务端生成 Token。
+Token 临时获取方式：为方便开发者调试，[ZEGO 控制台](https://console.zego.im/) 提供生成临时 Token 的功能，开发者可直接获取临时 Token 来使用，详情请参考 [控制台 - 开发辅助](#16309)。但是在开发者自己的线上环境中，一定要通过自己的服务端生成 Token。
 
 </div>
 
@@ -116,8 +116,8 @@ func main() {
 <div class="mk-warning">
 
 
-- 运行生成 Token 的 Java 源码时，如果出现 “java.security.InvalidKeyException:illegal Key Size” 异常提示，请参考 [相关常见问题文档\|_blank](/faq/java_illegal_key_size_solution?product=ExpressVideo&platform=all) 解决。
-- **Token 校验**：当您通过自己的服务端生成 Token 后，若需要校验 Token 正确性，可以使用 [ZEGO 控制台的自助校验工具\|_blank](https://console.zego.im/devAssistance)，详情请参考开发辅助文档的 [Token 校验章节\|_blank](16309#2)。
+- 运行生成 Token 的 Java 源码时，如果出现 “java.security.InvalidKeyException:illegal Key Size” 异常提示，请参考 [相关常见问题文档](/faq/java_illegal_key_size_solution?product=ExpressVideo&platform=all) 解决。
+- **Token 校验**：当您通过自己的服务端生成 Token 后，若需要校验 Token 正确性，可以使用 [ZEGO 控制台的自助校验工具](https://console.zego.im/devAssistance)，详情请参考开发辅助文档的 [Token 校验章节](16309#2)。
 
 </div>
 

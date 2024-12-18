@@ -1,6 +1,6 @@
 ZEGO Express SDK 支持推流到 CDN（Content Delivery Network，内容分发网络），包括转推 CDN 和直推 CDN 两种功能。开发者基于该功能可打通 RTC 产品和 CDN 直播产品，方便用户从网页或第三方播放器直接观看和收听直播内容。为了保证安全，推流到 CDN 时默认开启 CDN 鉴权。
 
-为防止攻击者盗取或伪造您的推流 URL 地址，您可以参考 [CDN 推流鉴权\|_blank](!CDN_StreamPublishing_Authentication)，提升您推流使用的安全性。
+为防止攻击者盗取或伪造您的推流 URL 地址，您可以参考 [CDN 推流鉴权](!CDN_StreamPublishing_Authentication)，提升您推流使用的安全性。
 
 <div class = 'mk-warning'>
 

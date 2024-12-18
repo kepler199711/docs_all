@@ -132,7 +132,7 @@
 </tr>
 <tr>
 <td>参考文档</td>
-<td colspan="2">[跑通示例源码|_blank](!ZegoAvatar-Samples_Codes_Avatar)</td>
+<td colspan="2">[跑通示例源码](!ZegoAvatar-Samples_Codes_Avatar)</td>
 </tr>
 <tr>
 <th rowspan="2">美术资源</th>
@@ -142,7 +142,7 @@
 </tr>
 <tr>
 <td>参考文档</td>
-<td>[集成 SDK - 导入资源|_blank](!ZegoAvatar-SDK_Integration#3)</td>
-<td>[集成 1.4.1 及以前版本 SDK - 导入资源|_blank](!ZegoAvatar-integrate_141_SDK#3)</td>
+<td>[集成 SDK - 导入资源](!ZegoAvatar-SDK_Integration#3)</td>
+<td>[集成 1.4.1 及以前版本 SDK - 导入资源](!ZegoAvatar-integrate_141_SDK#3)</td>
 </tr>
 </tbody></table>

@@ -39,7 +39,7 @@ Before you start to implement user privilege authentication in your app, make su
 
    </div>
 
-2. Integrate the ZEGO Express SDK (version 2.8.0 or later) into your project and implement the basic audio and video features. For details, see [Quick starts - Integration\|_blank](!Integration/SDK_Integration) and [Quick starts - Implementation\|_blank](!Solution_Implementation).
+2. Integrate the ZEGO Express SDK (version 2.8.0 or later) into your project and implement the basic audio and video features. For details, see [Quick starts - Integration](!Integration/SDK_Integration) and [Quick starts - Implementation](!Solution_Implementation).
 
 
 ## 3 The validation process
@@ -71,7 +71,7 @@ For business security, you must generate tokens on your app server.
 
 #### 4.1.1 Get the AppID and ServerSecret
 
-To generate a token, you need to use your ZEGO App ID and ServerSecret, which you can get from the [ZEGO Admin Console\|_blank](https://console.zegocloud.com) as described below:
+To generate a token, you need to use your ZEGO App ID and ServerSecret, which you can get from the [ZEGO Admin Console](https://console.zegocloud.com) as described below:
 
 - On the **Overview** page, find the App ID of your project in the **My Projects** section.
 
@@ -94,7 +94,7 @@ To generate a token, you need to use your ZEGO App ID and ServerSecret, which yo
 Upon request from your app clients, your app server generates tokens and sends the tokens to the corresponding app clients. 
 </div>
 
-ZEGO provides an open-source [token generator\|_blank](https://github.com/zegoim/zego_server_assistant) plug-in on GitHub, which you can use to generate tokens on your app server using different programming languages such as Go, C++, Java, Python, PHP,.NET, and Node.js.
+ZEGO provides an open-source [token generator](https://github.com/zegoim/zego_server_assistant) plug-in on GitHub, which you can use to generate tokens on your app server using different programming languages such as Go, C++, Java, Python, PHP,.NET, and Node.js.
 
 <table>
   <colgroup>
@@ -157,7 +157,7 @@ ZEGO provides an open-source [token generator\|_blank](https://github.com/zegoim
 
 Take Go language as an example, you can do the following steps to generate a token：
 
-1. Copy the `go/zegoserverassistant` directory provided in the  [token generator\|_blank](https://github.com/zegoim/zego_server_assistant) repository to your server-side project.
+1. Copy the `go/zegoserverassistant` directory provided in the  [token generator](https://github.com/zegoim/zego_server_assistant) repository to your server-side project.
 2. Use the command `import zsa "your-project-go-mod-path/zegoserverassistant"` to import the plug-in. Remember to replace the `your-project-go-mod-path` with your project name. 
 3. Call the `GenerateToken` method to generate a token.
 
@@ -191,12 +191,12 @@ fmt.Println(token)
 
 <div class="mk-hint">
 
-To make it easier for you to try and test the user authentication feature, [ZEGO Admin Console\|_blank](https://console.zegocloud.com) provides a tool for generating temporary tokens, which you can use directly in a testing environment. In production, you must generate tokens on your app server.
+To make it easier for you to try and test the user authentication feature, [ZEGO Admin Console](https://console.zegocloud.com) provides a tool for generating temporary tokens, which you can use directly in a testing environment. In production, you must generate tokens on your app server.
 
 </div>
 
 
-1. Go to [ZEGO Admin Console\|_blank](hhttps://console.zegocloud.com). In the **Basic Information** section, click **Generate temp token** in the **Temp token for audio/video call** column.
+1. Go to [ZEGO Admin Console](hhttps://console.zegocloud.com). In the **Basic Information** section, click **Generate temp token** in the **Temp token for audio/video call** column.
 
 
 ![/Pics/QuickStart/tem_token_1.png](https://storage.zego.im/sdk-doc/Pics/QuickStart/tem_token_1.png)

@@ -5,7 +5,7 @@
 ### 2.1 腾讯云配置方法
 
 若 DNS 服务商为腾讯云，可根据如下步骤添加 CNAME 记录。
-1. 登录 [腾讯云域名服务控制台\|_blank](https://console.cloud.tencent.com/cns)。
+1. 登录 [腾讯云域名服务控制台](https://console.cloud.tencent.com/cns)。
 2. 选择需要添加 CNAME 的域名，单击 “解析”。
 3. 进入指定域名的域名解析页，单击 “添加记录”。
 4. 在该新增列填写域名 CNAME 记录，具体填写内容如下所示：
@@ -24,7 +24,7 @@
 ### 2.2 阿里云配置方法
 
 若 DNS 服务商为阿里云，且已完成域名备案，可参考下述步骤进行 CNAME 设置。
-1. 登录 [阿里云域名服务控制台\|_blank](https://dns.console.aliyun.com)，选择“云解析DNS > 域名解析”。
+1. 登录 [阿里云域名服务控制台](https://dns.console.aliyun.com)，选择“云解析DNS > 域名解析”。
 2. 选择需要添加 CNAME 的域名，单击“解析设置”。
 3. 单击添加记录，添加 CNAME 记录。
 
@@ -45,7 +45,7 @@
 ### 2.3 百度云配置方法
 
 若 DNS 服务商为百度云，可通过如下步骤添加 CNAME 记录。
-1. 登录 [百度智能云域名服务控制台\|_blank](https://console.bce.baidu.com/dns/#/dns/manage/list)，选择“域名管理”，进入域名管理列表页。
+1. 登录 [百度智能云域名服务控制台](https://console.bce.baidu.com/dns/#/dns/manage/list)，选择“域名管理”，进入域名管理列表页。
 2. 选择云直播添加的域名，在操作列单击“解析”进入 DNS 解析页面。
 3. 添加解析记录，在该页面进行如下配置：
 

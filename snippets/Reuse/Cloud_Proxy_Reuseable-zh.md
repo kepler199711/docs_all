@@ -1,6 +1,6 @@
 ## 功能简介
 
-通过设置 SDK 的云代理接口，将 SDK 对应的所有流量通过云端的代理服务器中转，实现与 RTC、L3（[超低延迟直播\|_blank](!Publisher_Player_Advanced/Low_Latency_Live)）通信。
+通过设置 SDK 的云代理接口，将 SDK 对应的所有流量通过云端的代理服务器中转，实现与 RTC、L3（[超低延迟直播](!Publisher_Player_Advanced/Low_Latency_Live)）通信。
 
 <div class="mk-warning">
 

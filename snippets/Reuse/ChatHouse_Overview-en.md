@@ -12,4 +12,4 @@ ZEGO 语聊房解决方案预设 5 个麦位（包括主播麦位），观众人
 
 ## 体验 App 源码
 
-ZEGO 针对语聊房场景提供了 [体验 App 源码\|_blank](!ChatHouse-DownloadDemo)，以供开发者进一步了解 ZEGO 语聊房方案。
+ZEGO 针对语聊房场景提供了 [体验 App 源码](!ChatHouse-DownloadDemo)，以供开发者进一步了解 ZEGO 语聊房方案。

@@ -1,6 +1,6 @@
 #### 1. **如何采集屏幕视频与系统声音?**
 
-如需采集屏幕视频与系统声音，请参考 [屏幕共享\|_blank](!ExpressVideoSDK-Other_Functions/Share_Screen)。
+如需采集屏幕视频与系统声音，请参考 [屏幕共享](!ExpressVideoSDK-Other_Functions/Share_Screen)。
 
 #### 2. **是否支持设置多个媒体播放器?**
 

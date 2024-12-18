@@ -79,11 +79,11 @@
 
 生成 Token 需要开发者项目的唯一标识 AppId 和密钥 ServerSecret，获取方式如下：
 
-1. 在 [ZEGO 控制台\|_blank](https://console.zego.im/) 中，在“概览 > 我的项目”中，即可查看 AppId。
+1. 在 [ZEGO 控制台](https://console.zego.im/) 中，在“概览 > 我的项目”中，即可查看 AppId。
 
 ![get_AppID.png](/Pics/QuickStart/get_AppID.png)
 
-2. 在 [ZEGO 控制台\|_blank](https://console.zego.im/) 中，在“概览 > 我的项目”中，单击项目的“配置”信息，进入项目的“基本信息”页，单击项目的“后台相关密钥”，弹窗中的 “ServerSecret” 即生成 Token 需要使用的密钥。
+2. 在 [ZEGO 控制台](https://console.zego.im/) 中，在“概览 > 我的项目”中，单击项目的“配置”信息，进入项目的“基本信息”页，单击项目的“后台相关密钥”，弹窗中的 “ServerSecret” 即生成 Token 需要使用的密钥。
 
 ![get_ServerSecret.png](/Pics/QuickStart/get_ServerSecret.png)
 
@@ -191,11 +191,11 @@ fmt.Println(token)
 <div class="mk-hint">
 
 
-为方便开发者体验和测试用户权限控制功能，[ZEGO 控制台\|_blank](https://console.zego.im/) 提供生成临时 Token 的功能，开发者可直接获取 Token 使用。但是在开发者自己的线上环境中，一定要通过自己的服务端生成 Token。
+为方便开发者体验和测试用户权限控制功能，[ZEGO 控制台](https://console.zego.im/) 提供生成临时 Token 的功能，开发者可直接获取 Token 使用。但是在开发者自己的线上环境中，一定要通过自己的服务端生成 Token。
 </div>
 
 
-1. 在 [ZEGO 控制台\|_blank](https://console.zego.im/) 中，在“概览 > 我的项目”中，单击项目的“配置”信息，进入项目的“基本信息”页，单击项目的“音视频临时 Token”，在弹窗中填写测试的 “RoomId” 和 “UserId” 信息。
+1. 在 [ZEGO 控制台](https://console.zego.im/) 中，在“概览 > 我的项目”中，单击项目的“配置”信息，进入项目的“基本信息”页，单击项目的“音视频临时 Token”，在弹窗中填写测试的 “RoomId” 和 “UserId” 信息。
 
 ![console_Token.png](/Pics/QuickStart/console_Token.png)
 

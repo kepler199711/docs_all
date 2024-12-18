@@ -15,13 +15,13 @@ In the actual business development process, the Collaborative Whiteboard (ZegoWh
 
 ## 2 Prerequisites
 
-- ZegoExpress-Video SDK\|_blank has been integrated in the project to achieve basic real-time audio and Video functions. For details, please refer to the [Quick Starts - Integration\|_blank](!ExpressVideoSDK-Integration/SDK_Integration) of real-time audio and Video .
+- ZegoExpress-Video SDK has been integrated in the project to achieve basic real-time audio and Video functions. For details, please refer to the [Quick Starts - Integration](!ExpressVideoSDK-Integration/SDK_Integration) of real-time audio and Video .
 
-- [ZegoWhiteboardView SDK\|_blank](!WhiteBoard-DownloadSDK/DownloadSDK) has been integrated in the project. For details, please refer to [Quick Starts - Integration\|_blank](!WhiteBoard-QuickStart/Integration).
+- [ZegoWhiteboardView SDK](!WhiteBoard-DownloadSDK/DownloadSDK) has been integrated in the project. For details, please refer to [Quick Starts - Integration](!WhiteBoard-QuickStart/Integration).
 
-- [ZegoDocsView SDK\|_blank](!DocsView-DownloadSDK/DownloadSDK) has been integrated in the project. For details, please refer to the [Quick Starts - Integration\|_blank](!DocsView-QuickStart/Integration) of File Sharing .
+- [ZegoDocsView SDK](!DocsView-DownloadSDK/DownloadSDK) has been integrated in the project. For details, please refer to the [Quick Starts - Integration](!DocsView-QuickStart/Integration) of File Sharing .
 
-- You have created a project in the [ZEGO Console](https://console.zegocloud.com) and applied for a valid AppID and AppSign. For details, please refer to [Console - Project Management\|_blank](#1271).
+- You have created a project in the [ZEGO Console](https://console.zegocloud.com) and applied for a valid AppID and AppSign. For details, please refer to [Console - Project Management](#1271).
 
 
 

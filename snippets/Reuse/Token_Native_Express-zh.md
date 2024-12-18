@@ -23,7 +23,7 @@
 ## 2 前提条件
 
 - 根据实际业务情况，联系 ZEGO 技术支持开通 Token 鉴权功能。
-- 已在项目中集成 ZEGO Express SDK（2.8.0 版本及以上），实现基本的实时音视频功能，请参考 [快速开始 - 集成\|_blank](!ExpressVideoSDK-Integration/SDK_Integration) 和 [快速开始 - 实现视频通话\|_blank](!ExpressVideoSDK-Integration/Solution_Implementation)。
+- 已在项目中集成 ZEGO Express SDK（2.8.0 版本及以上），实现基本的实时音视频功能，请参考 [快速开始 - 集成](!ExpressVideoSDK-Integration/SDK_Integration) 和 [快速开始 - 实现视频通话](!ExpressVideoSDK-Integration/Solution_Implementation)。
 
 
 ## 3 实现流程
@@ -66,17 +66,17 @@
 
 生成 Token 需要开发者项目的唯一标识 AppId 和密钥 ServerSecret，获取方式如下：
 
-1. 在 [ZEGO 控制台\|_blank](https://console.zego.im/) 中，在“概览 > 我的项目”中，即可查看 AppID。
+1. 在 [ZEGO 控制台](https://console.zego.im/) 中，在“概览 > 我的项目”中，即可查看 AppID。
 
 
-2. 在 [ZEGO 控制台\|_blank](https://console.zego.im/) 中，在“概览 > 我的项目”中，单击项目的“查看”信息，进入项目的“基本信息”页。单击“服务端API密钥”下的“查看”，弹窗中的 “ServerSecret” 即生成 Token 需要使用的密钥。
+2. 在 [ZEGO 控制台](https://console.zego.im/) 中，在“概览 > 我的项目”中，单击项目的“查看”信息，进入项目的“基本信息”页。单击“服务端API密钥”下的“查看”，弹窗中的 “ServerSecret” 即生成 Token 需要使用的密钥。
 
 
 <div class = 'mk-hint'>
 
 可按如下方式查看控制台界面：
-- **2021-11-16** 之后在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目的用户，请参考 [控制台 - 项目管理\|_blank](12107#3)  中的 “查看项目基本信息”。
-- **2021-11-16** 及之前在 [ZEGO 控制台\|_blank](https://console.zego.im) 创建项目的用户，请参考  [控制台（旧版） - 项目管理\|_blank](1265#3)  中的 “查看项目基本信息”。
+- **2021-11-16** 之后在 [ZEGO 控制台](https://console.zego.im) 创建项目的用户，请参考 [控制台 - 项目管理](12107#3)  中的 “查看项目基本信息”。
+- **2021-11-16** 及之前在 [ZEGO 控制台](https://console.zego.im) 创建项目的用户，请参考  [控制台（旧版） - 项目管理](1265#3)  中的 “查看项目基本信息”。
 </div>
 
 
@@ -199,12 +199,12 @@ fmt.Println(token)
 <div class="mk-warning">
 
 
-运行生成 Token 的 Java 源码时，如果出现 “java.security.InvalidKeyException:illegal Key Size” 异常提示，请参考 [相关常见问题文档\|_blank](/faq/java_illegal_key_size_solution?product=ExpressVideo&platform=all) 解决。
+运行生成 Token 的 Java 源码时，如果出现 “java.security.InvalidKeyException:illegal Key Size” 异常提示，请参考 [相关常见问题文档](/faq/java_illegal_key_size_solution?product=ExpressVideo&platform=all) 解决。
 </div>
 
 
 
-为方便开发者体验使用 Token 鉴权，[ZEGO 控制台\|_blank](https://console.zego.im/) 提供生成临时 Token 的功能，开发者可直接获取 Token 使用，详情请参考 [控制台 - 开发辅助\|_blank](#16309)。但是在开发者自己的线上环境中，一定要通过自己的服务端生成 Token。
+为方便开发者体验使用 Token 鉴权，[ZEGO 控制台](https://console.zego.im/) 提供生成临时 Token 的功能，开发者可直接获取 Token 使用，详情请参考 [控制台 - 开发辅助](#16309)。但是在开发者自己的线上环境中，一定要通过自己的服务端生成 Token。
 
 
 

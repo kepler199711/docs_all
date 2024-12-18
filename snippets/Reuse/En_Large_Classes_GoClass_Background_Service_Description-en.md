@@ -24,7 +24,7 @@ You can configure the maximum number of members and the maximum number of co-hos
 
 ## 2 Technical Introduction
 
-GoClass cloud service is developed in Go language based on the open-source HTTP framework [beego|_blank](https://github.com/astaxie/beego). The current version uses `Redis` to store data and allows you to scale out your service on demand.
+GoClass cloud service is developed in Go language based on the open-source HTTP framework [beego](https://github.com/astaxie/beego). The current version uses `Redis` to store data and allows you to scale out your service on demand.
 
 
 <div class="mk-warning">
@@ -43,7 +43,7 @@ GoClass cloud service is developed in Go language based on the open-source HTTP 
 
 <div class="mk-hint">
 
-Please visit [ZEGO Admin Console\|_blank](https://console.zego.im/account/register?lang=en) to register a ZEGO account and create a project to get a ZEGO AppID and ServerSecret.  For the detailed instructions, please refer to [Project Management\|_blank](#1271).
+Please visit [ZEGO Admin Console](https://console.zego.im/account/register?lang=en) to register a ZEGO account and create a project to get a ZEGO AppID and ServerSecret.  For the detailed instructions, please refer to [Project Management](#1271).
 </div>
 
 ```

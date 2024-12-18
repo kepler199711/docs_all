@@ -23,7 +23,7 @@ For business security, you must generate Tokens on your app server.
 </div>
 
 
-1. Go to [ZEGOCLOUD Admin Console\|_blank](https://console.zegocloud.com), and do the following:
+1. Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com), and do the following:
     - Create a project, get the AppID and AppSign.
     - Subscribe to the In-app Chat service.
 

@@ -4,8 +4,8 @@ ZIM SDK 支持按照会话维度，获取某个会话下的所有历史消息。
 
 <div class="mk-hint">
 
-- 开发者请根据业务需要，查看 [收发消息\|_blank](!sendMessages)、[删除消息\|_blank](!deleteMessages) 等功能。
-- 历史消息存储天数与套餐版本相关，详情请参考 [计费说明\|_blank](!IM-Introduction/IM_price#2) 的 “版本说明”。
+- 开发者请根据业务需要，查看 [收发消息](!sendMessages)、[删除消息](!deleteMessages) 等功能。
+- 历史消息存储天数与套餐版本相关，详情请参考 [计费说明](!IM-Introduction/IM_price#2) 的 “版本说明”。
 </div>
 
 

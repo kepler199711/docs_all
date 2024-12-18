@@ -7,7 +7,7 @@ If you can't generate the Token on your app server, you can try to generate it o
 When your app is ready to go live, remember not to generate the Token on your client; Otherwise, there is a risk of the ServerSecret being exposed.
 </div>
 
-ZEGOCLOUD provides an open-source [Token generator\|_blank](https://github.com/ZEGOCLOUD/zego_server_assistant) plug-in on GitHub, which you can use to generate Tokens on your app server using different programming languages such as C++ and Java.
+ZEGOCLOUD provides an open-source [Token generator](https://github.com/ZEGOCLOUD/zego_server_assistant) plug-in on GitHub, which you can use to generate Tokens on your app server using different programming languages such as C++ and Java.
 
 
 <table>

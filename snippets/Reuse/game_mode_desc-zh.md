@@ -96,9 +96,9 @@ ZEGO 小游戏平台提供 **普通小游戏** 和**弹幕游戏** 两大类游�
 
 ### 普通小游戏
 
-您需要在调用 [loadGame\|_blank](@loadGame) 接口加载游戏时指定普通小游戏的模式类型，接口调用示例请参考 [实现普通小游戏 - 加载游戏\|_blank](!ZegoMiniGameEngine-Implement_mini_games#3_7)。对于 `游戏内指定匹配`、`随机匹配全屏` 和 `随机匹配半屏`模式游戏，调用此接口后用户即可参与游戏。 
+您需要在调用 [loadGame](@loadGame) 接口加载游戏时指定普通小游戏的模式类型，接口调用示例请参考 [实现普通小游戏 - 加载游戏](!ZegoMiniGameEngine-Implement_mini_games#3_7)。对于 `游戏内指定匹配`、`随机匹配全屏` 和 `随机匹配半屏`模式游戏，调用此接口后用户即可参与游戏。 
 
-对于 `游戏外指定匹配` 模式游戏，还需要调用 [startGame\|_blank](@startGame) 接口主动开始游戏，接口调用示例请参考 [实现普通小游戏 - 加载游戏\|_blank](!ZegoMiniGameEngine-Implement_mini_games#3_8)。
+对于 `游戏外指定匹配` 模式游戏，还需要调用 [startGame](@startGame) 接口主动开始游戏，接口调用示例请参考 [实现普通小游戏 - 加载游戏](!ZegoMiniGameEngine-Implement_mini_games#3_8)。
 ### 弹幕游戏
 
 #### PC 端开播场景

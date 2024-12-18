@@ -1,5 +1,5 @@
 ### 回调结果
-错误码，具体请参见 [精准同步播放器 - 常见错误码\|_blank](!ZegoAccurateSyncMediaPlayerSDK-Common_error_codes)，如查询不到可联系 ZEGO 技术支持。
+错误码，具体请参见 [精准同步播放器 - 常见错误码](!ZegoAccurateSyncMediaPlayerSDK-Common_error_codes)，如查询不到可联系 ZEGO 技术支持。
 
 <table class="collapsible-table" >
   <colgroup>

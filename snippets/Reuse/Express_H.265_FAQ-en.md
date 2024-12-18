@@ -1,6 +1,6 @@
 1. **How to deal with the error when using the H.265 for decoding?**
 
-Call the [`enableH265EncodeFallback`\|_blank](@enableH265EncodeFallback) method to enable the adaptive degradation feature (enabled by default). The SDK automatically uses the H.264 decoding when the failed to decode using H.265. If you are recording at the same time, the recording file will be doubled.
+Call the [`enableH265EncodeFallback`](@enableH265EncodeFallback) method to enable the adaptive degradation feature (enabled by default). The SDK automatically uses the H.264 decoding when the failed to decode using H.265. If you are recording at the same time, the recording file will be doubled.
 
 
 2. **Does H.265 automatically degrade from hardware decoding to software decoding?**

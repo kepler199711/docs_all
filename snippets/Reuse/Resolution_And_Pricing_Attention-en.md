@@ -17,7 +17,7 @@ The video streams that are included in the calculation of the final resolution a
 4. Resolution of the cloud recording service
 5. Resolution of the Live stream creation
 
-Before your app goes live, please **make sure you have reviewed all configurations and confirmed the billing tiers** for your business scenario to avoid unnecessary losses. For more details, please refer to [Pricing\|_blank](https://www.zegocloud.com/pricing).
+Before your app goes live, please **make sure you have reviewed all configurations and confirmed the billing tiers** for your business scenario to avoid unnecessary losses. For more details, please refer to [Pricing](https://www.zegocloud.com/pricing).
 
 </div>
 

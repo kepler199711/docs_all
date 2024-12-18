@@ -43,16 +43,9 @@ npm install @zegocloud/zego-uikit-prebuilt-call-rn
 ```
 </CodeGroup>
 
-<Warning title="Warning">
-
-- If you are using Expo, please note that we only support Expo bare workflow. (We have only done basic testing on expo. If possible, it is recommended to integrate call kit with a standard react native project.)
-
-- call invitation feature is not compatible with "expo-notifications" and cannot be used together. If you are using "expo-notifications", it is recommended to remove this dependency or migrate to "@react-native-firebase/messaging".
-
-</Warning>
-
-
-
+<Note title="Note">
+Our SDK not support the Expo framework. Some features of the SDK require to modify the native layer, which the Expo framework does not support. It is recommended to integrate the SDK with a standard react native project.
+</Note>
 
 2. Add other dependencies.
 
@@ -584,6 +577,18 @@ Open the `my_project/android/app/proguard-rules.pro` file and add the following:
 ```xml
 -keep class **.zego.**  { *; }
 -keep class **.**.zego_zpns.** { *; }
+
+-keep class com.hiennv.flutter_callkit_incoming.SharedPreferencesUtils* {*;}
+-keep class com.fasterxml.jackson.** {*;}
+
+-dontwarn com.google.firebase.messaging.TopicOperation$TopicOperations
+-dontwarn com.heytap.msp.push.**
+-dontwarn com.huawei.hms.**
+-dontwarn com.vivo.push.**
+-dontwarn com.xiaomi.mipush.sdk.**
+-dontwarn java.beans.ConstructorProperties
+-dontwarn java.beans.Transient
+-dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry
 ```
 
 #### 4. Add firebase-messaging dependency

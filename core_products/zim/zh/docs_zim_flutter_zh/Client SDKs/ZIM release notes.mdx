@@ -7,13 +7,13 @@ articleID: 15260
 
 - - -
 
-## 2.18.0 版本
+## 2.18.2 版本
 
-**发布日期：2024-11-xx**
+**发布日期：2024-11-07**
 
 <h5>新增功能</h5>
 
-| 功能项  | 功能描述 | 相关接口 |
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 群备注  | 支持用户对某个群组设置仅自己可见的群备注。详情请参考 [群资料管理 - 修改群备注](./../Guides/Group/Group%20info.mdx)。| <ul><li>[updateGroupAlias](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/updateGroupAlias.html)</li><li>[onGroupAliasUpdated](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onGroupAliasUpdated.html)</li></ul> |
 | 用户在线状态 | 不仅支持用户通过订阅以持续关注其他用户的在线状态变化，还支持一次性查询其他用户的当下的在线状态，也支持用户查询自己的订阅列表。此外，在多端登录场景下，用户可以监听自己的在线平台变化。详情请参考 [在线状态订阅](./../Guides/Users/Online%20Status%20Subscription.mdx)。| <ul><li>[subscribeUsersStatus](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/subscribeUsersStatus.html)</li><li>[onUserStatusUpdated]()</li><li>[unsubscribeUsersStatus](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/unsubscribeUsersStatus.html)</li><li>[queryUsersStatus](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/queryUsersStatus.html)</li><li>[querySubscribedUserStatusList](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIM/querySubscribedUserStatusList.html)</li></ul> |
@@ -24,7 +24,7 @@ articleID: 15260
 
 <h5>改进优化</h5>
 
-| 优化项  | 优化描述 | 相关接口 |
+| <div style={{width:"130px"}}>优化项</div>  | 优化描述 | 相关接口 |
 | -----  | ---- | ----- |
 | 首次拉取会话列表耗时优化 | 优化用户登录后首次拉取会话列表的时效，提升用户体验。 | [queryConversationList]() |
 | 服务端发送群聊消息响应参数优化 | 服务端 API `SendGroupMessage` 的响应参数新增 `MsgId`，可用于定位消息。 | [发送群组消息](/zh/zim-server/messaging/send-group-messages) |

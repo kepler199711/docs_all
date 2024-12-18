@@ -7,9 +7,12 @@ articleID: 16493
 
 ## Description
 
-It refers to sending messages with specific content, such as text, images, etc., to all **online** users, including the sender of the message. This feature is suitable for scenarios such as the global announcement of an event or the display of gifts across multiple rooms.
+It refers to sending messages with specific content, such as text, images, etc., to all **online** users, including the sender of the message and to all offline users. This feature is suitable for scenarios such as the global announcement of an event or the display of gifts across multiple rooms.
 
-The client receives broadcast messages via the ZIM SDK callback interface and knows which user sent the message.
+
+<Note title="Note">Messages sent through this interface will not create a conversation or be saved.</Note>
+
+Recipients of the message will only receive the message and identify the sender through the following callback interface provided by the ZIM SDK:
 
 <table>
 <tbody><tr>
@@ -80,6 +83,12 @@ The following list includes only the interface request parameters and some commo
 <td>Number</td>
 <td>No（However, it is mandatory when MessageType is set to custom message）</td>
 <td>Specific custom types. The values are defined by you and the range of values is [0,200]. </td>
+</tr>
+<tr>
+<td>PushType</td>
+<td>Number</td>
+<td>No</td>
+<td><ul><li>0： Push the message to all online users。</li><li>1: Push the message to all online users and all offline users.</li><li>2: Push the message to all offline users who have reported the ZPNsPushId.</li></ul></td>
 </tr>
 </tbody></table>
 
