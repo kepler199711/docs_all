@@ -112,6 +112,11 @@ onMounted(() => {
 const onPressed = (code, message) => {
     // 邀请回调
 }
+
+onBeforeUnmount(() => {
+    // 页面卸载时，需要调用 unInit 释放资源
+    ZegoUIKitPrebuiltCallService.unInit();
+})
 </script>
 ```
 
@@ -142,6 +147,11 @@ onMounted(() => {
 const handleSendInvitation = () => {
     ZegoUIKitPrebuiltCallService.sendInvitation(config: CallInviteConfig)
 }
+
+onBeforeUnmount(() => {
+    // 页面卸载时，需要调用 unInit 释放资源
+    ZegoUIKitPrebuiltCallService.unInit();
+})
 </script>
 ```
 sendInvitation 参数请参考[CallInviteConfig](./API%20Reference/Config.mdx#CallInviteConfig)
