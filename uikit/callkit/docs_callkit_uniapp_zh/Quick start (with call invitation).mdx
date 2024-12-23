@@ -21,7 +21,7 @@ import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.md
 若您已有 uni-app 项目，则跳过此步骤。若尚无 uni-app 项目，请参考 uni-app 开发者文档 [创建 uni-app](https://uniapp.dcloud.net.cn/quickstart-hx.html) 快速创建项目。
 </Step>
 
-<Step title="导入 ZEGO 即构实时音视频 SDK、Zego ZIM 即时通讯 SDK">
+<Step title="导入 ZEGO 实时音视频 SDK 和即时通讯 SDK">
 在插件市场购买 [ZEGO 即构实时音视频 SDK](https://ext.dcloud.net.cn/plugin?id=3617)和[Zego ZIM 即时通讯 SDK](https://ext.dcloud.net.cn/plugin?id=8601)。购买时填入的 AppID 必须和后面需要运行的 AppID 一致。
 
 <Frame width="100%">
@@ -34,7 +34,7 @@ import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.md
 
 单击项目目录的 “manifest.json” 文件后，单击 “App 原生插件配置 > 云端插件 [选择云端插件]”。
 
-<Frame width="100%">
+<Frame width="50%">
     <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/6ef174060a.png" alt="choose_native_plugins.png" />
 </Frame>
 
@@ -79,7 +79,7 @@ uni-app 官方自定义调试基座使用说明请参考 [什么是自定义调�
 
 <Step title="在业务页面中导入插件">
 
-在 Vue 的 script 中使用导入 ZegoSendCallInvitationButton 组件与 ZegoUIKitPrebuiltCallService 预设服务，生成一份呼叫邀请预设配置，在 template 中使用 ZegoSendCallInvitationButton 组件，并调用ZegoUIKitPrebuiltCallService.init将配置传入。
+在 Vue 的 script 中使用导入 ZegoSendCallInvitationButton 组件与 ZegoUIKitPrebuiltCallService 预设服务，生成一份呼叫邀请预设配置，在 template 中使用 ZegoSendCallInvitationButton 组件，并调用ZegoUIKitPrebuiltCallService.init 将配置传入。
 
 <Note title="说明">
 
@@ -99,8 +99,8 @@ import ZegoSendCallInvitationButton from "@/uni_modules/zego-PrebuiltCall/compon
 import { ZegoInvitationType } from "@/uni_modules/zego-UIKitCore";
 import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
 
-const appID = '您在 zego 控制台获取的 appID';
-const appSign = '您在 zego 控制台获取的 appSign';
+const appID = '您在 ZEGO 控制台获取的 AppID';
+const appSign = '您在 ZEGO 控制台获取的 AppSign';
 const userID = '您的 userID';
 const userName = '您的昵称';
 const invitees = ref([{userID: '需要邀请的用户ID', userName: '需要邀请的用户名'}])

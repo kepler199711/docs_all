@@ -15,8 +15,8 @@
 
 请参考下列推送集成指南，集成**您需要的**第三方厂商离线推送 SDK，接入各厂商的离线推送通道。集成方式会因为您的工程打包方式而有所差异。
 
-##### 离线打包
-
+<Tabs>
+<Tab title="离线打包">
 如果您根据 uni-app 提供的 [APP 离线打包](https://nativesupport.dcloud.net.cn/AppDocs/) 方式打包（即 APP 工程在开发者本地），请参考下列推送集成指南**全文**，向厂商申请离线推送证书，在 [ZEGO 控制台](https://console.zego.im) 配置离线推送证书，集成厂商的推送 SDK 等步骤。
 
 - [Apple 推送集成指南](./Integrate%20APNs.mdx)
@@ -24,9 +24,8 @@
 - [华为推送集成指南](./Integrate%20Huawei.mdx)
 - [OPPO 推送集成指南](./Integrate%20OPPO.mdx)
 - [vivo 推送集成指南](./Integrate%20vivo.mdx)
-
-##### 云端打包
-
+</Tab>
+<Tab title="云端打包">
 如果您使用 uni-app HBuilder 提供的云端打包方式，请参考下列推送集成指南的**前提条件**，向厂商申请离线推送证书，在 [ZEGO 控制台](https://console.zego.im) 配置离线推送证书。
 
 - [Apple 推送集成指南](./Integrate%20APNs.mdx)
@@ -34,6 +33,8 @@
 - [华为推送集成指南](./Integrate%20Huawei.mdx)
 - [OPPO 推送集成指南](./Integrate%20OPPO.mdx)
 - [vivo 推送集成指南](./Integrate%20vivo.mdx)
+</Tab>
+</Tabs>
 
 完成上述步骤，即可在集成 ZPNs uni-app SDK 时，自动集成上述厂商的推送 SDK。
 
