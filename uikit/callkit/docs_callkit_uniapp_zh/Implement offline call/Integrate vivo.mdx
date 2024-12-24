@@ -29,65 +29,65 @@
 
 ## 使用步骤
 
-1. 在您项目根目录的主“gradle”文件中配置 mavenCentral 支持。
+<Steps>
+<Step title="配置 mavenCentral">
+在您项目根目录的主“gradle”文件中配置 mavenCentral 支持。
 
-    ```groovy {3,9}
-    buildscript {  
-        repositories {  
-            mavenCentral()  
-        }  
+```groovy {3,9}
+buildscript {  
+    repositories {  
+        mavenCentral()  
     }  
+}  
 
-    allprojects {
-        repositories {  
-            mavenCentral()  
-        }     
-    }
-    ```
+allprojects {
+    repositories {  
+        mavenCentral()  
+    }     
+}
+```
+</Step>
+<Step title="获取 vivo 推送 SDK">
+下载 [vivo 推送 SDK](https://storage.zego.im/zpns/sdk/vivo/vivo_pushSDK_v4.0.4.0_504.aar)，并将其拷贝到您项目的的“app/libs”目录下。
 
-2. 下载 [vivo 推送 SDK](https://storage.zego.im/zpns/sdk/vivo/vivo_pushSDK_v4.0.4.0_504.aar)，并将其拷贝到您项目的的“app/libs”目录下。
+<Warning title="注意">
+本文提供的 vivo 推送 SDK 包建议搭配 ZPNs SDK v2.7.0。
+</Warning>
+</Step>
+<Step title="添加依赖">
+在应用级的“build.gradle”文件中添加 aar 依赖，参考如下：
+```groovy
+implementation files('libs/vivo_pushSDK_v4.0.4.0_504.aar')  // // 版本为 4.0.4 的 vivo 推送 SDK
+implementation 'im.zego:zpns-vivo:2.7.0' // 获取用于 vivo 推送的 ZPNs 包
+```
+</Step>
+<Step title="输入 vivo 应用信息">
+请在当前工程“AndroidManifest.xml”中的 Application 节点下添加以下代码，开发者需要在当前应用程序中，配置前提条件中获取到的 vivo 应用的 AppID、AppKey 等信息。
 
-    <Warning title="注意">
-    本文提供的 vivo 推送 SDK 包建议搭配 ZPNs SDK v2.7.0。
-    </Warning>
+```xml
+<!--Push开放平台中应用的appid 和api key-->
+<meta-data
+    android:name="api_key"
+    android:value="xxxxxxxx"/>
 
-3. 在应用级的“build.gradle”文件中添加 aar 依赖，参考如下：
-:::if{props.platform=undefined}
-    ```groovy
-    implementation files('libs/vivo_pushSDK_v4.0.4.0_504.aar')  // // 版本为 4.0.4 的 vivo 推送 SDK
-    implementation 'im.zego:zpns-vivo:2.7.0' // 获取用于 vivo 推送的 ZPNs 包
-    ```
-:::
-:::if{props.platform="Flutter|RN"}
-    ```groovy
-    implementation files('libs/vivo_pushSDK_v4.0.4.0_504.aar')  // // 版本为 4.0.4 的 vivo 推送 SDK
-    ```
-:::
+<meta-data
+    android:name="app_id"
+    android:value="xxxx"/>
+```
+</Step>
+<Step title="防止混淆">
+在“proguard-rules.pro”文件中，为 vivo 推送 SDK 添加 -keep 类的配置，这样可以防止混淆 vivo 推送 SDK 公共类名称：
 
-4. 请在当前工程“AndroidManifest.xml”中的 Application 节点下添加以下代码，开发者需要在当前应用程序中，配置前提条件中获取到的 vivo 应用的 AppID、AppKey 等信息。
-
-    ```xml
-    <!--Push开放平台中应用的appid 和api key-->
-    <meta-data
-        android:name="api_key"
-        android:value="xxxxxxxx"/>
-
-    <meta-data
-        android:name="app_id"
-        android:value="xxxx"/>
-    ```
-
-5. 以上配置完成后，请在 [ZEGO 控制台](https://console.zego.im/) 自助配置 ZIM 离线推送证书（详情请参考 [项目管理 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)），若无法配置，请联系 ZEGO 技术支持处理。
-
-6. 防止混淆代码
-    
-    在“proguard-rules.pro”文件中，为 vivo 推送 SDK 添加 -keep 类的配置，这样可以防止混淆 vivo 推送 SDK 公共类名称：
-
-    ```java
-    -dontwarn com.vivo.push.** 
-    -keep class com.vivo.push.**{*; } 
-    -keep class com.vivo.vms.**{*; }
-    ```
+```java
+-dontwarn com.vivo.push.** 
+-keep class com.vivo.push.**{*; } 
+-keep class com.vivo.vms.**{*; }
+```
+</Step>
+<Step title="配置证书">
+以上配置完成后，请在 [ZEGO 控制台](https://console.zego.im/) 自助配置 ZIM 离线推送证书（详情请参考 [项目管理 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)），若无法配置，请联系 ZEGO 技术支持处理。
+</Step>
+</Steps>
 
 ## vivo 推送消息限制
 
@@ -127,30 +127,35 @@ vivo 推送将消息分为“系统消息”和“运营消息”两大类别。
 
 ## 基于系统消息配置不限量推送
 
-1. 请参考 [resourcesID 说明 - 配置](./ResourcesID%20introduction.mdx#配置)，在 ZEGO 控制台上使用如下信息配置 resourcesID： 
+<Steps>
+<Step title="配置 resourcesID">
+请参考 [resourcesID 说明 - 配置](https://doc-zh.zego.im/zim-uniapp/offline-push-notifications/resourcesid-introduction#%E9%85%8D%E7%BD%AE)，在 ZEGO 控制台上使用如下信息配置 resourcesID： 
 
-    <table>
-    <tbody><tr>
-    <th>字段</th>
-    <th>说明</th>
-    </tr>
-    <tr>
-    <td>resourcesID</td>
-    <td>由您自定义，不超过 32 个字符。<Note title="说明">建议 resourcesID 能够直接反映推送目的。例如，目的是打电话，就可以命名为 `call_resource`。</Note></td>
-    </tr>
-    <tr>
-    <td>category</td>
-    <td>推送类别。<Warning title="注意"><ul><li>填写 category 后，可以不填写 classification。</li><li>但若填写 classification，请保证 category 与 classification 是正确对应关系，否则无法推送。</li></ul></Warning></td>
-    </tr>
-    <tr>
-    <td>classification</td>
-    <td>消息类型。<ul><li>运营类消息。</li><li>系统类消息。</li></ul></td>
-    </tr>
-    <tr>
-    <td>push_mode</td>
-    <td>推送模式。
-    <ul><li>0：正式推送。</li><li>1：测试推送。</li></ul></td>
-    </tr>
-    </tbody></table>
-
-3. 在发起呼叫时，可以指定使用该 Resource ID 对应的通道进行推送。您需要将配置的 Resource ID 填写到对应的呼叫邀请按钮中或者设置给呼叫邀请接口，即可在呼叫邀请的时候使用离线推送功能。
+<table>
+<tbody><tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+<tr>
+<td>resourcesID</td>
+<td>由您自定义，不超过 32 个字符。<Note title="说明">建议 resourcesID 能够直接反映推送目的。例如，目的是打电话，就可以命名为 `call_resource`。</Note></td>
+</tr>
+<tr>
+<td>category</td>
+<td>推送类别。<Warning title="注意"><ul><li>填写 category 后，可以不填写 classification。</li><li>但若填写 classification，请保证 category 与 classification 是正确对应关系，否则无法推送。</li></ul></Warning></td>
+</tr>
+<tr>
+<td>classification</td>
+<td>消息类型。<ul><li>运营类消息。</li><li>系统类消息。</li></ul></td>
+</tr>
+<tr>
+<td>push_mode</td>
+<td>推送模式。
+<ul><li>0：正式推送。</li><li>1：测试推送。</li></ul></td>
+</tr>
+</tbody></table>
+</Step>
+<Step title="后续操作">
+完成上述配置后，请参考 [实现离线推送](./Offline%20call.mdx) 集成 ZPNs SDK 等其他步骤。
+</Step>
+</Steps>

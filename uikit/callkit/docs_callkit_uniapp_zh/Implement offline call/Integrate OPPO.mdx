@@ -19,63 +19,55 @@
     4. 申请通过后，可在 OPPO 推送平台 > 配置管理 > 应用配置页面查看 AppKey、AppSecret 和 MasterSecret（仅开发者账号（主账号）可查看）。
     <Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/OPPO_MasterSecret.jpeg" /></Frame>    
 
-## 使用步骤
+## 实现流程
 
-1. 在您项目根目录的主 gradle 中配置 mavenCentral 支持。
+<Steps>
+<Step title="配置 mavenCentral">
+在您项目根目录的主 gradle 中配置 mavenCentral 支持。
 
-    ```groovy {3,9}
-    buildscript {  
-        repositories {  
-            mavenCentral()  
-        }  
+```groovy {3,9}
+buildscript {  
+    repositories {  
+        mavenCentral()  
     }  
+}  
 
-    allprojects {
-        repositories {  
-            mavenCentral()  
-        }     
-    }
-    ```
+allprojects {
+    repositories {  
+        mavenCentral()  
+    }     
+}
+```
+</Step>
+<Step title="获取 OPPO 推送 SDK">
+下载 [OPPO 推送 SDK](https://storage.zego.im/zpns/sdk/oppo/com.heytap.msp_3.5.2-release-20240516-416001043.aar)，并将其拷贝到您项目的的 “app/libs” 目录下。
+</Step>
+<Step title="添加依赖">
+在项目的应用级 “build.gradle” 文件中添加 aar 依赖。
+```groovy
+dependencies {
+    implementation files('libs/com.heytap.msp_3.5.2-release-20240516-416001043.aar') // 版本为 3.5.2 的 OPPO 推送 SDK
+    implementation 'im.zego:zpns-oppo:2.7.0' // 获取用于 OPPO 推送服务的 ZPNs 库
 
-2. 下载 [OPPO 推送 SDK](https://storage.zego.im/zpns/sdk/oppo/com.heytap.msp_3.5.2-release-20240516-416001043.aar)，并将其拷贝到您项目的的 “app/libs” 目录下。
+    //以下为 OPPO 推送 SDK 依赖的三方库
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'commons-codec:commons-codec:1.6'
+    implementation 'androidx.annotation:annotation:1.1.0'
+}
+```
+</Step>
+<Step title="防止混淆">
+在 “proguard-rules.pro” 文件中，为 OPPO 推送 SDK 添加 -keep 类的配置，这样可以防止混淆 OPPO 推送 SDK 公共类名称：
 
-3. 在项目的应用级 “build.gradle” 文件中添加 aar 依赖。
-:::if{props.platform=undefined}
-    ```groovy
-    dependencies {
-     implementation files('libs/com.heytap.msp_3.5.2-release-20240516-416001043.aar') // 版本为 3.5.2 的 OPPO 推送 SDK
-     implementation 'im.zego:zpns-oppo:2.7.0' // 获取用于 OPPO 推送服务的 ZPNs 库
-
-     //以下为 OPPO 推送 SDK 依赖的三方库
-     implementation 'com.google.code.gson:gson:2.10.1'
-     implementation 'commons-codec:commons-codec:1.6'
-     implementation 'androidx.annotation:annotation:1.1.0'
-    }
-    ```
-:::
-:::if{props.platform="Flutter|RN"}
-    ```groovy
-    dependencies {
-     implementation files('libs/com.heytap.msp_3.5.2-release-20240516-416001043.aar') // 版本为 3.5.2 的 OPPO 推送 SDK
-
-     //以下为 OPPO 推送 SDK 依赖的三方库
-     implementation 'com.google.code.gson:gson:2.10.1'
-     implementation 'commons-codec:commons-codec:1.6'
-     implementation 'androidx.annotation:annotation:1.1.0'
-    }
-    ```
-:::
-
-4. 防止混淆代码
-    
-    在 “proguard-rules.pro” 文件中，为 OPPO 推送 SDK 添加 -keep 类的配置，这样可以防止混淆 OPPO 推送 SDK 公共类名称：
-
-    ```java
-    -keep public class * extends android.app.Service
-    -keep class com.heytap.msp.** { *;}
-    ```
-
-5. 以上配置完成后，请在 [ZEGO 控制台](https://console.zego.im/) 自助配置 ZIM 离线推送证书（详情请参考 [项目管理 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)），若无法配置，请联系 ZEGO 技术支持处理。
+```java
+-keep public class * extends android.app.Service
+-keep class com.heytap.msp.** { *;}
+```
+</Step>
+<Step title="配置证书">
+以上配置完成后，请在 [ZEGO 控制台](https://console.zego.im/) 自助配置 ZIM 离线推送证书（详情请参考 [项目管理 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)），若无法配置，请联系 ZEGO 技术支持处理。
+</Step>
+</Steps>
 
 ## OPPO 推送消息限制
 
@@ -151,18 +143,24 @@ OPPO 推送服务将消息推送通道分为两种，公信和私信，具体限
 
 ## 使用私信通道不限量推送
 
-1. 您需要通过创建私信通道，才能无限制地向 OPPO 设备推送消息，详情请参考 OPPO 官网文档 <a href="https://open.oppomobile.com/new/developmentDoc/info?id=12391" target="_blank" rel="noreferrer noopener">创建私信通道</a>。
+<Steps>
+<Step title="创建私信通道">
+您需要通过创建私信通道，才能无限制地向 OPPO 设备推送消息，详情请参考 OPPO 官网文档 <a href="https://open.oppomobile.com/new/developmentDoc/info?id=12391" target="_blank" rel="noreferrer noopener">创建私信通道</a>。
 
-    <Warning title="注意">
-    邮件申请完成后，您需要在 OPPO 推送平台上登记该通道，并将通道对应属性设置为“私信”。   
-    </Warning>
+<Warning title="注意">
+邮件申请完成后，您需要在 OPPO 推送平台上登记该通道，并将通道对应属性设置为“私信”。   
+</Warning>
+</Step>
+<Step title="配置 resourcesID">
+完成上述申请后，请参考 [resourcesID 说明 - 配置](https://doc-zh.zego.im/zim-uniapp/offline-push-notifications/resourcesid-introduction#%E9%85%8D%E7%BD%AE)，在 ZEGO 控制台上使用如下信息配置 resourcesID： 
+- `resourcesID`：由您自定义，不超过 32 个字符。
+- `channel_id`：渠道 ID。
 
-2. 完成上述申请后，请参考 [resourcesID 说明 - 配置](./ResourcesID%20introduction.mdx#配置)，在 ZEGO 控制台上使用如下信息配置 resourcesID： 
-    - `resourcesID`：由您自定义，不超过 32 个字符。
-    - `channel_id`：渠道 ID。
-
-    <Note title="说明">
-    建议 `resourcesID` 能够直接反映推送目的。例如，目的是打电话，就可以命名为 `call_resource`。
-    </Note>
-
-3. 在发起呼叫时，可以指定使用该 Resource ID 对应的通道进行推送。您需要将配置的 Resource ID 填写到对应的呼叫邀请按钮中或者设置给呼叫邀请接口，即可在呼叫邀请的时候使用离线推送功能。
+<Note title="说明">
+建议 `resourcesID` 能够直接反映推送目的。例如，目的是打电话，就可以命名为 `call_resource`。
+</Note>
+</Step>
+<Step title="后续操作">
+完成上述配置后，请参考 [实现离线推送](./Offline%20call.mdx) 集成 ZPNs SDK 等其他步骤。
+</Step>
+</Steps>
