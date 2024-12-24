@@ -1168,7 +1168,7 @@ Among which:
 To receive the rich media content messages, do the following:
 After logging in, users should listen for the following callbacks based on the conversation type (one-to-one, room, group): {getPlatformData(props,peerMessageReceivedMap)}, {getPlatformData(props,roomMessageReceivedMap)}, {getPlatformData(props,groupMessageReceivedMap)}, to receive the events of rich media messages. From the events, the URL of rich media content can be obtained directly.
 
-:::if{props.platform="undefined|iOS|mac|win|rn|uniapp|flutter"}
+:::if{props.platform="undefined|iOS|mac|win|rn|flutter"}
 
 If you want to download the rich media content locally, call the {getPlatformData(props,downloadMediaFileMap)} method.
 
@@ -1390,7 +1390,7 @@ typedef ZIMMediaDownloadingProgress = void Function(ZIMMessage message, int curr
 ```
 :::
 
-:::if{props.platform="undefined|iOS|mac|win|rn|uniapp|flutter"}
+:::if{props.platform="undefined|iOS|mac|win|rn|flutter"}
 Among which:
 <div>
 - message: The message content you are downloading.
@@ -1514,7 +1514,7 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
                               const zim::ZIMError &errorInfo) { int i = 0; });
 ```
 :::
-:::if{props.platform="Web|miniprogram|rn|uniapp"}
+:::if{props.platform="Web|rn"}
 ```javascript
 // Send signaling messages to a specified user.
 var toConversationID = ''; // The recipient's user ID.
@@ -1569,8 +1569,8 @@ ZIM.getInstance()!.sendMessage(cmdMsg, 'toUserID', ZIMConversationType.peer, sen
 // Receive signaling messages.
 zim.setEventHandler(new ZIMEventHandler() {
     @Override
-    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
-        // Callback on the custom message received.
+    public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID) {
+        // Callback on the command message received.
         for (ZIMMessage zimMessage : messageList) {
             if (zimMessage instanceof ZIMCommandMessage) {
                 ZIMCommandMessage zimCommandMessage = (ZIMCommandMessage) zimMessage;
@@ -1582,11 +1582,11 @@ zim.setEventHandler(new ZIMEventHandler() {
 ```
 </CodeGroup>
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc SampleCode
 // Receive signaling messages.
-- (void)zim:(ZIM *)zim receivePeerMessage:(NSArray<ZIMMessage *> *)messageList fromUserID:(NSString *)fromUserID {
+- (void)zim:(ZIM *)zim peerMessageReceived:(NSArray<ZIMMessage *> *)messageList info:(ZIMMessageReceivedInfo *)info fromUserID:(NSString *)fromUserID {
     if (zim != self.zim) {
         return;
     }
@@ -1600,23 +1600,52 @@ zim.setEventHandler(new ZIMEventHandler() {
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
-<CodeGroup>
-```objc SampleCode
+:::if{props.platform="win"}
+```cpp
 // Receive signaling messages.
-- (void)zim:(ZIM *)zim receivePeerMessage:(NSArray<ZIMMessage *> *)messageList fromUserID:(NSString *)fromUserID {
-    if (zim != self.zim) {
-        return;
-    }
-    for (ZIMMessage *msg in messageList) {
-        if(msg.type == ZIMMessageTypeCommand){
-            ZIMCommandMessage *cmdMsg = (ZIMCommandMessage *)msg;
-            NSData *receivedData = cmdMsg.message;
+void onPeerMessageReceived(zim::ZIM *zim, const std::vector<std::shared_ptr<zim::ZIMMessage>> &messageList,
+    const ZIMMessageReceivedInfo &info, const std::string &fromUserID) {
+    for (auto &it : message_list) {
+        if (it->getType() == zim::ZIM_MESSAGE_TYPE_COMMAND) {
+            auto commandMessage = std::dynamic_pointer_cast<zim::ZIMCommandMessage>(it);
+            
         }
     }
 }
 ```
-</CodeGroup>
+:::
+:::if{props.platform="Web|rn"}
+```javascript
+// Receive signaling messages.
+zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
+    console.log(messageList, info, fromConversationID);
+    messageList.forEach(function (msg) {
+        // Here, take the JSON string as an example, which needs to be converted to Uint8Array.
+        if (msg.type == 2) {
+            var uint8Array = msg.message;
+            var jsonText = decodeURIComponent(escape(String.fromCharCode(...Array.from(uint8Array))));
+            var jsonObj = JSON.parse(jsonText);
+            console.log('peerMessageReceived', jsonObj);
+        }
+    })
+});
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+// Receive signaling messages.
+ZIMEventHandler.onPeerMessageReceived = (zim, messageList, info, fromUserID) {
+    // Triggered when receiving a command message
+    for (ZIMMessage message in messageList) {
+        switch (message.type) {
+            case ZIMMessageType.command:
+                message as ZIMCommandMessage;
+                break;
+            default:
+        }
+    }
+};
+```
 :::
 
 
@@ -1639,17 +1668,6 @@ Developers need to define custom type messages through the {getPlatformData(prop
 :::if{props.platform=undefined}
 ```java
 // Send a custom message to specified users in a one-to-one conversation
-// 1. Create a ZIM object and pass in appID, appSign and Application in Android
-// For specific codes, please refer to the related codes of the above [Send & Receive messages - Send Messages].
-
-// 2. Set setEventHandler callback
-// For specific codes, please refer to the related codes of the above [Send & Receive messages - Send Messages].
-
-// 3. Log in
-// For specific codes, please refer to the related codes of the above [Send & Receive messages - Send Messages].
-
-// 4. Send custom informatio
-// Specify the user's ID
 String userID = "xxxx";
 
 // Customize the text content of the message
@@ -1669,15 +1687,10 @@ ZIMMessageSendConfig config = new ZIMMessageSendConfig();
 config.priority = ZIMMessagePriority.LOW;
 
 // Send one-to-one conversation message 
-// ZIMConversationType type = ZIMConversationType.Peer;
+ZIMConversationType type = ZIMConversationType.Peer;
 
-// Send group conversation message
-// ZIMConversationType type = ZIMConversationType.Gourp;
 
-// Send room message
-// ZIMConversationType type = ZIMConversationType.Room;
-
-zim.sendMessage(zimCustomMessage, toConversationID, type,config, new ZIMMessageSentCallback() {
+zim.sendMessage(zimCustomMessage, userID, type, config, new ZIMMessageSentFullCallback() {
     @Override
     public void onMessageAttached(ZIMMessage zimMessage) {
         // You can use this callback to monitor whether the message is ready to be sent. This callback will be thrown only if the message passes the local basic parameter verification, otherwise an error will be thrown through the onMessageSent callback.            
@@ -1689,11 +1702,10 @@ zim.sendMessage(zimCustomMessage, toConversationID, type,config, new ZIMMessageS
     }
 });
 ```
-
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
- // Send a custom message to the specified user.
+ // Send a custom message to a specified user.
  NSString *message = @"message";
  NSString *toUserID = @"toUserID";
  ZIMCustomMessage * customMessage = [[ZIMCustomMessage alloc] init];
@@ -1708,25 +1720,109 @@ zim.sendMessage(zimCustomMessage, toConversationID, type,config, new ZIMMessageS
  }];
  ```
 :::
-:::if{props.platform="iOS"}
-```objc
- // Send a custom message to the specified user.
- NSString *message = @"message";
- NSString *toUserID = @"toUserID";
- ZIMCustomMessage * customMessage = [[ZIMCustomMessage alloc] init];
- customMessage.message = message;
- customMessage.subType = 1; // Developer-defined type
- customMessage.searchContent="";
- ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
- sendConfig.priority = ZIMMessagePriorityMedium;
+:::if{props.platform="win"}
+```cpp
+// Send a custom message to a specified user
+zim::ZIMMessage *message = nullptr;
+zim::ZIMCustomMessage customMessage;
 
- [self.zim sendMessage:customMessage toUserID:toUserID conversationType: ZIMConversationTypePeer config:config notification:notification callback:^((ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo)) {
-     // Developers can use this callback to monitor whether the message is sent successfully.
- }];
- ```
+zim::ZIMMessageSendConfig sendConfig;
+zim::ZIMPushConfig pushConfig;
+
+pushConfig.content = "win_push_content";
+pushConfig.extendedData = "win_push_extended_data";
+pushConfig.title = "win_push_title";
+
+sendConfig.priority = zim::ZIM_MESSAGE_PRIORITY_MEDIUM;
+sendConfig.pushConfig = &pushConfig;
+
+std::string message = "message";
+unsigned int subType = 1;
+std::string searchedContent = "searchedContent";
+
+customMessage.message = message;
+customMessage.subType = subType;
+customMessage.searchedContent = searchedContent;
+
+message = &customMessage;
+
+zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER
+
+auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
+            [=](const std::shared_ptr<zim::ZIMMessage> &message) { int i = 0; });
+
+zim_->sendMessage(message, "toConversationID", type, config, notification,
+                    [=](const std::shared_ptr<zim::ZIMMessage> &message,
+                              const zim::ZIMError &errorInfo) { int i = 0; });
+```
 :::
+:::if{props.platform="Web|rn"}
+```javascript
+// Send a custom message to a specified user
 
+// Pass in the userID of the message receiver
+var toConversationID = "xxxx";
+var conversationType = 0; // 0： One-to-one; 1: Room，2: Group
+// Advanced settings
+var config = { 
+    priority: 1, // Message priority: 1: Low (default); 2: Medium; 3: High.
+};
 
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
+    }
+}
+
+var zimCustomMessage = {
+    type: 200,
+    message: 'xxxx', // Text of custom message
+    subType: 100, // Specific custom message type
+    searchedContent: 'xxxx' 
+};
+
+zim.sendMessage(zimCustomMessage, toConversationID, conversationType, config, notification)
+    .then(function ({ message }) {
+        // Sent successfully
+    })
+    .catch(function (err) {
+        // Failed to send
+    });
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+// Send a custom message to a specified user
+
+// Pass in the userID of the message receiver
+String userID = "xxxx";
+
+// Message text
+String message = "";
+
+// Specific custom message type
+int subType = 100; 
+
+String searchedContent = "";
+
+ZIMCustomMessage zimCustomMessage = ZIMCustomMessage(message, subType);
+
+// Advanced settings
+ZIMMessageSendConfig config = ZIMMessageSendConfig();
+// Message Priority
+config.priority = ZIMMessagePriority.low;
+
+ZIMConversationType type = ZIMConversationType.Peer;
+
+ZIM.getInstance().sendMessage(zimCustomMessage, userID, type, config, ZIMMessageSendNotification(onMessageAttached: (ZIMMessage message){
+    // Developers can use this callback to listen for whether the message is ready to be sent. Only messages that pass the local basic parameter check will trigger this callback, otherwise an error will be thrown through the onMessageSent callback.
+  })).then((value) {
+    // Successful callback
+  }).catchError((onError){
+    // Handle failure
+  });
+```
+:::
 
 ### Receive custom messages
 
@@ -1739,7 +1835,7 @@ The following is an example code for receiving custom messages in a one-to-one c
 // User receives custom message in a one-to-one conversation
 zim.setEventHandler(new ZIMEventHandler() {
     @Override
-    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {
+    public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID) {
         // Callback when receiving "one-to-one conversation" message
         for (ZIMMessage zimMessage : messageList) {
             if (zimMessage instanceof ZIMCustomMessage) {
@@ -1752,37 +1848,59 @@ zim.setEventHandler(new ZIMEventHandler() {
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
  // Receiving custom messages in a one-to-one conversation
- - (void)zim:(ZIM *)zim receivePeerMessage:(NSArray<ZIMMessage *> *)messageList fromUserID:(NSString *)fromUserID {
+- (void)zim:(ZIM *)zim peerMessageReceived:(NSArray<ZIMMessage *> *)messageList info:(ZIMMessageReceivedInfo *)info fromUserID:(NSString *)fromUserID {
      if (zim != self.zim) {
          return;
     }
     for (ZIMMessage *msg in messageList) {
-        if(msg.type == ZIMCustomMessage){
+        if(msg.type == ZIMMessageTypeCustom){
             // This indicates that a custom message has been received.
          }
     }
- }
- ```
+}
+```
 :::
-:::if{props.platform="iOS"}
-```objc
- // Receiving custom messages in a one-to-one conversation
- - (void)zim:(ZIM *)zim receivePeerMessage:(NSArray<ZIMMessage *> *)messageList fromUserID:(NSString *)fromUserID {
-     if (zim != self.zim) {
-         return;
+:::if{props.platform="win"}
+```cpp
+// Receive Custom Messages in a one-to-one conversation
+void onPeerMessageReceived(zim::ZIM *zim, const std::vector<std::shared_ptr<zim::ZIMMessage>> &messageList,
+    const ZIMMessageReceivedInfo &info, const std::string &fromUserID) {
+    for (auto &it : message_list) {
+        if (it->getType() == zim::ZIM_MESSAGE_TYPE_CUSTOM) {
+            auto customMessage = std::dynamic_pointer_cast<zim::ZIMCustomMessage>(it);
+        }
     }
-    for (ZIMMessage *msg in messageList) {
-        if(msg.type == ZIMCustomMessage){
-            // This indicates that a custom message has been received.
-         }
-    }
- }
- ```
+}
+```
 :::
-
+:::if{props.platform="Web|rn"}
+```javascript
+// Receive a custom messages in a one-to-one conversation
+zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
+    console.log(messageList, info, fromConversationID);
+    messageList.forEach(function (msg) {
+        // When receiving a custom message
+        if (msg.type == 200) {
+        }
+    })
+});
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+// Receive a custom messages in a one-to-one conversation
+ZIMEventHandler.onPeerMessageReceived = (zim, messageList, info, fromUserID) {
+    for (ZIMMessage message in messageList) {
+        if(message is ZIMCustomMessage){
+        
+        }
+    }
+};
+```
+:::
 
 ## Send and Receive @ Messages
 
