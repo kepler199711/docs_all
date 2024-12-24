@@ -133,6 +133,12 @@ ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
 import ZegoSendCallInvitationButton from "@/uni_modules/zego-PrebuiltCall/components/invitation/ZegoSendCallInvitationButton.vue"
 import { ZegoInvitationType } from "@/uni_modules/zego-UIKitCore";
 
+const notificationConfig = ref({
+  title: "离线推送标题",
+  message: "离线推送内容",
+  resourceID: '资源ID',
+})
+
 onMounted(() => {
     ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, config);
 })
