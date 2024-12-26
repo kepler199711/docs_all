@@ -943,9 +943,9 @@ var notification = {
 
 // For an image
 var mediaMessageObj = {
-    fileDownloadUrl: 'https://xxxx.jpeg', // 原图
-    thumbnailDownloadUrl: 'https://xxxx-thumbnail.jpeg', // 缩略图
-    largeImageDownloadUrl: 'https://xxxx-large.jpeg', // 大图
+    fileDownloadUrl: 'https://xxxx.jpeg', // Original Image
+    thumbnailDownloadUrl: 'https://xxxx-thumbnail.jpeg', // Thumbnail
+    largeImageDownloadUrl: 'https://xxxx-large.jpeg', // Large Image
     type: 11,
 };
 
@@ -1826,7 +1826,7 @@ ZIM.getInstance().sendMessage(zimCustomMessage, userID, type, config, ZIMMessage
 
 ### Receive custom messages
 
-The callback interface for receiving custom messages is the same as the callback interface for receiving regular messages. Please refer to [Send & Receive messages - Receive messages](#receive-rich-media-content) for details on the specific interface.
+The callback interface for receiving custom messages is the same as the callback interface for receiving regular messages. Please refer to [Send & Receive messages - Receive messages](#receive-messages) for details on the specific interface.
 
 The following is an example code for receiving custom messages in a one-to-one conversation:
 
@@ -1927,55 +1927,55 @@ String userID = "xxxx";
 // The item list of multi-item message can contain a maximum of 20 items.
 ArrayList<ZIMMessageLiteInfo> messageInfoList = new ArrayList();
 
-// 文本
+// Text
 ZIMTextMessageLiteInfo textMsgInfo= new ZIMTextMessageLiteInfo();
-textMsgInfo.message = "消息内容";
+textMsgInfo.message = "Message content";
 messageInfoList.add(textMsgInfo);
 
-// 自定义消息：最多支持 1 个
+// Custom message: Only 1 allowed. 
 ZIMCustomMessageLiteInfo customMsgInfo= new ZIMCustomMessageLiteInfo();
-customMsgInfo.message = "消息内容";
-customMsgInfo.searchedContent = "搜索内容";
+customMsgInfo.message = "Message content";
+customMsgInfo.searchedContent = "Searched";
 customMsgInfo.subType = 100;
 messageInfoList.add(customMsgInfo);
 
-// 图片：最多支持 10 个
-// 网络图片示例
+// Image: Only 10 allowed.
+// Online image
 ZIMImageMessageLiteInfo imageMsgInfo= new ZIMImageMessageLiteInfo();
-imageMsgInfo.fileDownloadUrl = "https://xxxx.jpeg"; // 原图
-imageMsgInfo.thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // 缩略图
-imageMsgInfo.largeImageDownloadUrl = "https://xxxx-large.jpeg"; // 大图
+imageMsgInfo.fileDownloadUrl = "https://xxxx.jpeg"; // Original Image
+imageMsgInfo.thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // Thumbnail
+imageMsgInfo.largeImageDownloadUrl = "https://xxxx-large.jpeg"; // Large Image
 messageInfoList.add(imageMsgInfo);
 
-// 本地图片示例
+// Local Image
 ZIMImageMessageLiteInfo localImageMsgInfo= new ZIMImageMessageLiteInfo();
-localImageMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.jpg"; // 图片的绝对路径
+localImageMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.jpg"; // Absolute path of the image
 messageInfoList.add(localImageMsgInfo);
 
-// 文件：最多支持 1 个
+// File: Only 1 allowed. 
 ZIMFileMessageLiteInfo localFileMsgInfo= new ZIMFileMessageLiteInfo();
-localFileMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.zip"; // 文件的绝对路径
+localFileMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.zip"; // Absolute path of the file
 messageInfoList.add(localFileMsgInfo);
 
-// 音频：最多支持 1 个
+// Audio: Only 1 allowed. 
 ZIMAudioMessageLiteInfo localAudioMsgInfo= new ZIMAudioMessageLiteInfo();
-localAudioMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.mp3"; // 音频的绝对路径
-localAudioMsgInfo.audioDuration = 100; // 必填，音频时长，单位秒
+localAudioMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.mp3"; // Absolute path of the audio
+localAudioMsgInfo.audioDuration = 100; // Required: Audio duration in seconds.
 messageInfoList.add(localAudioMsgInfo);
 
-// 视频：最多支持 1 个
+// Video: Only 1 allowed. 
 ZIMVideoMessageLiteInfo localVideoMsgInfo= new ZIMVideoMessageLiteInfo();
-localVideoMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.mp4"; // 视频的绝对路径
-localVideoMsgInfo.videoDuration = 100; // 必填，视频时长，单位秒
+localVideoMsgInfo.fileLocalPath = "/storage/emulated/0/Android/data/packagename/xxx.mp4"; // Absolute path of the video
+localVideoMsgInfo.videoDuration = 100; // Required: Video duration in seconds.
 messageInfoList.add(localVideoMsgInfo);
 
 
 ZIMMultipleMessage zimMultipleMessage = new ZIMMultipleMessage();
 zimMultipleMessage.setMessageInfoList(messageInfoList);
 
-// 发送消息的高级属性配置
+// Advanced configuration for sending messages.
 ZIMMessageSendConfig config = new ZIMMessageSendConfig();
-// 设置消息优先级
+// Message Priority
 config.priority = ZIMMessagePriority.LOW;
 
 ZIMConversationType type = ZIMConversationType.Peer;
@@ -1983,29 +1983,29 @@ ZIMConversationType type = ZIMConversationType.Peer;
 zim.sendMessage(zimMultipleMessage, userID, type, config, new ZIMMessageSentFullCallback() {
     @Override
     public void onMessageAttached(ZIMMessage zimMessage) {
-        // 开发者可以通过该回调，监听消息是否开始准备发送。只有当通过本地基础参数检验的消息才会抛出该回调，否则通过 onMessageSent 回调抛出错误。               
+        // Developers can use this callback to monitor whether a message is ready to be sent. Only messages that pass the local basic parameter validation will trigger this callback; otherwise, an error will be returned through the onMessageSent callback.              
     }
 
     @Override
     public void onMessageSent(ZIMMessage zimMessage, ZIMError error) {
-        // 开发者可以通过该回调监听消息是否发送成功。
+        // Developers can use this callback to monitor whether the message was sent successfully.
     }
 
     @Override
     public void onMultipleMediaUploadingProgress(
         ZIMMultipleMessage message,
-        long currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-        long totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
-        int messageInfoIndex,      // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-        long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-        long totalIndexFileSize,   // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+        long currentFileSize,      // Total size of uploaded files in bytes (B). For example, if 20,971,520 B has been uploaded, this value will be 20,971,520.
+        long totalFileSize,        // Total file size in bytes (B). For example, if the total file size is 104,857,600 B, this value will be 104,857,600.
+        int messageInfoIndex,      // The index of the currently uploading file in the messageInfoList array when this callback is received.
+        long currentIndexFileSize, // The uploaded size of the currently uploading file in bytes (B) when this callback is received.
+        long totalIndexFileSize,   // The size of the currently uploading file when this callback is received.
     ) {
         // todo: upload progress
-        // 开发者可以监听这个回调获取多媒体上传的进度
-        // 此回调的触发频率为 1 次/秒。
-        // 总文件上传进度： currentFileSize / totalFileSize
-        // 上述例子中，总文件上传进度为：20,971,520 / 104,857,600 = 20% 
-        // 接收此回调时，当前正在上传的文件的上传进度：currentIndexFileSize / totalIndexFileSize
+        // Developers can use this callback to monitor the upload progress of multimedia files.
+        // This callback is triggered at a frequency of once per second.
+        // Total file upload progress: currentFileSize / totalFileSize.
+        // In the above example, the total file upload progress is: 20,971,520 / 104,857,600 = 20%.
+        // When this callback is received, the upload progress of the currently uploading file is: currentIndexFileSize / totalIndexFileSize.
     }
 });
 ```
@@ -2019,46 +2019,46 @@ NSString *toUserID = @"toUserID";
 // The item list of multi-item message can contain a maximum of 20 items.
 NSMutableArray<ZIMMessageLiteInfo *> *messageInfoList = [NSMutableArray array];
 
-// 文本
+// Text
 ZIMTextMessageLiteInfo *textMsgInfo = [[ZIMTextMessageLiteInfo alloc] init];
-textMsgInfo.message = @"消息内容";
+textMsgInfo.message = @"Message content";
 [messageInfoList addObject:textMsgInfo];
 
-// 自定义消息：最多支持 1 个
+// Custom message: Only 1 allowed. 
 ZIMCustomMessageLiteInfo *customMsgInfo = [[ZIMCustomMessageLiteInfo alloc] init];
-customMsgInfo.message = @"消息内容";
-customMsgInfo.searchedContent = @"搜索内容";
+customMsgInfo.message = @"Message content";
+customMsgInfo.searchedContent = @"Searched content";
 customMsgInfo.subType = 100;
 [messageInfoList addObject:customMsgInfo];
 
-// 图片：最多支持 10 个
-// 网络图片示例
+// Image: Only 10 allowed.
+// Online image
 ZIMImageMessageLiteInfo *imageMsgInfo = [[ZIMImageMessageLiteInfo alloc] init];
-imageMsgInfo.fileDownloadUrl = @"https://xxxx.jpeg"; // 原图
-imageMsgInfo.thumbnailDownloadUrl = @"https://xxxx-thumbnail.jpeg"; // 缩略图
-imageMsgInfo.largeImageDownloadUrl = @"https://xxxx-large.jpeg"; // 大图
+imageMsgInfo.fileDownloadUrl = @"https://xxxx.jpeg"; // Original Image
+imageMsgInfo.thumbnailDownloadUrl = @"https://xxxx-thumbnail.jpeg"; // Thumbnail
+imageMsgInfo.largeImageDownloadUrl = @"https://xxxx-large.jpeg"; // Large
 [messageInfoList addObject:imageMsgInfo];
 
-// 本地图片示例
+// Local
 ZIMImageMessageLiteInfo *localImageMsgInfo = [[ZIMImageMessageLiteInfo alloc] init];
-localImageMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.jpg"; // 图片的绝对路径
+localImageMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.jpg"; // Absolute path of the image
 [messageInfoList addObject:localImageMsgInfo];
 
-// 文件：最多支持 1 个
+// File: Only 1 allowed. 
 ZIMFileMessageLiteInfo *localFileMsgInfo = [[ZIMFileMessageLiteInfo alloc] init];
-localFileMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.zip"; // 文件的绝对路径
+localFileMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.zip"; // Absolute path of the file
 [messageInfoList addObject:localFileMsgInfo];
 
-// 音频：最多支持 1 个
+// Audio: Only 1 allowed. 
 ZIMAudioMessageLiteInfo *localAudioMsgInfo = [[ZIMAudioMessageLiteInfo alloc] init];
-localAudioMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.mp3"; // 音频的绝对路径
-localAudioMsgInfo.audioDuration = 100; // 必填，音频时长，单位秒
+localAudioMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.mp3"; // Absolute path of the audio
+localAudioMsgInfo.audioDuration = 100; // Required: Audio duration in seconds.
 [messageInfoList addObject:localAudioMsgInfo];
 
-// 视频：最多支持 1 个
+// Video: Only 1 allowed. 
 ZIMVideoMessageLiteInfo *localVideoMsgInfo = [[ZIMVideoMessageLiteInfo alloc] init];
-localVideoMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.mp4"; // 视频的绝对路径
-localVideoMsgInfo.videoDuration = 100; // 必填，视频时长，单位秒
+localVideoMsgInfo.fileLocalPath = @"/private/var/mobile/Containers/Data/Application/xxx.mp4"; // Absolute path of the video
+localVideoMsgInfo.videoDuration = 100; // Required: Video duration in seconds.
 [messageInfoList addObject:localVideoMsgInfo];
 
 
@@ -2068,29 +2068,29 @@ multipleMessage.messageInfoList = messageInfoList;
 ZIMMessageSendNotification *notification = [[ZIMMessageSendNotification alloc] init];
 
 notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
-    // 开发者可以监听这个回调执行消息发送前的业务逻辑
+    // Developers can use this callback to execute business logic before sending the message.
 };
         
 notification.onMultipleMediaUploadingProgress = ^(
     ZIMMultipleMessage * _Nonnull message,
-    unsigned long long currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-    unsigned long long totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
-    unsigned int messageInfoIndex,           // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-    unsigned long long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-    unsigned long long totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+    unsigned long long currentFileSize,      // Total size of uploaded files in bytes (B). For example, if 20,971,520 B has been uploaded, this value will be 20,971,520.
+    unsigned long long totalFileSize,        // Total file size in bytes (B). For example, if the total file size is 104,857,600 B, this value will be 104,857,600.
+    unsigned int messageInfoIndex,           // The index of the currently uploading file in the messageInfoList array when this callback is received.
+    unsigned long long currentIndexFileSize, // The uploaded size of the currently uploading file in bytes (B) when this callback is received.
+    unsigned long long totalIndexFileSize    // The size of the currently uploading file when this callback is received.
 ) {
-    // 开发者可以监听这个回调获取多媒体上传的进度
-    // 此回调的触发频率为 1 次/秒。
-    // 总文件上传进度： currentFileSize / totalFileSize
-    // 上述例子中，总文件上传进度为：20,971,520 / 104,857,600 = 20% 
-    // 接收此回调时，当前正在上传的文件的上传进度：currentIndexFileSize / totalIndexFileSize
+    // Developers can use this callback to monitor the upload progress of multimedia files.
+    // This callback is triggered at a frequency of once per second.
+    // Total file upload progress: currentFileSize / totalFileSize.
+    // In the above example, the total file upload progress is: 20,971,520 / 104,857,600 = 20%.
+    // When this callback is received, the upload progress of the currently uploading file is: currentIndexFileSize / totalIndexFileSize.
 };
 
 ZIMMessageSendConfig *sendConfig = [[ZIMMessageSendConfig alloc] init];
 sendConfig.priority = ZIMMessagePriorityMedium;
 
 [self.zim sendMessage:multipleMessage toUserID:toUserID conversationType: ZIMConversationTypePeer config:config notification:notification callback:^((ZIMMessage * _Nonnull message, ZIMError * _Nonnull errorInfo)) {
-    // 开发者可以通过该回调监听消息是否发送成功。
+    // Developers can use this callback to monitor whether the message was sent successfully.
 }];
 ```
 :::
@@ -2103,46 +2103,46 @@ auto multipleMessage zim::ZIMMultipleMessage();
 // The item list of multi-item message can contain a maximum of 20 items.
 std::vector<ZIMMessageLiteInfo*> messageInfoList;
 
-// 文本
+// Text
 zim::ZIMTextMessageLiteInfo textMsgInfo;
-textMsgInfo.message = "消息内容";
+textMsgInfo.message = "Message content";
 messageInfoList.push_back(textMsgInfo);
 
-// 自定义消息：最多支持 1 个
+// Custom message: Only 1 allowed. 
 zim::ZIMCustomMessageLiteInfo customMsgInfo;
-customMsgInfo.message = "消息内容";
-customMsgInfo.searchedContent = "搜索内容";
+customMsgInfo.message = "Message";
+customMsgInfo.searchedContent = "Searched content";
 customMsgInfo.subType = 100;
 messageInfoList.push_back(customMsgInfo);
 
-// 图片：最多支持 10 个
-// 网络图片示例
+// Image: Only 10 allowed.
+// Online image
 zim::ZIMImageMessageLiteInfo imageMsgInfo;
-imageMsgInfo.fileDownloadUrl = "https://xxxx.jpeg"; // 原图
-imageMsgInfo.thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // 缩略图
-imageMsgInfo.largeImageDownloadUrl = "https://xxxx-large.jpeg"; // 大图
+imageMsgInfo.fileDownloadUrl = "https://xxxx.jpeg"; // Original Image
+imageMsgInfo.thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // Thumbnail
+imageMsgInfo.largeImageDownloadUrl = "https://xxxx-large.jpeg"; // Large Image
 messageInfoList.push_back(imageMsgInfo);
 
-// 本地图片示例
+// Local Image
 zim::ZIMImageMessageLiteInfo localImageMsgInfo;
-localImageMsgInfo.fileLocalPath = "D:\\files\\xxx.jpg"; // 图片的绝对路径
+localImageMsgInfo.fileLocalPath = "D:\\files\\xxx.jpg"; // Absolute path of the image
 messageInfoList.push_back(localImageMsgInfo);
 
-// 文件：最多支持 1 个
+// File: Only 1 allowed. 
 zim::ZIMFileMessageLiteInfo localFileMsgInfo;
-localFileMsgInfo.fileLocalPath = "D:\\files\\xxx.zip"; // 文件的绝对路径
+localFileMsgInfo.fileLocalPath = "D:\\files\\xxx.zip"; // Absolute path of the file
 messageInfoList.push_back(localFileMsgInfo);
 
-// 音频：最多支持 1 个
+// Audio: Only 1 allowed. 
 zim::ZIMAudioMessageLiteInfo localAudioMsgInfo;
-localAudioMsgInfo.fileLocalPath = "D:\\files\\xxx.mp3"; // 音频的绝对路径
-localAudioMsgInfo.audioDuration = 100; // 必填，音频时长，单位秒
+localAudioMsgInfo.fileLocalPath = "D:\\files\\xxx.mp3"; // Absolute path of the audio
+localAudioMsgInfo.audioDuration = 100; // Required: Audio duration in seconds.
 messageInfoList.push_back(localAudioMsgInfo);
 
-// 视频：最多支持 1 个
+// Video: Only 1 allowed. 
 zim::ZIMVideoMessageLiteInfo localVideoMsgInfo;
-localVideoMsgInfo.fileLocalPath = "D:\\files\\xxx.mp4"; // 文件绝对路径
-localVideoMsgInfo.videoDuration = 100; // 必填，视频时长，单位秒
+localVideoMsgInfo.fileLocalPath = "D:\\files\\xxx.mp4"; // Absolute path of the file
+localVideoMsgInfo.videoDuration = 100; // Required: Video duration in seconds.
 messageInfoList.push_back(localVideoMsgInfo);
 
 multipleMessage.messageInfoList = messageInfoList;
@@ -2162,14 +2162,14 @@ zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_
 
 auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
             [=](const std::shared_ptr<zim::ZIMMessage> &message) { 
-                // 开发者可监听此回调，执行消息发送前的逻辑
+                // Developers can listen to this callback to execute logic before sending the message.
             },
             [=](const std::shared_ptr<zim::ZIMMultipleMessage> &message,
-                unsigned long long currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-                unsigned long long totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
-                unsigned int messageInfoIndex,           // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-                unsigned long long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-                unsigned long long totalIndexFileSize    // 触发该回调对应的文件的大小
+                unsigned long long currentFileSize,      // Total size of uploaded files in bytes (B). For example, if 20,971,520 B has been uploaded, this value will be 20,971,520.
+                unsigned long long totalFileSize,        // Total file size in bytes (B). For example, if the total file size is 104,857,600 B, this value will be 104,857,600.
+                unsigned int messageInfoIndex,           // The index of the currently uploading file in the messageInfoList array when this callback is received.
+                unsigned long long currentIndexFileSize, // The uploaded size of the currently uploading file in bytes (B) when this callback is received.
+                unsigned long long totalIndexFileSize    // The size of the currently uploading file when this callback is received.
             ) { 
 ··
             });
@@ -2181,8 +2181,8 @@ zim_->sendMessage(message, "toConversationID", type, config, notification,
 :::
 :::if{props.platform="Web"}
 ```javascript
-// 选择本地文件的方法
-var file = null; // 上传的文件对象
+// The method to select a local file
+var file = null; // The file object to be uploaded
 var input = document.createElement('input');
 input.type = 'file';
 input.onchange = function() {
@@ -2192,20 +2192,20 @@ input.onchange = function() {
 :::
 :::if{props.platform="rn"}
 ```javascript
-// 选择本地文件的方法
-var file = ''; // 上传的文件的绝对路径
+// The method to select a local file
+var file = ''; // Absolute path of the file to be uploaded
 ```
 :::
 :::if{props.platform="Web|rn"}
 ```javascript
 // Send a multi-item message in a one-to-one conversation
 
-// 指定用户的 ID
+// Pass in the userID of the message receiver
 var toConversationID = "xxxx";
-// 发送消息的高级属性配置
-var conversationType = 0; // 会话类型，取值为 单聊：0，房间：1，群组：2
+// Advanced configuration for sending messages.
+var conversationType = 0; // 0: One-to-one; 1: Room; 2: Group
 var config = { 
-    priority: 1, // 设置消息优先级，取值为 低：1（默认），中：2，高：3
+    priority: 1, // Message Priority, 1: low (default), 2: medium, 3: high
 };
 
 var notification = {
@@ -2214,17 +2214,17 @@ var notification = {
     },
     onMultipleMediaUploadingProgress: function(
         message,
-        currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-        totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
-        messageInfoIndex,     // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-        currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-        totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+        currentFileSize,      // Total size of uploaded files in bytes (B). For example, if 20,971,520 B has been uploaded, this value will be 20,971,520.
+        totalFileSize,        // Total file size in bytes (B). For example, if the total file size is 104,857,600 B, this value will be 104,857,600.
+        messageInfoIndex,     // The index of the currently uploading file in the messageInfoList array when this callback is received.
+        currentIndexFileSize, // The uploaded size of the currently uploading file in bytes (B) when this callback is received.
+        totalIndexFileSize    // The size of the currently uploading file when this callback is received.
     ) {
         // todo: upload progress
-        // 开发者可以监听这个回调获取多媒体上传的进度
-        // 总文件上传进度： currentFileSize / totalFileSize
-        // 上述例子中，总文件上传进度为：20,971,520 / 104,857,600 = 20% 
-        // 接收此回调时，当前正在上传的文件的上传进度：currentIndexFileSize / totalIndexFileSize
+        // Developers can use this callback to monitor the upload progress of multimedia files.
+        // Total file upload progress: currentFileSize / totalFileSize.
+        // In the above example, the total file upload progress is: 20,971,520 / 104,857,600 = 20%.
+        // When this callback is received, the upload progress of the currently uploading file is: currentIndexFileSize / totalIndexFileSize.
     }
 };
 
@@ -2232,57 +2232,57 @@ var zimMultipleMessage = {
     type: 10,
     // The item list of multi-item message can contain a maximum of 20 items.
     messageInfoList: [
-        // 文本
+        // Text
         {
             type: 1,
             message: 'xxxx',
         },
-        // 自定义消息：最多支持 1 个
+        // Custom message
         {
             type: 200,
             message: 'xxxx',
             subType: 100,
             searchedContent: 'xxxx'
         },
-        // 图片：最多支持 10 个
-        // 网络图片示例
+        // Image: Only 10 allowed.
+        // Online image
         {
             type: 11,
-            fileDownloadUrl: 'https://xxxx.jpeg', // 原图
-            thumbnailDownloadUrl: 'https://xxxx-thumbnail.jpeg', // 缩略图
-            largeImageDownloadUrl: 'https://xxxx-large.jpeg', // 大图
+            fileDownloadUrl: 'https://xxxx.jpeg', // Original Image
+            thumbnailDownloadUrl: 'https://xxxx-thumbnail.jpeg', // Thumbnail
+            largeImageDownloadUrl: 'https://xxxx-large.jpeg', // Large Image
         },
-        // 本地图片示例
+        // Local Image
         {
             type: 11,
-            fileLocalPath: file, // 上传的文件
+            fileLocalPath: file, // File to be uploaded
         },
-        // 文件：最多支持 1 个
+        // File: Only 1 allowed. 
         {
             type: 12,
-            fileLocalPath: file, // 上传的文件
+            fileLocalPath: file, // File to be uploaded
         },
-        // 音频：最多支持 1 个
+        // Audio: Only 1 allowed. 
         {
             type: 13,
-            fileLocalPath: file, // 上传的文件
-            audioDuration: 100, // 请填写音频时长，单位秒（必填）
+            fileLocalPath: file, // File to be uploaded
+            audioDuration: 100, // Required: Audio duration in seconds.
         },
-        // 视频：最多支持 1 个
+        // Video: Only 1 allowed. 
         {
             type: 14,
-            fileLocalPath: file, // 上传的文件
-            videoDuration: 100, // 请填写视频时长，单位秒（必填）
+            fileLocalPath: file, // File to be uploaded
+            videoDuration: 100, // Required: Video duration in seconds.
         }
     ]
 };
 
 zim.sendMessage(zimMultipleMessage, toConversationID, conversationType, config, notification)
     .then(function ({ message }) {
-        // 发送成功
+        // Sent successfully
     })
     .catch(function (err) {
-        // 发送失败
+        // Failed to send
     });
 ```
 :::
@@ -2290,52 +2290,51 @@ zim.sendMessage(zimMultipleMessage, toConversationID, conversationType, config, 
 ```dart
 // Send a multi-item message in a one-to-one conversation
 
-// 指定用户的 ID
 String userID = "xxxx";
 
 // The item list of multi-item message can contain a maximum of 20 items.
 List<ZIMMessageLiteInfo> messageInfoList = [];
 
-// 文本消息
+// Text
 ZIMTextMessageLiteInfo textMsgInfo = ZIMTextMessageLiteInfo();
-textMsgInfo.message = "消息内容";
+textMsgInfo.message = "Message content";
 messageInfoList.add(textMsgInfo);
 
-// 自定义消息：最多支持 1 个
+// Custom message: Only 1 allowed. 
 ZIMCustomMessageLiteInfo customMsgInfo = ZIMCustomMessageLiteInfo();
-customMsgInfo.message = "消息内容";
-customMsgInfo.searchedContent = "搜索内容";
+customMsgInfo.message = "Message content";
+customMsgInfo.searchedContent = "S er che d";
 customMsgInfo.subType = 100;
 messageInfoList.add(customMsgInfo);
 
-// 图片：最多支持 10 个
-// 网络图片
+// Image: Only 10 allowed.
+// Online
 ZIMImageMessageLiteInfo imageMsgInfo = ZIMImageMessageLiteInfo();
-imageMsgInfo.fileDownloadUrl = "https://xxxx.jpeg"; // 原图
-imageMsgInfo.thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // 缩略图
-imageMsgInfo.largeImageDownloadUrl = "https://xxxx-large.jpeg"; // 大图
+imageMsgInfo.fileDownloadUrl = "https://xxxx.jpeg"; // Original Image
+imageMsgInfo.thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // Thumbnail
+imageMsgInfo.largeImageDownloadUrl = "https://xxxx-large.jpeg"; // Large Image
 messageInfoList.add(imageMsgInfo);
 
-// 本地图片
+// Local Image
 ZIMImageMessageLiteInfo localImageMsgInfo = ZIMImageMessageLiteInfo();
-localImageMsgInfo.fileLocalPath = "/path/xxx.jpg"; // 图片绝对路径
+localImageMsgInfo.fileLocalPath = "/path/xxx.jpg"; // Absolute path of the image
 messageInfoList.add(localImageMsgInfo);
 
-// 文件：最多支持 1 个
+// File: Only 1 allowed. 
 ZIMImageMessageLiteInfo localFileMsgInfo = ZIMFileMessageLiteInfo();
-localFileMsgInfo.fileLocalPath = "/path/xxx.zip"; // 文件绝对路径
+localFileMsgInfo.fileLocalPath = "/path/xxx.zip"; // Absolute path of the file
 messageInfoList.add(localFileMsgInfo);
 
-// 音频：最多支持 1 个
+// Audio: Only 1 allowed. 
 ZIMAudioMessageLiteInfo localAudioMsgInfo = ZIMAudioMessageLiteInfo();
-localAudioMsgInfo.fileLocalPath = "/path/xxx.mp3"; // 音频绝对路径
-localAudioMsgInfo.audioDuration = 100; // 必填，播放时长，单位秒
+localAudioMsgInfo.fileLocalPath = "/path/xxx.mp3"; //Absolute path of the audio
+localAudioMsgInfo.audioDuration = 100; // Required: Playback duration in seconds.
 messageInfoList.add(localAudioMsgInfo);
 
-// 视频：最多支持 1 个
+// Video: Only 1 allowed. 
 ZIMVideoMessageLiteInfo localVideoMsgInfo = ZIMVideoMessageLiteInfo();
-localVideoMsgInfo.fileLocalPath = "/path/xxx.mp4"; // 视频绝对路径
-localVideoMsgInfo.videoDuration = 100; // 必填，播放时长，单位秒
+localVideoMsgInfo.fileLocalPath = "/path/xxx.mp4"; // Absolute path of the video
+localVideoMsgInfo.videoDuration = 100; // Required: Playback duration in seconds.
 messageInfoList.add(localVideoMsgInfo);
 
 ZIMMultipleMessage zimMultipleMessage = ZIMMultipleMessage(messageInfos);
@@ -2343,55 +2342,58 @@ zimMultipleMessage.messageInfoList = messageInfoList;
 
 ZIMMessageSendNotification notification = ZIMMessageSendNotification(
     onMessageAttached: (message){
-        // 开发者可以监听这个回调执行消息发送前的业务逻辑
+        // Developers can use this callback to execute business logic before sending the message.
     },
     onMultipleMediaUploadingProgress: (
         message,
-        currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-        totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
-        messageInfoIndex,     // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-        currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-        totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+        currentFileSize,      // Total size of uploaded files in bytes (B). For example, if 20,971,520 B has been uploaded, this value will be 20,971,520.
+        totalFileSize,        // Total file size in bytes (B). For example, if the total file size is 104,857,600 B, this value will be 104,857,600.
+        messageInfoIndex,     // The index of the currently uploading file in the messageInfoList array when this callback is received.
+        currentIndexFileSize, // The uploaded size of the currently uploading file in bytes (B) when this callback is received.
+        totalIndexFileSize    // The size of the currently uploading file when this callback is received.
     ){
-        // 开发者可以监听这个回调获取多媒体上传的进度
-        // 总文件上传进度： currentFileSize / totalFileSize
-        // 上述例子中，总文件上传进度为：20,971,520 / 104,857,600 = 20% 
-        // 接收此回调时，当前正在上传的文件的上传进度：currentIndexFileSize / totalIndexFileSize
+        // Developers can use this callback to monitor the upload progress of multimedia files.
+        // Total file upload progress: currentFileSize / totalFileSize.
+        // In the above example, the total file upload progress is: 20,971,520 / 104,857,600 = 20%.
+        // When this callback is received, the upload progress of the currently uploading file is: currentIndexFileSize / totalIndexFileSize.
     }
 );
 
-// 发送消息的高级属性配置
+// Advanced configuration for sending messages.
 ZIMMessageSendConfig config = ZIMMessageSendConfig();
-// 设置消息优先级
+// Message Priority
 config.priority = ZIMMessagePriority.low;
 
 ZIMConversationType type = ZIMConversationType.Peer;
 
 
 ZIM.getInstance().sendMessage(zimMultipleMessage, userID, type, config, notification).then((value) {
-    // 发送成功回调
+    // Sent successfully
   }).catchError((onError){
-    // 处理失败
+    // Failed to send
   });
 ```
 :::
 
 
-### 接收组合消息
+### Receive multi-item messages
 
 接收组合消息的回调接口与接收普通消息的回调接口一致，请参考 [收发普通消息 - 接收消息](./Send%20and%20receive%20messages.mdx#接收消息) 了解具体接口。
 
-以下为用户在单聊会话中接收组合消息的示例代码：
+
+The callback interface for receiving multi-item messages is the same as the callback interface for receiving regular messages. Please refer to [Send & Receive messages - Receive messages](#receive-messages) for details on the specific interface.
+
+The following is an example code for receiving multi-item messages in a one-to-one conversation:
 
 :::if{props.platform=undefined}
 ```java
-// 用户在单聊会话中接收组合消息
+// // User receives multi-item message in a one-to-one conversation
 zim.setEventHandler(new ZIMEventHandler() {
     @Override
     public void onPeerMessageReceived(ZIM zim, ArrayList<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID) {
-        // 收到“单聊”消息的回调
         for (ZIMMessage zimMessage : messageList) {
             if (zimMessage instanceof ZIMMultipleMessage) {
+                // This indicates that a multi-item message has been received.
                 ZIMMultipleMessage zimMultipleMessage = (ZIMMultipleMessage) zimMessage;
                 
            }    
@@ -2402,14 +2404,14 @@ zim.setEventHandler(new ZIMEventHandler() {
 :::
 :::if{props.platform="iOS|mac"}
 ```objc
-// 用户在单聊会话中接收组合消息
+// // User receives multi-item message in a one-to-one conversation
 - (void)zim:(ZIM *)zim peerMessageReceived:(NSArray<ZIMMessage *> *)messageList info:(ZIMMessageReceivedInfo *)info fromUserID:(NSString *)fromUserID {
     if (zim != self.zim) {
         return;
     }
     for (ZIMMessage *msg in messageList) {
         if(msg.type == ZIMMessageTypeMultiple){
-            // 这里表示接收到组合消息
+            // This indicates that a multi-item message has been received.
         }
     }
 }
@@ -2417,7 +2419,7 @@ zim.setEventHandler(new ZIMEventHandler() {
 :::
 :::if{props.platform="win"}
 ```cpp
-// 用户接收组合消息
+// // User receives multi-item message in a one-to-one conversation
 void onPeerMessageReceived(zim::ZIM *zim, const std::vector<std::shared_ptr<zim::ZIMMessage>> &messageList,
     const ZIMMessageReceivedInfo &info, const std::string &fromUserID) {
     for (auto &it : message_list) {
@@ -2430,15 +2432,15 @@ void onPeerMessageReceived(zim::ZIM *zim, const std::vector<std::shared_ptr<zim:
 :::
 :::if{props.platform="Web|rn"}
 ```javascript
-// 用户在单聊会话中接收组合消息
+// // User receives multi-item message in a one-to-one conversation
 zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversationID }) {
     console.log(messageList, fromConversationID);
     messageList.forEach(function (msg) {
-        // 收到 `Multiple` 消息时
+        // This indicates that a multi-item message has been received.
         if (msg.type == 10) {
             msg.messageInfoList.forEach(function (info) {
-                // 根据消息类型展示 UI
-                console.log('组合消息 item 类型：' + info.type);
+                // Display UI based on the message type.
+                console.log('The item type:' + info.type);
             }
         }
     })
@@ -2447,7 +2449,7 @@ zim.on('peerMessageReceived', function (zim, { messageList, info, fromConversati
 :::
 :::if{props.platform="flutter"}
 ```dart
-// 用户在单聊会话中接收组合消息
+// // User receives multi-item message in a one-to-one conversation
 ZIMEventHandler.onPeerMessageReceived = (zim, messageList, info, fromUserID) {
     for (ZIMMessage message in messageList) {
         if(message is ZIMMultipleMessage){
@@ -2470,7 +2472,7 @@ The "@" message is not a message type itself. A message can be both a text messa
 
 ### Send @ messages
 
-When calling {getPlatformData(props,sendMessageMap)} to send a message, you can use the following {getPlatformData(props,ZIMMessageMap)}  parameters (can be used simultaneously) to mark a message as an "@" message:
+When calling {getPlatformData(props,sendMessageMap)} to send a message, you can use the following methods (can be used simultaneously) to mark a message as an "@" message:
 - {getPlatformData2(props,mentionedUserIDsMap)}: Notifies specific users (including users outside of the conversation) to view the message. The length of the userID list passed in should be up to 50. If you need to increase this limit, please contact the ZEGOCLOUD technical support team.
 - {getPlatformData2(props,isMentionAllMap)}: Notifies all other users within the conversation to view the message.
 
@@ -2484,10 +2486,10 @@ Only ZIM SDK version 2.14.0 and above supports sending messages with @ informati
 ```java
 // The following is a sample code for a user to send an @ message in a single conversation:
 
-// Create reminder user list
+// Create a list of users to be mentioned
 ArrayList<String> mentionArrayList = new ArrayList<>();
 
-// Add a reminder to the user (the user does not need to be in the current conversation)
+// Add a user (the user does not need to be in the current conversation)
 mentionArrayList.add("userId1");
 mentionArrayList.add("userId2");
 
@@ -2524,47 +2526,13 @@ zim.sendMessage(message, "conv_id", type, config, new ZIMMessageSentFullCallback
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
 // The following is a sample code for a user to send an @ message in a single conversation:
-// Create a reminder user list
+// Create a list of users to be mentioned
 NSMutableArray<NSString *> *mentionArrayList = [[NSMutableArray alloc] init];
 
-// Add a reminder to the user (the user does not need to be in the current conversation)
-[mentionArrayList addObject:@"userId1"];
-[mentionArrayList addObject:@"userId2"];
-
-// message can be any type of message
-// Call the interface to remind users in the list to view messages
-[message mentionedUserIDs:mentionArrayList];
-
-// Remind all other users in the conversation to view the message
-BOOL isMentionAll = YES;
-[message isMentionAll:isMentionAll];
-
-ZIMMessageSendConfig *config = [[ZIMMessageSendConfig alloc] init];
-// Whether to forcefully push the notification to the alerted user (regardless of whether the other party has enabled Do Not Disturb mode), the default is NO;
-config.isNotifyMentionedUsers = YES;
-
-// Take sending one-to-one conversation messages as an example
-ZIMConversationType type = ZIMConversationTypePeer;
-
-[zim sendMessage:message convId:@"conv_id" type:type config:config callback:^(ZIMMessage *zimMessage, ZIMError *error) {
-  if (error) {
-        // Developers can use this callback to monitor whether the message is sent successfully.
-    }
-}];
-
-```
-
-:::
-:::if{props.platform="iOS"}
-```objc
-// The following is a sample code for a user to send an @ message in a single conversation:
-// Create a reminder user list
-NSMutableArray<NSString *> *mentionArrayList = [[NSMutableArray alloc] init];
-
-// Add a reminder to the user (the user does not need to be in the current conversation)
+// Add a user (the user does not need to be in the current conversation)
 [mentionArrayList addObject:@"userId1"];
 [mentionArrayList addObject:@"userId2"];
 
@@ -2590,10 +2558,119 @@ ZIMConversationType type = ZIMConversationTypePeer;
 }];
 ```
 :::
+:::if{props.platform="win"}
+```cpp
+// Create a list of users to be mentioned
+std::vector<std::string> mentionArrayList;
+
+// Add a user (the user does not need to be in the current conversation)
+nimentionArrayList.push_back("userId1");
+mentionArrayList.push_back("userId2");
+
+// message can be of any type
+message->mentionedUserIDs = mentionArrayList;
+
+// Remind all other users in the conversation to read the message.
+bool isMentionAll = true;
+message->isMentionAll = true;
+
+ZIMMessageSendConfig config;
+// Set the message priority
+config.priority = ZIMMessagePriority::LOW;
+
+// Whether to forcefully push the notification to the alerted user (regardless of whether the other party has enabled Do Not Disturb mode), the default is false;
+config.isNotifyMentionedUsers = true;
+
+// Taking sending a one-to-one message as an example.
+ZIMConversationType type = ZIMConversationType::Peer;
+
+zim_->sendMessage(
+    message, "conv_id", type, config,
+    std::make_shared<zim::ZIMMessageSendNotification>(
+        [=](const std::shared_ptr<zim::ZIMMessage> &message) {
+            if (message) {
+                // Developers can use this callback to monitor whether a message is preparing to be sent. Only messages that pass the local basic parameter validation will trigger this callback; otherwise, an error will be returned through the onMessageSent callback.
+            }
+        }),
+    [=](std::shared_ptr<zim::ZIMMessage> message, zim::ZIMError errorInfo) {
+        // Developers can use this callback to monitor whether the message was sent successfully.
+        if (errorInfo.code == zim::ZIMErrorCode::ZIM_ERROR_CODE_SUCCESS) {
+            
+        }
+    });
+```
+:::
+:::if{props.platform="Web|rn"}
+```javascript
+// Below is an example code for a user sending an @ message (text message) in a one-to-one conversation: 
+var toConversationID = ''; // the userID of message receiver
+var conversationType = 0; // Conversation type, with values: One-to-one: 0, Room: 1, Group: 2.
+var config = { 
+    priority: 1, // Set message priority, with values: Low: 1 (default), Medium: 2, High: 3.
+};
+
+var notification = {
+    onMessageAttached: function(message) {
+        // todo: Loading
+    }
+}
+
+var messageTextObj = {
+    type: 1,
+    message: 'xxxx',
+    isMentionAll: true, // Remind all other users in the conversation to check the message.
+    mentionedUserIDs: ["userId1", "userId2"], // Remind users in the list to check the message.
+};
+
+zim.sendMessage(messageTextObj, toConversationID, conversationType, config, notification)
+    .then(function ({ message }) {
+        // Sent successfully
+    })
+    .catch(function (err) {
+        // Failed to send
+    });
+
+
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+// Below is an example code for a user sending an @ message in a one-to-one conversation: 
+
+try {
+    // The list of users to be mentioned
+    List<String> memtionList = ['userID1', 'userID2'];
+
+    // The message can be of any type.
+    // Call the API to remind users in the list to check the message.
+    message.mentionedUserIDs(memtionList);
+
+    // Remind all other users in the conversation to check the message.
+    bool isMentionAll = true;
+    message.isMentionAll(isMentionAll);
+
+    ZIMMessageSendConfig config = ZIMMessageSendConfig();
+    //Set message priority.
+    config.priority = ZIMMessagePriority.low;
+    // Whether to forcefully push the notification to the alerted user (regardless of whether the other party has enabled Do Not Disturb mode), the default is fasle;
+    config.isNotifyMentionedUsers = true;
+
+    // Taking sending a one-to-one message as an example.
+    ZIMConversationType type = ZIMConversationType.peer;
+
+    ZIMMessageSentResult result = await ZIM.getInstance()!.sendMessage(message, 'conv_id', type, config);
+    
+} on PlatformException catch (onError){
+    onError.code;// Handle error based on the error code docs.
+    onError.message;// Error message
+}
+```
+:::
+
 
 ### Receive @ messages
 
-The callback interface for receiving @ messages is the same as the callback interface for receiving regular messages. Please refer to [Send & Receive messages - Receive messages](#receive-rich-media-content) for details on the specific interface.
+The callback interface for receiving @ messages is the same as the callback interface for receiving regular messages. Please refer to [Send & Receive messages - Receive messages](#receive-messages) for details on the specific interface.
 
 After receiving a message, developers can implement corresponding functionalities based on their business logic, such as highlighting, etc.
 
@@ -2619,12 +2696,13 @@ When a user is mentioned, the {getPlatformData(props,conversationChangedMap)} wi
 @Override
   public void onConversationChanged(
       ZIM zim, ArrayList<ZIMConversationChangeInfo> conversationChangeInfoList) {
-      // conversationChangeInfoList You can get the mentionInfoList in the conversation that received the reminder
+      // conversationChangeInfoList 
+      // You can get the mentionInfoList in the conversation that received the reminder
   }
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
  - (void)zim:(ZIM *)zim
      conversationChanged:(NSArray<ZIMConversationChangeInfo *> *)conversationChangeInfoList {
@@ -2632,12 +2710,27 @@ When a user is mentioned, the {getPlatformData(props,conversationChangedMap)} wi
     }
 ```
 :::
-:::if{props.platform="iOS"}
-```objc
- - (void)zim:(ZIM *)zim
-     conversationChanged:(NSArray<ZIMConversationChangeInfo *> *)conversationChangeInfoList {
-         // Retrieve mentionInfoList from the conversationChangeInfoList of the mentioned conversation
-    }
+:::if{props.platform="win"}
+```cpp
+void onConversationChanged(
+        ZIM * /*zim*/,
+        const std::vector<ZIMConversationChangeInfo> & /*conversationChangeInfoList*/) {
+        // Retrieve mentionInfoList from the conversationChangeInfoList of the mentioned conversation
+}
+```
+:::
+:::if{props.platform="Web|rn"}
+```javascript
+zim.on('conversationChanged', function (zim, { info }) {
+    console.log(info.mentionInfoList);
+});
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+ZIMEventHandler.onConversationChanged = (ZIM zim, List<ZIMConversationChangeInfo> conversationChangeInfoList){
+        // Retrieve mentionInfoList from the conversationChangeInfoList of the mentioned conversation
+};
 ```
 :::
 
@@ -2652,20 +2745,31 @@ ArrayList<ZIMMessageMentionedInfo> mentionedInfoList = conversation.mentionedInf
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
  NSArray<ZIMMessageMentionedInfo *> * mentionedInfoList = conversation.mentionedInfoList;
  ```
 :::
-:::if{props.platform="iOS"}
-```objc
- NSArray<ZIMMessageMentionedInfo *> * mentionedInfoList = conversation.mentionedInfoList;
- ```
+:::
+:::if{props.platform="win"}
+```cpp
+std::vector<ZIMMessageMentionedInfo> mentionedInfoList = conversation.mentionedInfoList;
+```
+:::
+:::if{props.platform="Web|rn"}
+```javascript
+var mentionedInfoList = conversaion.mentionedInfoList;
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+List<ZIMMessageMentionedInfo> mentionedInfoList = conversation.mentionedInfoList;
+```
 :::
 
 ### Clearing mentionedInfoList of a conversation
 
-After receiving @ messages, users need to clear the [mentionedInfoList](@mentionedInfoList) of a conversation to stop receiving notifications.
+After receiving @ messages, users need to clear the {getPlatformData(props,mentionedInfoListMap)} of the conversation to stop receiving notifications.
 
 The interface for clearing the mentionedInfoList  is the same as clearing the unread message count of a conversation:
 - {getPlatformData(props,clearConversationUnreadMessageCountMap)}: Clears the unread message count of a single conversation. Refer to the example code in [Manage conversations - Clear single conversation message unread](./../Conversation/Get%20the%20conversation%20list.mdx).
@@ -2681,20 +2785,30 @@ ArrayList<String> userIds = message.getMentionedUserIDs();
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
  NSArray<NSString *> *userIds = message.mentionedUserIDs;
 ```
 :::
-:::if{props.platform="iOS"}
-```objc
- NSArray<NSString *> *userIds = message.mentionedUserIDs;
+:::if{props.platform="win"}
+```cpp
+std::vector<std::string> userIds = message.mentionedUserIDs;
+```
+:::
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
+```javascript
+var userIds = message.mentionedUserIDs;
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+List<String> userIds = message.mentionedUserIDs;
 ```
 :::
 
 ### Confirm whether it is a reminder for all members
 
-All users within the conversation can use the {getPlatformData(props,isMentionAllMap)} parameter of {getPlatformData(props,ZIMMessageMap)}to determine whether it is a reminder for all members. 
+All users within the conversation can use the {getPlatformData(props,isMentionAllMap)} parameter of {getPlatformData(props,ZIMMessageMap)} to determine whether it is a reminder for all members. 
 
 :::if{props.platform=undefined}
 ```java
@@ -2702,14 +2816,24 @@ boolean isMentionAll = message.isMentionAll();
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
 BOOL isMentionAll = message.isMentionAll;
 ```
 :::
-:::if{props.platform="iOS"}
-```objc
-BOOL isMentionAll = message.isMentionAll;
+:::if{props.platform="win"}
+```cpp
+boolean isMentionAll = message.isMentionAll;
+```
+:::
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
+```javascript
+var isMentionAll = message.isMentionAll;
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+bool isMentionAll = message.isMentionAll;
 ```
 :::
 
@@ -2744,7 +2868,7 @@ public void onBroadcastMessageReceived(ZIM zim, ZIMMessage message) {
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
  // User receives broadcast messages
  - (void)zim:(ZIM *)zim broadcastMessageReceived:(ZIMMessage *)message {
@@ -2752,13 +2876,25 @@ public void onBroadcastMessageReceived(ZIM zim, ZIMMessage message) {
  }
  ```
 :::
-:::if{props.platform="iOS"}
-```objc
+:::if{props.platform="win"}
+```c++
  // User receives broadcast messages
- - (void)zim:(ZIM *)zim broadcastMessageReceived:(ZIMMessage *)message {
-     // Receive broadcast messages from all members
- }
- ```
+virtual void onBroadcastMessageReceived(ZIM * /*zim*/, const std::shared_ptr<ZIMMessage> & /*message*/) {}
+```
+:::
+:::if{props.platform="Web|miniprogram|rn|uniapp"}
+```javascript
+ // User receives broadcast messages
+zim.on('broadcastMessageReceived', function (zim, { message }) {
+    console.log(message);
+});
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+ // User receives broadcast messages
+ZIMEventHandler.onBroadcastMessageReceived(zim, message){}
+```
 :::
 
 ## Forward message
@@ -2773,9 +2909,6 @@ For more information, see [Forward messages](./Forward%20messages.mdx).
 ## Receive Tips message
 
 ZIM SDK supports converting user operations within a conversation into Tips messages. When a related operation occurs, ZIM SDK will send a Tips message to the session to notify. For details, please refer to [Receive tip messages](./Receive%20tip%20messages.mdx).
-
-
-
 
 ## Listen for the message status 
 
@@ -2797,7 +2930,7 @@ zim.setEventHandler(new ZIMEventHandler() {
 ```
 
 :::
-:::if{props.platform="mac"}
+:::if{props.platform="iOS|mac"}
 ```objc
 //  Listen for the message status.
 - (void)zim:(ZIM *)zim messageSentStatusChanged:
@@ -2806,13 +2939,34 @@ zim.setEventHandler(new ZIMEventHandler() {
 }
 ```
 :::
-:::if{props.platform="iOS"}
-```objc
+:::if{props.platform="win"}
+```cpp
 //  Listen for the message status.
-- (void)zim:(ZIM *)zim messageSentStatusChanged:
-        (NSArray<ZIMMessageSentStatusChangeInfo *> *)messageSentStatusChangeInfoList {
-            // You can listen for the callback on the changes of message status here.
+void onMessageSentStatusChanged(zim::ZIM *zim, const std::vector<ZIMMessageSentStatusChangeInfo> &messageSentStatusChangeInfoList{
+    // You can listen for the callback on the changes of message status here.
 }
+```
+:::
+:::if{props.platform="Web|rn"}
+```javascript
+//  Listen for the message status.
+zim.on('messageSentStatusChanged', function (zim, { infos }) {
+    infos.forEach( function (info) {
+        console.warn(info.message, info.status);
+    });  
+});
+```
+:::
+:::if{props.platform="flutter"}
+```dart
+//  Listen for the message status.
+ZIMEventHandler.onMessageSentStatusChanged = (
+    ZIM zim, List<ZIMMessageSentStatusChangeInfo> messageSentStatusChangedInfoList){
+        for(ZIMMessageSentStatusChangeInfo info in messageSentStatusChangedInfoList){
+            log(info.status.toString());
+            log(info.message!.messageID.toString());
+        }
+    };
 ```
 :::
 

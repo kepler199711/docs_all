@@ -2460,7 +2460,7 @@ ZIM.getInstance().sendMessage(zimMultipleMessage, userID, type, config, notifica
 
 ### 接收组合消息
 
-接收组合消息的回调接口与接收普通消息的回调接口一致，请参考 [收发普通消息 - 接收消息](./Send%20and%20receive%20messages.mdx#接收消息) 了解具体接口。
+接收组合消息的回调接口与接收普通消息的回调接口一致，请参考 [收发普通消息 - 接收消息](#接收消息) 了解具体接口。
 
 以下为用户在单聊会话中接收组合消息的示例代码：
 
@@ -2717,7 +2717,7 @@ zim.sendMessage(messageTextObj, toConversationID, conversationType, config, noti
 // 以下为用户在单聊会话中发送 @ 消息的示例代码：
 
 try {
-    // 群内成员查询群组的成员列表
+    // 待提醒的用户列表
     List<String> memtionList = ['userID1', 'userID2'];
 
     // message 可以为任何类型消息
