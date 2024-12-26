@@ -38,36 +38,9 @@
 
 完成上述步骤，即可在集成 ZPNs uni-app SDK 时，自动集成上述厂商的推送 SDK。
 
-### 集成 ZPNs SDK
+### 配置离线推送
 
 <Steps>
-<Step title="获取 ZPNs 原生插件">
-请参考 [即时通讯 - 下载](https://doc-zh.zego.im/zim-uniapp/client-sdks/sdk-downloads) 页面，获取最新版本的 ZPNs 原生插件 SDK，并解压得到的 “zego-ZPNsUniPlugin.zip” 文件。
-</Step>
-<Step title="解压插件并引入工程">
-将解压后获取的的文件夹，直接复制到您项目工程根目录下的 “nativeplugins” 文件夹，如果没有该目录，请手动创建。
-
-    <Frame width="512" height="auto" caption="">
-      <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/uniapp/img1.jpeg" />
-    </Frame>
-
-    <Warning title="注意">
-    由于 uni-app 原生插件的限制，ZPNs SDK 暂不支持通过插件市场下载插件，仅支持通过 ZEGO 官网下载获取。
-    </Warning>
-</Step>
-<Step title="添加本地插件">
-单击项目目录的 “manifest.json” 文件后，单击 “App原生插件配置” 中的 “选择本地插件” 。
-  
-    <Frame width="512" height="auto" caption="">
-      <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/uniapp/img2.jpeg" />
-    </Frame>
-
-在弹出的选择框中，选择 “Zego ZPNs 离线推送 SDK” 后，单击“确认”，即添加成功。
-
-    <Frame width="512" height="auto" caption="">
-        <img src="https://storage.zego.im/sdk-doc/Pics/ZIM/ZPNS/uniapp/img3.jpeg" />
-    </Frame>
-</Step>
 <Step title="（仅适用于云端打包项目）配置 vivo 推送">
 针对 vivo 推送，在 “App原生插件配置” 中，传入 vivo api_key 和 app_id，如图额外信息：
 
