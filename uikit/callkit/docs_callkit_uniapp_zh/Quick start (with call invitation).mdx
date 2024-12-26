@@ -173,7 +173,7 @@ onBeforeUnmount(() => {
     <view @click="handleSendInvitation">发起呼叫</button>
 </template>
 
-<script>
+<script lang="setup" setup>
 import ZegoSendCallInvitationButton from "@/uni_modules/zego-PrebuiltCall/components/invitation/ZegoSendCallInvitationButton.vue"
 import { ZegoInvitationType } from "@/uni_modules/zego-UIKitCore";
 import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";

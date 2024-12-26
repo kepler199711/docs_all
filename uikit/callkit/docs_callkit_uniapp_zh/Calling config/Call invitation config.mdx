@@ -10,14 +10,12 @@
 
 以下是参考代码：
 
-```vue title="自定义呼叫铃声" {5-6}
+```vue title="自定义呼叫铃声" {4-5}
 import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
 
-onMounted(() => {
-  ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
-    incomingCallRingtone: 'https://xxx/xxx.mp3', // 接收呼叫邀请时的铃声
-    outgoingCallRingtone: 'https://xxx/xxx.mp3', // 发送呼叫邀请时的铃声
-  })
+ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
+  incomingCallRingtone: 'https://xxx/xxx.mp3', // 接收呼叫邀请时的铃声
+  outgoingCallRingtone: 'https://xxx/xxx.mp3', // 发送呼叫邀请时的铃声
 })
 ```
 
@@ -27,13 +25,11 @@ onMounted(() => {
 
 以下是参考代码：
 
-```vue title="隐藏拒绝按钮" {5}
+```vue title="隐藏拒绝按钮" {4}
 import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
 
-onMounted(() => {
-  ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
-    showDeclineButton: false,
-  })
+ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
+  showDeclineButton: false,
 })
 ```
 
@@ -43,13 +39,11 @@ onMounted(() => {
 
 以下是参考代码：
 
-```vue title="设置因发起者离开而自动结束通话" {5}
+```vue title="设置因发起者离开而自动结束通话" {4}
 import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
 
-onMounted(() => {
-  ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
-    endCallWhenInitiatorLeave: true,
-  })
+ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
+  endCallWhenInitiatorLeave: true,
 })
 ```
 
@@ -84,39 +78,37 @@ onMounted(() => {
 ```vue title="监听呼叫邀请事件回调"
 import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
 
-onMounted(() => {
-  ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
-        onIncomingCallDeclineButtonPressed() {
+ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
+      onIncomingCallDeclineButtonPressed() {
 
-        },
-        onIncomingCallAcceptButtonPressed() {
+      },
+      onIncomingCallAcceptButtonPressed() {
 
-        },
-        onIncomingCallReceived(callID, caller, callType, callees) {
-            
-        },
-        onIncomingCallCanceled(callID, caller) {
+      },
+      onIncomingCallReceived(callID, caller, callType, callees) {
+          
+      },
+      onIncomingCallCanceled(callID, caller) {
 
-        },
-        onIncomingCallTimeout(callID, caller) {
-            
-        },
-        onOutgoingCallCancelButtonPressed() {
-            
-        },
-        onOutgoingCallAccepted(callID, callee) {
-            
-        },
-        onOutgoingCallRejectedCauseBusy(callID, callee) {
-            
-        },
-        onOutgoingCallDeclined(callID, callee) {
-            
-        },
-        onOutgoingCallTimeout(callID, callees) {
-            
-        },
-  })
+      },
+      onIncomingCallTimeout(callID, caller) {
+          
+      },
+      onOutgoingCallCancelButtonPressed() {
+          
+      },
+      onOutgoingCallAccepted(callID, callee) {
+          
+      },
+      onOutgoingCallRejectedCauseBusy(callID, callee) {
+          
+      },
+      onOutgoingCallDeclined(callID, callee) {
+          
+      },
+      onOutgoingCallTimeout(callID, callees) {
+          
+      },
 })
 ```
 
@@ -127,12 +119,10 @@ onMounted(() => {
 
 以下是参考代码：
 
-```vue title="通话配置" {5}
+```vue title="通话配置" {4}
 import ZegoUIKitPrebuiltCallService from "@/uni_modules/zego-PrebuiltCall/services/ZegoUIKitPrebuiltCallService";
 
-onMounted(() => {
-  ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
-        callConfig: ZegoUIKitPrebuiltCallConfig;
-  })
+ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, {
+      callConfig: ZegoUIKitPrebuiltCallConfig;
 })
 ```
