@@ -22,6 +22,15 @@ import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.md
 若您已有 uni-app 项目，则跳过此步骤。若尚无 uni-app 项目，请参考 uni-app 开发者文档 [创建 uni-app](https://uniapp.dcloud.net.cn/quickstart-hx.html) 快速创建项目。
 </Step>
 
+<Step title="设置 Android SdkVersion">
+单击项目目录的 “manifest.json” 文件后，单击 “App 常用其他设置”。
+设置 Android minSdkVersion 为 23, targetSdkVersion 为 33。
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/97cc39689b.png" alt=""/>
+</Frame>
+</Step>
+
 <Step title="导入 ZEGO 实时音视频 SDK 和 ZIM 即时通讯 SDK">
 在插件市场购买 [ZEGO 即构实时音视频 SDK](https://ext.dcloud.net.cn/plugin?id=3617)和[Zego ZIM 即时通讯 SDK](https://ext.dcloud.net.cn/plugin?id=8601)。购买时填入的 AppID 必须和后面需要运行的 AppID 一致。
 
@@ -152,7 +161,7 @@ const navigateTo = (url: string) => {
 		    "style": {
 		        "navigationBarTitleText": "首页"
 		    }
-		}
+		},
         // 新增基础通话页
 		{
 		    "path": "pages/base-call/index",

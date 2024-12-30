@@ -111,6 +111,8 @@ const notificationConfig = ref({
 })
 
 onMounted(() => {
+    // 离线推送配置
+    const config = {}
     ZegoUIKitPrebuiltCallService.init(appID, appSign, userID, userName, config);
 })
 ```
@@ -119,7 +121,31 @@ onMounted(() => {
 使用 `ZegoUIKitPrebuiltCallService.sendInvitation()`来发送呼叫邀请。
 
 ```javascript
-ZegoUIKitPrebuiltCallService.sendInvitation(callInviteConfig: CallInviteConfig)
+import { ZegoInvitationType } from "@/uni_modules/zego-UIKitCore";
+import { Navigation } from "@/uni_modules/zego-PrebuiltCall/utils/Navigation";
+
+const invitees = [{userID: '需要邀请的用户ID', userName: '需要邀请的用户名'}]
+const notificationConfig = {
+  title: "离线推送标题",
+  message: "离线推送内容",
+  resourceID: '资源ID',
+}
+// 发起邀请参数
+const callInviteConfig = {
+    invitees: invitees.value,
+    type: ZegoInvitationType.VideoCall,
+    notificationConfig,
+}
+
+ZegoUIKitPrebuiltCallService.sendInvitation(callInviteConfig)
+    .then(({ invitationID, callID, successUsers, errorUsers }) => {
+            Navigation.navigateTo('/uni_modules/zego-PrebuiltCall/pages/invitation/ZegoCallInvitationWaiting', {
+                invitees: successUsers,
+                isVideoCall: callInviteConfig.type === ZegoInvitationType.VideoCall,
+                invitationID,
+                roomID: callID
+            })
+        })
 ```
 
 发起呼叫邀请配置请参考[CallInviteConfig](../API%20Reference/Config.mdx#CallInviteConfig)。
