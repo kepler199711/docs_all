@@ -153,7 +153,7 @@ static void Function(ZIM zim, ZIMConnectionState state, ZIMConnectionEvent event
 static void Function(ZIM zim, List<ZIMMessage> messageList, ZIMMessageReceivedInfo info, String fromUserID)? onPeerMessageReceived;
 ```
 
-详细的接口介绍，请参考 [onTokenWillExpire](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onTokenWillExpire.html)、[onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html)、[onPeerMessageReceived](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onPeerMessageReceived.html)、[onRoomMessageReceived](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMessageReceived.html)、[onRoomMemberJoined](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMemberJoined.html)、[onRoomMemberLeft](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onRoomMemberLeft.html)。
+详细的接口介绍，请参考 [onError](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onError.html)、[onTokenWillExpire](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onTokenWillExpire.html)、[onConnectionStateChanged](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html)、[onPeerMessageReceived](https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onPeerMessageReceived.html)。
 
 <a id="login"></a>
 
@@ -282,13 +282,6 @@ ZIM.getInstance()!.logout();
 ZIM.getInstance()!.destroy();
 ```
 
-### 3.2 API 时序图
-
-通过以上的实现流程描述，API 接口调用时序图如下：
-
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/flutter/peerMessage_Flutter_new.png" /></Frame>
-
-<MarkSendMessageEvent platform="flutter" />
 
 ## 相关文档
 

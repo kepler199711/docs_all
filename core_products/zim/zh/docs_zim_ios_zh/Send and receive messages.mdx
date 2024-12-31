@@ -225,13 +225,13 @@ static ZGZIMManager *_sharedManager = nil;
 
 <a id="login"></a>
 
-详细的接口介绍，请参考 [tokenWillExpire](/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-token-will-expire)、[connectionStateChanged](/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-connection-state-changed-event-extended-data)、[peerMessageReceived](/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-peer-message-received-info-from-user-id)。
+详细的接口介绍，请参考 [tokenWillExpire](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-token-will-expire)、[connectionStateChanged](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-connection-state-changed-event-extended-data)、[peerMessageReceived](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-peer-message-received-info-from-user-id)。
 
 #### 4. 登录 ZIM
 
 创建实例后，客户端 A 和 B 需要登录 ZIM，只有登录成功后才可以开始发送、接收消息、更新 Token 等。
 
-首先，请创建用户个人登录配置（[ZIMLoginConfig](@-ZIMLoginConfig) 对象）；创建完毕后，调用 [loginWithUserID](/article/api?doc=zim_API~objective-c_ios~protocol~ZIM#login-with-user-id-config-callback-2) 接口，传入上述对象，即可登录 ZIM。
+首先，请创建用户个人登录配置（[ZIMLoginConfig](@-ZIMLoginConfig) 对象）；创建完毕后，调用 [loginWithUserID](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIM#login-with-user-id-config-callback-2) 接口，传入上述对象，即可登录 ZIM。
 
 <Warning title="注意">
 
@@ -287,7 +287,7 @@ config.priority = ZIMMessagePriorityMedium;  // 消息优先级，取值为 低:
 
 #### 6. 接收消息
 
-客户端 B 登录 ZIM 后，将会收到在 [setEventHandler](@setEventHandler) 回调中设置的 [peerMessageReceived](/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-peer-message-received-info-from-user-id) 监听接口，收到客户端 A 发送过来的消息。
+客户端 B 登录 ZIM 后，将会收到在 [setEventHandler](@setEventHandler) 回调中设置的 [peerMessageReceived](https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-peer-message-received-info-from-user-id) 监听接口，收到客户端 A 发送过来的消息。
 
 <Warning title="注意">
 
@@ -326,13 +326,6 @@ config.priority = ZIMMessagePriorityMedium;  // 消息优先级，取值为 低:
 [zim destroy];
 ```
 
-### 3.2 API 时序图
-
-通过以上的实现流程描述，API 接口调用时序图如下：
-
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/iOS/peerMessage_iOS_new.png" /></Frame>
-
-<MarkSendMessageEvent platform="ios" />
 
 ## 相关文档
 
