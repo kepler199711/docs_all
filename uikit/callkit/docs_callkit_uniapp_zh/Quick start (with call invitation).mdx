@@ -22,8 +22,7 @@ import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.md
 </Step>
 
 <Step title="设置 Android SdkVersion">
-单击项目目录的 “manifest.json” 文件后，单击 “App 常用其他设置”。
-设置 Android minSdkVersion 为 23, targetSdkVersion 为 33。
+单击项目目录的 “manifest.json” 文件后，单击 “App 常用其他设置”。设置 Android `minSdkVersion` 为 23，`targetSdkVersion` 为 33。
 
 <Frame width="100%">
     <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/97cc39689b.png" alt=""/>
@@ -176,7 +175,7 @@ onBeforeUnmount(() => {
 </script>
 ```
 
-更多邀请按钮参数请参考[ZegoSendCallInvitationButton](./API%20Reference/Config.mdx#ZegoSendCallInvitationButton)
+更多邀请按钮参数请参考 [ZegoSendCallInvitationButton](./API%20Reference/Config.mdx#ZegoSendCallInvitationButton)
 
 如果需要自定义通话按钮，可以通过调用 ZegoUIKitPrebuiltCallService.sendInvitation 来发起呼叫。
 
@@ -254,7 +253,7 @@ const navigateTo = (url: string) => {
 ```
 
 打开 pages.json，添加 pages 配置
-```json title="pages.json" {11-37}
+```json title="pages.json" {10-37}
 {
 	"pages": [
         // 首页
