@@ -2051,11 +2051,11 @@ zim.sendMessage(zimMultipleMessage, userID, type, config, new ZIMMessageSentFull
     @Override
     public void onMultipleMediaUploadingProgress(
         ZIMMultipleMessage message,
-        long currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-        long totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
+        long currentFileSize,      // 已上传文件总大小，单位为 Byte。比如已上传了 20,971,520 Byte，则此处为 20,971,520。
+        long totalFileSize,        // 总文件大小，单位为 Byte。比如总文件大小 104,857,600 Byte，则此处为 104,857,600
         int messageInfoIndex,      // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-        long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-        long totalIndexFileSize,   // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+        long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 Byte。
+        long totalIndexFileSize,   // 接收到此回调时，当前正在上传的文件的实际大小，单位为 Byte。
     ) {
         // todo: upload progress
         // 开发者可以监听这个回调获取多媒体上传的进度
@@ -2130,11 +2130,11 @@ notification.onMessageAttached = ^(ZIMMessage * _Nonnull message) {
         
 notification.onMultipleMediaUploadingProgress = ^(
     ZIMMultipleMessage * _Nonnull message,
-    unsigned long long currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-    unsigned long long totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
+    unsigned long long currentFileSize,      // 已上传文件总大小，单位为 Byte。比如已上传了 20,971,520 Byte，则此处为 20,971,520。
+    unsigned long long totalFileSize,        // 总文件大小，单位为 Byte。比如总文件大小 104,857,600B，则此处为 104,857,600
     unsigned int messageInfoIndex,           // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-    unsigned long long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-    unsigned long long totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+    unsigned long long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 Byte。
+    unsigned long long totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 Byte。
 ) {
     // 开发者可以监听这个回调获取多媒体上传的进度
     // 此回调的触发频率为 1 次/秒。
@@ -2155,85 +2155,85 @@ sendConfig.priority = ZIMMessagePriorityMedium;
 ```cpp
 // 在单聊会话中向指定用户发送组合消息
 
-zim::ZIMMessage *message = nullptr;
-auto multipleMessage zim::ZIMMultipleMessage();
-// 组合消息 Item 列表，最多只可以包含 20 个 Item
-std::vector<ZIMMessageLiteInfo*> messageInfoList;
+auto multiMsg = std::make_shared<ZIMMultipleMessage>();
 
 // 文本
-zim::ZIMTextMessageLiteInfo textMsgInfo;
-textMsgInfo.message = "消息内容";
-messageInfoList.push_back(textMsgInfo);
+auto textMsgInfo = std::make_shared<ZIMTextMessageLiteInfo>();
+textMsgInfo->message = "消息内容";
+multiMsg->messageInfoList.push_back(textMsgInfo);
 
 // 自定义消息：最多支持 1 个
-zim::ZIMCustomMessageLiteInfo customMsgInfo;
-customMsgInfo.message = "消息内容";
-customMsgInfo.searchedContent = "搜索内容";
-customMsgInfo.subType = 100;
-messageInfoList.push_back(customMsgInfo);
+auto customMsgInfo = std::make_shared<ZIMCustomMessageLiteInfo>();
+customMsgInfo->message = "消息内容";
+customMsgInfo->searchedContent = "搜索内容";
+customMsgInfo->subType = 100;
+multiMsg->messageInfoList.push_back(customMsgInfo);
 
 // 图片：最多支持 10 个
 // 网络图片示例
-zim::ZIMImageMessageLiteInfo imageMsgInfo;
-imageMsgInfo.fileDownloadUrl = "https://xxxx.jpeg"; // 原图
-imageMsgInfo.thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // 缩略图
-imageMsgInfo.largeImageDownloadUrl = "https://xxxx-large.jpeg"; // 大图
-messageInfoList.push_back(imageMsgInfo);
+auto imageMsgInfo = std::make_shared<ZIMImageMessageLiteInfo>();
+imageMsgInfo->fileDownloadUrl = "https://xxxx.jpeg";                // 原图
+imageMsgInfo->thumbnailDownloadUrl = "https://xxxx-thumbnail.jpeg"; // 缩略图
+imageMsgInfo->largeImageDownloadUrl = "https://xxxx-large.jpeg";    // 大图
+multiMsg->messageInfoList.push_back(imageMsgInfo);
 
 // 本地图片示例
-zim::ZIMImageMessageLiteInfo localImageMsgInfo;
-localImageMsgInfo.fileLocalPath = "D:\\files\\xxx.jpg"; // 图片的绝对路径
-messageInfoList.push_back(localImageMsgInfo);
+auto localImageMsgInfo = std::make_shared<ZIMImageMessageLiteInfo>();
+localImageMsgInfo->fileLocalPath = "D:\\files\\xxx.jpg"; // 图片的绝对路径
+multiMsg->messageInfoList.push_back(localImageMsgInfo);
 
 // 文件：最多支持 1 个
-zim::ZIMFileMessageLiteInfo localFileMsgInfo;
-localFileMsgInfo.fileLocalPath = "D:\\files\\xxx.zip"; // 文件的绝对路径
-messageInfoList.push_back(localFileMsgInfo);
+auto localFileMsgInfo = std::make_shared<ZIMFileMessageLiteInfo>();
+localFileMsgInfo->fileLocalPath = "D:\\files\\xxx.zip"; // 文件的绝对路径
+multiMsg->messageInfoList.push_back(localFileMsgInfo);
 
 // 音频：最多支持 1 个
-zim::ZIMAudioMessageLiteInfo localAudioMsgInfo;
-localAudioMsgInfo.fileLocalPath = "D:\\files\\xxx.mp3"; // 音频的绝对路径
-localAudioMsgInfo.audioDuration = 100; // 必填，音频时长，单位秒
-messageInfoList.push_back(localAudioMsgInfo);
+auto localAudioMsgInfo = std::make_shared<ZIMAudioMessageLiteInfo>();
+localAudioMsgInfo->fileLocalPath = "D:\\files\\xxx.mp3"; // 音频的绝对路径
+localAudioMsgInfo->audioDuration = 100; // 必填，音频时长，单位秒
+multiMsg->messageInfoList.push_back(localAudioMsgInfo);
 
 // 视频：最多支持 1 个
-zim::ZIMVideoMessageLiteInfo localVideoMsgInfo;
-localVideoMsgInfo.fileLocalPath = "D:\\files\\xxx.mp4"; // 文件绝对路径
-localVideoMsgInfo.videoDuration = 100; // 必填，视频时长，单位秒
-messageInfoList.push_back(localVideoMsgInfo);
-
-multipleMessage.messageInfoList = messageInfoList;
-message = &multipleMessage;
+auto localVideoMsgInfo = std::make_shared<ZIMVideoMessageLiteInfo>();
+localVideoMsgInfo->fileLocalPath = "D:\\files\\xxx.mp4"; // 文件绝对路径
+localVideoMsgInfo->videoDuration = 100; // 必填，视频时长，单位秒
+multiMsg->messageInfoList.push_back(localVideoMsgInfo);
 
 zim::ZIMMessageSendConfig sendConfig;
 zim::ZIMPushConfig pushConfig;
 
 pushConfig.content = "win_push_content";
-pushConfig.extendedData = "win_push_extended_data";
+pushConfig.payload = "win_push_payload";
 pushConfig.title = "win_push_title";
 
 sendConfig.priority = zim::ZIM_MESSAGE_PRIORITY_MEDIUM;
 sendConfig.pushConfig = &pushConfig;
 
-zim::ZIMConversationType type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER
+auto type = zim::ZIMConversationType::ZIM_CONVERSATION_TYPE_PEER;
 
 auto notification = std::make_shared<zim::ZIMMessageSendNotification>(
-            [=](const std::shared_ptr<zim::ZIMMessage> &message) { 
-                // 开发者可监听此回调，执行消息发送前的逻辑
-            },
-            [=](const std::shared_ptr<zim::ZIMMultipleMessage> &message,
-                unsigned long long currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-                unsigned long long totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
-                unsigned int messageInfoIndex,           // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-                unsigned long long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-                unsigned long long totalIndexFileSize    // 触发该回调对应的文件的大小
-            ) { 
-··
-            });
+    [=](const std::shared_ptr<zim::ZIMMessage> &message) {
+        // 开发者可监听此回调，执行消息发送前的逻辑
+    },
+    [=](const std::shared_ptr<ZIMMediaMessage> &message,
+        unsigned long long currentFileSize, unsigned long long totalFileSize) {
+        // 发送组合消息时，该通知不会触发
+    },
+    [=](const std::shared_ptr<zim::ZIMMultipleMessage> &message,
+        unsigned long long currentFileSize, // 已上传文件总大小，单位为 Byte。比如已上传了 20,971,520 Byte，则此处为 20,971,520。
+        unsigned long long totalFileSize, // 总文件大小，单位为 Byte。比如总文件大小 104,857,600 Byte，则此处为 104,857,600
+        unsigned int messageInfoIndex, // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
+        unsigned long long currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 Byte。
+        unsigned long long totalIndexFileSize // 触发该回调对应的文件的大小
+    ) {
+        // 发送组合消息的上传回调，如果组合消息中没有媒体类型，则该回调不会触发
+    });
 
-zim_->sendMessage(message, "toConversationID", type, config, notification,
+zim_->sendMessage(multiMsg, "toConversationID", type, sendConfig, notification,
                     [=](const std::shared_ptr<zim::ZIMMessage> &message,
-                              const zim::ZIMError &errorInfo) { int i = 0; });
+                        const zim::ZIMError &errorInfo) {
+                        // 发送结果的回调
+                    });
 ```
 :::
 :::if{props.platform="Web"}
@@ -2295,11 +2295,11 @@ var notification = {
     },
     onMultipleMediaUploadingProgress: function(
         message,
-        currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-        totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
+        currentFileSize,      // 已上传文件总大小，单位为 Byte。比如已上传了 20,971,520 Byte，则此处为 20,971,520。
+        totalFileSize,        // 总文件大小，单位为 Byte。比如总文件大小 104,857,600 Byte，则此处为 104,857,600
         messageInfoIndex,     // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-        currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-        totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+        currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 Byte。
+        totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 Byte。
     ) {
         // todo: upload progress
         // 开发者可以监听这个回调获取多媒体上传的进度
@@ -2428,11 +2428,11 @@ ZIMMessageSendNotification notification = ZIMMessageSendNotification(
     },
     onMultipleMediaUploadingProgress: (
         message,
-        currentFileSize,      // 已上传文件总大小，单位为 B。比如已上传了 20,971,520B，则此处为 20,971,520。
-        totalFileSize,        // 总文件大小，单位为 B。比如总文件大小 104,857,600B，则此处为 104,857,600
+        currentFileSize,      // 已上传文件总大小，单位为 Byte。比如已上传了 20,971,520 Byte，则此处为 20,971,520。
+        totalFileSize,        // 总文件大小，单位为 Byte。比如总文件大小 104,857,600 Byte，则此处为 104,857,600
         messageInfoIndex,     // 接收到此回调时，当前正在上传的文件在 messageInfoList 数组的索引
-        currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 B。
-        totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 B。
+        currentIndexFileSize, // 接收到此回调时，当前正在上传的文件的已上传大小，单位为 Byte。
+        totalIndexFileSize    // 接收到此回调时，当前正在上传的文件的实际大小，单位为 Byte。
     ){
         // 开发者可以监听这个回调获取多媒体上传的进度
         // 总文件上传进度： currentFileSize / totalFileSize
