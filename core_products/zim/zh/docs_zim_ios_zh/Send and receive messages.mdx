@@ -4,6 +4,7 @@ articleID: 11567
 
 import MarkMessageType from '/core_products/zim/zh/snippets/MessageType.mdx'
 import MarkSendMessageEvent from '/core_products/zim/zh/snippets/SendMessageEvent.mdx'
+import MessageSequenceDiagramOC from '/core_products/zim/zh/snippets/MessageSequenceDiagramOCzh.mdx'
 
 # 实现基本消息收发
 
@@ -326,6 +327,12 @@ config.priority = ZIMMessagePriorityMedium;  // 消息优先级，取值为 低:
 [zim destroy];
 ```
 
+### 3.2 API 时序图
+
+通过以上的实现流程描述，API 接口调用时序图如下：
+
+<MessageSequenceDiagramOC />
+<MarkSendMessageEvent />
 
 ## 相关文档
 

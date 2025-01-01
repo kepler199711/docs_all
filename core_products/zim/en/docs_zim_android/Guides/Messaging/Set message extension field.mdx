@@ -99,7 +99,7 @@ ZIM.getInstance()!.sendMessage(textMessage, toConversationID, type, sendConfig).
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title ="Sample code"
 NSString *toConversationID = @"xxxx1";
@@ -303,7 +303,7 @@ zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCa
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title="Sample code"
 // 1. Configure the local extension field of a message.
@@ -498,7 +498,7 @@ ZIMEventHandler.onPeerMessageReceived = (ZIM zim, List<ZIMMessage> messageList, 
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title="Sample code"
 // Update the local extension field of a private-chat message after you receive the message.

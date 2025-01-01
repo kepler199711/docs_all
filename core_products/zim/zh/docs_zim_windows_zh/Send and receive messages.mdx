@@ -5,6 +5,8 @@ articleID: 11623
 
 import MarkMessageType from '/core_products/zim/zh/snippets/MessageType.mdx'
 import MarkSendMessageEvent from '/core_products/zim/zh/snippets/SendMessageEvent.mdx'
+import MessageSequenceDiagramCommon from '/core_products/zim/zh/snippets/MessageSequenceDiagramCommonzh.mdx'
+
 
 # 实现基本消息收发
 
@@ -232,7 +234,7 @@ void CZIMDemoDlg::OnRoomMessageReceived(zim::ZIM* zim,
 
 创建实例后，客户端 A 和 B 需要登录 ZIM，只有登录成功后才可以开始发送、接收消息、更新 Token 等。
 
-客户端需要使用各自的用户信息进行登录。调用 [login](@login) 接口，传入 userID 和 [ZIMLoginConfig](@-ZIMLoginConfig) 对象，进行登录。
+客户端需要使用各自的用户信息进行登录。调用 [login](@login__2) 接口，传入 userID 和 [ZIMLoginConfig](@-ZIMLoginConfig) 对象，进行登录。
 
 <Warning title="注意">
 
@@ -344,7 +346,7 @@ zim_->destroy();
 
 通过以上的实现流程描述，API 接口调用时序图如下：
 
-<Frame width="512" height="auto" caption=""><img src="https://storage.zego.im/sdk-doc/Pics/ZIM/Android/peerMessage_Android_Windows_new.png" /></Frame>
+<MessageSequenceDiagramCommon />
 
 <MarkSendMessageEvent platform="win" />
 

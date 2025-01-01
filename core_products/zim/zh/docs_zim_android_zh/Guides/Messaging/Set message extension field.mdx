@@ -114,7 +114,7 @@ ZIM.getInstance()!.sendMessage(textMessage, toConversationID, type, sendConfig).
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title ="示例代码"
 NSString *toConversationID = @"xxxx1";
@@ -315,7 +315,7 @@ zim.sendMessage(zimMessage, toConversationID, type, config, new ZIMMessageSentCa
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title="示例代码"
 // 1. 设置消息的本地拓展字段
@@ -506,7 +506,7 @@ ZIMEventHandler.onPeerMessageReceived = (ZIM zim, List<ZIMMessage> messageList, 
 ```
 </CodeGroup>
 :::
-:::if{props.platform="iOS"}
+:::if{props.platform="iOS|mac"}
 <CodeGroup>
 ```objc title="示例代码"
 // 收到单聊消息后，更新消息的本地拓展字段
