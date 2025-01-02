@@ -11,7 +11,7 @@
         },
         {
           "type": "doc",
-          "label": "即构云服务SLA",
+          "label": "即构云服务可用性保证",
           "id": "zego-cloud-service-availability-guarantee"
         },
         {
@@ -55,11 +55,6 @@
           "type": "doc",
           "label": "即构安全合规白皮书",
           "id": "zego-security-and-compliance-white-paper"
-        },
-        {
-          "type": "doc",
-          "label": "即构云服务可用性保证",
-          "id": "zego-cloud-service-availability-guarantee"
         }
       ]
     },
