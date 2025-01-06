@@ -7,6 +7,11 @@
     },
     {
       "type": "doc",
+      "label": "Release Notes",
+      "id": "release-notes"
+    },
+    {
+      "type": "doc",
       "label": "Accessing Server APIs",
       "id": "accessing-server-apis"
     },
@@ -239,7 +244,12 @@
         },
         {
           "type": "doc",
-          "label": "MessageBody Introduction",
+          "label": "Query messages",
+          "id": "messaging/query-messages"
+        },
+        {
+          "type": "doc",
+          "label": "MessageBody introduction",
           "id": "messaging/messagebody-introduction"
         }
       ]

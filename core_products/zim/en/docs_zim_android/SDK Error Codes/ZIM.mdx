@@ -77,7 +77,7 @@ zim.on('error', function(zim, errorInfo) {
 });
 
 // Error occurs when calling methods.
-zim.login({ userID: '', userName: '' }, '')
+zim.login('', { token: '', userName: '' })
     .then(function() {
         // Operation successful.
     })
@@ -95,7 +95,7 @@ zim.on('error', function(zim, errorInfo) {
 });
 
 // An error occurred when calling the method.
-zim.login({ userID: '', userName: '' }, '')
+zim.login('', { token: '', userName: '' }, '')
     .then(function() {
         // Operation successful.
     })

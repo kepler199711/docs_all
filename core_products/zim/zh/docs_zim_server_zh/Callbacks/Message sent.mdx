@@ -1,4 +1,5 @@
-
+import MediaMsgBodyDescriptionZh from '/core_products/zim/zh/snippets/MediaMsgBodyDescriptionZh.mdx'
+import MultiMsgBodyDescriptionZh from '/core_products/zim/zh/snippets/MultiMsgBodyDescriptionZh.mdx'
 
 # 消息发送后回调
 
@@ -91,7 +92,7 @@
 <tr data-row-level="11">
 <td>msg_type</td>
 <td>Int</td>
-<td>消息类型：<ul><li>1：文本。</li><li>11：图片。</li><li>12：文档。</li><li>13：音频。</li><li>14：视频。</li><li>200：自定义。</li></ul></td>
+<td>消息类型：<ul><li>1：文本。</li><li>10：组合。</li><li>11：图片。</li><li>12：文档。</li><li>13：音频。</li><li>14：视频。</li><li>200：自定义。</li></ul></td>
 </tr>
 <tr data-row-level="12">
 <td>sub_msg_type</td>
@@ -101,7 +102,7 @@
 <tr data-row-level="13">
 <td>msg_body</td>
 <td>String</td>
-<td>消息内容。<ul><li>消息由客户端发送时：<ul><li>当 msg_type 为 1（文本类型）或 200（自定义类型），msg_body 为发送消息时传入的消息内容，开发者可直接阅读消息内容。</li><li>当 msg_type 为 11、12、13、14，即消息为媒体类型时，msg_body 为 JSON 字符串。请使用 URLDecode 对此 JSON 字符串解码，并按照多媒体消息结构解析这个 JSON 字符串，进而获取消息中的 <a href="#msgbody-json-字符串解析结果参数说明">各个字段数据</a>。</li></ul></li><li>消息由服务端发送时，不论消息类型，本回调会直接透传发送消息时传入的内容。</li></ul></td>
+<td>消息内容<ul><li>消息由客户端发送时：<ul><li>当 msg_type 为 1（文本类型）或 200（自定义类型），msg_body 为发送消息时传入的消息内容，开发者可直接阅读消息内容。</li><li>当 msg_type 为下列类型时，msg_body 为 JSON 字符串。请使用 URLDecode 对此 JSON 字符串解码，并按照对应结构获取消息中各字段数据：<ul><li>当 msg_type 为 11、12、13、14（多媒体消息）：<a href="#多媒体消息">msg_body JSON 字符串解析结果参数说明 - 多媒体消息</a>。</li><li>当 msg_type 为 10（组合消息）：<a href="#组合消息">msg_body JSON 字符串解析结果参数说明 - 组合消息</a>。</li></ul></li></ul></li><li>消息由服务端发送时，不论消息类型，本回调会直接透传发送消息时传入的内容。</li></ul></td>
 </tr>
 <tr data-row-level="14">
 <td>msg_id</td>
@@ -156,15 +157,15 @@
 建议您将部分参数转换为 Int 进行逻辑处理，相关字段包括 `appid` 和 `nonce`。
 </Note>
 
-#### msg_body JSON 字符串解析结果参数说明
+### msg_body JSON 字符串解析结果参数说明
 
-| 参数              | 类型     | 描述    |
-|-----------------|--------|-------|
-| md5             | String | 文件 MD5 值。   |
-| file_name       | String | 文件名称。  |
-| file_size       | String | 文件大小，单位为字节（B）。  |
-| download_url    | String | 下载地址。  |
-| media_duration  | String | 音视频时长，单位为秒（s）。 |
+#### 多媒体消息
+
+<MediaMsgBodyDescriptionZh />
+
+#### 组合消息
+
+<MultiMsgBodyDescriptionZh />
 
 
 ## 数据示例

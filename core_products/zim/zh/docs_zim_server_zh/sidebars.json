@@ -7,6 +7,11 @@
     },
     {
       "type": "doc",
+      "label": "发布日志",
+      "id": "release-notes"
+    },
+    {
+      "type": "doc",
       "label": "调用方式",
       "id": "accessing-server-apis"
     },
@@ -236,6 +241,11 @@
           "type": "doc",
           "label": "导入群聊消息",
           "id": "messaging/import-group-messages"
+        },
+        {
+          "type": "doc",
+          "label": "查询消息",
+          "id": "messaging/query-messages"
         },
         {
           "type": "doc",
