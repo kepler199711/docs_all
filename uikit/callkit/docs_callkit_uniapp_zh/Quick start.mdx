@@ -22,22 +22,53 @@ import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.md
 若您已有 uni-app 项目，则跳过此步骤。若尚无 uni-app 项目，请参考 uni-app 开发者文档 [创建 uni-app](https://uniapp.dcloud.net.cn/quickstart-hx.html) 快速创建项目。
 </Step>
 
-<Step title="导入 ZEGO 即构实时音视频 SDK">
-在插件市场购买 [ZEGO 即构实时音视频 SDK](https://ext.dcloud.net.cn/plugin?id=3617)。购买时填入的 AppID 必须和后面需要运行的 AppID 一致。
+<Step title="设置 Android SdkVersion">
+单击项目目录的 “manifest.json” 文件后，单击 “App 常用其他设置”。设置 Android `minSdkVersion` 为 23，`targetSdkVersion` 为 33。
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/97cc39689b.png" alt=""/>
+</Frame>
+</Step>
+
+<Step title="导入 ZEGO 实时音视频 SDK 和 ZIM 即时通讯 SDK">
+在插件市场购买 [ZEGO 即构实时音视频 SDK](https://ext.dcloud.net.cn/plugin?id=3617)和[Zego ZIM 即时通讯 SDK](https://ext.dcloud.net.cn/plugin?id=8601)。购买时填入的 AppID 必须和后面需要运行的 AppID 一致。
 
 <Frame width="100%">
     <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/fc005e6051.png" alt="free_buy_for_cloud_build.png"/>
 </Frame>
 
-单击项目目录的 “manifest.json” 文件后，单击 “App 原生插件配置 > 云端插件 [选择云端插件]”。
-
 <Frame width="100%">
-    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/65c125a799.png" alt="choose_native_plugins.png" />
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/c30b1f1c5a.png" alt="free_buy_for_cloud_build.png"/>
 </Frame>
 
-在“云端插件选择”弹窗勾选上面购买的 ZEGO 即构实时音视频 SDK 并确认。
-<Frame height="300px">
-    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/2a4289a346.png" alt="check_and_confirm.png" />
+单击项目目录的 “manifest.json” 文件后，单击 “App 原生插件配置 > 云端插件 [选择云端插件]”。
+
+<Frame width="50%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/6ef174060a.png" alt="choose_native_plugins.png" />
+</Frame>
+
+在“云端插件选择”弹窗勾选上面购买的 ZEGO SDK 并确认。
+
+</Step>
+
+<Step title="导入 Zego ZIM 即时通讯原生插件（JS 封装层）">
+在插件市场下载 [Zego ZIM 即时通讯原生插件（JS 封装层）](https://ext.dcloud.net.cn/plugin?id=8648) 插件并导入 HBuilderX。
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/18428d374c.png" alt="choose_native_plugins.png" />
+</Frame>
+</Step>
+
+<Step title="导入 ZEGOUIKitPrebuiltCall">
+在插件市场下载 [ZEGOUIKitPrebuiltCall](https://ext.dcloud.net.cn/plugin?id=19688) 插件并导入 HBuilderX。
+
+<Frame width="100%">
+    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/8fbac5726a.png" alt="download_and_import.png"/>
+</Frame>
+
+由于 zego-PrebuiltCall 中包含了 zego-UIKitCore 和 zego-ExpressUniAppzego-ExpressUniApp-JS以及zego-UIKitReport，因此，导入完成后，您的 uni_modules 会包含以下插件。
+
+<Frame height="50%">
+    <img src="https://media-resource.spreading.io/docuo/workspace743/b15828c70dcfacdbb1e91d99a16d0514/3c07b30ce4.png" alt="screenshot-20240909-101238.png"/>
 </Frame>
 </Step>
 
@@ -48,11 +79,11 @@ import EnviromentRequiremenZh from "/snippets/uikit/UniEnviromentRequiremenZh.md
 uni-app 官方自定义调试基座使用说明请参考 [什么是自定义调试基座及使用说明](https://uniapp.dcloud.net.cn/tutorial/run/run-app.html#customplayground)。
 </Note>
 
-<Frame width="400px">
+<Frame width="50%">
     <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/47d08e1b29.png" alt="run_with_custom.png"/>
 </Frame>
 
-<Frame width="100%">
+<Frame width="80%">
     <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/02f56f8dad.png" alt="config_custom.png"/>
 </Frame>
 
@@ -60,20 +91,6 @@ uni-app 官方自定义调试基座使用说明请参考 [什么是自定义调�
 由于 iOS 项目需要 Apple 开发者证书。为方便测试，您可以暂时只勾选 Android 端。
 </Note>
 
-</Step>
-
-<Step title="导入 ZEGOUIKitPrebuiltCall">
-在插件市场下载 [ZEGOUIKitPrebuiltCall](https://ext.dcloud.net.cn/plugin?id=19688) 插件并导入 HBuilderX。
-
-<Frame width="100%">
-    <img src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/8fbac5726a.png" alt="download_and_import.png"/>
-</Frame>
-
-由于 zego-PrebuiltCall 中包含了 zego-UIKitCore 和 zego-ExpressUniAppzego-ExpressUniApp-JS，因此，导入完成后，您的 uni_modules 会包含以下插件。
-
-<Frame height="120px">
-    <img src="https://media-resource.spreading.io/docuo/workspace733/92cf2c578a7f03194465a905bb923c76/9276069cc7.png" alt="screenshot-20240909-101238.png"/>
-</Frame>
 </Step>
 
 <Step title="在业务页面中导入插件">
@@ -134,7 +151,7 @@ const navigateTo = (url: string) => {
 ```
 
 打开 pages.json，添加 pages 配置
-```json title="pages.json"
+```json title="pages.json" {10-16}
 {
 	"pages": [
         // 首页
@@ -143,7 +160,7 @@ const navigateTo = (url: string) => {
 		    "style": {
 		        "navigationBarTitleText": "首页"
 		    }
-		}
+		},
         // 新增基础通话页
 		{
 		    "path": "pages/base-call/index",
