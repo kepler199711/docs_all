@@ -2,6 +2,26 @@
 
 ---
 
+## 2025-01
+
+**Release date: 2025-01-06**
+
+<h5>New Features</h5>
+
+| Feature | Description | Method |
+| ----------- | -------------- | --------------- |
+| Multi-item Messages | ZIM newly supports multi-item messages, allowing multiple content items in a single message, including text, images, audio, video, files, and custom messages. This message type enables various combinations such as text + image, text + video, and text + audio to flexibly meet diverse scenarios. | [MessageBody Description](./Messaging/MessageBody%20Introduction.mdx) |
+| Query Messages | ZIM server supports querying multiple messages within a single specified conversation (one-to-one chat or group chat) by passing a list of MsgSeq. | [Query Messages](./Messaging/Query%20messages.mdx) |
+| Callbacks Related to Message Sending  | When the message type is a media message, developers can obtain detailed information such as the original image dimensions, large image dimensions, thumbnail dimensions, and video first-frame dimensions through these two callbacks. | <ul><li>[Callback on message not sent yet - msg_body JSON String Parsing Result Parameters - Multimedia messages](./Callbacks/Message%20not%20sent%20yet.mdx#multimedia-messages)</li><li>[Callback on message sent - msg_body JSON String Parsing Result Parameters - Multimedia messages](./Callbacks/Message%20sent.mdx#multimedia-messages)</li></ul> |
+| Width/Height Field Correction | When calling the server APIs to send image or video messages, ZIM server will check the width and height fields for images and video first-frame. If the fields are incorrect, ZIM server will correct them. | <ul><li>[MessageBody introduction - Image message - Message structure](./Messaging/MessageBody%20Introduction.mdx#Message%20Structure%202)</li><li>[MessageBody introduction - Video message - Message structure](./Messaging/MessageBody%20Introduction.mdx#Message%20Structure%205)</li></ul> |
+| Review Failure Reason Acquisition | A new `AuditInfos` field has been added to the response parameters of the message-sending APIs. When a message fails to send due to review failure, this field provides the detailed failure reason. | <ul><li>[Send a one-to-one message - Response parameters](./Messaging/Send%20a%20one-to-one%20message.mdx#Response%20Parameters)</li><li>[Send group messages - Response parameters](./Messaging/Send%20group%20messages.mdx#Response%20Parameters)</li><li>[Send room messages - Response parameters](./Messaging/Send%20room%20messages.mdx#Response%20Parameters)</li></ul> |
+
+<h5>Improvements</h5>
+
+| **Improvement** | **Description** | **Related API** |
+| ---------------- | -------------- | --------------- |
+| Increased Mark Limit for Single Conversations | The maximum number of marks that a single conversation can have has been increased from 20 to 30. | [Set Conversation Marks](./Conversation/Set%20conversation%20marks.mdx) |
+
 ## 2024-10
 
 **Release date: 2024-10-15**

@@ -2,6 +2,28 @@
 
 ---
 
+## 2025 年 01 月
+
+**发布日期：2025-01-06**
+
+<h5>新增功能</h5>
+
+| <div style={{width:"80px"}}>功能项</div>  | <div style={{width:"80px"}}>功能描述</div> | <div style={{width:"120px"}}>相关接口</div> |
+| ------------------------------  | ---- | ----- |
+| 组合消息  | 新增组合消息类型，支持在一条消息中包含多种内容项，包括文本、图片、音频、视频、文件以及自定义消息。可实现如文本+图片、文本+视频、文本+音频等多种组合方式，灵活满足不同场景需求。 | [MessageBody 说明](./Messaging/MessageBody%20Introduction.mdx) |
+| 查询消息 | 支持在服务端通过传入 MsgSeq 列表查询单个指定会话（群聊、单聊）中的多条消息。| [查询消息](./Messaging/Query%20messages.mdx) |
+| 消息发送前后回调支持获取媒体消息详细内容 | 当消息类型为媒体消息时，开发者可以通过这两个回调获取如原图宽高、大图宽高、缩略图宽高、视频首帧宽高等详细信息。 | <ul><li>[消息发送前回调 - msg_body JSON 字符串解析结果参数说明 - 多媒体消息](./Callbacks/Message%20not%20sent%20yet.mdx#多媒体消息)</li><li>[消息发送后回调 - msg_body JSON 字符串解析结果参数说明 - 多媒体消息](./Callbacks/Message%20sent.mdx#多媒体消息)</li></ul>|
+| 宽高字段纠正 | 当调用服务端接口发送图片消息和视频消息时，ZIM 服务端会检查消息体中有关图片宽高、视频首帧宽高的字段。若相关字段不正确，ZIM 服务端会纠正相关字段。 | <ul><li>[MessageBody 说明 - 图片消息 - Message 结构](./Messaging/MessageBody%20Introduction.mdx#message-结构-2)</li><li>[MessageBody 说明 - 视频消息 - Message 结构](./Messaging/MessageBody%20Introduction.mdx#message-结构-5)</li></ul> |
+| 审核失败原因 | 发送消息接口的响应参数中新增了 `AuditInfos` 字段。当消息因审核未通过而导致发送失败时，该字段提供审核失败的详细原因。 | <ul><li>[发送单聊消息 - 响应参数](./Messaging/Send%20a%20one-to-one%20message.mdx#响应参数)</li><li>[发送群聊消息 - 响应参数](./Messaging/Send%20group%20messages.mdx#响应参数)</li><li>[发送房间消息 - 响应参数](./Messaging/Send%20room%20messages.mdx#响应参数)</li></ul> |
+
+<h5>改进优化</h5>
+
+| <div style={{width:"100px"}}>优化项</div>  | 优化描述 | 相关接口 |
+| -----  | ---- | ----- |
+| 单个会话的标记数量限制上调 | 每个会话可拥有的标记数量上限从 20 上调至 30。 | [设置会话标记](./Conversation/Set%20conversation%20marks.mdx) |
+
+---
+
 ## 2024 年 10 月
 
 **发布日期：2024-10-15**

@@ -32,9 +32,10 @@ import {
     messageSentStatusChangedMap,
     onMediaUploadingProgressMap,
     onMediaDownloadingProgressMap,
+    multipleMediaUploadingProgressMap,
 } from "/snippets/zim/const-linkEn.mdx"
 
-# Send & Receive messages
+# Send and receive messages
 
 - - -
 
@@ -188,7 +189,7 @@ var config = {
 
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     }
 }
 
@@ -826,10 +827,10 @@ var conversationID = 'xxxx';
 var config = { priority: 1 };
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     },
     onMediaUploadingProgress: function(message, currentFileSize, totalFileSize) {
-        // todo: upload progress
+        // You can display the upload progress here on the UI.
     }
 };
 
@@ -882,10 +883,10 @@ var conversationID = 'xxxx';
 var config = { priority: 1 };
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     },
     onMediaUploadingProgress: function(message, currentFileSize, totalFileSize) {
-        // todo: upload progress
+        // You can display the upload progress here on the UI.
     }
 };
 
@@ -935,7 +936,7 @@ var conversationID = 'xxxx';
 var config = { priority: 1 };
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     },
 };
 
@@ -994,10 +995,10 @@ if (navigator.mediaDevices) {
                 var config = { priority: 1 };
                 var notification = {
                     onMessageAttached: function(message) {
-                        // todo: Loading
+                        // 
                     },
                     onMediaUploadingProgress: function(message, currentFileSize, totalFileSize) {
-                        // todo: upload progress
+                        // You can display the upload progress here on the UI.
                     }
                 };
 
@@ -1525,7 +1526,7 @@ var config = {
 
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     }
 }
 
@@ -1770,7 +1771,7 @@ var config = {
 
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     }
 }
 
@@ -1916,7 +1917,20 @@ ZIM SDK supports sending multiple types of content in a single message, such as 
 
 ### Send multi-item messages
 
-You need to defined a multi-item message by the {getPlatformData(props,ZIMMultipleMessageMap)} object, and then send the message through the {getPlatformData(props,sendMessageMap)} method. The following demonstrate how to send a multi-item message in a one-to-one conversation: 
+After the user logs in successfully, they can send 1 message containing various types of content (such as text, images, audio, video, files, and custom messages) using the {getPlatformData(props,ZIMMultipleMessageMap)} object in one-to-one chats, room chats, or group chats via the {getPlatformData(props,sendMessageMap)} interface.
+
+You can use the {getPlatformData(props,multipleMediaUploadingProgressMap)} callback to receive notifications about the upload progress of rich media files in the multi-item message. This callback provides the following fields:
+<div>
+- **currentFileSize**: Total size of the uploaded files, in bytes.  
+- **totalFileSize**: Total size of all rich media files in the multi-item message, in bytes.  
+- **messageInfoIndex**: The index of the currently uploading file in the {getPlatformData(props,ZIMMultipleMessageMap)} array.  
+- **currentIndexFileSize**: Uploaded size of the currently uploading file, in bytes.  
+- **totalIndexFileSize**: Actual size of the currently uploading file, in bytes.
+</div>
+
+These fields can be used to calculate the overall upload progress and the progress of the current file being uploaded:  
+- **Total upload progress** = `currentFileSize / totalFileSize`.  
+- **Current file upload progress** = `currentIndexFileSize / totalIndexFileSize`.
 
 :::if{props.platform=undefined}
 ```java
@@ -2000,9 +2014,8 @@ zim.sendMessage(zimMultipleMessage, userID, type, config, new ZIMMessageSentFull
         long currentIndexFileSize, // The uploaded size of the currently uploading file in bytes (B) when this callback is received.
         long totalIndexFileSize,   // The size of the currently uploading file when this callback is received.
     ) {
-        // todo: upload progress
+        // You can display the upload progress here on the UI.
         // Developers can use this callback to monitor the upload progress of multimedia files.
-        // This callback is triggered at a frequency of once per second.
         // Total file upload progress: currentFileSize / totalFileSize.
         // In the above example, the total file upload progress is: 20,971,520 / 104,857,600 = 20%.
         // When this callback is received, the upload progress of the currently uploading file is: currentIndexFileSize / totalIndexFileSize.
@@ -2080,7 +2093,6 @@ notification.onMultipleMediaUploadingProgress = ^(
     unsigned long long totalIndexFileSize    // The size of the currently uploading file when this callback is received.
 ) {
     // Developers can use this callback to monitor the upload progress of multimedia files.
-    // This callback is triggered at a frequency of once per second.
     // Total file upload progress: currentFileSize / totalFileSize.
     // In the above example, the total file upload progress is: 20,971,520 / 104,857,600 = 20%.
     // When this callback is received, the upload progress of the currently uploading file is: currentIndexFileSize / totalIndexFileSize.
@@ -2208,7 +2220,7 @@ var config = {
 
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     },
     onMultipleMediaUploadingProgress: function(
         message,
@@ -2218,7 +2230,7 @@ var notification = {
         currentIndexFileSize, // The uploaded size of the currently uploading file in bytes (B) when this callback is received.
         totalIndexFileSize    // The size of the currently uploading file when this callback is received.
     ) {
-        // todo: upload progress
+        // You can display the upload progress here on the UI.
         // Developers can use this callback to monitor the upload progress of multimedia files.
         // Total file upload progress: currentFileSize / totalFileSize.
         // In the above example, the total file upload progress is: 20,971,520 / 104,857,600 = 20%.
@@ -2609,7 +2621,7 @@ var config = {
 
 var notification = {
     onMessageAttached: function(message) {
-        // todo: Loading
+        // 
     }
 }
 

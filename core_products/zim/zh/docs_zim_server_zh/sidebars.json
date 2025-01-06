@@ -244,6 +244,11 @@
         },
         {
           "type": "doc",
+          "label": "查询消息",
+          "id": "messaging/query-messages"
+        },
+        {
+          "type": "doc",
           "label": "MessageBody 说明",
           "id": "messaging/messagebody-introduction"
         }

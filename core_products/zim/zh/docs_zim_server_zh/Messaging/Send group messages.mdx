@@ -151,38 +151,16 @@ https://zim-api.zego.im/?Action=SendGroupMessage
 
 ## 响应参数
 
-<table>
-<tbody><tr>
-<th>参数</th>
-<th>类型</th>
-<th>描述</th>
-</tr>
-<tr>
-<td>Code</td>
-<td>Number</td>
-<td>返回码。</td>
-</tr>
-<tr>
-<td>Message</td>
-<td>String</td>
-<td>请求结果的说明信息。</td>
-</tr>
-<tr>
-<td>RequestId</td>
-<td>String</td>
-<td>请求 ID。</td>
-</tr>
-<tr>
-<td>MsgSeq</td>
-<td>Number</td>
-<td>消息 Seq。当消息类型为信令消息时，此字段为空。可用于 [撤回群聊消息](./Recall%20a%20group%20message.mdx)。</td>
-</tr>
-<tr>
-<td>MsgId</td>
-<td>Number</td>
-<td>消息 ID。</td>
-</tr>
-</tbody></table>
+| 参数       | 类型    | 描述                                                                 |
+|-----------|--------|--------------------------------------------------------------------|
+| Code      | Number | 返回码。                                                              |
+| Message   | String | 请求结果的说明信息。                                                    |
+| RequestId | String | 请求 ID。                                                            |
+| MsgSeq    | Number | 消息 Seq。当消息类型为信令消息时，此字段为空。可用于 [撤回群聊消息](./Recall%20a%20group%20message.mdx)。 |
+| MsgId     | Number | 消息 ID。                                                            |
+| AuditInfos   | Array of Object    | 审核结构数组，当数组不为空时，说明存在审核失败的消息，可以通过该结构查看审核失败原因。    |
+| └Index    | Number             |  <ul><li>此参数可能出现以下几种情况：<ul><li>当您已启用 ZIM 内容审核服务，且未通过 [发送消息前回调](./../Callbacks/Message%20not%20sent%20yet.mdx) 拒绝该消息时：<ul><li>对于组合消息，此参数表示未通过审核的 Item 在组合消息中的索引，从 0 开始。</li><li>对于其他类型消息，则此参数始终为 0。</li></ul></li><li>当您收到发送消息前回调后拒绝了此消息，则不论消息类型，此参数始终为 0。</li></ul></li></ul>  |
+| └Reason    | String             | 拒绝原因。  |
 
 
 ## 响应示例
@@ -193,7 +171,13 @@ https://zim-api.zego.im/?Action=SendGroupMessage
     "Message":"success",
     "RequestId":"343649807833778782",
     "MsgSeq": 1,
-    "MsgId": 1
+    "MsgId": 1,
+    "AuditInfos":[
+        {
+            "Index": 0,
+            "Reason": "reason"    // 返回审核失败原因
+        }
+    ] 
 }
 ```
 

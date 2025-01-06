@@ -6,6 +6,37 @@ articleID: 14166
 
 - - -
 
+## Version 2.19.0
+
+**Release Date: 2025-01-06**
+
+<h5>New features</h5>
+
+| <div style={{width:"130px"}}>Feature</div>  | Description | Related APIs |
+| ------------------------------  | ---- | ----- |
+| Multi-item Messages | ZIM newly supports multi-item messages, allowing multiple content items in a single message, including text, images, audio, video, files, and custom messages. This message type enables various combinations such as text + image, text + video, and text + audio to flexibly meet diverse scenarios. For details, see [Send and receive messages - Send/Receive multi-item messages](./../Guides/Messaging/Send%20and%20receive%20messages.mdx#sendreceive-multi-item-messages). | [ZIMMultipleMessage](@-ZIMMultipleMessage) |
+| Image Format | ZIM supports sending image in HEIC and HEIF formats, expanding compatibility with more image types to meet a broader range of needs. | [ZIMImageMessage](@-ZIMImageMessage) |
+| Image Width and Height Information  | ZIMImageMessage allows developers to provide the original image, large image, and thumbnail width and height information when sending an image message. ZIMVideoMessage allows developers to provide the width and height information of the first frame image when sending a video message. | <ul><li>[ZIMImageMessage - originalImageSize](@originalImageSize-ZIMImageMessage)</li><li>[ZIMImageMessage - largeImageSize](@largeImageSize-ZIMImageMessage)</li><li>[ZIMImageMessage - thumbnailSize](@thumbnailSize-ZIMImageMessage)</li><li>[ZIMVideoMessage - videoFirstFrameSize](@videoFirstFrameSize-ZIMVideoMessage)</li></ul> |
+
+<h5>Enhancement</h5>
+
+| <div style={{width:"100px"}}>Optimization</div>  | Description | Related APIs |
+| -----  | ---- | ----- |
+| Improved Handling of Conversation Mark Limits | When the number of marked conversations reaches the limit (default: 1000), the logic has been improved from throwing an error to automatically cancelling the earliest marked conversation, ensuring users can continue marking new conversations without interruption. | [setConversationMark](@setConversationMark) |
+| Increased Mark Limit per Conversation | The maximum number of marks per conversation has been increased from 20 to 30. | [setConversationMark](@setConversationMark) |
+| Enhanced Group Member Information Query Logic | Group member list information is now associated with the user database, ensuring the latest local user information can be retrieved. | <ul><li>[queryGroupMemberListByGroupID](@queryGroupMemberListByGroupID)</li><li>[queryGroupMemberInfoByUserID](@queryGroupMemberInfoByUserID)</li></ul> |
+
+<h5>API Changes</h5>
+
+<Note title="Note">For details about API changes, refer to [ZIM upgrade Guide](./ZIM%20upgrade%20guide.mdx#2190-upgrade-guide).</Note>
+
+| Changed API | Description | 
+| -----  | ---- | 
+| downloadMediaFileWithMessage and related callbacks | <ul><li>The original `downloadMediaFileWithMessage` API is deprecated. Please use the new [downloadMediaFileWithMessage](@downloadMediaFileWithMessage) instead. The updated [downloadMediaFileWithMessage](@downloadMediaFileWithMessage) introduces a new `config` parameter, which can be used to specify the download of individual media content in multi-item messages.</li><li>In [ZIMMediaDownloadingProgress](@ZIMMediaDownloadingProgress) and [ZIMMediaDownloadedCallback](@ZIMMediaDownloadedCallback), the `message` parameter type has been changed from `ZIMMediaMessage *` to `ZIMMessage *` to support multi-item messages.</li></ul> |
+| `sendMediaMessage` | Starting from version 2.19.0, to send multimedia messages, you should use the [sendMessage](@sendMessage) API. The `sendMediaMessage` API is deprecated to ensure uniformity in sending messages and to facilitate future extensions. |
+
+---
+
 ## Version 2.18.2 
 
 **Release date: 2024-11-06**
