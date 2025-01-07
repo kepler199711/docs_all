@@ -209,7 +209,7 @@ ZIM::getInstance()->downloadMediaFile(imageMessage,
 <CodeGroup>
 ```javascript title="Usage in Version 2.19.0(For Multi-item Messages) {14-17,19,29}
 // Assume multipleMessage.messageInfoList[0] is a text message, and multipleMessage.messageInfoList[1] is an image message
-const multipleMessage = new ZIMMessageBase({
+const multipleMessage: ZIMMessageBase = {
     type: ZIMMessageType.Multiple,
     messageInfoList: [
         new ZIMTextMessageLiteInfo({
@@ -219,18 +219,18 @@ const multipleMessage = new ZIMMessageBase({
             fileLocalPath: file
         })
     ]
-})
+}
 
-const config = new ZIMMediaDownloadConfig({
+const config: ZIMMediaDownloadConfig = {
     // Specify to download the image message
     messageInfoIndex: 1
-})
+}
 
 zim.downloadMediaFile(multipleMessage, ZIMMediaFileType.OriginalFile, config, (message: ZIMMessage, currentFileSize: number, totalFileSize: number) => {
     // Download progress
     // Developers need to check the type of the message and cast it to the corresponding message type
     if (message.type === ZIMMessageType.Multiple) {
-        const multipleMessage = new ZIMMultipleMessage(message)
+        const multipleMessage: ZIMMultipleMessage = message as ZIMMultipleMessage
         // Handle multi-item messages
     }
     // Handle other types of messages
@@ -240,7 +240,7 @@ zim.downloadMediaFile(multipleMessage, ZIMMediaFileType.OriginalFile, config, (m
     // Download complete
     // Developers need to check the type of the message and cast it to the corresponding message type
     if (message.type === ZIMMessageType.Multiple) {
-        const multipleMessage = new ZIMMultipleMessage(message)
+        const multipleMessage: ZIMMultipleMessage = message as ZIMMultipleMessage
         // Handle multi-item messages
     }
     // Handle other types of messages
@@ -413,23 +413,23 @@ ZIM::getInstance()->sendMediaMessage(imageMessage,
 :::if{props.platform="Web|RN"}
 <CodeGroup>
 ```javascript title="Usage in Version 2.19.0" {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMessageSendNotification({
+const notification: ZIMMessageSendNotification = {
     onMessageAttached: (message: ZIMMessage) => {
         // Developers can listen to this callback to execute business logic before sending the message
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // Multimedia upload progress
     }
-})
+}
 
 zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // Message send result
@@ -439,23 +439,24 @@ zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, co
 ```
 
 ```javascript title="Old Usage" {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMediaMessageSendNotification({
+const notification: ZIMMediaMessageSendNotification = {
     onMessageAttached: (message: ZIMMediaMessage) => {
         // Developers can listen to this callback to execute business logic before sending the message
+
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // Multimedia upload progress
     }
-})
+}
 
 zim.sendMediaMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // Message send result

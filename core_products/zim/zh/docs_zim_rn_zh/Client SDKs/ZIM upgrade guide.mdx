@@ -24,7 +24,7 @@ articleID: 20619
 <CodeGroup>
 ```javascript 2.19.0版本用法（下载组合消息指定媒体内容） {14-17,19,29}
 // 假设 multipleMessage.messageInfoList[0] 是文本消息，multipleMessage.messageInfoList[1] 是图片消息
-const multipleMessage = new ZIMMessageBase({
+const multipleMessage: ZIMMessageBase = {
     type: ZIMMessageType.Multiple,
     messageInfoList: [
         new ZIMTextMessageLiteInfo({
@@ -34,18 +34,18 @@ const multipleMessage = new ZIMMessageBase({
             fileLocalPath: file
         })
     ]
-})
+}
 
-const config = new ZIMMediaDownloadConfig({
+const config: ZIMMediaDownloadConfig = {
     // 指定下载图片消息
     messageInfoIndex: 1
-})
+}
 
 zim.downloadMediaFile(multipleMessage, ZIMMediaFileType.OriginalFile, config, (message: ZIMMessage, currentFileSize: number, totalFileSize: number) => {
     // 下载进度
     // 开发者需要判断 message 的类型并转换成对应类型的消息
     if (message.type === ZIMMessageType.Multiple) {
-        const multipleMessage = new ZIMMultipleMessage(message)
+        const multipleMessage: ZIMMultipleMessage = message as ZIMMultipleMessage
         // 处理组合消息
     }
     // 其他类型消息的处理
@@ -55,7 +55,7 @@ zim.downloadMediaFile(multipleMessage, ZIMMediaFileType.OriginalFile, config, (m
     // 下载完成
     // 开发者需要判断 message 的类型并转换成对应类型的消息
     if (message.type === ZIMMessageType.Multiple) {
-        const multipleMessage = new ZIMMultipleMessage(message)
+        const multipleMessage: ZIMMultipleMessage = message as ZIMMultipleMessage
         // 处理组合消息
     }
     // 其他类型消息的处理
@@ -66,16 +66,16 @@ zim.downloadMediaFile(multipleMessage, ZIMMediaFileType.OriginalFile, config, (m
 ```
 
 ```javascript 2.19.0用法（下载多媒体消息） {6,15}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
 zim.downloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (message: ZIMMessage, currentFileSize: number, totalFileSize: number) => {
     // 下载进度
     // 开发者需要判断 message 的类型并转换成对应类型的消息
     if (message.type === ZIMMessageType.Image) {
-        const imageMessage = new ZIMImageMessage(message)
+        const imageMessage: ZIMImageMessage = message as ZIMImageMessage
         // 处理图片消息
     }
     // 其他类型消息的处理
@@ -84,7 +84,7 @@ zim.downloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (message: ZIM
     // 下载完成
     // 开发者需要判断 message 的类型并转换成对应类型的消息
     if (message.type === ZIMMessageType.Image) {
-        const imageMessage = new ZIMImageMessage(message)
+        const imageMessage: ZIMImageMessage = message as ZIMImageMessage
         // 处理图片消息
     }
     // 其他类型消息的处理
@@ -95,10 +95,10 @@ zim.downloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (message: ZIM
 ```
 
 ```javascript 旧版本用法 {6,8}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
 zim.downloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
     // 下载进度
@@ -118,23 +118,23 @@ zim.downloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (message: ZIM
 
 <CodeGroup>
 ```javascript 2.19.0版本用法 {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMessageSendNotification({
+const notification: ZIMMessageSendNotification = {
     onMessageAttached: (message: ZIMMessage) => {
         // 开发者可以监听这个回调执行消息发送前的业务逻辑
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // 多媒体上传进度
     }
-})
+}
 
 zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // 消息发送结果
@@ -144,23 +144,23 @@ zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, co
 ```
 
 ```javascript 旧版本用法 {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMediaMessageSendNotification({
+const notification: ZIMMediaMessageSendNotification = {
     onMessageAttached: (message: ZIMMediaMessage) => {
         // 开发者可以监听这个回调执行消息发送前的业务逻辑
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // 多媒体上传进度
     }
-})
+}
 
 zim.sendMediaMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // 消息发送结果
