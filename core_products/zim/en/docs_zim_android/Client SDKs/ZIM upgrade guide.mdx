@@ -17,15 +17,13 @@ export const platformMap = {
 
 This article provides some instructions and considerations for upgrading the ZIM SDK for {getPlatformData(props,platformMap)} version.
 
-:::if{props.platform="undefined|window|web"}
 ## 2.19.0 upgrade guide
 
 <Warning title="Warning">
 
 Starting from version 2.19.0, the following interfaces have undergone significant changes. Therefore, when upgrading from an older version to version 2.19.0, please read the following guidelines.
 </Warning>
-:::
-:::if{props.platform="undefined|window"}
+:::if{props.platform="undefined|window|RN"}
 ### downloadMediaFile and related callbacks	
 
 
@@ -41,6 +39,9 @@ The [ZIMMediaDownloadedCallback](@-ZIMMediaDownloadedCallback) callback has been
 :::
 :::if{props.platform="window"}
 In [ZIMMediaDownloadingProgress](@ZIMMediaDownloadingProgress) and [ZIMMediaDownloadedCallback](@ZIMMediaDownloadedCallback), the `message` parameter type has changed from `const std::shared_ptr<ZIMMediaMessage> &` to `const std::shared_ptr<ZIMMessage> &` to support multi-item messages. Developers need to fix the calls according to the IDE's compile error hints.
+:::
+:::if{props.platform="RN"}
+In [ZIMMediaDownloadingProgress](@ZIMMediaDownloadingProgress) and [ZIMMediaDownloadedResult](@ZIMMediaDownloadedResult), the parameter `message` type has changed from `ZIMMediaMessage` to `ZIMMessage` to support composite messages. TypeScript developers need to update their code based on the compilation error messages from their IDE.
 :::
 
 :::if{props.platform="undefined"}
@@ -204,6 +205,97 @@ ZIM::getInstance()->downloadMediaFile(imageMessage,
 ```
 </CodeGroup>
 :::
+:::if{props.platform="RN"}
+<CodeGroup>
+```javascript title="Usage in Version 2.19.0(For Multi-item Messages) {14-17,19,29}
+// Assume multipleMessage.messageInfoList[0] is a text message, and multipleMessage.messageInfoList[1] is an image message
+const multipleMessage: ZIMMessageBase = {
+    type: ZIMMessageType.Multiple,
+    messageInfoList: [
+        new ZIMTextMessageLiteInfo({
+            text: "Hello, World!"
+        }),
+        new ZIMImageMessageLiteInfo({
+            fileLocalPath: file
+        })
+    ]
+}
+
+const config: ZIMMediaDownloadConfig = {
+    // Specify to download the image message
+    messageInfoIndex: 1
+}
+
+zim.downloadMediaFile(multipleMessage, ZIMMediaFileType.OriginalFile, config, (message: ZIMMessage, currentFileSize: number, totalFileSize: number) => {
+    // Download progress
+    // Developers need to check the type of the message and cast it to the corresponding message type
+    if (message.type === ZIMMessageType.Multiple) {
+        const multipleMessage: ZIMMultipleMessage = message as ZIMMultipleMessage
+        // Handle multi-item messages
+    }
+    // Handle other types of messages
+    ......
+
+}).then((message: ZIMMessage) => {
+    // Download complete
+    // Developers need to check the type of the message and cast it to the corresponding message type
+    if (message.type === ZIMMessageType.Multiple) {
+        const multipleMessage: ZIMMultipleMessage = message as ZIMMultipleMessage
+        // Handle multi-item messages
+    }
+    // Handle other types of messages
+    ......
+}).catch((errorInfo: ZIMError) => {
+    // Failed to download
+})
+```
+
+```javascript title="Usage in Version 2.19.0(For Multi-media Messages) {6,15}
+const imageMessage = new ZIMMessageBase({
+    type: ZIMMessageType.Image,
+    fileLocalPath: file
+})
+
+zim.downloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (message: ZIMMessage, currentFileSize: number, totalFileSize: number) => {
+    // Download progress
+    // Developers need to check the type of the message and cast it to the corresponding message type
+    if (message.type === ZIMMessageType.Image) {
+        const imageMessage = new ZIMImageMessage(message)
+        // Handler image messages
+    }
+    // Handle other types of messages
+    ......
+}).then((message: ZIMMessage) => {
+    // Download complete
+    // Developers need to check the type of the message and cast it to the corresponding message type
+    if (message.type === ZIMMessageType.Image) {
+        const imageMessage = new ZIMImageMessage(message)
+        // Handler image messages
+    }
+    // Handle other types of messages
+    ......
+}).catch((errorInfo: ZIMError) => {
+    // Failed to download
+})
+```
+
+```javascript title="Old Usage" {6,8}
+const imageMessage = new ZIMMessageBase({
+    type: ZIMMessageType.Image,
+    fileLocalPath: file
+})
+
+zim.downloadMediaFile(imageMessage, ZIMMediaFileType.OriginalFile, (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
+    // Download progress
+}).then((message: ZIMMediaMessage) => {
+    // Download complete
+}).catch((errorInfo: ZIMError) => {
+    // Failed to download
+})
+```
+</CodeGroup>
+:::
+
 :::if{props.platform="undefined"}
 ### sendMessage
 
@@ -265,7 +357,7 @@ zim.getInstance().sendMediaMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConver
 
 Since version 2.19.0, multimedia messages must be sent using the [sendMessage](@sendMessage) interface. The `sendMediaMessage` interface is deprecated to unify message sending and facilitate future general extensions.
 :::
-:::if{props.platform="Web"}
+:::if{props.platform="Web|RN"}
 In [ZIMMessageSendNotification](@-ZIMMessageSendNotification), the `message` parameter type in the [onMediaUploadingProgress](@onMediaUploadingProgress-ZIMMessageSendNotification) callback method has changed from `ZIMMessage` to `ZIMMediaMessage` to ensure that only media messages are notified in the callback. TypeScript developers need to fix the calls based on the compile error hints from the IDE. (Currently, only developers using TypeScript and the [replyMessage](@replyMessage) interface will be affected by the need to resolve compile errors.)
 :::
 
@@ -318,26 +410,26 @@ ZIM::getInstance()->sendMediaMessage(imageMessage,
 ```
 </CodeGroup>
 :::
-:::if{props.platform="Web"}
+:::if{props.platform="Web|RN"}
 <CodeGroup>
 ```javascript title="Usage in Version 2.19.0" {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMessageSendNotification({
+const notification: ZIMMessageSendNotification = {
     onMessageAttached: (message: ZIMMessage) => {
         // Developers can listen to this callback to execute business logic before sending the message
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // Multimedia upload progress
     }
-})
+}
 
 zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // Message send result
@@ -347,23 +439,24 @@ zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, co
 ```
 
 ```javascript title="Old Usage" {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMediaMessageSendNotification({
+const notification: ZIMMediaMessageSendNotification = {
     onMessageAttached: (message: ZIMMediaMessage) => {
         // Developers can listen to this callback to execute business logic before sending the message
+
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // Multimedia upload progress
     }
-})
+}
 
 zim.sendMediaMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // Message send result
