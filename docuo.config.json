@@ -157,6 +157,24 @@
       }
     },
     {
+      "id": "zim_harmonyos_zh",
+      "label": "即时通讯 (HarmonyOS)",
+      "path": "core_products/zim/zh/docs_zim_harmonyos_zh",
+      "routeBasePath": "zh/zim-harmonyos",
+      "locale": "zh",
+      "navigationInfo": {
+        "group": {
+          "id": "zim_zh",
+          "name": "即时通讯"
+        },
+        "category": [
+          "产品",
+          "互动核心产品"
+        ],
+        "platform": "HarmonyOS: ArkTS"
+      }
+    },
+    {
       "id": "zim_flutter_zh",
       "label": "即时通讯 (Flutter)",
       "path": "core_products/zim/zh/docs_zim_flutter_zh",
