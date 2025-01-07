@@ -28,10 +28,10 @@ static init(appID: number, server: string, userID: string, userName: string, tok
 import { ZegoUIKitPrebuiltCall, ZegoCallScenario, ZegoUIKitUser }  from '@zegocloud/zego-uikit-prebuilt-call-mini-program';
 const events = {
     onIncomingCallReceived: (callID: string, caller: ZegoUIKitUser,  callType: number, callees: ZegoUIKitUser[], customData: string) => {
-        console.warn('===demo onIncomingCallReceived', callID, caller, callType, callees, customData);
+        console.warn('onIncomingCallReceived', callID, caller, callType, callees, customData);
     },
     onIncomingCallCanceled: (callID: string, caller: ZegoUIKitUser, customData: string) =>{
-        console.warn('===demo onIncomingCallCanceled', callID, caller, customData);
+        console.warn('onIncomingCallCanceled', callID, caller, customData);
         showToast(`${caller.userID}已取消呼叫邀请`);
     },
     // ......
@@ -43,15 +43,48 @@ const config = {
 }
 ZegoUIKitPrebuiltCall.init(APPID, SERVER, userID, userName, token, config, events)
     .then((res)=>{
-        console.log('===demo res', res);
+        console.log('res', res);
     })
     .catch((err)=>{
-        console.log('===demo err', err);
-        showToast('初始化失败，请稍后重试');
+        console.log('err', err);
     });
 ```
 </CodeGroup>
 
+### sendCallInvitation
+
+使用该接口发起呼叫邀请。
+
+<CodeGroup>
+```js Prototype
+/**
+     * 发起通话邀请
+     * @param params 通话邀请参数
+     * @returns 接口调用结果
+     */
+    static sendCallInvitation(params: {
+        callees: ZegoUIKitUser[], 
+        callType: ZegoCallInvitationType, 
+        customData?: string, 
+        timeout?: number, 
+        roomID?: string}
+    )
+```
+
+```js Example
+import { ZegoUIKitPrebuiltCall }  from '@zegocloud/zego-uikit-prebuilt-call-mini-program';
+
+ZegoUIKitPrebuiltCall.init(APPID, SERVER, userID.value, userName.value, token, config, events)
+    .then((res)=>{
+        const callees = [{ userID: 'xx', userName: 'user_xx' }];
+        const callType = 1;
+        ZegoUIKitPrebuiltCall.sendCallInvitation({ callees, callType })
+            .then((res)=>{
+        	    !res.code && ZegoUIKitPrebuiltCall.onInvitationSent(callType, callees)
+            });
+    })
+```
+</CodeGroup>
 
 ### unInit
 
@@ -101,7 +134,7 @@ onMounted(() => {
     // 监听 `onTokenWillExpire` 回调
     ZegoUIKitPrebuiltCall.addUIKitListener(LISTENER_ID, {
         onTokenWillExpire(roomID) {
-            console.log('===demo onTokenWillExpire', roomID);
+            console.warn('onTokenWillExpire', roomID);
             // 重新获取token
             token = generatePrebuiltTokenTest(APPID, SERVER_SECRET, userID);
             // 刷新内部token
@@ -111,7 +144,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-	console.warn('[demo] unmounted');
     // 确保配套调用, 添加的 listener 必须在不用的时候删除
     ZegoUIKitPrebuiltCall.removeUIKitListener(LISTENER_ID);
 	ZegoUIKitPrebuiltCall.unInit();
