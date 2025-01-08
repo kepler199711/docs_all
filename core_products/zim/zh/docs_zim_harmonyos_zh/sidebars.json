@@ -45,17 +45,6 @@
         },
         {
           "type": "category",
-          "label": "升级指南",
-          "items": [
-            {
-              "type": "doc",
-              "label": "ZIM",
-              "id": "client-sdks/zim-upgrade-guide"
-            }
-          ]
-        },
-        {
-          "type": "category",
           "label": "错误码",
           "items": [
             {
