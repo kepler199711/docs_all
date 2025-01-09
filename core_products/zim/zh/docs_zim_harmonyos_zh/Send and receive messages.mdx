@@ -12,17 +12,18 @@ import MessageSequenceDiagramJS from '/core_products/zim/zh/snippets/MessageSequ
 
 本文介绍如何使用 ZIM SDK 快速实现基本的单聊会话消息收发功能。
 
-## 1 前提条件
+## 前提条件
 
 在使用 ZIM SDK 前，请确保：
 
 * 开发环境：
 
-    - React Native 0.60.0 或以上版本。
-    - iOS 11.0 或以上版本的 iOS 设备或模拟器（推荐使用真机）。
-    - Android 4.0.3 或以上版本的 Android 设备或模拟器（推荐使用真机），如果为真机，请开启“允许调试”选项。
-    - iOS / Android 设备已经连接到 Internet。
-    - 配置 VS Code 开发环境，可在应用商店中搜索 “React Native Tools” 扩展并下载。
+    - 获取 [DevEco Studio 5.0.0 Release]（https://developer.huawei.com/consumer/cn/deveco-studio/） 或以上版本。
+    - 获取配套 API Version 12 Release 的 HarmonyOS 5.0.0 Release SDK 或以上版本。
+    - 获取配套 API Version 12 Release 的 HarmonyOS 5.0.0 Release 操作系统或以上版本，支持音视频的鸿蒙设备，且已开启“允许调试”选项。
+    - 如果需要使用真机调试，请参考 鸿蒙官网文档 进行配置。
+    - 鸿蒙设备已经连接到 Internet。
+    - 已注册华为开发者账号 并完成实名认证。
 - 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，获取到了接入 ZIM SDK 服务所需的 AppID、AppSign。ZIM 服务权限不是默认开启的，使用前，请先在 [ZEGO 控制台](https://console.zego.im) 自助开通 ZIM 服务（详情请参考 [项目管理 - 即时通讯](https://doc-zh.zego.im/article/14994)），若无法开通 ZIM 服务，请联系 ZEGO 技术支持开通。
 
 <Warning title="注意">
@@ -31,49 +32,60 @@ import MessageSequenceDiagramJS from '/core_products/zim/zh/snippets/MessageSequ
 </Warning>
 
 
-## 2 集成 SDK  
+## 集成 SDK
 
-### 2.1 （可选）新建项目
-
+<Steps>
+<Step title="（可选）新建项目">
 <Accordion title="此步骤以如何创建新项目为例，如果是集成到已有项目，可忽略此步。" defaultOpen="false">
-1. 使用 `React Native` 内置的命令行工具，创建一个名为 “zego-zim-example” 的新项目。
 
-    此命令行工具不需要安装，可以直接用 `node` 自带的 `npx` 命令来使用：
+    <Steps>
+    <Step title="创建项目">
+    打开 DevEco Studio，选择 “File > New > Create Project” 菜单，新建工程。
 
-    ```
-    npx react-native init zego-zim-example
-    ```
+    <Frame width="auto" height="auto" caption="">
+    <img src="https://media-resource.spreading.io/docuo/workspace745/03e04f98099440df3547898e90a80a96/98b3e94237.png" alt="create_ohos_project.png"/>
+    </Frame>
+    </Step>
+    <Step title="选择项目模板">
+    选择项目模版为 “Empty Ability”。
 
-2. 编译运行 iOS 平台：
+    <Frame width="auto" height="auto" caption="">
+    <img src="https://media-resource.spreading.io/docuo/workspace745/03e04f98099440df3547898e90a80a96/c48596c8ee.png" alt="create_ohos_project_2.png"/>
+    </Frame>
+    </Step>
+    <Step title="填写信息">
 
-    ```
-    yarn react-native run-ios
-    ```
-
-
-3. 编译运行 Android 平台：
-
-    ```
-    yarn react-native run-android
-    ```
+    填写您项目名称、设备类型等信息。
+    <Frame width="auto" height="auto" caption="">
+    <img src="https://media-resource.spreading.io/docuo/workspace745/03e04f98099440df3547898e90a80a96/87bc1e70b0.png" alt="create_ohos_project_3.png"/>
+    </Frame>
+    信息填写完步后，单击 "Finish"，完成工程创建。
+    </Step>
+    </Steps>    
 </Accordion>
-
-
+</Step>
+<Step title="Second Step">
+Here's content that's only inside the second Step.
+</Step>
+</Steps>
 
 ### 2.2 导入 SDK
 
-开发者可以使用 npm 获取 SDK。
+开发者可以通过复制 SDK 文件手动集成 SDK。
 
-1. 执行 `npm i zego-zim-react-native` 或 `yarn add zego-zim-react-native` 命令安装依赖。
+1. 请参考 [ZIM 下载](https://doc-zh.zego.im/article/14994) 获取 SDK 文件。
 
-2. 导入 SDK。
+2. 解压 SDK 至 “entry/libs” 项目目录。如果您的项目中没有 libs 目录，手动新建一个即可。
 
-    ```javascript
-    import ZIM from 'zego-zim-react-native';
+    <Frame width="auto" height="auto" caption="">
+    <img src="https://media-resource.spreading.io/docuo/workspace745/03e04f98099440df3547898e90a80a96/f5fbda474a.jpeg" alt="20250108-182414.jpeg"/>
+    </Frame>
+
+3. 进入 “entry” 目录，打开 “oh-package.json5” 文件，在 “dependencies” 节点中引入 “libs” 下所有的 har，添加 SDK 引用。
+
+    ```json5
+        "@ohos/ZIM": "file:./libs/ZIM.har"
     ```
-3. 进入 iOS 根目录，并执行 `pod install` 命令安装依赖。
-
-完成如上操作即可在项目中通过 javascript 或 typescript (推荐) 来使用 `zego-zim-react-native` SDK。
 
 ## 3 实现基本收发消息
 
@@ -91,7 +103,7 @@ import MessageSequenceDiagramJS from '/core_products/zim/zh/snippets/MessageSequ
 
 #### 1. 导入 SDK 文件
 
-请参考 [2.2 导入 SDK](#22-导入-sdk)，使用 npm 获取 SDK，导入 SDK 文件。
+请参考 [2.2 导入 SDK](#22-导入-sdk)，导入 SDK 文件。
 
 #### 2. 创建 ZIM 实例
 
@@ -107,7 +119,7 @@ import MessageSequenceDiagramJS from '/core_products/zim/zh/snippets/MessageSequ
 // create 方法仅第一次调用时会创建 ZIM 实例，后续调用会返回 null。
 ZIM.create({ appID: 0, appSign: '' });
 // 通过 getInstance 获取单实例，避免热更新导致 create 多次创建返回 null。
-var zim = ZIM.getInstance();
+var zim : ZIM | null = ZIM.getInstance();
 ```    
 
 
