@@ -23,23 +23,23 @@ articleID: 20617
 
 <CodeGroup>
 ```javascript 2.19.0版本用法 {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMessageSendNotification({
+const notification: ZIMMessageSendNotification = {
     onMessageAttached: (message: ZIMMessage) => {
         // 开发者可以监听这个回调执行消息发送前的业务逻辑
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // 多媒体上传进度
     }
-})
+}
 
 zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // 消息发送结果
@@ -49,23 +49,23 @@ zim.sendMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, co
 ```
 
 ```javascript 旧版本用法 {10,14,19}
-const imageMessage = new ZIMMessageBase({
+const imageMessage: ZIMMessageBase = {
     type: ZIMMessageType.Image,
     fileLocalPath: file
-})
+}
 
-const config = new ZIMMessageSendConfig({
+const config: ZIMMessageSendConfig = {
     priority: ZIMMessagePriority.Medium
-})
+}
 
-const notification = new ZIMMediaMessageSendNotification({
+const notification: ZIMMediaMessageSendNotification = {
     onMessageAttached: (message: ZIMMediaMessage) => {
         // 开发者可以监听这个回调执行消息发送前的业务逻辑
     },
     onMessageUploadingProgress: (message: ZIMMediaMessage, currentFileSize: number, totalFileSize: number) => {
         // 多媒体上传进度
     }
-})
+}
 
 zim.sendMediaMessage(imageMessage, "TO_CONVERSATION_ID", ZIMConversationType.Peer, config, notification).then((message: ZIMMessage) => {
     // 消息发送结果
