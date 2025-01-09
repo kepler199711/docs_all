@@ -20,8 +20,9 @@ import MessageSequenceDiagramJS from '/core_products/zim/zh/snippets/MessageSequ
     - 已 [注册华为开发者账号\|_blank](https://developer.huawei.com/consumer/cn/doc/start/registration-and-verification-0000001053628148) 并完成实名认证。
     - 获取 [DevEco Studio 5.0.0 Release](https://developer.huawei.com/consumer/cn/deveco-studio/) 或以上版本。
     - 获取配套 [API Version 12 Release\|_blank](https://developer.huawei.com/consumer/cn/doc/harmonyos-references-V5/development-intro-api-V5?catalogVersion=V5) 的 HarmonyOS 5.0.0 Release SDK 或以上版本。
-    - 获取配套 [API Version 12 Release\|_blank](https://developer.huawei.com/consumer/cn/doc/harmonyos-references-V5/development-intro-api-V5?catalogVersion=V5) 的 HarmonyOS 5.0.0 Release 操作系统或以上版本的鸿蒙设备，且已开启“允许调试”选项。
-    - 如果需要使用真机调试，请参考 [鸿蒙官网文档](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-run-device-V5) 进行配置。
+    - 获取配套 [API Version 12 Release\|_blank](https://developer.huawei.com/consumer/cn/doc/harmonyos-references-V5/development-intro-api-V5?catalogVersion=V5) 的 HarmonyOS 5.0.0 Release 操作系统或以上版本的鸿蒙设备真机或模拟器。
+        - 如需使用真机，请参考鸿蒙官网文档 [使用本地真机运行应用/元服务](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-run-device-V5)。
+        - 如需使用模拟器，请参考鸿蒙官网文档 [使用模拟器运行应用/元服务](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-run-emulator-V5)。
     - 鸿蒙设备已经连接到 Internet。
 - 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，获取到了接入 ZIM SDK 服务所需的 AppID、AppSign。ZIM 服务权限不是默认开启的，使用前，请先在 [ZEGO 控制台](https://console.zego.im) 自助开通 ZIM 服务（详情请参考 [项目管理 - 即时通讯](https://doc-zh.zego.im/article/14994)），若无法开通 ZIM 服务，请联系 ZEGO 技术支持开通。
 
@@ -36,21 +37,21 @@ import MessageSequenceDiagramJS from '/core_products/zim/zh/snippets/MessageSequ
     <Step title="创建项目">
     打开 DevEco Studio，选择 “File > New > Create Project” 菜单，新建工程。
 
-    <Frame width="auto" height="auto">
+    <Frame width="512" height="auto">
     <img src="https://media-resource.spreading.io/docuo/workspace745/03e04f98099440df3547898e90a80a96/c9c9584bf2.jpeg"/>
     </Frame>
     </Step>
     <Step title="选择项目模板">
     选择项目模版为 “Empty Ability”。
 
-    <Frame width="auto" height="auto">
+    <Frame width="512" height="auto">
     <img src="https://media-resource.spreading.io/docuo/workspace745/03e04f98099440df3547898e90a80a96/4cebd36b22.jpeg"/>
     </Frame>
     </Step>
     <Step title="填写信息">
 
     填写您项目名称、设备类型等信息。
-    <Frame width="auto" height="auto">
+    <Frame width="512" height="auto">
     <img src="https://media-resource.spreading.io/docuo/workspace745/03e04f98099440df3547898e90a80a96/03f53ea813.jpeg"/>
     </Frame>
     信息填写完步后，单击 "Finish"，完成工程创建。
@@ -123,7 +124,7 @@ var zim : ZIM | null = ZIM.getInstance();
 
 #### 3. 监听回调事件
 
-在客户端登录前，开发者可以通过调用 [on](@on) 接口，自定义 ZIM 中的事件回调，接收到 SDK 异常、消息通知回调等的通知。
+在客户端登录前，开发者可以通过调用 [on](@on) 接口，监听 ZIM 中的事件回调，接收到 SDK 异常、消息通知回调等的通知。
 
 ```typescript
 // 注册监听“运行时错误信息”的回调  
@@ -175,7 +176,7 @@ zim.on('tokenWillExpire', function (zim, { second }) {
     - 为方便开发者调试，[ZEGO 控制台\|_blank](https://console.zego.im/) 提供生成临时 Token 的功能，详情请参考 [控制台 - 开发辅助\|_blank](#16309)。但是，在您的项目上线时，一定要通过自己的服务端生成 Token。
 </Warning>
 
-```type
+```typescript
 // userID 最大 32 字节的字符串。仅支持数字，英文字符 和 '!', '#', '$', '%', '&', '(', ')', '+', '-', ':', ';', '<', '=', '.', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~'。
 // userName 最大 256 字节的字符串，无特殊字符限制。
 var userID = 'xxxx';
@@ -236,7 +237,7 @@ zim.sendMessage(messageTextObj, toConversationID, conversationType, config, noti
 
 #### 6. 接收消息
 
-客户端 B 登录 ZIM 后，将会收到在 [on](@on) 回调中设置的 [peerMessageReceived](@peerMessageReceived) 监听接口，收到客户端 A 发送过来的消息。
+客户端 B 登录 ZIM 后，将会在 [peerMessageReceived](@peerMessageReceived) 回调收到客户端 A 发送过来的消息。
 
 ```typescript 
 // 注册监听“收到单聊消息”的回调
