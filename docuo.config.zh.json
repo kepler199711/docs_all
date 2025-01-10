@@ -1067,6 +1067,9 @@
   "analytics": {
     "ga4": {
       "measurementId": "G-PKWFYY4JH2"
+    },
+    "baidu": {
+      "tongjiID": "1d8137b1d22392852da8458ac7611118"
     }
   },
   "i18n": {
