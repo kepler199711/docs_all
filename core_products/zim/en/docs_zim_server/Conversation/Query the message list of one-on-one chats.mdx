@@ -97,7 +97,7 @@ https://zim-api.zego.im/?Action=QueryPeerMsg
 | :-- | :-- | :-- | 
 | Message | String | The description of the request result. |
 | RequestId | String | The request ID. |
-| Next | Number | Pagination flag.<ul><li>Not 0: indicates that there is more conversation information to be returned, and this field needs to be set to the Next&nbsp; parameter in the request to fetch more conversation information.</li><li>0: indicates that the complete conversation list has been returned.</li></ul> |
+| Next | Number | Pagination flag.<ul><li>Not 0: indicates that there is more conversation information to be returned, and this field needs to be set to the Next; parameter in the request to fetch more conversation information.</li><li>0: indicates that the complete conversation list has been returned.</li></ul><Note>Aside from the explanations mentioned above, this field has no association with the list information. Please do not base any other logic on it.</Note> |
 | List | Array of Object | Message list. Return the results in descending order by MsgTime. |
 | └Sender | String | Message sender ID. |
 | └MsgType | Number | Message type: <li>1: Text.</li> <li>11: Image.</li><li>12: Document.</li><li>13: Audio.</li><li>14: Video.</li><li>200: Custom.</li> |
