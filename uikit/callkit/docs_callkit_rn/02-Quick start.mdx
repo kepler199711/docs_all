@@ -6,21 +6,23 @@
 
 ### Import the SDK
 
-1. Add @zegocloud/zego-uikit-prebuilt-call-rn as dependencies.
+<Steps>
+<Step title="Add the SDK">
+
+Run the following code to add @zegocloud/zego-uikit-prebuilt-call-rn as dependencies.
 
 <CodeGroup>
-
 ```bash yarn
 yarn add @zegocloud/zego-uikit-prebuilt-call-rn
 ```
 
 </CodeGroup>
-
 <Note title="Note">
-Our SDK not support the Expo framework. Some features of the SDK require to modify the native layer, which the Expo framework does not support. It is recommended to integrate the SDK with a standard react native project.
+Our SDK does not support the Expo framework. Some features of the SDK require to modify the native layer, which the Expo framework does not support. It is recommended to integrate the SDK with a standard react native project.
 </Note>
+</Step>
+<Step title="Add other dependencies">
 
-2. Add other dependencies.
 
 Run the following command to install other dependencies for making sure the `@zegocloud/zego-uikit-prebuilt-call-rn` can work properly:
 
@@ -31,6 +33,9 @@ yarn add @zegocloud/zego-uikit-rn react-delegate-component zego-express-engine-r
 ```
 
 </CodeGroup>
+</Step>
+</Steps>
+
 
 ### Using the ZegoUIKitPrebuiltCall Component in your project
 

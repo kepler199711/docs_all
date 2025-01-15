@@ -29,9 +29,11 @@ Recorded on Xiaomi and iPhone, the outcome may differ on different devices.
 <UIKitInvitationPrerequisitesZIMSignaling/>
 
 
-### Add dependencies.
+### Add dependencies
 
-1. Run the following code in your project root directory, to install `@zegocloud/zego-uikit-prebuilt-call-rn`.
+<Steps>
+<Step title="Add the SDK">
+Run the following code in your project root directory, to install `@zegocloud/zego-uikit-prebuilt-call-rn`.
 
 <CodeGroup>
 ```bash yarn
@@ -43,9 +45,8 @@ yarn add @zegocloud/zego-uikit-prebuilt-call-rn
 <Note title="Note">
 Our SDK not support the Expo framework. Some features of the SDK require to modify the native layer, which the Expo framework does not support. It is recommended to integrate the SDK with a standard react native project.
 </Note>
-
-2. Add other dependencies.
-
+</Step>
+<Step title="Add other dependencies">
 Run the following command to install other dependencies for making sure the `@zegocloud/zego-uikit-prebuilt-call-rn` can work properly.
 
 <CodeGroup>
@@ -54,6 +55,8 @@ yarn add @zegocloud/zego-uikit-rn react-delegate-component @react-navigation/nat
 ```
 
 </CodeGroup>
+</Step>
+</Steps>
 
 <Accordion title="When your React Native version is below 0.60, please follow these steps" defaultOpen="false">
 
