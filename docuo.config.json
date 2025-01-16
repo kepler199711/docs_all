@@ -662,7 +662,7 @@
       "locale": "zh",
       "navigationInfo": {
         "group": {
-          "id": "mini-game-zh",
+          "id": "mini_game_zh",
           "name": "小游戏平台",
           "tag": ""
         },
@@ -698,7 +698,7 @@
       "locale": "zh",
       "navigationInfo": {
         "group": {
-          "id": "analytics-dashboard-zh",
+          "id": "analytics_dashboard_zh",
           "name": "星图",
           "tag": ""
         },
