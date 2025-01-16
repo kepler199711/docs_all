@@ -69,6 +69,13 @@ import MarkSendMessageEvent from '/core_products/zim/zh/snippets/SendMessageEven
         # 请从发布日志查询 SDK 最新版本，并将 x.y.z 修改为具体的版本号
         zego_zim: ^x.y.z
     ```
+    如果集成的是支持鸿蒙平台的 flutter ZIM SDK ，请在下载 sdk zip 文件后，解压后，添加 "zego_zim" 本地依赖：
+
+    ```yaml
+    dependencies:
+        zego_zim:
+            path: /path/to/zego_zim // 替换为解压后的文件夹路径
+    ```
 
 2. 添加完成并保存文件后，在终端执行 `flutter pub get`。
 
