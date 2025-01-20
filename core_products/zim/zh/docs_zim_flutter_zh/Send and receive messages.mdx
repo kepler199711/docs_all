@@ -13,30 +13,46 @@ import MarkSendMessageEvent from '/core_products/zim/zh/snippets/SendMessageEven
 
 <Note title="说明">
 
-本文档适用于开发以下平台的应用：iOS、Android、macOS、Windows、Web。
+本文档适用于开发以下平台的应用：iOS、Android、HarmonyOS、macOS、Windows、Web。
 </Note>
 
 ## 1 前提条件
 
 在使用 ZIM SDK 前，请确保：
 
-- 已安装 Flutter。
-- 已安装 Dart 且版本为 [2.12.0, 4.0.0)。
-- 测试设备满足以下要求：
-    - iOS 11.0 或以上版本的 iOS 设备或模拟器（推荐使用真机）。
-    - Android 4.1 或以上的 Android 设备或模拟器（推荐使用真机），如果是真机，请开启“允许调试”选项。
-    - Windows: Windows 10 或更高的版本（基于 x86-64 的 64 位操作系统）。
-    - macOS: macOS 10.13 或以上版本。
-    - Web 浏览器：
-        - Chrome 58 或以上版本
-        - Firefox 56 或以上版本
-        - Safari 11 或以上版本
-        - Opera 45 或以上版本
-        - QQ 浏览器 Windows 10.1 或以上版本/macOS 4.4 或以上版本
-        - 360 安全浏览器极速模式
-     - 设备已经连接到 Internet。 
+- 开发环境与测试设备满足以下要求：
+    <Tabs>
+    <Tab title="不适用于 HarmonyOS App 开发">
+    - 开发环境：
+        - 已安装 Flutter。
+        - 已安装 Dart 且版本为 [2.12.0, 4.0.0)。
+    - 测试设备：
+        - 满足以下版本要求：
+            | 平台 | 版本要求 |
+            | ---- | -------- |
+            | iOS | iOS 11.0 或以上版本的 iOS 设备或模拟器（推荐使用真机）。 |
+            | Android | Android 4.1 或以上的 Android 设备或模拟器（推荐使用真机），如果是真机，请开启“允许调试”选项。 |
+            | Windows | Windows 10 或更高的版本（基于 x86-64 的 64 位操作系统）。 |
+            | macOS | macOS 10.13 或以上版本的设备。|
+            | Web | 支持以下浏览器：<ul><li>Chrome 58 或以上版本</li><li>Firefox 56 或以上版本</li><li>Safari 11 或以上版本</li><li>Opera 45 或以上版本</li><li>QQ 浏览器 Windows 10.1 或以上版本/macOS 4.4 或以上版本</li><li>360 安全浏览器极速模式</li></ul> |
+        - 已经连接到 Internet。 
+    </Tab>
+    <Tab title="适用于 HarmonyOS App 开发">
+    - 开发环境：已参考 [OpenHarmony-SIG/flutter_flutter](https://gitee.com/openharmony-sig/flutter_flutter) 安装了适配 OpenHarmony 的 Flutter。
+    - 测试设备：
+        - 满足以下版本要求：
+            | 平台 | 版本要求 |
+            | ---- | -------- |
+            | HarmonyOS | HarmonyOS 5.0.0 Release 操作系统或以上版本的 HarmonyOS 设备真机或模拟器。 |
+            | iOS | iOS 11.0 或以上版本的 iOS 设备或模拟器（推荐使用真机）。 |
+            | Android | Android 4.1 或以上的 Android 设备或模拟器（推荐使用真机），如果是真机，请开启“允许调试”选项。 |
+            | Windows | Windows 10 或更高的版本（基于 x86-64 的 64 位操作系统）。 |
+            | macOS | macOS 10.13 或以上版本的设备。|
+            | Web | 支持以下浏览器：<ul><li>Chrome 58 或以上版本</li><li>Firefox 56 或以上版本</li><li>Safari 11 或以上版本</li><li>Opera 45 或以上版本</li><li>QQ 浏览器 Windows 10.1 或以上版本/macOS 4.4 或以上版本</li><li>360 安全浏览器极速模式</li></ul> |
+        - 设备已经连接到 Internet。 
+    </Tab>
+    </Tabs>
 - 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，获取到了接入 ZIM SDK 服务所需的 AppID、AppSign。ZIM 服务权限不是默认开启的，使用前，请先在 [ZEGO 控制台](https://console.zego.im) 自助开通 ZIM 服务（详情请参考 [项目管理 - 即时通讯](https://doc-zh.zego.im/article/14994)），若无法开通 ZIM 服务，请联系 ZEGO 技术支持开通。
-
 <Warning title="注意">
 
 `2.3.0 及以上`版本的 SDK，开始支持 “AppSign 鉴权”，同时仍支持 “Token 鉴权”，若您需要升级鉴权方式，可参考 [ZIM 如何从 AppSign 鉴权升级为 Token 鉴权](http://doc-zh.zego.im/faq/token_upgrade_zim)。
@@ -53,28 +69,51 @@ import MarkSendMessageEvent from '/core_products/zim/zh/snippets/SendMessageEven
 
 ### 2.2 导入 SDK  
 
-1. 打开 “pubspec.yaml” 文件，以 “pub” 形式，添加 “zego_zim” 依赖：
-
+<Steps>
+<Step title="添加 zego_zim 依赖">
+    <Tabs>
+    <Tab title="不适用于 HarmonyOS App 开发">
+    打开 “pubspec.yaml” 文件，以 “pub” 的形式添加 “zego_zim” 依赖：
     ```yaml
     dependencies:
         # 请填写具体的 SDK 版本号
         # 请从发布日志查询 SDK 最新版本，并将 x.y.z 修改为具体的版本号
         zego_zim: ^x.y.z
     ```
-
-2. 添加完成并保存文件后，在终端执行 `flutter pub get`。
-
-3. 如果您使用的是 Web 平台，还需要在您的 Web 项目的 index.html 文件中，添加如下代码，引入 Web SDK。
-
-    ```html
-    <script src="assets/packages/zego_zim/assets/index.js" type="application/javascript"></script>
-    ``` 
+    </Tab>
+    <Tab title="适用于 HarmonyOS App 开发">
+    <Steps>
+    <Step title="下载 SDK">
+    在 [下载](./Client%20SDKs/SDK%20downloads.mdx) 中获取支持 HarmonyOS 的 ZIM Flutter SDK 压缩包并解压。 
+    </Step>
+    <Step title="添加本地依赖">
+    打开 “pubspec.yaml” 文件，添加 "zego_zim" 本地依赖：
+    ```yaml
+    dependencies:
+        zego_zim:
+            path: /path/to/zego_zim // 替换为解压后的文件夹路径
+    ```
+    </Step>
+    </Steps>
+    </Tab>
+    </Tabs>
+</Step>
+<Step title="运行命令">
+保存 “pubspec.yaml” 文件，并在终端执行 `flutter pub get`。
+</Step>
+<Step title="（适用于 Web）引入 Web SDK">
+在您的 Web 项目的 index.html 文件中，添加如下代码，引入 Web SDK。
+```html
+<script src="assets/packages/zego_zim/assets/index.js" type="application/javascript"></script>
+``` 
+</Step>
+</Steps>
 
 ### 2.3 设置权限  
 
 开发者可以根据实际应用需要，设置应用所需权限。
 
-- iOS、Web 平台：无特殊权限要求。
+- iOS、HarmonyOS、Windows、macOS、Web 平台：无特殊权限要求。
 - Android 平台：
 
     进入 “app/src/main” 目录，打开 “AndroidManifest.xml” 文件，添加权限。 
