@@ -2720,7 +2720,7 @@
         ],
         "platform": "iOS: Objective-C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "whiteboard_android_android_zh",
@@ -2739,7 +2739,7 @@
         ],
         "platform": "Android: Java"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "whiteboard_android_macos_zh",
@@ -2758,7 +2758,7 @@
         ],
         "platform": "macOS: Objective-C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "whiteboard_android_windows_zh",
@@ -2777,7 +2777,7 @@
         ],
         "platform": "Windows: C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "whiteboard_android_web_zh",
@@ -2796,7 +2796,7 @@
         ],
         "platform": "Web: JavaScript"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "whiteboard_android_electron_zh",
@@ -2815,7 +2815,7 @@
         ],
         "platform": "Electron: JavaScript"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "docs_view_android_ios_zh",
@@ -2834,7 +2834,7 @@
         ],
         "platform": "iOS: Objective-C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "docs_view_android_android_zh",
@@ -2853,7 +2853,7 @@
         ],
         "platform": "Android: Java"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "docs_view_android_macos_zh",
@@ -2872,7 +2872,7 @@
         ],
         "platform": "macOS: Objective-C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "docs_view_android_windows_zh",
@@ -2891,7 +2891,7 @@
         ],
         "platform": "Windows: C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "docs_view_android_web_zh",
@@ -2910,7 +2910,7 @@
         ],
         "platform": "Web: JavaScript"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "docs_view_android_electron_zh",
@@ -2929,7 +2929,7 @@
         ],
         "platform": "Electron: JavaScript"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_video_android_ios_zh",
@@ -2948,7 +2948,7 @@
         ],
         "platform": "iOS: Objective-C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_video_android_android_zh",
@@ -2967,7 +2967,7 @@
         ],
         "platform": "Android: Java"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_video_android_macos_zh",
@@ -2986,7 +2986,7 @@
         ],
         "platform": "macOS: Objective-C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_video_android_windows_zh",
@@ -3005,7 +3005,7 @@
         ],
         "platform": "Windows: C++"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_video_android_linux_zh",
@@ -3024,7 +3024,7 @@
         ],
         "platform": "Linux: C++"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_video_android_web_zh",
@@ -3043,10 +3043,10 @@
         ],
         "platform": "Web: JavaScript"
       },
-      "visible": "false"
+      "visible": false
     },
     {
-      "id": "old_real_time_video_android_小程序_zh",
+      "id": "old_real_time_video_android_miniprogram_zh",
       "path": "https://doc-zh.zego.im/article/5478",
       "routeBasePath": "old-real-time-video",
       "locale": "zh",
@@ -3060,9 +3060,9 @@
           "产品",
           "互动核心产品"
         ],
-        "platform": "小程序: JavaScript"
+        "platform": "小程序: JS"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_video_android_electron_zh",
@@ -3081,7 +3081,7 @@
         ],
         "platform": "Electron: JavaScript"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_voice_android_ios_zh",
@@ -3100,7 +3100,7 @@
         ],
         "platform": "iOS: Objective-C"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_voice_android_android_zh",
@@ -3119,7 +3119,7 @@
         ],
         "platform": "Android: Java"
       },
-      "visible": "false"
+      "visible": false
     },
     {
       "id": "old_real_time_voice_android_windows_zh",
@@ -3138,7 +3138,7 @@
         ],
         "platform": "Windows: C++"
       },
-      "visible": "false"
+      "visible": false
     }
   ],
   "analytics": {
