@@ -148,42 +148,19 @@ self.zim = [ZIM createWithAppConfig: appConfig];
 ```
 
 <Accordion title="ZIM 创建单例的示例" defaultOpen="false">
-由于大多数开发者，在整个流程中，只需要将 ZIM 实例化一次，因此 ZEGO 建议您将 ZIM 单例化并保存。
-
-创建一个 ZGZIMManager 类，在该类中声明并实现了一个 “shared” 类方法，该方法将会在首次调用时创建并返回一个 ZGZIMManager 的对象，在该对象中实例化 ZIM 并保存，此后在项目的任意位置导入 ZIMManager.h 头文件，调用 “[ZGZIMManager shared].zim” 将会返回 zim 对象。
+由于大多数开发者，在整个流程中，只需要将 ZIM 实例化一次，因此 ZEGO 建议您使用 ZIM 单例方法来获取实例对象。
 
 ```objc
-#import <Foundation/Foundation.h>
-#import "ZIM/ZIM.h"
-NS_ASSUME_NONNULL_BEGIN
+// 调用 ZIM create 静态方法初始化
+ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
+appConfig.appID = 123456;// 填入实际的 appID
+appConfig.appSign = "";// 填入实际的 appSign
+ZIM * zim = [ZIM createWithAppConfig:appConfig];
 
-@interface ZGZIMManager : NSObject
-@property (nonatomic, strong) ZIM *zim;
-+ (ZGZIMManager *)shared;
+//create 成功后，后续可以通过 getInstance 方法获取该 zim 对象
+ZIM *zim = [ZIM getInstance];
 
-@end
-
-NS_ASSUME_NONNULL_END
-```
-
-```objc
-#import "ZGZIMManager.h"
-static ZGZIMManager *_sharedManager = nil;
-@interface ZGZIMManager ()
-@end
-@implementation ZGZIMManager
-+ (ZGZIMManager *)shared {
-    if (!_sharedManager) {
-        @synchronized (self) {
-            if (!_sharedManager) {
-                _sharedManager = [[self alloc] init];
-                _sharedManager.zim = [ZIM createWithAppID:123]; //将此处 123 替换成自己的 APPID
-            }
-        }
-    }
-    return _sharedManager;
-}
-@end
+// 调用 create 前或者调用 destroy 方法后， getInstance 将返回到空指针
 ```
 </Accordion>
 

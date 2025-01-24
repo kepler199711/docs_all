@@ -219,30 +219,18 @@ zim = ZIM.create(appConfig, application);
 
 <Accordion title="ZIM 创建单例的示例" defaultOpen="false">
 
-由于大多数开发者，在整个流程中，只需要将 ZIM 实例化一次，因此 ZEGO 建议您将 ZIM 单例化并保存。
+由于大多数开发者，在整个流程中，只需要将 ZIM 实例化一次，因此 ZEGO 建议您使用 ZIM 单例方法来获取实例对象。
 
-创建一个 SDKManager 类，在该类中声明并实现了一个 “sharedInstance” 静态方法，该方法将会在首次调用时创建并返回一个 SDKManager 的对象，在该对象中调用 ”create“，此后在项目的任意位置导入 SDKManager 类，调用 “SDKManager.sharedInstance().zim” 将会返回 zim 对象。
+```objc
+// 调用 ZIM create 静态方法初始化
+ZIMAppConfig appConfig = new ZIMAppConfig();
+appConfig.appID = 123456;// 填入实际的 appID
+appConfig.appSign = "";// 填入实际的 appSign
+ZIM zim = ZIM.create(appConfig,application);
+//create 成功后，后续可以通过 getInstance 方法获取该 zim 对象
+ZIM zim = ZIM.getInstance();
 
-```java
-public class SDKManager {
-    private static SDKManager sdkManager;
-    public ZIM zim;
-
-    public static SDKManager sharedInstance() {
-        if (sdkManager == null) {
-            synchronized (SDKManager.class) {
-                if (sdkManager == null) {
-                    sdkManager = new SDKManager();
-                }
-            }
-        }
-        return sdkManager;
-    }
-
-    public void create(Application application) {
-        zim = ZIM.create(ZegoAppID.appID, application);
-    }
-}
+// 调用 create 前或者调用 destroy 方法后， getInstance 将返回到空指针
 ```
 
 </Accordion>
