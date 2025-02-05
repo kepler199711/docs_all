@@ -151,7 +151,7 @@ self.zim = [ZIM createWithAppConfig: appConfig];
 由于大多数开发者，在整个流程中，只需要将 ZIM 实例化一次，因此 ZEGO 建议您使用 ZIM 单例方法来获取实例对象。
 
 ```objc
-// 调用 ZIM create 静态方法初始化
+// 调用 ZIM createWithAppConfig 静态方法初始化
 ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
 appConfig.appID = 123456;// 填入实际的 appID
 appConfig.appSign = "";// 填入实际的 appSign
@@ -160,7 +160,7 @@ ZIM * zim = [ZIM createWithAppConfig:appConfig];
 //create 成功后，后续可以通过 getInstance 方法获取该 zim 对象
 ZIM *zim = [ZIM getInstance];
 
-// 调用 create 前或者调用 destroy 方法后， getInstance 将返回到空指针
+// 调用 createWithAppConfig 前或者调用 destroy 方法后， getInstance 将返回到空指针
 ```
 </Accordion>
 
