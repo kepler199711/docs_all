@@ -256,23 +256,13 @@ appConfig.appSign = ""; // Replace the value with your AppSign
 zim = ZIM.create(appConfig, application);
 ```
 
-<Accordion title="The sample code to create a ZIM SDK singleton" defaultOpen="false">
-
-Since most developers only need to instantiate ZIM once throughout the entire process, We recommends using the ZIM singleton method to obtain the instance object.
+Since most developers only need to instantiate ZIM once throughout the entire process, We recommends using the [getInstance](@getInstance) method to obtain the created instance object.
 
 ```java
-// Initialize by calling the static `create` method of ZIM
-ZIMAppConfig appConfig = new ZIMAppConfig();
-appConfig.appID = 123456; // Fill in the actual appID
-appConfig.appSign = ""; // Fill in the actual appSign
-ZIM zim = ZIM.create(appConfig, application);
-// After create succeeds, you can retrieve the ZIM object using the getInstance method
+// After successfully calling the create method to create an instance, you can obtain the zim object via the getInstance method.
+// Calling the getInstance method before calling the create method or after calling the destroy method to destroy the instance will return null.
 ZIM zim = ZIM.getInstance();
-
-// Before calling create or after calling the destroy method, getInstance will return a null pointer.
 ```
-</Accordion>
-
 
 ### Set an event handler object
 

@@ -138,31 +138,20 @@ If you want to change your authentication mode, please refer to the [Upgrade the
 </Warning>
 
 ```objc
-// Create a ZIM SDK object and pass your AppID and AppSign.
+// Call the createWithAppConfig method to create a ZIM SDK object and pass your AppID and AppSign.
 ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
-appConfig.appID = (unsigned int)appID;
-appConfig.appSign = @"appSign";
-self.zim = [ZIM createWithAppConfig: appConfig];
+appConfig.appID = 123456; // Pass in your appID
+appConfig.appSign = @""; // Pass in your appSign
+ZIM * zim = [ZIM createWithAppConfig:appConfig];
 ```
 
-<Accordion title="The sample code to create a ZIM SDK singleton" defaultOpen="false">
-
-Since most developers only need to instantiate ZIM once throughout the entire process, We recommends using the ZIM singleton method to obtain the instance object.
+Since most developers only need to instantiate ZIM once throughout the entire process, We recommends using the [getInstance](@getInstance) method to obtain the created instance object.
 
 ```objc
-// Initialize by calling the static `createWithAppConfig` method of ZIM
-ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
-appConfig.appID = 123456; // Fill in the actual appID
-appConfig.appSign = @""; // Fill in the actual appSign
-ZIM *zim = [ZIM createWithAppConfig:appConfig];
-
-// After `create` succeeds, you can retrieve the ZIM object using the `getInstance` method
+// After successfully calling the createWithAppConfig method to create an instance, you can obtain the zim object via the getInstance method.
+// Calling the getInstance method before calling the createWithAppConfig method or after calling the destroy method to destroy the instance will return nil.
 ZIM *zim = [ZIM getInstance];
-
-// Before calling `createWithAppConfig` or after calling the `destroy` method, `getInstance` will return a null pointer.
 ```
-</Accordion>
-
 
 ### Conform to the EventHandler protocol
 
