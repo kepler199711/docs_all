@@ -256,39 +256,13 @@ appConfig.appSign = ""; // Replace the value with your AppSign
 zim = ZIM.create(appConfig, application);
 ```
 
-<Accordion title="The sample code to create a ZIM SDK singleton" defaultOpen="false">
-
-For most cases, you will only need to create the ZIM SDK instance once. We recommend you create a singleton and save it.
-
-Create an `SDKManager` class, declare and implement a `sharedInstance` static method in this class, which will create and return an `SDKManager` object the first time it is called.
-Then, when you import the `SDKManager` class anywhere in the project and call the `SDKManager.sharedInstance().zim`, a ZIM object will be returned.
+Since most developers only need to instantiate ZIM once throughout the entire process, We recommends using the [getInstance](@getInstance) method to obtain the created instance object.
 
 ```java
-public class SDKManager {
-private static SDKManager sdkManager;
-public ZIM zim;
-
-public static SDKManager sharedInstance() {
-    if (sdkManager == null) {
-        synchronized (SDKManager.class) {
-            if (sdkManager == null) {
-                sdkManager = new SDKManager();
-            }
-        }
-    }
-    return sdkManager;
-}
-
-public void create(Application application) {
-    ZIMAppConfig appConfig = new ZIMAppConfig();
-    appConfig.appID = 12345;
-    appConfig.appSign = "appSign";
-    zim = ZIM.create(appConfig, application);
-}
-}
+// After successfully calling the create method to create an instance, you can obtain the zim object via the getInstance method.
+// Calling the getInstance method before calling the create method or after calling the destroy method to destroy the instance will return null.
+ZIM zim = ZIM.getInstance();
 ```
-</Accordion>
-
 
 ### Set an event handler object
 
