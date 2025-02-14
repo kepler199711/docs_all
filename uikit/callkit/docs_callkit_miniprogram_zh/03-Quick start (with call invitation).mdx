@@ -52,10 +52,11 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 <Step title="初始化具备呼叫邀请功能的音视频通话 UIKit。">
                 在您的首页或其他页面中，参考以下代码初始化 ZegoUIKitPrebuiltCall。
 
-                <Warning title="Warning">设置房间配置的 <code>mode</code> 参数为 <code>ZegoCallScenario.CALL_INVITATION</code> 后才能发起呼叫和接受呼叫。</Warning>
-                ```js YourInitPage.vue {10,14-16}
+                <Warning title="Warning">设置房间配置的 <code>mode</code> 参数为 <code>ZegoCallScenario.CALL_INVITATION</code> 和 <code>globalPagePath</code> 参数为 UIKit 组件的存储路径后才能发起呼叫和接受呼叫。</Warning>
+                ```js YourInitPage.vue {11-12,16}
                 <script setup>
-                import { ZegoUIKitPrebuiltCall, ZegoCallScenario }  from '@zegocloud/zego-uikit-prebuilt-call-mini-program';
+                import { onMounted } from "vue";
+                import { ZegoUIKitPrebuiltCall, ZegoCallScenario }  from "@zegocloud/zego-uikit-prebuilt-call-mini-program";
 
                 const appID = 0; // 您从控制台获取的 AppID
                 const server = ""; // 您从控制台获取的 Server 地址
@@ -64,7 +65,7 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 const token = ""; // 您从服务端生成的 Token
                 const config = {
                     mode: ZegoCallScenario.CALL_INVITATION, // 设置 mode 为 ZegoCallScenario.CALL_INVITATION 后才能发起呼叫和接受呼叫
-                    globalPagePath: "/ZegoUIKitPrebuiltCall/src/pages/call_invitation/InvitationCall",
+                    globalPagePath: "/ZegoUIKitPrebuiltCall/src/pages/call_invitation/InvitationCall",  // UIKit 组件的存储路径
                 }; // 房间配置
 
                 onMounted(() => {
@@ -76,10 +77,11 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 <Step title="添加呼叫邀请按钮。">
 
                 在您的其他页面中，参考以下代码导入 ZegoSendCallInvitationButton 组件，当点击组件后，就会发起呼叫邀请。
-                ```js YourPage.vue {3-10,14}
+                ```js YourPage.vue {3-11,15}
                 <template>
                     <view class="button-container">
-                        <ZegoSendCallInvitationButton 
+                        <ZegoSendCallInvitationButton
+                            class="btn"
                             :invitees="invitees" 
                             :isVideoCall="true" 
                             :text="text"
@@ -90,12 +92,12 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                     </view>
                 </template>
                 <script setup>
-                import ZegoSendCallInvitationButton from '../ZegoUIKitPrebuiltCall/src/components/ZegoSendCallInvitationButton.vue';
-                import { ref } from 'vue';
+                import ZegoSendCallInvitationButton from "../ZegoUIKitPrebuiltCall/src/components/ZegoSendCallInvitationButton.vue";
+                import { ref } from "vue";
                 // 您要呼叫的用户列表
                 const invitees = ref([{
-                    userID: 'user_invitee',
-                    userName: 'user_invitee',
+                    userID: "user_invitee",
+                    userName: "user_invitee",
                 }]);
                 const text = ref("视频通话");
                 const customData = ref("您需要传递给被叫者的其他参数");
@@ -106,8 +108,17 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 <style scoped>
                 .button-container {
                     display: flex;
-                    flex-direction: column;
                     justify-content: center;
+                }
+                .btn {
+                    text-align: center;
+                    width: 570rpx;
+                    height: 100rpx;
+                    line-height: 100rpx;
+                    font-size: 32rpx;
+                    color: #fff;
+                    border-radius: 20rpx;
+                    background-color: #0055FF;
                 }
                 </style>
                 ```
@@ -144,16 +155,20 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 <Step title="新建 pages/index.vue 文件">
 
                 访问 UIKit 组件的存储路径，新建 pages/index.vue 文件，并复制以下代码至该文件。
+
+                <Frame width="256" height="auto" caption="">
+                    <img src="https://media-resource.spreading.io/docuo/workspace746/5e93b8724bfcf0da36e347272ac420f1/21853a1650.jpeg" alt="20250214-110156.jpeg"/>
+                </Frame>
                 ``` js index.vue
                 <template>
                     <view>
                         <InvitationCall v-if="isUIKitShow"/>
                         <view class="button-container">
                             <ZegoSendCallInvitationButton
-                                class="btn video-btn"
+                                class="btn"
                                 :isVideoCall="true"
                                 :invitees="invitees"
-                                text="text"
+                                :text="text"
                                 :customData="customData"
                                 :timeout="30"
                                 :onPressed="sendCallback">
@@ -162,12 +177,13 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                     </view>
                 </template>
                 <script setup>
-                import { ref, computed, onMounted, onUnmounted, getCurrentInstance } from 'vue';
-                import { ZegoUIKitPrebuiltCall, ZegoUIKitUser, makePrebuiltListenerID } from '@zegocloud/zego-uikit-prebuilt-call-mini-program';
+                import { ref, onMounted, onUnmounted, getCurrentInstance } from 'vue';
+                import { ZegoUIKitPrebuiltCall, makePrebuiltListenerID } from '@zegocloud/zego-uikit-prebuilt-call-mini-program';
                 import ZegoSendCallInvitationButton from '../src/components/ZegoSendCallInvitationButton.vue';
                 import InvitationCall from '../src/pages/call_invitation/invitationCall.vue';
 
-                const isUIKitShow = ref<boolean>(false);
+                let isUIKitShow = ref(false);
+                const LISTENER_ID = makePrebuiltListenerID(); // 生成回调ID
                 // 您要呼叫的用户列表
                 const invitees = ref([{
                     userID: 'user_invitee',
@@ -175,11 +191,13 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 }]);
                 const text = ref("视频通话");
                 const customData = ref("您需要传递给被叫者的其他参数");
+
                 onMounted(() => {
                     const instance = getCurrentInstance()?.proxy;
                     // @ts-ignore
                     const eventChannel = instance?.getOpenerEventChannel();
                     if (eventChannel) {
+                        // 监听事件获取从主包传递过来的数据
                         eventChannel.on('acceptDataFromOpenerPage', function(data) {
                             ZegoUIKitPrebuiltCall.init(data.appID, data.server, data.userID, data.userName, data.token, data.config);
                             ZegoUIKitPrebuiltCall.addPrebuiltListener(LISTENER_ID, {
@@ -201,10 +219,19 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 }
                 </script>
                 <style scoped>
-                .button-container {
+               .button-container {
                     display: flex;
-                    flex-direction: column;
                     justify-content: center;
+                }
+                .btn {
+                    text-align: center;
+                    width: 570rpx;
+                    height: 100rpx;
+                    line-height: 100rpx;
+                    font-size: 32rpx;
+                    color: #fff;
+                    border-radius: 20rpx;
+                    background-color: #0055FF;
                 }
                 </style>
                 ```
@@ -247,15 +274,15 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 import uni from "@dcloudio/vite-plugin-uni";
 
                 export default defineConfig({
-                plugins: [uni()],
-                optimizeDeps: {
-                    include: ["@zegocloud/zego-uikit-prebuilt-call-mini-program"],
-                },
-                build: {
-                    rollupOptions: {
-                    external: ["@zegocloud/zego-uikit-prebuilt-call-mini-program"],
+                    plugins: [uni()],
+                    optimizeDeps: {
+                        include: ["@zegocloud/zego-uikit-prebuilt-call-mini-program"],
                     },
-                },
+                    build: {
+                        rollupOptions: {
+                        external: ["@zegocloud/zego-uikit-prebuilt-call-mini-program"],
+                        },
+                    },
                 });
                 ```
                 </Step>
@@ -272,18 +299,21 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                     </view>
                 </template>
                 <script setup>
-                const appID = 0; // 您从控制台获取的 AppID
-                const server = ""; 
-                const token = ""; // 您从服务端生成的 Token
-                const userID = ""; // userID，需用户自己定义，保证全局唯一，建议设置为业务系统中的用户唯一标识
-                const userName = ""; // userName 用户名
-                const config = { mode: 2 };
+                const data = {
+                    appID: 0, // 您从控制台获取的 AppID
+                    server: "", // 您从控制台获取的 server 地址
+                    token: "", // 您从服务端生成的 Token
+                    userID: "", // userID，保证全局唯一，建议设置为业务系统中的用户唯一标识
+                    userName: "", // userName 用户名
+                    config: { mode: 2 }, // UIKit 的配置
+                }
                 const gotoSubPackage = () => {
                     // @ts-ignore
                     uni.navigateTo({
                         url: `/ZegoUIKitPrebuiltCall/pages/index`,
                         success: (res) => { 
-                            res.eventChannel.emit('acceptDataFromOpenerPage', { appID, server, token, userID, userName, config })
+                            // 传递数据到分包
+                            res.eventChannel.emit('acceptDataFromOpenerPage', data)
                         },
                         fail: () => {
                             console.error(`navigateTo fail!`);
@@ -301,6 +331,13 @@ npm i @zegocloud/zego-uikit-prebuilt-call-mini-program --save
                 npm init -y
                 npm i @zegocloud/zego-uikit-prebuilt-call-mini-program
                 ```
+
+                <Frame width="auto" height="auto" caption="新建终端">
+                  <img src="https://media-resource.spreading.io/docuo/workspace746/5e93b8724bfcf0da36e347272ac420f1/36da689ece.jpeg" alt="20250214-102417.jpeg"/>
+                </Frame>
+                <Frame width="auto" height="auto" caption="构建npm">
+                  <img src="https://media-resource.spreading.io/docuo/workspace746/5e93b8724bfcf0da36e347272ac420f1/142dce6305.jpeg" alt="20250214-103101.jpeg"/>
+                </Frame>
                 </Step>
             </Steps>
             </Tab>
