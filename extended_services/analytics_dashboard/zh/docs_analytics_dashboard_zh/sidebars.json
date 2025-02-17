@@ -1,0 +1,14 @@
+{
+  "mySidebar": [
+    {
+      "type": "category",
+      "label": "产品简介",
+      "collapsed": false,
+      "items": [
+        {"type":"doc","label":"产品概述","id":"introduction/overview"}
+        ,{"type":"doc","label":"Release notes","id":"introduction/release-notes"}
+        ,{"type":"doc","label":"Pricing","id":"introduction/pricing"}
+      ]
+    }
+  ]
+}
