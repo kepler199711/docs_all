@@ -86,56 +86,20 @@ Creating a ZIM instance is the very first step, an instance corresponds to a use
 So, let's suppose we have two clients now, client A and client B. To send and receive messages to each other, both of them will need to call the [createWithAppConfig](@createWithAppConfig) method with the AppID and AppSign you get in the [Prerequisites](#prerequisites) to create a ZIM SDK instance of their own:
 
 ```objc
-// Create a ZIM SDK instance
-//  Create a ZIM SDK object and pass your AppID and AppSign.
+// Call the createWithAppConfig method to create a ZIM SDK object and pass your AppID and AppSign.
 ZIMAppConfig *appConfig = [[ZIMAppConfig alloc] init];
-appConfig.appID = (unsigned int)appID;     // Replace with your AppID
-appConfig.appSign = @"appSign";     // Replace with your AppSign
-self.zim = [ZIM createWithAppConfig: appConfig];
+appConfig.appID = 123456; // Pass in your appID
+appConfig.appSign = @""; // Pass in your appSign
+ZIM * zim = [ZIM createWithAppConfig:appConfig];
 ```
 
-<Accordion title="The sample code to create a ZIM SDK singleton" defaultOpen="false">
-
-For most cases, you will only need to create the ZIM SDK instance once. We recommend you create a singleton and save it.
-
-Create a `ZGZIMManager` class, declare and implement a `shared` class method in this class, which will create and return a `ZGZIMManager` object the first time it is called, and create and save a ZIM SDK instance in this object.
-Then, when you import the `zimManager.h` header file anywhere in the project and call the `[ZGZIMManager shared].zim`, a ZIM object will be returned.
+Since most developers only need to instantiate ZIM once throughout the entire process, We recommends using the [getInstance](@getInstance) method to obtain the created instance object.
 
 ```objc
-#import <Foundation/Foundation.h>
-#import "ZIM/ZIM.h"
-NS_ASSUME_NONNULL_BEGIN
-
-@interface ZGZIMManager : NSObject
-@property (nonatomic, strong) ZIM *zim;
-+ (ZGZIMManager *)shared;
-
-@end
-
-NS_ASSUME_NONNULL_END
+// After successfully calling the createWithAppConfig method to create an instance, you can obtain the zim object via the getInstance method.
+// Calling the getInstance method before calling the createWithAppConfig method or after calling the destroy method to destroy the instance will return nil.
+ZIM *zim = [ZIM getInstance];
 ```
-
-```objc
-#import "ZGZIMManager.h"
-static ZGZIMManager *_sharedManager = nil;
-@interface ZGZIMManager ()
-@end
-@implementation ZGZIMManager
-+ (ZGZIMManager *)shared {
-    if (!_sharedManager) {
-        @synchronized (self) {
-            if (!_sharedManager) {
-                _sharedManager = [[self alloc] init];
-                _sharedManager.zim = [ZIM createWithAppID:123]; //Replace the 123 with the AppID you get.
-            }
-        }
-    }
-    return _sharedManager;
-}
-
-@end
-```
-</Accordion>
 
 
 ### Conform to the EventHandler protocol
