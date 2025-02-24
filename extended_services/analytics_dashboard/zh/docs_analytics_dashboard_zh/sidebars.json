@@ -5,9 +5,21 @@
       "label": "产品简介",
       "collapsed": false,
       "items": [
-        {"type":"doc","label":"产品概述","id":"introduction/overview"}
-        ,{"type":"doc","label":"发布日志","id":"introduction/release-notes"}
-        ,{"type":"doc","label":"计费说明","id":"introduction/pricing"}
+        {
+          "type": "doc",
+          "label": "产品概述",
+          "id": "introduction/overview"
+        },
+        {
+          "type": "doc",
+          "label": "发布日志",
+          "id": "introduction/release-notes"
+        },
+        {
+          "type": "doc",
+          "label": "计费说明",
+          "id": "introduction/pricing"
+        }
       ]
     },
     {
@@ -20,9 +32,50 @@
           "label": "通话洞察",
           "collapsed": false,
           "items": [
-            {"type":"doc","label":"功能介绍","id":"guides/communication-insights/function-introduction"}
-            ,{"type":"doc","label":"数据说明","id":"guides/communication-insights/data-explanation"}
+            {
+              "type": "doc",
+              "label": "功能介绍",
+              "id": "guides/communication-insights/function-introduction"
+            },
+            {
+              "type": "doc",
+              "label": "数据说明",
+              "id": "guides/communication-insights/data-explanation"
+            }
           ]
+        },
+        {
+          "type": "doc",
+          "label": "运营大盘",
+          "id": "guides/operations-dashboard",
+          "collapsible": false,
+          "items": [
+            {
+              "type": "doc",
+              "label": "功能介绍",
+              "id": "guides/operations-dashboard/function-introduction"
+            },
+            {
+              "type": "doc",
+              "label": "数据说明",
+              "id": "guides/operations-dashboard/data-explanation"
+            },
+            {
+              "type": "doc",
+              "label": "地区质量（高级）",
+              "id": "guides/operations-dashboard/regional-quality(pro)"
+            }
+          ]
+        },
+        {
+          "type": "doc",
+          "label": "用户监测",
+          "id": "guides/user-behavior-monitoring"
+        },
+        {
+          "type": "doc",
+          "label": "实时监控",
+          "id": "guides/real-time-monitoring"
         }
       ]
     }
