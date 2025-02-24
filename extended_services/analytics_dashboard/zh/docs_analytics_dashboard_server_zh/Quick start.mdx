@@ -12,7 +12,7 @@ ZEGO 星图提供了多个服务端 API 接口，支持开发者向 ZEGO 服务�
 
 在开始调用服务端 API 接口之前，请确保：
 
-- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppId 和 ServerSecret，详情请参考 [控制台 - 项目管理](#12107) 中的“项目信息”。
+- 已在 [ZEGO 控制台](https://console.zego.im) 创建项目，并申请有效的 AppId 和 ServerSecret，详情请参考 [控制台 - 项目管理](https://doc-zh.zego.im/article/12107)) 中的“项目信息”。
 - 已准备好调试服务端 API 接口的开发环境。
 - 已准备好自己的客户端，搭建相关的业务场景。
 
@@ -467,7 +467,7 @@ https://analytics-api.zego.im/?Action=GetBizUsage
 
 其中：
 - https：指定了请求通信协议。
-- analytics-api.zego.im：指定了 ZEGO 服务端的接入地址，其中 `analytics` 代表使用的产品是星图，详见 [调用方式 - 请求结构 - 接入地址](./Access%20server%20APIs.mdx#3_1)。
+- analytics-api.zego.im：指定了 ZEGO 服务端的接入地址，其中 `analytics` 代表使用的产品是星图，详见 [调用方式 - 请求结构 - 接入地址](./Access%20server%20APIs.mdx#接入地址)。
 - Action=GetBizUsage：指定了要调用的 API 接口为 `GetBizUsage`。
 
 
@@ -475,14 +475,14 @@ https://analytics-api.zego.im/?Action=GetBizUsage
 
 为保证 API 的安全调用，ZEGO 服务端会对每个 API 的访问请求进行身份验证。开发者在调用 API 时，都需要在请求中包含签名 Signature 信息。
 
-开发者可以参考 [调用方式 - 签名机制](./Access%20server%20APIs.mdx#5) 中的各语言示例代码，使用本文 [前提条件](#前提条件) 获取到的 AppId 和 ServerSecret，生成自己的签名信息。
+开发者可以参考 [调用方式 - 签名机制](./Access%20server%20APIs.mdx#签名机制) 中的各语言示例代码，使用本文 [前提条件](#前提条件) 获取到的 AppId 和 ServerSecret，生成自己的签名信息。
 
 
 ### 3 配置公共请求参数
 
 开发者调用每个 ZEGO 服务端 API 前，需要先配置 API 的公共请求参数。
 
-公共请求参数，是指每个接口都需要使用到的请求参数，包含了 AppId、Signature（指 [2 生成的签名信息](#2-生成签名信息)）、SignatureNonce（随机字符串）、Timestamp（时间戳）等参数，请根据实际情况修改。公共参数的具体介绍，请参考 [调用方式 - 公共参数](./Access%20server%20APIs.mdx#4)。
+公共请求参数，是指每个接口都需要使用到的请求参数，包含了 AppId、Signature（指 [2 生成的签名信息](#2-生成签名信息)）、SignatureNonce（随机字符串）、Timestamp（时间戳）等参数，请根据实际情况修改。公共参数的具体介绍，请参考 [调用方式 - 公共参数](./Access%20server%20APIs.mdx#公共参数)。
 
 ```txt
 https://analytics-api.zego.im/?Action=GetBizUsage&AppId=1234567890&SignatureNonce=15215528852396&Timestamp=1234567890&Signature=Pc5WB8gokVn0xfeu%2FZV%2BiNM1dgI%3D&SignatureVersion=2.0&IsTest=false
@@ -494,7 +494,7 @@ https://analytics-api.zego.im/?Action=GetBizUsage&AppId=1234567890&SignatureNonc
 
 配置完公共参数后，再去配置 API 相关的业务参数，设定所需的目标操作。 
 
-业务参数的具体介绍，请参考 [请求参数](./Operation%20data/Get%20biz%20usage.mdx#3)。
+业务参数的具体介绍，请参考 [请求参数](./Operation%20data/Get%20biz%20usage.mdx#请求参数)。
 
 ### 5 开发者的服务端发起请求 
 
