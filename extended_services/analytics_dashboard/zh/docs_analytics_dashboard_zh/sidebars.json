@@ -78,6 +78,30 @@
           "id": "guides/real-time-monitoring"
         }
       ]
+    },
+    {
+      "type": "category",
+      "label": "案例分析",
+      "collapsed": false,
+      "items": [
+        {
+          "type": "category",
+          "label": "音视频卡顿问题排查",
+          "collapsed": false,
+          "items": [
+            {
+              "type": "doc",
+              "label": "排查分析卡顿是由拉流端（观众）网络不佳导致",
+              "id": "cases/troubleshooting-of-audio-and-video-freezing-issues/player-poor-network-condition"
+            },
+            {
+              "type": "doc",
+              "label": "排查分析卡顿是由拉流端（观众）设备 CPU或内存资源不足导致",
+              "id": "cases/troubleshooting-of-audio-and-video-freezing-issues/insufficient-resources"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
