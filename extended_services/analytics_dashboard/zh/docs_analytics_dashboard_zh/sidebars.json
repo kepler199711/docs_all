@@ -47,7 +47,6 @@
         {
           "type": "category",
           "label": "运营大盘",
-          "id": "guides/operations-dashboard",
           "collapsible": false,
           "items": [
             {
