@@ -1,0 +1,38 @@
+---
+articleID: 19213
+---
+
+# 自定义点击跳转实现
+
+## 前提条件
+
+在自定义点击跳转实现之前，请确保：
+
+- 已集成 ZPNs SDK，详情请参考 [实现离线推送](./Implement%20offline%20push%20notification.mdx)。
+- 已在控制台配置离线推送证书。
+
+
+## 实现流程
+
+收到离线推送后，通知栏会显示推送信息（如下图所示）
+<img src="/Users/wuyaolin/Downloads/Image_316112594921225.jpg"/>
+
+1、请联系技术支持配置开启自定义点击跳转功能。
+
+2、实现 ZPNsEventHandler 中的 onNotificationClicked 方法
+```dart
+
+ZPNsEventHandler.onNotificationClicked = (ZPNsMessage message){
+    if(zpnsMessage.pushSourceType == ZPNsPushSourceType.FCM){
+        // FCM does not support this interface,please use Intent get payload at Android Activity.
+    }else{
+        // 获取透传消息，后续可以根据此处的信息跳转到指定页面
+        String payload = message.payload; //与 ZIMPushConfig 中 payload 字段内容一致
+
+    }
+};
+```
+3、收到推送消息后点击该消息，会触发 onNotificationClicked。如果点击时您还未调用过 ZPNs registerPush 方法，那么事件会暂存直到您调用 registerPush 后回调，请在 registerPush 前实现 ZPNsEventHandler 中的 onNotificationClicked 方法。
+
+
+
