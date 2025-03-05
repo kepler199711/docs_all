@@ -98,21 +98,12 @@
 
     打开应用级的 “build.gradle” 文件，在 “dependencies” 节点中添加如下编译依赖。
 
-:::if{props.platform=undefined}
     ```groovy
     dependencies {
         implementation 'com.huawei.hms:push:6.12.0.300' // 华为推送 SDK
         implementation 'im.zego:zpns-huawei:2.7.0' // 获取用于华为推送服务的 ZPNs 库
     }
     ```
-:::
-:::if{props.platform="Flutter|RN"}
-    ```groovy
-    dependencies {
-        implementation 'com.huawei.hms:push:6.12.0.300' // 华为推送 SDK
-    }
-    ```
-:::
 
 6. 防止混淆代码
 
