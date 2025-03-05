@@ -2,37 +2,112 @@
 articleID: 19213
 ---
 
-# 自定义点击跳转实现
+import {getPlatformData} from "/snippets/utils-content-parser.js"
+
+export const registerPushMap = {
+  'Android,RN': <a href='@registerPush' target='_blank'>registerPush</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNs/registerPush.html' target='_blank'>registerPush</a>,
+}
+
+export const ZPNsEventHandlerMap = {
+  'Android,RN': <a href='@-ZPNsEventHandler' target='_blank'>ZPNsEventHandler</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler-class.html' target='_blank'>ZPNsEventHandler</a>,
+}
+
+export const onNotificationClickedMap = {
+  'Android': <a href='@onNotificationClicked' target='_blank'>onNotificationClicked</a>,
+  'RN': <a href='@notificationClicked' target='_blank'>notificationClicked</a>,
+  'Flutter': <a href='https://pub.dev/documentation/zego_zpns/latest/zego_zpns/ZPNsEventHandler/onNotificationClicked.html' target='_blank'>onNotificationClicked</a>,
+}
+
+# 自定义点击跳转
+
+:::if{props.platform=undefined}
+<Warning title="注意">本文档仅适用于 FCM 以外的 Android 推送通道。</Warning>
+:::
+:::if{props.platform="Flutter|RN"}
+<Warning title="注意">本文档仅适用于 FCM 以外的 Android 推送通道以及 Apple 推送。</Warning>
+:::
+
+## 描述
+
+待补充文本
+
+| 自定义前 | 自定义后 |
+| -- | -- |
+| 待补充图片 | 待补充图片 | 
 
 ## 前提条件
 
-在自定义点击跳转实现之前，请确保：
-
-- 已集成 ZPNs SDK，详情请参考 [实现离线推送](./Implement%20offline%20push%20notification.mdx)。
-- 已在控制台配置离线推送证书。
-
+在实现自定义点击跳转之前，请确保：
+- 已集成 2.8.0 或以上版本的 ZPNs SDK，详情请参考 [实现离线推送](./Implement%20offline%20push%20notification.mdx)。
+- 已在控制台配置离线推送证书，详情请参考控制台文档 [服务配置 - 即时通讯 - 离线推送配置](https://doc-zh.zego.im/article/16233)。
 
 ## 实现流程
 
-收到离线推送后，通知栏会显示推送信息（如下图所示）
-<img src="/Users/wuyaolin/Downloads/Image_316112594921225.jpg"/>
-
-1、请联系技术支持配置开启自定义点击跳转功能。
-
-2、请在自定义的 ZPNsMessageReceiver 广播类派生类中（参考实现离线推送->使用 ZPNs SDK 注册离线推送功能）,重写 onNotificationClicked 方法。
+<Steps>
+<Step title="开通功能">
+请联系 ZEGO 技术支持配置开启自定义点击跳转功能。
+</Step>
+:::if{props.platform=undefined}
+<Step title="重写回调">
+请在自定义的 [ZPNsMessageReceiver](@-ZPNsMessageReceiver) 广播类派生类中（请参考 [实现离线推送->使用 ZPNs SDK 注册离线推送功能](./Implement%20offline%20push%20notification.mdx#使用-zpns-sdk-注册离线推送功能) 的类似内容），重写 {getPlatformData(props,onNotificationClickedMap)} 方法，以便获取跳转目标页面的路径。
 ```java
 protected void onNotificationClicked(Context context, ZPNsMessage message) {
-        Log.e("MyZPNsReceiver", "onNotificationClicked message:" + message.toString());
-        // 获取透传消息，可以根据此处的信息跳转到指定页面
-        String payload = message.getPayload();
-        //以下为伪代码，通过 Intent 跳转到一个虚构的空白 Activity
-        Intent intent = new Intent(context, BlankActivity.class);
-        intent.putExtra("EXTRA_MESSAGE",payload);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);
-    }
+    Log.e("MyZPNsReceiver", "onNotificationClicked message:" + message.toString());
+    // 获取透传消息（即跳转目标页面的路径）
+    // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致
+    String payload = message.getPayload();
+    // 您可以根据上述信息编写代码实现跳转
+}
 ```
-3、收到推送消息后点击该消息，ZPNs 将会回调 onNotificationClicked 事件。
+</Step>
+:::
+:::if{props.platform="Flutter"}
+<Step title="监听回调">
+在调用 {getPlatformData(props,registerPushMap)} 方法之前，监听 {getPlatformData(props,ZPNsEventHandlerMap)} 中的 {getPlatformData(props,onNotificationClickedMap)} 方法，以便获取跳转目标页面的路径。
+```dart
+ZPNsEventHandler.onNotificationClicked = (ZPNsMessage message){
+    if(zpnsMessage.pushSourceType == ZPNsPushSourceType.FCM){
+        // FCM 不支持此接口，请在 Android Activity 中使用 Intent 获取 payload。
+    }else{
+        // 获取透传消息（即跳转目标页面的路径）
+        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致
+        String payload = message.payload; 
+        // 您可以根据上述信息编写代码实现跳转
+    }
+};
+```
+</Step>
+:::
+:::if{props.platform="RN"}
+<Step title="监听回调">
+在调用 {getPlatformData(props,registerPushMap)} 方法之前，监听 {getPlatformData(props,ZPNsEventHandlerMap)} 中的 {getPlatformData(props,onNotificationClickedMap)} 方法，以便获取跳转目标页面的路径。
+```js
+ZPNs.getInstance().on('notificationClicked', message => {
+    if (message.pushSourceType == ZPNsPushSourceType.FCM){
+        // FCM 不支持此接口，请在 Android Activity 中使用 Intent 获取 payload。
+    }else{
+        // 获取透传消息（即跳转目标页面的路径）
+        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致
+        const payload = message.payload;
+        // 您可以根据上述信息编写代码实现跳转
+    }
+});
+```
+</Step>
+:::
+<Step title="发送消息">
+补充发送消息时候需要添加 payload 的代码
+</Step>
+<Step title="触发回调">
+:::if{props.platform=undefined}
+收到推送后，当用户点击该推送，ZPNs 将会回调 {getPlatformData(props,onNotificationClickedMap)} 事件，随即用户界面跳转至指定页面。
+:::
+:::if{props.platform="Flutter|RN"}
+收到推送后，当用户点击该推送，ZPNs 将会回调 {getPlatformData(props,onNotificationClickedMap)} 事件。
 
-
-
+如果点击时，您还未调用过 ZPNs 的 {getPlatformData(props,registerPushMap)} 方法，那么，此事件会被暂存，直到您调用 {getPlatformData(props,registerPushMap)} 方法后才会回调。
+:::
+</Step>
+</Steps>

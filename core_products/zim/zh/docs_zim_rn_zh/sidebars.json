@@ -412,7 +412,7 @@
             },
             {
               "type": "doc",
-              "label": "自定义点击跳转实现",
+              "label": "自定义点击跳转",
               "id": "offline-push-notifications/custom-click-jump-implementation"
             },
             {
