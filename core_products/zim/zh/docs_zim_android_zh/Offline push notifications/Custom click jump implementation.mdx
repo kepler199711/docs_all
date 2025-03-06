@@ -31,7 +31,8 @@ export const onNotificationClickedMap = {
 
 ## 描述
 
-待补充文本
+本功能允许开发者自定义离线推送的点击跳转逻辑，比如用户在点击推送消息时，能够跳转到指定页面，从而提升用户体验和交互效率。
+
 
 | 自定义前 | 自定义后 |
 | -- | -- |
@@ -56,7 +57,7 @@ export const onNotificationClickedMap = {
 protected void onNotificationClicked(Context context, ZPNsMessage message) {
     Log.e("MyZPNsReceiver", "onNotificationClicked message:" + message.toString());
     // 获取透传消息（即跳转目标页面的路径）
-    // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致
+    // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致,请参考实现离线推送,使用 ZIM SDK 实现离线推送功能章节。
     String payload = message.getPayload();
     // 您可以根据上述信息编写代码实现跳转
 }
@@ -72,7 +73,7 @@ ZPNsEventHandler.onNotificationClicked = (ZPNsMessage message){
         // FCM 不支持此接口，请在 Android Activity 中使用 Intent 获取 payload。
     }else{
         // 获取透传消息（即跳转目标页面的路径）
-        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致
+        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致,，请参考实现离线推送,使用 ZIM SDK 实现离线推送功能章节。
         String payload = message.payload; 
         // 您可以根据上述信息编写代码实现跳转
     }
@@ -89,8 +90,8 @@ ZPNs.getInstance().on('notificationClicked', message => {
         // FCM 不支持此接口，请在 Android Activity 中使用 Intent 获取 payload。
     }else{
         // 获取透传消息（即跳转目标页面的路径）
-        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致
-        const payload = message.payload;
+        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致，请参考实现离线推送,使用 ZIM SDK 实现离线推送功能章节。
+        const payload = message.payload; 
         // 您可以根据上述信息编写代码实现跳转
     }
 });
