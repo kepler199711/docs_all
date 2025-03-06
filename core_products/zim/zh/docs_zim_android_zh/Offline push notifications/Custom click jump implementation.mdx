@@ -31,8 +31,7 @@ export const onNotificationClickedMap = {
 
 ## 描述
 
-本功能允许开发者自定义离线推送的点击跳转逻辑，比如用户在点击推送消息时，能够跳转到指定页面，从而提升用户体验和交互效率。
-
+通常，用户点击离线推送通知时，会跳转到应用首页。基于本功能，开发者可以自定义离线推送通知的点击跳转逻辑，比如用户在点击推送消息时，能够跳转到指定页面，从而提升用户体验和交互效率。
 
 - 自定义前：
     <Video src="https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/7a952bc33f.mp4" />
@@ -99,8 +98,8 @@ ZPNs.getInstance().on('notificationClicked', message => {
 ```
 </Step>
 :::
-<Step title="发送消息">
-补充发送消息时候需要添加 payload 的代码
+<Step title="配置透传字段">
+消息发送者在发送消息时，需要通过 `ZIMPushConfig > payload` 参数设置透传字段（例如需要跳转到的目标页面路径）。相关代码请参考 [实现离线推送 - 使用 ZIM SDK 实现离线推送功能 - 场景 1：发送单聊消息时使用离线推送功能](./Implement%20offline%20push%20notification.mdx#场景-1发送单聊消息时使用离线推送功能) 章节。
 </Step>
 <Step title="触发回调">
 :::if{props.platform=undefined}
