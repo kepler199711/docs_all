@@ -23,11 +23,13 @@ export const onNotificationClickedMap = {
 # 自定义点击跳转
 
 :::if{props.platform=undefined}
-<Warning title="注意">本文档仅适用于 FCM 以外的 Android 推送通道。</Warning>
+<Note title="说明">本文档仅适用于 FCM 以外的 Android 推送通道。</Note>
 :::
 :::if{props.platform="Flutter|RN"}
-<Warning title="注意">本文档仅适用于 FCM 以外的 Android 推送通道以及 Apple 推送。</Warning>
+<Note title="说明">本文档仅适用于 FCM 以外的 Android 推送通道以及 Apple 推送服务（APNs）。</Note>
 :::
+
+---
 
 ## 描述
 
@@ -57,7 +59,7 @@ export const onNotificationClickedMap = {
 protected void onNotificationClicked(Context context, ZPNsMessage message) {
     Log.e("MyZPNsReceiver", "onNotificationClicked message:" + message.toString());
     // 获取透传消息（即跳转目标页面的路径）
-    // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致,请参考实现离线推送,使用 ZIM SDK 实现离线推送功能章节。
+    // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致, 请参考 [实现离线推送 - 使用 ZIM SDK 实现离线推送功能](https://doc-zh.zego.im/zim-android/offline-push-notifications/implement-offline-push-notification#%E4%BD%BF%E7%94%A8-zim-sdk-%E5%AE%9E%E7%8E%B0%E7%A6%BB%E7%BA%BF%E6%8E%A8%E9%80%81%E5%8A%9F%E8%83%BD)。
     String payload = message.getPayload();
     // 您可以根据上述信息编写代码实现跳转
 }
@@ -73,7 +75,7 @@ ZPNsEventHandler.onNotificationClicked = (ZPNsMessage message){
         // FCM 不支持此接口，请在 Android Activity 中使用 Intent 获取 payload。
     }else{
         // 获取透传消息（即跳转目标页面的路径）
-        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致,，请参考实现离线推送,使用 ZIM SDK 实现离线推送功能章节。
+        // 请参考 [实现离线推送 - 使用 ZIM SDK 实现离线推送功能](https://doc-zh.zego.im/zim-flutter/offline-push-notifications/implement-offline-push-notification#%E4%BD%BF%E7%94%A8-zim-sdk-%E5%AE%9E%E7%8E%B0%E7%A6%BB%E7%BA%BF%E6%8E%A8%E9%80%81%E5%8A%9F%E8%83%BD)。
         String payload = message.payload; 
         // 您可以根据上述信息编写代码实现跳转
     }
@@ -90,7 +92,7 @@ ZPNs.getInstance().on('notificationClicked', message => {
         // FCM 不支持此接口，请在 Android Activity 中使用 Intent 获取 payload。
     }else{
         // 获取透传消息（即跳转目标页面的路径）
-        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致，请参考实现离线推送,使用 ZIM SDK 实现离线推送功能章节。
+        // 与发送消息时传入的 ZIMPushConfig > payload 字段内容一致, 请参考 [实现离线推送 - 使用 ZIM SDK 实现离线推送功能](https://doc-zh.zego.im/zim-rn/offline-push-notifications/implement-offline-push-notification#%E4%BD%BF%E7%94%A8-zim-sdk-%E5%AE%9E%E7%8E%B0%E7%A6%BB%E7%BA%BF%E6%8E%A8%E9%80%81%E5%8A%9F%E8%83%BD)。
         const payload = message.payload; 
         // 您可以根据上述信息编写代码实现跳转
     }
@@ -99,7 +101,7 @@ ZPNs.getInstance().on('notificationClicked', message => {
 </Step>
 :::
 <Step title="配置透传字段">
-消息发送者在发送消息时，需要通过 `ZIMPushConfig > payload` 参数设置透传字段（例如需要跳转到的目标页面路径）。相关代码请参考 [实现离线推送 - 使用 ZIM SDK 实现离线推送功能 - 场景 1：发送单聊消息时使用离线推送功能](./Implement%20offline%20push%20notification.mdx#场景-1发送单聊消息时使用离线推送功能) 章节。
+消息发送者在发送消息时，需要通过 `ZIMPushConfig > payload` 参数设置透传字段（例如需要跳转到的目标页面路径）。相关代码请参考 [实现离线推送 - 使用 ZIM SDK 实现离线推送功能](./Implement%20offline%20push%20notification.mdx#使用-zim-sdk-实现离线推送功能) 章节。
 </Step>
 <Step title="触发回调">
 :::if{props.platform=undefined}
