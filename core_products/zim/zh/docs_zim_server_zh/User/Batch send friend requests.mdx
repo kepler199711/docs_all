@@ -45,6 +45,11 @@
 
 以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
+<Note title="说明">
+
+以下 `FromUserId` 和 `UserId` 对应的用户已在客户端调用 `login` 方法登录 ZIM 服务，或已调用 [服务端 API](./Batch%20register%20users.mdx) 完成注册。
+</Note>
+
 <table class="collapsible-table" >
 <tbody><tr data-row-level="1">
 <th>参数</th>
@@ -56,7 +61,7 @@
 <td>FromUserId</td>
 <td>String</td>
 <td>是</td>
-<td>为此 UserId（已注册）发送好友申请。</td>
+<td>为此 UserId 发送好友申请。</td>
 </tr>
 <tr data-row-level="4" data-row-child="true">
 <td>FriendInfos</td>
@@ -68,7 +73,7 @@
 <td>└UserId</td>
 <td>String</td>
 <td>是</td>
-<td>目标用户 ID（已注册）。长度上限为 32 字节。</td>
+<td>目标用户 ID。长度上限为 32 字节。</td>
 </tr>
 <tr data-row-level="4-4">
 <td>└Wording</td>

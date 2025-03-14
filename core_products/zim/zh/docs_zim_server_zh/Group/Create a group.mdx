@@ -31,8 +31,11 @@
 
 以下请求参数列表仅列出了接口请求参数和部分公共参数，完整公共参数列表请参考 [调用方式 - 公共请求参数](../Accessing%20Server%20APIs.mdx#2-公共参数)。
 
-<table class="collapsible-table" >
+<Note title="说明">
+以下 `GroupOwner` 和 `UserId` 对应的用户已在客户端调用 `login` 方法登录 ZIM 服务，或开发者已调用 [服务端 API](./../User/Batch%20register%20users.mdx) 注册相关的 userID。
+</Note>
 
+<table class="collapsible-table" >
 <tbody><tr data-row-level="1">
 <th>参数</th>
 <th>类型</th>
@@ -70,7 +73,7 @@
 <td>群主的用户 ID。长度上限为 32 字节。如需调整，请联系 ZEGO 技术支持。</td>
 </tr>
 <tr data-row-level="7">
-<td>UserId[]</td>
+<td>UserId</td>
 <td>Array of String</td>
 <td>否</td>
 <td>需要入群用户的 ID。每个用户 ID 的长度上限为 32 字节。如需调整，请联系 ZEGO 技术支持。<br/>默认支持一次性最多添加 100 名用户。如需调整，请联系 ZEGO 技术支持。<Note title="说明"><ul><li>此数组无需包含群主。如果包含了群主，ZIM 服务端会自动去重。</li><li>此数组用户的入群时间等于群组创建时间，即 CreateGroupTime。</li></ul></Note></td>

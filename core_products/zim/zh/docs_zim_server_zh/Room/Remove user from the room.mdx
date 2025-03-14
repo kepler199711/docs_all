@@ -48,7 +48,7 @@
     <td>UserId[]</td>
     <td>Array of String</td>
     <td>是</td>
-    <td><p>需要移除的用户 ID 列表，最大支持 50 个用户 ID。</p><p>
+    <td><p>需要移除的用户 ID 列表（已在客户端调用 `login` 方法登录 ZIM 服务，或已调用 [服务端 API](./../User/Batch%20register%20users.mdx) 完成注册）），最大支持 50 个用户 ID。</p><p>
 </p><p>示例：UserId[]=a&amp;UserId[]=b</p><p></p></td>
   </tr>
   <tr>
@@ -61,7 +61,7 @@
 
 <Note title="说明">
 
-RoomId、UserId 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}。
+RoomId、UserId[] 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'，'('，')'，'+'，'-'，':'，';'，'<'，'='，'.'，'>'，'?'，'@'，'['，']'，'^'，'_'，' '，'{'，'}'，'|'，'~'"}。
 </Note>
 
 ## 请求示例
@@ -69,7 +69,8 @@ RoomId、UserId 仅支持数字，英文字符和 {"'!'，'#'，'$'，'%'，'&'�
 ```json
 https://zim-api.zego.im/?Action=KickoutRoomUser
 &RoomId=123
-&UserId[]=a&UserId[]=b
+&UserId[]=a
+&UserId[]=b
 &CustomReason=%E8%B8%A2%E5%87%BA%E7%94%A8%E6%88%B7-%E5%8E%9F%E5%9B%A0
 &<公共请求参数>
 ```
