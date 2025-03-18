@@ -16,13 +16,13 @@ export const onUserStatusUpdatedMap = {
   'Android': <a href='@onUserStatusUpdated' target='_blank'>onUserStatusUpdated</a>,
   'iOS': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-user-status-updated' target='_blank'>userStatusUpdated</a>,
   'mac': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-user-status-updated' target='_blank'>userStatusUpdated</a>,
-  "RN": <a href="@userStatusUpdated">userStatusUpdated</a>,
+  "RN,uniapp": <a href="@userStatusUpdated">userStatusUpdated</a>,
   "Flutter": <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onUserStatusUpdated.html' target='_blank'>onUserStatusUpdated</a>,
 }
 export const ZIMEventHandlerMap = {
   'Android': <a href='@-ZIMEventHandler' target='_blank'>ZIMEventHandler</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler-class.html' target='_blank'>ZIMEventHandler</a>,
-  "RN": <a href="@on">on</a>,
+  "RN,uniapp": <a href="@on">on</a>,
   
 }
 export const unsubscribeUsersStatusMap = {
@@ -43,7 +43,7 @@ export const onConnectionStateChangedMap = {
   'Android': <a href='@onConnectionStateChanged' target='_blank'>onConnectionStateChanged</a>,
   'iOS': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_ios~protocol~ZIMEventHandler#zim-connection-state-changed-event-extended-data' target='_blank'>connectionStateChanged</a>,
   'mac': <a href='https://doc-zh.zego.im/article/api?doc=zim_API~objective-c_macos~protocol~ZIMEventHandler#zim-connection-state-changed-event-extended-data' target='_blank'>connectionStateChanged</a>,
-  "RN": <a href='@connectionStateChanged' target='_blank'>connectionStateChanged</a>,
+  "RN,uniapp": <a href='@connectionStateChanged' target='_blank'>connectionStateChanged</a>,
   'Flutter': <a href='https://pub.dev/documentation/zego_zim/latest/zego_zim/ZIMEventHandler/onConnectionStateChanged.html' target='_blank'>onConnectionStateChanged</a>,  
 }
 export const ZIMConnectionStateMap = {
@@ -54,28 +54,28 @@ export const ConnectedMap = {
   'Android': `CONNECTED`,
   'iOS, mac': `ZIMConnectionStateConnected`,
   'window': `ZIM_CONNECTION_STATE_CONNECTED`,
-  "RN":`Connected`,
+  "RN,uniapp":`Connected`,
   "Flutter":`connected`,
 }
 export const DisconnectedMap = {
   'Android': `DISCONNECTED`,
   'iOS, mac': `ZIMConnectionStateDisconnected`,
   'window': `ZIM_CONNECTION_STATE_DISCONNECTED`,
-  "RN":`Disconnected`,
+  "RN,uniapp":`Disconnected`,
   "Flutter":`disconnected`,
 }
 export const ConnectingMap = {
   'Android': `CONNECTING`,
   'iOS, mac': `ZIMConnectionStateConnecting`,
   'window': `ZIM_CONNECTION_STATE_CONNECTING`,
-  "RN":`Connecting`,
+  "RN,uniapp":`Connecting`,
   "Flutter":`connecting`,  
 }
 export const ReconnectingMap = {
   'Android': `RECONNECTING`,
   'iOS, mac': `ZIMConnectionStateReconnecting`,
   'window': `ZIM_CONNECTION_STATE_RECONNECTING`,
-  "RN":`Reconnecting`,
+  "RN,uniapp":`Reconnecting`,
   "Flutter":`reconnecting`,      
 }
 
@@ -203,8 +203,6 @@ ZIM.getInstance()?.subscribeUsersStatus(["userIdA","userIdB"], config).then((ZIM
 });
 ```
 :::
-
-
 
 ## 订阅用户状态
 
@@ -393,7 +391,7 @@ void onUserStatusUpdated(ZIM* zim, const std::vector<ZIMUserStatus>& userStatusL
 }
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN,uniapp"}
 ```javascript
 // 监听用户状态更新事件
 zim.on('userStatusUpdated', function (zim, { userStatusList }) {
@@ -467,7 +465,7 @@ zim_->unsubscribeUsersStatus(userIDs, [](const std::vector<ZIMErrorUserInfo> &er
 });
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN,uniapp"}
 ```javascript
 // 要取消订阅的用户ID列表
 const userIDs = ['userIdA', 'userIdB'];
@@ -573,7 +571,7 @@ zim_->queryUsersStatus(userIDs, [](const std::vector<ZIMUserStatus> &userStatusL
 });
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN,uniapp"}
 ```javascript
 // 需要查询状态的用户 ID 列表
 const userIDs = ['userIdA', 'userIdB'];
@@ -684,7 +682,7 @@ zim_->querySubscribedUserStatusList(config, [](const std::vector<ZIMUserStatusSu
 });
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN,uniapp"}
 ```javascript
 // 查询配置对象
 const config = {
@@ -831,7 +829,7 @@ void onConnectionStateChanged(ZIM* /*zim*/, ZIMConnectionState state, ZIMConnect
 }
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN,uniapp"}
 ```javascript
 zim.on('connectionStateChanged', function (zim, { state, event }) {
     switch (state) {
@@ -955,7 +953,7 @@ void onUserStatusUpdated(ZIM* /*zim*/, const std::vector<ZIMUserStatus>& userSta
 }
 ```
 :::
-:::if{props.platform="RN"}
+:::if{props.platform="RN,uniapp"}
 ```javascript
 zim.on('userStatusUpdated', function (zim, userStatusList) {
     const myUserID = '当前用户ID'; // 用当前用户的实际ID替换
